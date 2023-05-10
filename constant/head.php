@@ -1,5 +1,5 @@
 <?php require('constant/constant.php'); 
-require $DEFAULT_PATH."vendor/autoload.php";
+require("vendor/autoload.php");
 ?>
 <head>
     <link rel="stylesheet" href="<?=$DEFAULT_PATH?>vendor/twbs/bootstrap/dist/css/bootstrap.min.css">

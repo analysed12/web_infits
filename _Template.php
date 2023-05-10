@@ -7,6 +7,9 @@
     <title>Page TITLE HERE</title>
     <?php require('constant/head.php'); ?>
     <!-- CSS FILES GOES HERE -->
+
+
+    
     <!-- WE WILL NOT USE ANY KIND OF CDN -->
 <style>
     /* CSS of Page Goes Here */
@@ -15,11 +18,20 @@
 
 <body>
     <!-- Code Related to This Page Only -->
+
+
+
+
+
+
+
     <!-- Script FILES GOES HERE-->
-    <?php require('constant/head.php'); ?>
+    <?php require('constant/scripts.php'); ?>
     <!-- Other Script Files -->
 <script>
     // JS of This page Goes Here
+
+
 </script>
 </body>
 </html>
