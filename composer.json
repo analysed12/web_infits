@@ -1,0 +1,13 @@
+{
+    "name": "cheeku/infits_web",
+    "autoload": {
+        "psr-4": {
+            "Cheeku\\InfitsWeb\\": "src/"
+        }
+    },
+    "require": {
+        "twbs/bootstrap": "^5.2",
+        "components/font-awesome": "^6.2",
+        "components/jquery": "^3.6"
+    }
+}
