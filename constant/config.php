@@ -10,14 +10,16 @@ $conn = new mysqli("localhost", "root", "", "infits");
 if($conn->connect_error){
     die("Connection failed :" . $conn->connect_error);
 }
-function runQuery($query){
-    global $conn;
-    $result = $conn->query($query);
-    $data = array();
-    while($row = $result->fetch_assoc()){
-        $data[] =  $row;
+if (!function_exists('runQuery')) {
+    function runQuery($query){
+        global $conn;
+        $result = $conn->query($query);
+        $data = array();
+        while($row = $result->fetch_assoc()){
+            $data[] =  $row;
+        }
+        $conn->close();
+        return ($data);
     }
-    $conn->close();
-    return ($data);
 }
 ?>

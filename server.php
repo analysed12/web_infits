@@ -7,6 +7,7 @@ $email = "";
 $errors = array();
 
 include "constant/config.php";
+include "constant/constant.php";
 global $conn;
 
 if (isset($_SESSION['login_id'])) {
@@ -22,9 +23,9 @@ $client->setClientId('3315662633-6joqrjkcqimq2ms96p4ls8ie96e5liq1.apps.googleuse
 $client->setClientSecret('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');
 // Enter the Redirect URL
 if(basename($_SERVER['PHP_SELF']) == 'register'){
-    $client->setRedirectUri('http://localhost/TeamHuddle/Infits_web/register.php');
+    $client->setRedirectUri($DEFAULT_PATH.'register.php');
 }else{
-    $client->setRedirectUri('http://localhost/TeamHuddle/Infits_web/login.php');
+    $client->setRedirectUri($DEFAULT_PATH.'login.php');
 }
 // Adding those scopes which we want to get (email & profile Information)
 $client->addScope("email");
