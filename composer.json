@@ -6,7 +6,7 @@
         }
     },
     "require": {
-        "twbs/bootstrap": "^5.2",
+        "twbs/bootstrap": "*",
         "components/font-awesome": "^6.2",
         "components/jquery": "^3.6",
         "google/apiclient": "^2.13"
