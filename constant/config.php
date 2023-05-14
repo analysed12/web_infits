@@ -4,7 +4,7 @@ $USERNAME = "root";
 $PASSWORD = "";
 $DBNAME = "infits";
 
-$conn = new mysqli("localhost", "root", "", "infits");
+$conn = new mysqli($HOSTNAME, $USERNAME, $PASSWORD, $DBNAME);
 
 
 if($conn->connect_error){
