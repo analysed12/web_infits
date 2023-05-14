@@ -766,8 +766,8 @@ h3{
 
         <div class="dashboard_comtainer1">
             <div class="container1_leftside">
-                <p style="font-size: 40px;font-weight:600;margin-bottom: 0;">Dashboard</p>
-                <p style="font-weight:600;font-size:1.5rem">Upcoming Events</p>
+                <p style="font-size: 40px;font-weight: 400;margin-bottom: 0;">Dashboard</p>
+                <p style="font-weight: 400;font-size:1.5rem">Upcoming Events</p>
             </div>
             <div class="container2_rightside" >
                 <div class="addbutton" id="addbutton">
@@ -826,7 +826,7 @@ if(!empty($up_event)){
 </div>
 
         <div class="dashboard_container3">
-            <div style="font-size:1.5rem; font-weight:600;margin-left: 2.5px;"> Client Progress</div>
+            <div style="font-size:1.5rem; font-weight: 400;margin-left: 2.5px;"> Client Progress</div>
             <div class="details">
                 <a href="client_progress.php"><button id="details">View All</button></a>
                 <a href="client_detailed_progress.php"><button id="details">View Detailed Progress</button></a>
@@ -955,7 +955,7 @@ if(!empty($data)){
         <div class="dashboard_container5">
             <div class="container5_wrapper1">
                 <div class="tasklist">
-                    <p style="font-size:1.5rem ; font-weight:600; margin-top: -5px;margin-left: 2.5px;">My Task List</p>
+                    <p style="font-size:1.5rem ; font-weight: 400; margin-top: -5px;margin-left: 2.5px;">My Task List</p>
                     <span class="down"><a href="task_list.php" style="background-color:white; color:#717171; border:none" >View All</a></span> 
                 </div>
                 <div class="list_tasklist">
@@ -1038,7 +1038,7 @@ if (mysqli_num_rows($result) > 0) {
 
 <div class="container5_wrapper2">
                 <div class="tasklist">
-                    <p style="font-size:1.5rem ; font-weight:600;margin-top: -5px">Messages</p>
+                    <p style="font-size:1.5rem ; font-weight: 400;margin-top: -5px">Messages</p>
 
                     <span class="down2"><a href="chat_home.php" style=" color:#717171 ; border:none">View All</a></span>
                 </div>
