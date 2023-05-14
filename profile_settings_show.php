@@ -568,9 +568,10 @@ if ($result->num_rows > 0) {
                                 placeholder="Password" value="<?php echo $password; ?>" disabled style="color: #AEAEAE;"/>
                             <img style="cursor: pointer; width: 22px; height: 19px; margin-left:-38px;"
                                 src="<?=$DEFAULT_PATH?>assets/images/eye.svg" id="eyeicon" alt="eye">
-                            <br>
+                            
                             </div>
                             </h4>
+                            <br>
                         </div>
 
 
