@@ -38,7 +38,7 @@ if (isset($_SESSION['dietitianuserID'])) {
         <div class=" d-flex flex-column ">
             <h3 class="m-4">Messages</h3>
             <div class="container-fluid mt-3">
-                <img src="images/NoMessages.png" class="no-message d-block">
+                <img src="<?=$DEFAULT_PATH?>assets/images/No Messages.svg" class="no-message d-block">
 
                 <h4 class="d-flex justify-content-center mt-3 pt-2" style="color: #000000; text-align: center;">You haven't started any <br /> chat yet! </h4>
 
