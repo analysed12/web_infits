@@ -111,7 +111,6 @@ header('location: profile_settings_show.php');
         box-shadow: 0px 0.7px 5px rgba(0, 0, 0, 0.25);
         border-radius: 10px;
         border: none;
-        width: 100%;
         padding: 8px 16px;
         gap: 8px;
     }
@@ -121,7 +120,6 @@ header('location: profile_settings_show.php');
         box-shadow: 0px 0.7px 5px rgba(0, 0, 0, 0.25);
         border: none;
         border-radius: 10px;
-        width: 100%;
         padding: 0px 16px;
         gap: 8px;
         height: 48px;
@@ -527,132 +525,7 @@ header('location: profile_settings_show.php');
         padding-top: 0 !important;
         padding-bottom: 0 !important;
     }
-
-    @media screen and (max-width: 320px) {
-        .input-sec {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .popup {
-            margin-left: 0rem;
-        }
-
-        .popup .close {
-            right: 70px;
-        }
-
-        .popup .content {
-            margin-left: 25px;
-        }
-
-        .heading {
-            margin-left: 2.5rem;
-        }
-
-        .leftinput {
-            width: 90% !important;
-        }
-
-        .flex-left {
-            width: 90% !important;
-            margin-right: 5rem;
-        }
-
-        .flex-middle {
-            width: 100% !important;
-            margin-right: 2rem;
-        }
-
-        .flex-right {
-            width: 90%;
-            margin-left: 2.5rem;
-        }
-
-        .flex-main_wrapper {
-            width: 100%;
-        }
-
-        .flex-main {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user {
-            margin-left: 6rem !important;
-        }
-
-        .star {
-            margin-left: 7.5rem !important;
-        }
-
-        .center-flex {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            margin-left: 2rem;
-            width: 100%;
-        }
-
-        .addBtn {
-            width: 200px !important;
-            margin-right: 2rem;
-            margin-left: 0;
-        }
-
-        .sharebutton {
-            width: 200px !important;
-            margin-left: 0;
-            margin-right: 2rem;
-        }
-
-        .chooseimage {
-            margin-left: 6rem !important;
-        }
-
-        .text {
-            margin-left: 6rem !important;
-        }
-
-        .profiles {
-            margin: auto;
-
-        }
-
-        .modal-content {
-            margin-left: 0rem;
-            width: 400px;
-        }
-
-        .modal-img {
-            margin-left: 0rem;
-            width: 410px;
-            height: 250px;
-        }
-
-        .modal-img .upload .upload-btn {
-            width: 170px;
-            height: 50px;
-            border-radius: 8px;
-            border: none;
-            margin-top: 8px;
-            box-shadow: 0px 1.5px 1.5px 1.5px rgba(0, 0, 0, 0.15);
-            background-color: #FFFFFF;
-            Font size: 20.42px;
-        }
-
-        .modal-img .upload .upload-btn .up {
-            margin-left: 15px;
-        }
-
-        .modal-img .upload .upload-btn .del {
-            margin-left: 10px;
-        }
-    }
-
-    @media screen and (min-width:321px) and (max-width: 600px) {
+    @media screen and (max-width:600px){
 
         .input-sec {
             display: flex;
@@ -669,7 +542,7 @@ header('location: profile_settings_show.php');
         }
 
         .heading {
-            margin-left: 2.5rem;
+            margin-left: 2rem;
         }
 
         .leftinput {
@@ -682,17 +555,13 @@ header('location: profile_settings_show.php');
         }
 
         .flex-middle {
-            width: 100% !important;
-            margin-right: 2rem;
+            width: 90% !important;
+            margin-right: 5rem;
         }
 
         .flex-right {
-            width: 90%;
-            margin-left: 2.5rem;
-        }
-
-        .flex-main_wrapper {
-            width: 100%;
+            width: 80%;
+            margin-left: 1rem;
         }
 
         .flex-main {
@@ -713,20 +582,19 @@ header('location: profile_settings_show.php');
             flex-direction: column;
             align-items: center;
             gap: 1rem;
-            margin-left: 2rem;
             width: 100%;
         }
 
         .addBtn {
             width: 200px !important;
-            margin-right: 2rem;
+            margin-right: 3rem;
             margin-left: 0;
         }
 
         .sharebutton {
             width: 200px !important;
             margin-left: 0;
-            margin-right: 2rem;
+            margin-right: 3rem;
         }
 
         .chooseimage {
@@ -764,7 +632,13 @@ header('location: profile_settings_show.php');
         }
     }
 
-    @media screen and (min-width:600px) and (max-width: 720px) {
+    @media screen and (min-width:600px) and (max-width: 1000px) {
+
+        .input-sec {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .popup {
             margin-left: 8rem;
         }
@@ -778,10 +652,76 @@ header('location: profile_settings_show.php');
             width: 420px;
             height: 250px;
         }
+
+        .heading{
+            margin-left: 2rem;
+        }
+
+        .leftinput {
+            width: 90% !important;
+        }
+
+        .flex-left {
+            width: 90% !important;
+            margin-right: 5rem;
+        }
+
+        .flex-middle {
+            width: 90% !important;
+            margin-right: 5rem;
+        }
+
+        .flex-right {
+            width: 80%;
+            margin-left: 1rem;
+        }
+
+        .flex-main {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user {
+            margin-left: 6rem !important;
+        }
+
+        .star {
+            margin-left: 7.5rem !important;
+        }
+
+        .center-flex {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-left:0;
+            width: 100%;
+        }
+
+        .addBtn {
+            width: 200px !important;
+            margin-left: 8rem;
+        }
+
+        .sharebutton {
+            width: 200px !important;
+            margin-left: 8rem;
+        }
+
+        .modal-img .upload .upload-btn {
+            width: 160px;
+            height: 50px;
+            border-radius: 8px;
+            border: none;
+            margin-top: 8px;
+            box-shadow: 0px 1.5px 1.5px 1.5px rgba(0, 0, 0, 0.15);
+            background-color: #FFFFFF;
+            Font size: 20.42px;
+        }
     }
 
     /***************media query for tablet devices *******************/
-    @media only screen and (min-width:720px) and (max-width:1280px) {
+    /* @media only screen and (min-width:1024px) and (max-width:1440px) {
         .flex-main_wrapper {
             display: flex;
             align-content: center;
@@ -832,43 +772,24 @@ header('location: profile_settings_show.php');
             margin-left: 22rem;
 
         }
-    }
+    } */
 
-    /***************media query for large devices *******************/
-    @media screen and (min-width:1300px) and (max-width:1440px) {
-        .flex-main_wrapper {
-            display: flex;
-            align-content: center;
-            margin: 10px;
-            justify-content: center;
+    @media only screen and (min-width:1024px) and (max-width:1440px){
+        .flex-right {
+            margin-left: 330px;
         }
 
-        .heading {
-            margin-left: 18rem;
-        }
-
-        .popup .close {
-            right: 20px;
-        }
-
-        .flex-left {
+        .addBtn {
             margin-left: 4rem;
         }
 
-        .center-flex {
-            margin-top: 150px;
+        .sharebutton {
+            margin-left: 3rem;
         }
 
-        .modal-content {
-            margin-left: 28rem;
-        }
-
-        .modal-img {
-            margin-left: 28rem;
-        }
     }
 
-    @media screen and (min-width:1800px) {
+    @media screen and (min-width:1600px) {
         .flex-main_wrapper {
             display: flex;
             align-content: center;
@@ -909,20 +830,20 @@ header('location: profile_settings_show.php');
                 <div class="flex-main_wrapper">
                     <div class="input-sec d-flex flex-lg-row align-center justify-content-center" style="gap:3rem">
                         <div class="flex-left" id="flexleft" style="font-size:18px">
-                            <h4><span>User ID</span><br> <input type="text" name="dietitianuserID"
+                            <h4><span>User ID</span><br> <input type="text" name="dietitianuserID"  class="leftinput"
                                     value="<?php echo $dietitianuserID; ?>" required style="color: #AEAEAE;" />
                             </h4>
                             <br>
 
-                            <h4><span>Name</span><br><input type="text" name="name" value="<?php echo $name; ?>"
+                            <h4><span>Name</span><br><input type="text" name="name"  class="leftinput" value="<?php echo $name; ?>"
                                     required style="color: #AEAEAE;" /></h4>
                             <br>
 
-                            <h4><span>Email</span><br> <input type="email" name="email" value="<?php echo $email; ?>"
+                            <h4><span>Email</span><br> <input type="email" name="email"  class="leftinput" value="<?php echo $email; ?>"
                                     required style="color: #AEAEAE;" /></h4>
                             <br>
 
-                            <h4><span>Mobile No</span><br> <input type="text" name="mobile"
+                            <h4><span>Mobile No</span><br> <input type="text" name="mobile"  class="leftinput"
                                     value="<?php echo $mobile; ?>" required style="color: #AEAEAE;" /></h4>
                             <br>
 
@@ -935,7 +856,7 @@ header('location: profile_settings_show.php');
                                     <option value="phd">PhD</option>
                                 </select>
                                 <?php } else { ?>
-                                <input type="text" name="qualification" value="<?php echo $qualification; ?>" required
+                                <input type="text"  class="leftinput" name="qualification" value="<?php echo $qualification; ?>" required
                                     style="color: #AEAEAE;">
                                 <?php } ?>
                             </h4>
