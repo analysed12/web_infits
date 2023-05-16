@@ -10,6 +10,10 @@ include('navbar.php');
     <title>Infits | My Plans</title>
     <?php require('constant/head.php'); ?>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
     html::-webkit-scrollbar {
         width: 0.5rem;
@@ -88,7 +92,7 @@ include('navbar.php');
     }
 
     .card-middle {
-        padding: 1rem;
+        padding-left: 1rem;
         color: #919191!important;
         font-weight:400!important;
     }
@@ -202,17 +206,15 @@ include('navbar.php');
         .card{
             width:90%;
         }
-        body{
-            margin-left: 10%;
-        }
 
     }
     @media screen and (max-width: 720px) {
-        .search-form {
-            width: 300px !important;
-        }
+       
         .card-body{
         margin-top:-60px;
+    }
+    .col-6{
+        margin-top:2rem !important;
     }
     }
     .card-body{
@@ -221,8 +223,23 @@ include('navbar.php');
     .col-6{
         max-width:100%;
         flex:50 50 50%;
-        margin:auto;
+        
     }
+    .planBtn1 {
+        
+        width: auto;
+        
+        margin-right: 30px;
+        
+    }
+
+    .planBtn2 {
+        
+        width: auto;
+       
+
+    }
+    
     </style>
     <script>
     $(document).ready(function() {
@@ -234,10 +251,10 @@ include('navbar.php');
 <body>
 
     <div class="row" style="padding:1rem 0rem 1rem 1rem;">
-        <div class="col-6 " style="font-weight:400;font-size:40px;letter-spacing:2px;">All Diet Plans</div>
+        <div class="col-6 " style="font-weight:400;font-size:40px;">All Diet Plans</div>
         <div class="col-6" style="text-align:right">
-            <div class="card-body" >
-                <form method="POST" class="search-form form-inline" style="width:400px;background: #FFFFFF;box-shadow: 0.6px 0.6px 2px 1px #ccc;
+            <div class="card-body" style="padding:0" >
+                <form method="POST" class="search-form form-inline" style="width:350px;background: #FFFFFF;box-shadow: 0.6px 0.6px 2px 1px #ccc;
     border-radius: 0.6rem;position:relative;">
                     <input type="text" placeholder="Search Plan" class="search-box form-control w-75" id="search"
                         name="search" style="color: #667080;font-weight:400!important;font-size:20px;margin-left:30px;letter-spacing:1.5px;">
@@ -298,7 +315,7 @@ if(isset($_POST['search-btn']))
                                     </div>
                                     <div class="w-100"></div>
                                     <?php
-                                            $mark=explode(',', $row1['tags']);
+                                            $mark=explode(',', $row1['tags']);//what will do here
                                             foreach($mark as $out) {
                                                echo '<div class="tag-element" style="width:auto; font-weight:400!important;font-size:20px;">'.$out.'</div>';
                                             }
@@ -315,7 +332,7 @@ if(isset($_POST['search-btn']))
                                 <div class="row" >FEATURES</div>
                                 <div class="row">
                                     <?php
-                                            $mark=explode(',', $row1['features']);
+                                            $mark=explode(',', $row1['features']);//what will do here
                                             foreach($mark as $out) {
                                               
                                                 echo '<div style="display:inline-block;width:auto; margin-right:0.2px;"><i style="color:black;" class="fa-regular fa-circle-check"></i></div>';
@@ -336,7 +353,6 @@ if(isset($_POST['search-btn']))
             }
           }
 
-    
   }
 }
 else{                       
@@ -373,7 +389,7 @@ else{
                                         </div>
                                         <div class="w-100"></div>
                                         <?php
-                                            $mark=explode(',', $row['tags']);
+                                            $mark=explode(',', $row['tags']);//what will do here
                                             foreach($mark as $out) {
                                                echo '<div class="tag-element" style="width:auto;">'.$out.'</div>';
                                             }
@@ -388,23 +404,21 @@ else{
                                 <div class="col">
                                     <div class="row">FEATURES</div>
                                     <?php
-                                            $mark=explode(',', $row['features']);
+                                            $mark=explode(',', $row['features']);//what will do here
                                             foreach($mark as $out) {
-
-                                        
                                                 echo '<div style="display:inline-block;width:auto;margin-right:5px; "><i style="color:black;" class="fa-regular fa-circle-check"></i></div>';
                                                 echo '<div style="display:inline-block;width:auto; margin-right:20px;font-style:normal; font-size:20px;font-weight:400!important;letter-spacing:0.9px;">'.$out.'</div>';
-                                          
                                             
                                             }
                                             ?>
-                                 
                                 </div>
                             </div>
                             <div class="" style="display:flex; align-items:center;justify-content:center; ">
-                                <a class="planBtn1" href="update_client_plan.php?plan_id=<?php echo $row['plan_id'] ?>">Edit
+                            
+                                <a class="planBtn1" href="update_client_plan.php?plan_id=<?php echo $row['plan_id'] ?>&pev=<?= $_GET['pev']."&client_id=".$_GET['client_id']?>">Edit
                                     Plan</a>
-                                <a class="planBtn2" href="<?=$_SERVER['HTTP_REFERER']?>&plan_id=<?=$row['plan_id'] ?>">Choose Plan</a>
+                                    
+                                <a class="planBtn2" href="<?php if(isset($_GET['pev'])){echo $_GET['pev'].".php?client_id=".$_GET['client_id']."&plan_id={$row['plan_id']}";}?>">Choose Plan</a>
                             </div>
                         </form>
                     </div>
@@ -430,9 +444,11 @@ else{
                     </div>
                 </div>
             </div>
-            <?php require('constant/scripts.php'); ?>
+        <a class="butt" href="create_plan.php" style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;display:flex;justify-content:center;align-items:center;">+</a>
+            
+           
 </body>
-
+<?php require('constant/scripts.php'); ?>
 <script>
 function fill(Value) {
     $('#search').val(Value);

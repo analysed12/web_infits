@@ -49,7 +49,6 @@ while ($row = mysqli_fetch_array($result)) {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-
     </head>
     <style>
         ::placeholder {
@@ -98,7 +97,6 @@ while ($row = mysqli_fetch_array($result)) {
             color: #7282FB;
             width: 197px;
             height: 52px;
-            /* padding: 10px; */
             background: #ffffff;
             border: 2px solid #7282fb;
             border-radius: 10px;
@@ -111,7 +109,6 @@ while ($row = mysqli_fetch_array($result)) {
             height: 52px;
             background-color: #6883FB;
             color: white;
-            /* padding: 10px; */
             border-radius: 10px;
             font-size: 25px;
         }
@@ -124,7 +121,6 @@ while ($row = mysqli_fetch_array($result)) {
             display: flex;
             align-items: center;
             width: 100% !important;
-            /* border: 2px solid red; */
             flex-direction: column;
             margin-bottom: 4rem;
         }
@@ -218,8 +214,7 @@ while ($row = mysqli_fetch_array($result)) {
 
     <body>
         <div id="page">
-
-
+            
             <div id="content">
 
                 <div class="add-client-area">
@@ -320,7 +315,7 @@ while ($row = mysqli_fetch_array($result)) {
                                         <input hidden readonly name="plan" value="<?php if(isset($_GET['plan_id'])){echo $newPlanDetails['plan_id'];}else{ echo $row1['plan_id']; } ?>" >
 
                                         <input readonly type="text" name="" value="<?php if(isset($_GET['plan_id'])){echo $newPlanDetails['name'];}else{ echo $row1['name']; } ?>" class="input-tag" style="width:50% !important; margin-right:10%;" id="">
-                                        <a href="select_client_plan.php?client_id=<?php echo $client_id ?>" class=""
+                                        <a href="select_client_plan.php?client_id=<?php echo $client_id ?>&pev=update_client_profile" class=""
                                             style="display:flex;justify-content: center;align-items: center; width:40% !important;height:40px; background: #FFFFFF;border: 1px solid #6883FB;color: #6883FB; text-decoration:none ;border-radius: 8px;">Select</a>
                                     </div>
                                 </div>
@@ -342,13 +337,12 @@ while ($row = mysqli_fetch_array($result)) {
 } ?>
                 </form>
             </div>
+            <?php require('constant/scripts.php'); ?>
             <script>
                 function gender() {
                     document.getElementById('female').style.cssText = 'background-color:red; color:white;';
                 }
             </script>
-            <?php require('constant/scripts.php'); ?>
-
 </body>
 
 </html>

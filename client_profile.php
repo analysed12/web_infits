@@ -13,7 +13,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+        
 </head>
 <style>
     ::placeholder {
@@ -23,8 +23,8 @@
         /* Firefox */
 }
 
+   
 body {
-        /* height: 100vh; */
     overflow: auto;
     font-family: 'NATS', sans-serif;
         font-weight: 400;
@@ -139,7 +139,8 @@ body {
 
 <body>
     <div id="page">
-    
+       
+
         <div id="content">
 
             <div class="add-client-area">
