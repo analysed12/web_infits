@@ -719,61 +719,6 @@ header('location: profile_settings_show.php');
             Font size: 20.42px;
         }
     }
-
-    /***************media query for tablet devices *******************/
-    /* @media only screen and (min-width:1024px) and (max-width:1440px) {
-        .flex-main_wrapper {
-            display: flex;
-            align-content: center;
-            justify-content: center;
-            margin: 15px;
-        }
-
-
-        .popup {
-            margin-left: 400px;
-        }
-
-        .popup .close {
-            right: 20px;
-        }
-
-        .heading {
-            margin-left: 18rem;
-        }
-
-        .flex-right {
-            margin-left: 330px;
-        }
-
-        .flex-left {
-            margin-left: 4rem;
-        }
-
-        .center-flex {
-            display: flex;
-            margin-top: 50px;
-            width: 100%;
-        }
-
-        .addBtn {
-            margin-left: 4rem;
-        }
-
-        .sharebutton {
-            margin-left: 3rem;
-        }
-
-        .modal-content {
-            margin-left: 24rem;
-        }
-
-        .modal-img {
-            margin-left: 22rem;
-
-        }
-    } */
-
     @media only screen and (min-width:1024px) and (max-width:1440px){
         .flex-right {
             margin-left: 330px;
