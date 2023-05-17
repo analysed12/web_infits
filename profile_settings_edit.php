@@ -102,7 +102,7 @@ header('location: profile_settings_show.php');
     body {
         font-family: 'NATS', sans-serif;
         font-weight: 400;
-        padding-bottom: 2rem;
+      
     }
 
     input,

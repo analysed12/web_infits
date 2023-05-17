@@ -53,7 +53,7 @@ if ($result->num_rows > 0) {
         body {
             font-family: 'NATS', sans-serif;
             font-weight: 400;
-            padding-bottom: 2rem;
+            
         }
         input,
         input[type=file] {
