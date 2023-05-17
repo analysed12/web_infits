@@ -13,7 +13,7 @@ $name = explode(" ", $row['dietitianuserID']);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings | Infits</title>
-</head>
+    <?php require('constant/head.php');?>
 
 <style>
     body {
@@ -301,6 +301,7 @@ border-radius: 10px;
         position: relative;
     }
 </style>
+>
 
 
 
