@@ -13,7 +13,7 @@ $name = explode(" ", $row['dietitianuserID']);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings | Infits</title>
-</head>
+    <?php require('constant/head.php');?>
 
 <style>
     body {
@@ -255,7 +255,7 @@ border-radius: 10px;
 
     .mob_wrapper1 {
         margin: 10px;
-        margin-left: 20px;
+        
         display: flex;
 
         width: 370px;
@@ -280,8 +280,9 @@ border-radius: 10px;
 
         .mob_wrapper1 {
 
-            margin: 0.5rem;
+           
             display: flex;
+            align-items: center;
 
 
             width: auto !important;
@@ -300,6 +301,7 @@ border-radius: 10px;
         position: relative;
     }
 </style>
+>
 
 
 
@@ -324,17 +326,6 @@ border-radius: 10px;
                             <p
                                 style="text-align:center !important;font-weight: 400;color:black;font-size: 25px;margin-top:3rem">
                                 My Profile</p>
-                        </div>
-                    </li>
-                </a>
-                <a href="#">
-                    <li>
-                        <div class="box img-2">
-                            <img src="<?=$DEFAULT_PATH?>assets/icons/people.svg" alt="">
-                            <p
-                                style="text-align:center !important;font-weight: 400;color:black;font-size: 25px;margin-top:3rem">
-                                Referral Code</p>
-
                         </div>
                     </li>
                 </a>
@@ -388,26 +379,33 @@ border-radius: 10px;
         </div>
 
 
-        <div class="mob_wrapper1">
-            <img src="<?=$DEFAULT_PATH?>assets/icons/profile.svg" alt="">
-            <p style="margin-top:2px;font-size:28px;margin-left:15px;font-weight:500">Referral Code</p>
-        </div>
-        <div class="mob_wrapper1">
-            <img src="<?=$DEFAULT_PATH?>assets/icons/bell.svg" alt="">
-            <p style="margin-top:2px;font-size:28px;margin-left:15px;font-weight:500">Notifications</p>
-        </div>
-        <div class="mob_wrapper1">
+       <a href="profile_settings_show.php" style="color:black">
+            <div class="mob_wrapper1">
+                    <img src="<?=$DEFAULT_PATH?>assets/icons/profile.svg" alt="">
+                    <p style="margin-top:2px;font-size:28px;margin-left:15px;font-weight:500">My Profile</p>
+                </div> 
+       </a>
+       <a href="abaout_us.php" style="color:black">
+       <div class="mob_wrapper1">
             <img src="<?=$DEFAULT_PATH?>assets/icons/info.svg" alt="">
             <p style="margin-top:2px;font-size:28px;margin-left:15px;font-weight:500">About Us</p>
-        </div>
-        <div class="mob_wrapper1">
+        </div> 
+       </a>
+       <a href="refer_friend.php" style="color:black">
+       <div class="mob_wrapper1">
             <img src="<?=$DEFAULT_PATH?>assets/icons/people.svg" alt="">
             <p style="margin-top:2px;font-size:28px;margin-left:15px;font-weight:500">Refer to friends</p>
         </div>
-        <div class="mob_wrapper1">
-            <img src="<?=$DEFAULT_PATH?>assets/icons/people.svg" alt="">
-            <p style="margin-top:2px;font-size:28px;margin-left:15px;font-weight:500">Referral Code</p>
+       </a>
+       <a href="notification.php" style="color:black">
+       <div class="mob_wrapper1">
+            <img src="<?=$DEFAULT_PATH?>assets/icons/bell.svg" alt="">
+            <p style="margin-top:2px;font-size:28px;margin-left:15px;font-weight:500">Notifications</p>
         </div>
+       </a>
+        
+        
+        
         <a style="bottom:-70px" href="logout.php" class="logout">Logout</a>
     </div>
 
