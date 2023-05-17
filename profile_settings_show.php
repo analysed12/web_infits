@@ -46,10 +46,8 @@ if ($result->num_rows > 0) {
     
     <style>
         ::placeholder {
-            /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: #BBBBBB;
             opacity: 1;
-            /* Firefox */
         }
 
         body {
@@ -57,15 +55,13 @@ if ($result->num_rows > 0) {
             font-weight: 400;
             padding-bottom: 2rem;
         }
-
-
         input,
         input[type=file] {
             background: #FFFFFF;
             box-shadow: 0px 0.7px 5px rgba(0, 0, 0, 0.25);
             border-radius: 10px;
             border: none;
-            width: 100%;
+            /* width: 100%; */
             padding: 8px 16px;
             gap: 8px;
         }
@@ -75,7 +71,7 @@ if ($result->num_rows > 0) {
             box-shadow: 0px 0.7px 5px rgba(0, 0, 0, 0.25);
             border: none;
             border-radius: 4px;
-            width: 100%;
+            /* width: 100%; */
             padding: 8px 16px;
             gap: 8px;
         }
@@ -88,7 +84,7 @@ if ($result->num_rows > 0) {
             border-radius: 10px;
             text-decoration: none;
             margin: 4px 2px;
-            width: auto;
+            /* width: auto; */
         }
 
         /* Shared */
@@ -317,14 +313,15 @@ if ($result->num_rows > 0) {
 
 
         /***************media query for mobile *******************/
-        @media screen and (max-width: 720px) {
-            
+        
+
+
+        @media screen and (max-width: 1000px) {
             .input-sec {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
             }
-
             .popup {
                 margin-left: 0rem;
             }
@@ -338,11 +335,10 @@ if ($result->num_rows > 0) {
             .heading {
                 position: relative;
                 right: 2rem;
-                width: 100%;   
             }
 
             .leftinput {
-                width: 90%!important;
+                width: 100%!important;
             }
 
             .flex-left {
@@ -357,11 +353,8 @@ if ($result->num_rows > 0) {
             }
 
             .flex-right{
-                margin-left: 3rem;
-            }
-
-            .flex-main_wrapper {
-                width: 100%;
+                margin-left: 2rem;
+                
             }
 
             .flex-main {
@@ -373,31 +366,24 @@ if ($result->num_rows > 0) {
                 flex-direction: column;
                 align-items: center;
                 gap: 1rem;
-                margin-left: 0;
                 width: 100%;
+                margin-left:0;
             }
 
             .addBtn {
                 width: 200px !important;
-                margin-right: 1rem;
+                margin-right: 0.5rem;
             }
 
             .sharebutton {
                 width: 200px !important;
                 margin-left: 0;
-                margin-right: 1rem;
+                margin-right: 0.5rem;
             }
         }
 
-        /***************media query for large devices *******************/
-        @media only screen and (min-width:720px) and (max-width:1280px) {
-            .flex-main_wrapper {
-                display: flex;
-                align-content: center;
-                justify-content: center;
-                margin: 15px;
-            }
-
+        /* **************media query for large devices *******************/
+        @media only screen and (min-width:1024px) and (max-width:1440px) {
 
             .popup {
                 margin-left: 400px;
@@ -407,22 +393,8 @@ if ($result->num_rows > 0) {
                 right: 20px;
             }
 
-            .heading {
-                margin-left: 4rem;
-            }
-
             .flex-right {
                 margin-left: 330px;
-            }
-
-            .flex-left {
-                margin-left: 4rem;
-            }
-
-            .center-flex {
-                display: flex;
-                margin-top: 50px;
-                width: 100%;
             }
 
             .addBtn {
@@ -441,90 +413,8 @@ if ($result->num_rows > 0) {
                 margin-left: 22rem;
                 
             }
-        }
-        
-        
-        @media screen and (min-width:1300px) and (max-width:1440px){
-            .flex-main_wrapper {
-                display: flex;
-                align-content: center;
-                margin:10px;
-                justify-content: center;
-            }
-
-            .heading {
-                position: relative;
-                left: 6rem;
-                width: 100%;   
-            }
-
-            .center-flex{
-                margin-top: 120px;
-            }
-
-            .popup .close{
-                right: 20px;
-            }
-
-            .addBtn {
-                margin-left: 40px;
-            }
-
-            .flex-left {
-                width: 90%;
-                margin-left: 6rem;
-            }
-
-            .flex-middle {  
-                width: 90%;
-                margin-right: 2rem;
-            }
-    }
-
-    @media screen and (min-width:1800px){
-            .flex-main_wrapper {
-                display: flex;
-                align-content: center;
-                margin:10px;
-                justify-content: center;
-            }
-
-            .heading {
-                position: relative;
-                left: 6rem;
-                width: 100%;   
-            }
-
-            .popup .close{
-                right: 20px;
-            }
-
-            .center-flex{
-                margin-top: 120px;
-            }
-
-
-            .addBtn {
-                width: 330px !important;
-                margin-left: 30px;
-            }
-
-            .sharebutton {
-                width: 330px !important;
-            }
-
-            .flex-left {
-                width: 90%;
-                margin-left: 6rem;
-            }
-
-            .flex-middle {  
-                width: 90%;
-                margin-right: 2rem;
-            }
-    }
-    
-    </style>
+        } 
+</style>
 </head>
 <body>
     <div id="content">
@@ -673,7 +563,7 @@ if ($result->num_rows > 0) {
 
             </div>
 
-            <div class="center-flex col-lg-10 col-sm-12 offset-lg-2 col-md-9 offset-md-3 col-xl-7 offset-xl-2"> <br>
+            <div class="center-flex  col-lg-10 col-sm-12 offset-lg-2 col-md-9 offset-md-3 col-xl-7 offset-xl-2"> <br>
                 <br>
                 <a id="addBtn" href="profile_settings_edit.php" style="text-decoration: none;">
                     <div class="addBtn">
@@ -691,7 +581,6 @@ if ($result->num_rows > 0) {
             <br>
         </form>
     </div>
-
 
     <!-------------------------------------POPUPS-------------------------------------------------->
     <div id="popup1" class="overlay">
