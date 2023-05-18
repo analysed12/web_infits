@@ -1,20 +1,15 @@
 <?php 
 
-# server name
-$sName = "localhost";
-# user name
-$uName = "root";
-# password
-$pass = "";
+$HOSTNAME = "localhost";
+$USERNAME = "root";
+$PASSWORD = "";
+$DBNAME = "infits";
 
-# database name
-$db_name = "infits";
-$conn1 = mysqli_connect($sName, $uName, $pass, $db_name);
+$conn1 = mysqli_connect($HOSTNAME, $USERNAME, $PASSWORD, $DBNAME);
 
 #creating database connection
 try {
-    $conn = new PDO("mysql:host=$sName;dbname=$db_name", 
-                    $uName, $pass);
+    $conn = new PDO("mysql:host=$HOSTNAME;dbname=$DBNAME", $USERNAME, $PASSWORD);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
    
 }catch(PDOException $e){
