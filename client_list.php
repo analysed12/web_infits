@@ -9,7 +9,7 @@ if (isset($_SESSION['dietitianuserID'])) {
         header('Location:clientlist.php');
     }
 }
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if (isset($_POST['clientList'])) {
     $clients = json_decode($_POST['clientList'], true);
     if (is_array($clients)) {
         foreach ($clients as $clientID) {
@@ -532,7 +532,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
 
         <div class="clients_container2">
-            <a href="?active-btn" class="button-top <?php if(isset($_GET['active-btn'])){echo 'active';} ?> active-button text-dark" name="active-btn">Active</a>
+            <a href="?active-btn" class="button-top <?php if(!isset($_GET['pending-btn'])){echo 'active';} ?> active-button text-dark" name="active-btn">Active</a>
             <a href="?pending-btn" class="button-top <?php if(isset($_GET['pending-btn'])){echo 'active';} ?> pending-btn text-dark" name="pending-btn" style="margin-left:2rem">Pending</a>
         </div>
         <br><br>
