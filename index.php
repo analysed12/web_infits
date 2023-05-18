@@ -10,7 +10,7 @@ if(isset($_SESSION['dietitianuserID'])){
     $result = $conn->query($sql);
     $req= $conn->query($q);
     if(mysqli_num_rows($result)<1 && mysqli_num_rows($req)<1){
-        header('Location:upcomingevents.php');
+        header('Location:index_default.php');
     }
     
     # database connection file
