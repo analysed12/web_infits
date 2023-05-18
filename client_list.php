@@ -13,10 +13,6 @@ if (isset($_POST['clientList'])) {
     $clients = json_decode($_POST['clientList'], true);
     if (is_array($clients)) {
         foreach ($clients as $clientID) {
-
-            // Make User non active when dietition removed user 
-            // $sql1 = "DELETE FROM dietchart WHERE client_id = '$clientID'";
-            // $sql = "DELETE FROM addclient WHERE client_id = '$clientID'";
             $query = "UPDATE addclient set status = 0 where client_id = '$clientID'";
             if ($conn) {
                 $conn->query($query);
@@ -54,7 +50,6 @@ if (isset($_POST['clientList'])) {
 
     .clients_container {
         display: flex;
-        /* gap: 18rem; */
     }
 
     .clients_operations {
@@ -131,9 +126,6 @@ if (isset($_POST['clientList'])) {
         font-size: 25px;
     }
 
-    /* .clients_container3 {
-    display: none;
-} */
 
     #active {
         border: none;
@@ -201,9 +193,7 @@ if (isset($_POST['clientList'])) {
         width: 70%;
         margin: 0 auto;
         margin-bottom: 1rem;
-        /* background-color:rgba(0, 0, 0, 0.1); */
         border-radius: 10px;
-        /* backdrop-filter: blur(10px); */
         display: none;
         transition: all 0.4 ease-in-out !important;
     }
@@ -219,9 +209,7 @@ if (isset($_POST['clientList'])) {
         width: 70%;
         margin: 0 auto;
         margin-bottom: 1rem;
-        /* background-color:rgba(0, 0, 0, 0.1); */
         border-radius: 10px;
-        /* backdrop-filter: blur(10px); */
         display: none;
         transition: all 0.4 ease-in-out !important;
     }
@@ -237,9 +225,7 @@ if (isset($_POST['clientList'])) {
         width: 70%;
         margin: 0 auto;
         margin-bottom: 1rem;
-        /* background-color:rgba(0, 0, 0, 0.1); */
         border-radius: 10px;
-        /* backdrop-filter: blur(10px); */
         display: none;
         transition: all 0.4 ease-in-out !important;
     }
@@ -383,7 +369,6 @@ if (isset($_POST['clientList'])) {
 
         #add_set_client {
             margin-left: 0% !important;
-
         }
 
         .modal-content {
@@ -392,7 +377,6 @@ if (isset($_POST['clientList'])) {
         }
 
         .add_set {
-            /* margin-bottom:1rem; */
             font-size: 25px;
             font-weight: 400;
         }
@@ -444,24 +428,17 @@ if (isset($_POST['clientList'])) {
 
     .client-item {
         padding: 30px 10px;
-        /* border: 1px solid grey; */
-        /* text-align: center; */
         margin: 5px;
         width: 150px;
         flex-basis: 300px;
         background: #FAFAFA;
-        /* border: 1px solid #D9D9D9; */
-        /* box-shadow: 0px 10px 15px rgba(136, 136, 136, 0.05); */
         border-radius: 15px;
         position: relative;
-
-
     }
 
     .client-item:hover {
         border: 1px solid #D9D9D9;
         box-shadow: 0px 10px 15px rgba(136, 136, 136, 0.05);
-
     }
 
     .button-top {
@@ -562,11 +539,7 @@ if (isset($_POST['clientList'])) {
 
                         $plan_name = $row1['name'];
                         $plan_duration = $months . " Month";
-                        // echo $months;
-            
                         if (mysqli_num_rows($result1) > 0) {
-                            // $name_of_plan = $row1["name"];
-            
                             echo "<div class='client-item'id='card' >";
                             echo "<div class='profile1' style='float:left; margin-right:10px;'><img src='{$DEFAULT_PATH}assets/images/client_profile.svg'></div>";
                             echo "<div class='profile2'>";
