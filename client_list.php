@@ -450,6 +450,7 @@ if (isset($_POST['clientList'])) {
     .button-top:focus {
         border-bottom: 4px solid #4B9AFB;
     }
+
     .button-top.active {
         border-bottom: 4px solid #4B9AFB;
     }
@@ -487,7 +488,8 @@ if (isset($_POST['clientList'])) {
 
             <div class="clients_operations">
                 <div class="add_set_client" id="add_set_client">
-                    <div><button id="btn1"><span class="material-symbols-outlined">add</span></button> </div>
+                    <div><a href="add_client.php"><button id="btn1"><span
+                                    class="material-symbols-outlined">add</span></button></a></div>
                     <div class="add_set">
                         <span">Add Clients</span>
                     </div>
@@ -509,8 +511,16 @@ if (isset($_POST['clientList'])) {
         </div>
 
         <div class="clients_container2">
-            <a href="?active-btn" class="button-top <?php if(!isset($_GET['pending-btn'])){echo 'active';} ?> active-button text-dark" name="active-btn">Active</a>
-            <a href="?pending-btn" class="button-top <?php if(isset($_GET['pending-btn'])){echo 'active';} ?> pending-btn text-dark" name="pending-btn" style="margin-left:2rem">Pending</a>
+            <a href="?active-btn"
+                class="button-top <?php if (!isset($_GET['pending-btn'])) {
+                    echo 'active';
+                } ?> active-button text-dark"
+                name="active-btn">Active</a>
+            <a href="?pending-btn"
+                class="button-top <?php if (isset($_GET['pending-btn'])) {
+                    echo 'active';
+                } ?> pending-btn text-dark"
+                name="pending-btn" style="margin-left:2rem">Pending</a>
         </div>
         <br><br>
 
