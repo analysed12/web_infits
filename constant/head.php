@@ -5,6 +5,7 @@ require("vendor/autoload.php");
     <link rel="stylesheet" href="<?=$DEFAULT_PATH?>vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?=$DEFAULT_PATH?>vendor/components/font-awesome/css/all.min.css">
     <link rel="stylesheet" href="<?=$DEFAULT_PATH?>vendor/components/font-awesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
 <style>
     @font-face {
