@@ -57,13 +57,14 @@ if (isset($_GET['code'])):
             exit;
         } else {
             // if user not exists we will insert the user
-            $insert = mysqli_query($conn, "INSERT INTO `dietitian`(`dietitianuserID`,`name`,`email`,`p_p`) VALUES('$id','$full_name','$email','$profile_pic')");
-            echo $id;
-            echo $full_name;
-            echo $email;
-            echo $profile_pic;
+            $insert = mysqli_query($conn, "INSERT INTO `dietitian`(`dietitianuserID`,`name`,`email`,`p_p`,`socialLogin`) VALUES('$id','$full_name','$email','$profile_pic',1)");
             if ($insert) {
+                $fetch = mysqli_query($conn, "SELECT * FROM `dietitian` WHERE dietitianuserID = '$id'");
+                $dietitian_id = mysqli_fetch_assoc($fetch)['dietitian_id'];
                 $_SESSION['login_id'] = $id;
+                $_SESSION['dietitianuserID'] = $id;
+                $_SESSION['name'] = $full_name;
+                $_SESSION['dietitian_id'] = $dietitian_id;
                 header('Location: index.php');
                 exit;
             } else {

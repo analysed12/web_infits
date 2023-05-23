@@ -301,9 +301,6 @@ border-radius: 10px;
         position: relative;
     }
 </style>
->
-
-
 
 <body>
 
@@ -312,7 +309,7 @@ border-radius: 10px;
     <div class="webview">
         <div class="container">
             <div style="height:175px;" class="d-flex justify-content-center align-items-center gap-5">
-                <img src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" class="h-100 rounded" alt="...">
+                <img <?php if($row['socialLogin'] == 1){ echo "src='{$row['p_p']}'";  }else { ?> src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" <?php  } ?> class="h-100 rounded" alt="...">
                 <h3><?=$_SESSION['name']?></h3>
             </div>
         </div>
@@ -375,7 +372,7 @@ border-radius: 10px;
         <div class="profileimg">
             <img src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" id="pfp"
                 style=" display: block;margin-left: auto;margin-right: auto;width:30%">
-            <p style="font-weight:400;font-size:30px;text-align:center">John Wayne</p>
+            <p style="font-weight:400;font-size:30px;text-align:center"><?=$_SESSION['name']?></p>
         </div>
 
 
@@ -403,8 +400,6 @@ border-radius: 10px;
             <p style="margin-top:2px;font-size:28px;margin-left:15px;font-weight:500">Notifications</p>
         </div>
        </a>
-        
-        
         
         <a style="bottom:-70px" href="logout.php" class="logout">Logout</a>
     </div>
