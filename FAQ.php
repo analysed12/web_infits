@@ -199,7 +199,7 @@ include('navbar.php');
                   Lorem ipsum dolor sit amet, adipiscing elit.
                 </h1>
                 <span class="main__right__plus">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Plus Math.svg">
+                <img src="<?=$DEFAULT_PATH?>assets/images/plus.svg">
               
                 </span>
               </div>
@@ -219,7 +219,7 @@ include('navbar.php');
                   Lorem ipsum dolor sit amet, adipiscing elit.
                 </h1>
                 <span class="main__right__plus">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Plus Math.svg">
+                <img src="<?=$DEFAULT_PATH?>assets/images/plus.svg">
               
                 </span>
               </div>
@@ -228,7 +228,7 @@ include('navbar.php');
                   Lorem ipsum dolor sit amet, adipiscing elit.
                 </h1>
                 <span class="main__right__plus">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Plus Math.svg">
+                <img src="<?=$DEFAULT_PATH?>assets/images/plus.svg">
               
                 </span>
               </div>
