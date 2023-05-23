@@ -1,6 +1,6 @@
 <?php
 include('navbar.php');
-
+ob_start();
 if (isset($_SESSION['dietitianuserID'])) {
     $id = $_SESSION['dietitianuserID'];
     $sql = "SELECT * FROM addclient WHERE dietitianuserID='$id'";
@@ -9,6 +9,9 @@ if (isset($_SESSION['dietitianuserID'])) {
         header('Location:clientlist.php');
     }
 }
+$output = ob_end_clean();
+ob_end_flush();
+echo $output;
 if (isset($_POST['clientList'])) {
     $clients = json_decode($_POST['clientList'], true);
     if (is_array($clients)) {
