@@ -85,6 +85,9 @@ body {
 
 
 }
+.row{
+     --bs-gutter-x: 0 !important;
+}
 
 .text {
     position: absolute;
@@ -128,7 +131,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 100%;
+    
     gap: 20px;
 }
 
@@ -463,17 +466,30 @@ span.time {
 }
 
 @media screen and (max-width: 500px) {
-    #flexchange {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
+   
+    .code-box{
+        width:300px;
     }
 }
+@media screen and (max-width: 1000px){
+    .img111{
+        display:none;
+    }
+    .img112{
+        display:none;
+    }
 
+
+}
 @media screen and (max-width: 720px) {
     span .client-name {
         font-size: 20px !important;
         width: 130px !important;
+    }
+    #flexchange {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
 
     .img111 {
@@ -494,9 +510,7 @@ span.time {
         margin-left: 2rem;
     }
 
-    .code-box {
-        margin-left: 2rem;
-    }
+    
 
     .profilepopup {
         width: auto;
@@ -504,10 +518,6 @@ span.time {
 
     .inputbar1 {
         width: auto;
-    }
-
-    .vcode_footer {
-        margin-left: 2rem;
     }
 
     .tab-content {
