@@ -516,7 +516,7 @@ input[type="date"]::-webkit-datetime-edit-year-field {
     <div id="content">
         <p class="header" style="font-size:40px;margin-left:4rem;margin-top:2rem">Edit Plan</p>
         <?php
-        $id = $_GET['plan_id'];
+        $id = $_GET['id'];
         $sql = "SELECT * from `create_plan` where plan_id='$id'";
         $result = mysqli_query($conn,$sql);
 
