@@ -10,7 +10,7 @@ if(isset($_SESSION['dietitianuserID'])){
     $result = $conn->query($sql);
     $req= $conn->query($q);
     if(mysqli_num_rows($result)<1 && mysqli_num_rows($req)<1){
-        header('Location:upcomingevents.php');
+        header('Location:index_default.php');
     }
     
     # database connection file
@@ -36,10 +36,7 @@ else{
 date_default_timezone_set("Asia/Calcutta");
 $date = new DateTime();
 function fetchData($query){
-    $conn = new mysqli("localhost", "root", "", "infits");
-    if($conn->connect_error){
-        die("Connection failed :" . $conn->connect_error);
-    }
+    include('constant/config.php');
     $result = $conn->query($query) or die("Query Failed");
     $data = array();
     while($row = $result->fetch_assoc()){
