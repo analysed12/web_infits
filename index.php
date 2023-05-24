@@ -368,7 +368,6 @@ function fetchInformation($client_id){
 .symbols-container,
 .values-container{
     display: flex;
-    /* gap: 4rem; */
     font-weight: 400;
     justify-content: flex-end;
     width: 75%;
@@ -768,7 +767,7 @@ h3{
             </div>
             <div class="container2_rightside" >
                 <div class="addbutton" id="addbutton">
-                    <button id="addbtn" onclick ="window.location.href='calendar_of_events.php'">Add Event</button>
+                    <button id="addbtn" onclick ="window.location.href='appointments.php'">Add Event</button>
                     <button id="addbtn" onclick ="window.location.href='task_list.php'">Add Task</button>
                     <button id="addbtn" onclick ="window.location.href='add_client.php'" class="add">Add Client</button>
                 </div>

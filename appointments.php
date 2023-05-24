@@ -271,7 +271,7 @@ a:hover {
     padding-right: 0px;
 }
 .light {
-    border: 1px solid #CCCCCC;
+    
     border-radius: 15px;
     background: #FFFFFF;
     display: flex;
@@ -519,11 +519,7 @@ td.today {
                     font-size: 18px !important;
                     margin-top: 7px;
                 }
-@media screen and (min-width:720px) {
-    .flex-item {
-        border-left: 2px solid #E8ECF5;
-    }
-}
+
 
 @media screen and (max-width:720px) {
     .container-main {
@@ -663,7 +659,7 @@ td.today {
                                 <h3 style="display:inline-block;margin-left:0.4rem;margin-top:1.8rem;font-size:40px">
                                     Calendar</h3>
                                 <a href="createevent.php" class="event_btn" style="display:inline-block; float:right;background: #7A78FD;
-            border-radius: 7px;border: none; color: white; padding:10px;margin-top:2rem">+ Create Schedule</a>
+            border-radius: 7px;border: none; color: white; padding:10px;margin-top:2rem;text-decoration:none">+ Create Schedule</a>
                             </div>
                             <br>
                             <div id="calendar" style="height:15px !important"></div>

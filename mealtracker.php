@@ -1,12 +1,6 @@
 <?php
-// session_start();
-//error_reporting(0);
 include("navbar.php");
-// if(isset($_GET['client_id'])){
-//   $clientId = $_GET['client_id'];
-// }else{
-//   header('Location: client_list.php');
-//}
+
 ?>
 
 <!DOCTYPE html>
@@ -392,7 +386,7 @@ include("navbar.php");
                     <p class="card-food" style="margin-left:18px;"><?php echo $d['drecipe_name'] ?></p>
                 </div>
                 <div class="d-flex justify-content-between" style="align-items:center;">
-                    <h6 class="card-calorie"> <img src="./icons/calorie.svg" style="margin-left:18px;" alt="">
+                    <h6 class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" style="margin-left:18px;" alt="">
                         <?php echo $nutritional['Calories'] ?> kcal</h6>
                 </div>
                 <div class="date2">
@@ -449,7 +443,7 @@ include("navbar.php");
                     <p class="card-food" style="margin-left:18px;"><?php echo $d['drecipe_name'] ?></p>
                 </div>
                 <div class="d-flex justify-content-between" style="align-items:center;">
-                    <h6 class="card-calorie"> <img src="./icons/calorie.svg" style="margin-left:18px;" alt="">
+                    <h6 class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" style="margin-left:18px;" alt="">
                         <?php echo $nutritional['Calories'] ?> kcal</h6>
                 </div>
                 <div class="date2">
@@ -504,7 +498,7 @@ include("navbar.php");
                     <p class="card-food" style="margin-left:18px;"><?php echo $d['drecipe_name'] ?></p>
                 </div>
                 <div class="d-flex justify-content-between" style="align-items:center;">
-                    <h6 class="card-calorie"> <img src="./icons/calorie.svg" style="margin-left:18px;" alt="">
+                    <h6 class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" style="margin-left:18px;" alt="">
                         <?php echo $nutritional['Calories'] ?> kcal</h6>
                 </div>
                 <div class="date2">
@@ -559,7 +553,7 @@ include("navbar.php");
                     <p class="card-food" style="margin-left:18px;"><?php echo $d['drecipe_name'] ?></p>
                 </div>
                 <div class="d-flex justify-content-between" style="align-items:center;">
-                    <h6 class="card-calorie"> <img src="./icons/calorie.svg" style="margin-left:18px;" alt="">
+                    <h6 class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" style="margin-left:18px;" alt="">
                         <?php echo $nutritional['Calories'] ?> kcal</h6>
                 </div>
                 <div class="date2">
