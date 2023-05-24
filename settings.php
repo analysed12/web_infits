@@ -273,9 +273,6 @@ $name = explode(" ", $row['dietitianuserID']);
     }
 </style>
 
-
-
-
 <body>
 
     <br />
@@ -283,7 +280,7 @@ $name = explode(" ", $row['dietitianuserID']);
     <div class="webview">
         <div class="container">
             <div style="height:175px;" class="d-flex justify-content-center align-items-center gap-5">
-                <img src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" class="h-100 rounded" alt="...">
+                <img <?php if($row['socialLogin'] == 1){ echo "src='{$row['p_p']}'";  }else { ?> src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" <?php  } ?> class="h-100 rounded" alt="...">
                 <h3><?=$_SESSION['name']?></h3>
             </div>
         </div>
@@ -346,7 +343,7 @@ $name = explode(" ", $row['dietitianuserID']);
         <div class="profileimg">
             <img src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" id="pfp"
                 style=" display: block;margin-left: auto;margin-right: auto;width:30%">
-            <p style="font-weight:400;font-size:30px;text-align:center">John Wayne</p>
+            <p style="font-weight:400;font-size:30px;text-align:center"><?=$_SESSION['name']?></p>
         </div>
 
 

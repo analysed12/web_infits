@@ -1,11 +1,11 @@
 <?php
 if (isset($_POST['clientUserId'])) {
     header('Content-Type: application/json');
-    $c = new mysqli('localhost', 'root', '', 'infits');
+    include 'constant/config.php';
     $query = "SELECT * FROM client WHERE clientuserID = '{$_POST['clientUserId']}'";
     $query1 = "SELECT * FROM addclient WHERE clientuserID = '{$_POST['clientUserId']}'";
-    $result = $c->query($query);
-    $result1 = $c->query($query1);
+    $result = $conn->query($query);
+    $result1 = $conn->query($query1);
     $client = $result->fetch_assoc();
     $client1 = $result1->fetch_assoc();
     $responsee = json_encode($client1);
@@ -20,10 +20,15 @@ include 'navbar.php';
 if (isset($_SESSION['dietitianuserID'])) {
     $id = $_SESSION['dietitian_id'];
     $userid = $_SESSION['dietitianuserID'];
-    $verification = "987654321";
-
-
+    $sql = "SELECT * FROM dietitian WHERE dietitianuserID = '$userid'";
+    global $conn;
+    $result = $conn->query($sql);
+    $verification = $result->fetch_assoc()['verification_code'];
+    
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        global $conn;
+        // print_r($_POST); exit;
         $clientuserID = $_POST['clientuserID'];
         $name = $_POST['name'];
         $email = $_POST['email'];
@@ -33,15 +38,16 @@ if (isset($_SESSION['dietitianuserID'])) {
         $age = $_POST['age'];
         $about = $_POST['about'];
         $weight = $_POST['weight'];
-        $duaration = $_POST['duration'];
-        $plan = $_POST['plan'];
+        $plan = "-1";
         $location = $_POST['location'];
 
-        $sql = "INSERT INTO `addclient`(`dietitian_id`, `dietitianuserID`, `clientuserID`, `name`, `gender`, `email`, `phone`, `age`, `height`, `weight`, `about`, `plan_id`,`location`) VALUES ($id,'$userid','$clientuserID','$name','$gender','$email','$mobile',$age,$height,$weight,'$about',$plan, '$location')";
+        $sql = "INSERT INTO `addclient`(`dietitian_id`, `dietitianuserID`, `clientuserID`, `profile`, `p_p`, `name`, `gender`, `email`, `phone`, `age`, `height`, `weight`, `about`, `plan_id`, `status`, `client_code`, `location`) VALUES ('$id','$userid','$clientuserID','','','$name','$gender','$email','$mobile','$age','$height','$weight','$about','$plan','1','','$location')";
+
         mysqli_query($conn, $sql);
 
         $sql2 = "SELECT client_id FROM addclient WHERE clientuserID = '$clientuserID'";
         $result = mysqli_query($conn, $sql2);
+
         $client_id = mysqli_fetch_assoc($result)['client_id'];
         $sql3 = "UPDATE `client` SET `client_id`='$client_id',`plan`='',`dietitianuserID`='$userid',`verification`='1' WHERE `clientuserID`='$clientuserID'";
         mysqli_query($conn, $sql3);
@@ -152,8 +158,8 @@ body {
 
 }
 
-.bartab:active {
-    border-bottom: 3.59764px solid #9E5EF4;
+.tabActive {
+    border-bottom: 3.59764px solid #9E5EF4 !important;
 }
 
 .bartab:focus {
@@ -588,8 +594,8 @@ span.time {
             </div>
         </div>
         <div class="row tabs-title mt-3 mb-3 tabsss" style="margin-top:2rem !important">
-            <div id="verification" class="col-4 tab " tab="vcode">
-                <h3 class="text-center  bartab">Verification Code</h3>
+            <div id="verification" class="col-4 tab" tab="vcode">
+                <h3 class="text-center  bartab  tabActive">Verification Code</h3>
             </div>
             <div id="verified" class="col-4 tab" tab="vclients">
                 <h3 class="text-center  bartab">Verified Clients</h3>
@@ -605,104 +611,110 @@ span.time {
                 <div id='vclients' class='tab-content  client-card-container'>
                     <?php
                     $sql = "SELECT * FROM addclient WHERE dietitianuserID='$userid'";
-                    $result = mysqli_query($conn, $sql);
-                    // echo mysqli_num_rows($result);
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            ?>
-                    <div id="flexchange" class="client-card gap-1 gap-md-3 gap-lg-6 ">
-                        <div class="ccard-left gap-md-2 gap-lg-5">
-                            <img class="profile" src="<?= $DEFAULT_PATH ?>assets/images/client1.svg" alt="">
-                            <span class="client-name">
-                                <?php echo $row['name'] ?>
-                            </span>
-                            <button data-client-username="<?= $row['clientuserID'] ?>"
-                                data-client-dietitian="<?= $row['dietitianuserID'] ?>" type="button"
-                                class="btn btn_verified">Profile</button>
-                        </div>
-                        <div class="ccard-right gap-md-2 gap-lg-5">
-                            <span class="date">
-                                <?php echo $row['last_seen'] ?>
-                            </span>
-                            <div class="verified-client">
-                                <span>Verified!</span>
-                                <img src="<?= $DEFAULT_PATH ?>assets/images/Approval.svg" alt="">
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) { ?>
+                            <div id="flexchange" class="client-card gap-1 gap-md-3 gap-lg-6 ">
+                                <div class="ccard-left gap-md-2 gap-lg-5">
+                                    <img class="profile" src="<?= $DEFAULT_PATH ?>assets/images/client1.svg" alt="">
+                                    <span class="client-name">
+                                        <?php echo $row['name'] ?>
+                                    </span>
+                                    <button data-client-username="<?= $row['clientuserID'] ?>"
+                                        data-client-dietitian="<?= $row['dietitianuserID'] ?>" type="button"
+                                        class="btn btn_verified">Profile</button>
+                                </div>
+                                <div class="ccard-right gap-md-2 gap-lg-5">
+                                    <span class="date">
+                                        <?php echo $row['last_seen'] ?>
+                                    </span>
+                                    <div class="verified-client">
+                                        <span>Verified!</span>
+                                        <img src="<?= $DEFAULT_PATH ?>assets/images/Approval.svg" alt="">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
                     <?php
                         }
-                    }
+                    }else{ ?>
+                        <div id="flexchange" class="client-card gap-1 gap-md-3 gap-lg-6 ">
+                            <h2>No Verified Client Found</h2>
+                        </div>
+                     <?php }
                     ?>
                 </div>
-            </div>
+            
 
 
-            <!--------------pending verification---------------->
-            <div id='pclients' class='tab-content client-card-container'>
-                <?php
-                $sql = "SELECT * FROM client WHERE verification_code='$verification' and dietitianuserID!='$userid'";
-                $result = mysqli_query($conn, $sql);
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        ?>
-                <div id='flexchange' class='client-card gap-1 gap-md-3 gap-lg-6'>
-                    <div class='ccard-left gap-md-2 gap-lg-5'>
-                        <img class='profile' src='<?= $DEFAULT_PATH ?>assets/images/client1.svg' alt=''>
-                        <span class='client-name'>
-                            <?php echo $row['name'] ?>
-                        </span>
-                        <button data-client-username="<?= $row['clientuserID'] ?>" type='button'
-                            class='btn btn_pending'>Profile</button>
-                    </div>
-                    <div class='ccard-right gap-md-2 gap-lg-5'>
-                        <span class='date'>
-                            <?php echo $row['last_seen'] ?>
-                        </span>
-                        <div class='pending-client'>
-                            <span>pending!</span>
-                            <img src='<?= $DEFAULT_PATH ?>assets/images/pending-client.svg' alt=''>
+                <!--------------pending verification---------------->
+                <div id='pclients' class='tab-content client-card-container'>
+                    <?php
+                    $sql = "SELECT * FROM client WHERE verification_code='$verification' and dietitianuserID!='$userid'";
+                    $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) { ?>
+                                <div id='flexchange' class='client-card gap-1 gap-md-3 gap-lg-6'>
+                                    <div class='ccard-left gap-md-2 gap-lg-5'>
+                                        <img class='profile' src='<?= $DEFAULT_PATH ?>assets/images/client1.svg' alt=''>
+                                        <span class='client-name'>
+                                            <?php echo $row['name'] ?>
+                                        </span>
+                                        <button data-client-username="<?= $row['clientuserID'] ?>" type='button'
+                                            class='btn btn_pending'>Profile</button>
+                                    </div>
+                                    <div class='ccard-right gap-md-2 gap-lg-5'>
+                                        <span class='date'>
+                                            <?php echo $row['last_seen'] ?>
+                                        </span>
+                                        <div class='pending-client'>
+                                            <span>pending!</span>
+                                            <img src='<?= $DEFAULT_PATH ?>assets/images/pending-client.svg' alt=''>
+                                        </div>
+                                    </div>
+                                </div>
+                    <?php
+                        }
+                    }else{ ?>
+                        <div id="flexchange" class="client-card gap-1 gap-md-3 gap-lg-6 ">
+                            <h2>No Pending Client Found</h2>
                         </div>
-                    </div>
+                     <?php }
+                    ?>
                 </div>
-                <?php
-                    }
-                }
-                ?>
-            </div>
 
 
 
             <!----------verification code-------------------->
 
 
-            <div id="vcode" class="dietitian-code tab-content ">
-                <div style="display: flex;justify-content: center">
-                    <img class="img112" src="<?= $DEFAULT_PATH ?>assets/images/lilac user icon.svg"
-                        style="width:20%; right:15%;position: absolute">
-                    <div class="code-container">
-                        <div class="code-box">
-                            <h4>Your Verification Code</h4>
-                            <p class="vcode">
-                                <?php echo $verification; ?>
-                            </p>
-                            <p class="share-btn" style="display:flex;gap:1rem"> <img
-                                    src="<?= $DEFAULT_PATH ?>assets/images/shareeee.svg" alt="">Share
-                                Verification Code</p>
+                <div id="vcode" class="dietitian-code tab-content ">
+                    <div style="display: flex;justify-content: center">
+                        <img class="img112" src="<?= $DEFAULT_PATH ?>assets/images/lilac user icon.svg"
+                            style="width:20%; right:15%;position: absolute">
+                        <div class="code-container">
+                            <div class="code-box">
+                                <h4>Your Verification Code</h4>
+                                <p class="vcode">
+                                    <?php echo $verification; ?>
+                                </p>
+                                <p class="share-btn" style="display:flex;gap:1rem"> <img
+                                        src="<?= $DEFAULT_PATH ?>assets/images/shareeee.svg" alt="">Share
+                                    Verification Code</p>
+                            </div>
+                        </div>
+                        <img class="img111" src="<?= $DEFAULT_PATH ?>assets/images/lilac user icon (1).svg"
+                            style="width:18%;position:absolute;left:18%;bottom:10%">
+                    </div>
+                    <div class="vcode_footer" style="display:flex;gap:1rem;margin-top:3rem">
+                        <div><img src="<?= $DEFAULT_PATH ?>assets/images/vec_active_help.svg"></div>
+                        <div>
+                            <p style="font-size: 20px;">This verification code will help you connect with the clients. You
+                                can share the code with your clients so that
+                                they can verify the code and succesfully connect with you!</p>
                         </div>
                     </div>
-                    <img class="img111" src="<?= $DEFAULT_PATH ?>assets/images/lilac user icon (1).svg"
-                        style="width:18%;position:absolute;left:18%;bottom:10%">
-                </div>
-                <div class="vcode_footer" style="display:flex;gap:1rem;margin-top:3rem">
-                    <div><img src="<?= $DEFAULT_PATH ?>assets/images/vec_active_help.svg"></div>
-                    <div>
-                        <p style="font-size: 20px;">This verification code will help you connect with the clients. You
-                            can share the code with your clients so that
-                            they can verify the code and succesfully connect with you!</p>
-                    </div>
-                </div>
 
+                </div>
             </div>
 
             <!----------SHARE POPUP-------------------->
@@ -711,7 +723,8 @@ span.time {
                     <h4 style="text-align: center;" class="title">Share Via</h4>
                     <a class="close" href="add_client.php" style="top:15%;right:7%">&times;</a>
                     <div class="socials">
-                        <img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg" alt="">
+                        <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg" alt=""></a>
+                        
                         <img src="<?= $DEFAULT_PATH ?>assets/images/Twitter.svg">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/Facebook.svg">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn_Circled.svg">
@@ -746,7 +759,15 @@ span.time {
                 })
             });
             tab[0].click();
-
+            const allBars = document.querySelectorAll('.bartab');
+            allBars.forEach(element => {
+                element.addEventListener('click',function(){
+                    allBars.forEach(el=>{
+                        el.classList.remove('tabActive');
+                    });
+                    this.classList.add('tabActive');
+                })
+            });
             const shareBtn = document.querySelector('.share-btn');
             shareBtn.addEventListener('click', () => {
                 document.querySelector('.popup1').classList.toggle('d-flex');
@@ -757,7 +778,6 @@ span.time {
 
             pendingBtn.forEach(pBtn => {
                 pBtn.addEventListener('click', function() {
-                    console.log(this);
                     const pendingPopDiv = document.querySelector('.pendingPopForm');
                     const clientUserId = this.getAttribute('data-client-username');
                     $.ajax({
@@ -955,6 +975,7 @@ span.time {
             function closePopForm(popId) {
                 document.getElementById(popId).style.display = 'none';
             }
+            
             </script>
 </body>
 

@@ -403,7 +403,7 @@ a {
         <a id="client_list"
             class="sidenavlink nav-add_client nav-client_list nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
             href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg" class="nav-icon">Clients</a>
-        <a id="myplan" class="sidenavlink nav-myplan" href="myplan.php"><img
+        <a id="myplan" class="sidenavlink nav-myplan nav-create_plan nav-update_plan" href="myplan.php"><img
                 src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg" class="nav-icon">Diet Plans</a>
         <a id="payments" class="sidenavlink nav-payments" href="billingAndInvoices.php"><img
                 src="<?=$DEFAULT_PATH?>assets/images/payment.svg" class="nav-icon">Payments</a>

@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include('navbar.php');
 
 if (isset($_SESSION['dietitianuserID'])) {
@@ -9,6 +10,7 @@ if (isset($_SESSION['dietitianuserID'])) {
         header('Location:clientlist.php');
     }
 }
+
 if (isset($_POST['clientList'])) {
     $clients = json_decode($_POST['clientList'], true);
     if (is_array($clients)) {
@@ -20,6 +22,9 @@ if (isset($_POST['clientList'])) {
         }
     }
 }
+$output = ob_get_contents();
+ob_end_clean();
+echo $output;
 ?>
 <!DOCTYPE html>
 <html lang="en">
