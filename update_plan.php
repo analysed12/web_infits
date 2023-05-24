@@ -518,16 +518,16 @@ input[type="date"]::-webkit-datetime-edit-year-field {
         <?php
         $id = $_GET['plan_id'];
         $sql = "SELECT * from `create_plan` where plan_id='$id'";
-        $result = mysqli_query($conn,$sql);
+        $result = $conn->query($sql);
 
-        while($row = mysqli_fetch_array($result)){
+        while($row = $result->fetch_assoc()){
         ?>
         <div class="plan_form">
             <!-- Person image -->
             <div class="event-image">
                 <div class="ev-img" style="position:relative">
                     <div style="background: #7282FB;border-radius:100px;padding:0.5rem;margin-top:3rem;cursor:pointer;">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/Pencil.svg" alt="">
+                        <img src="<?=$DEFAULT_PATH?>assets/images/pencil.svg" alt="">
                     </div>
                     <img src="<?=$DEFAULT_PATH?>assets/images/fruit_salad.svg" class="edit-plan-img" style="position:absolute;margin-top:2rem; z-index:-2; width: 126px;
                     height: 133px;">

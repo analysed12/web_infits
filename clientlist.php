@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client List</title>
     <?php require('constant/head.php');?>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     
 </head>
 <style>
@@ -31,15 +29,6 @@
     margin-top:1.5rem;
     height:55px;
    }
-@font-face {
-    font-family: 'NATS';
-    src:url('font/NATS.ttf.woff') format('woff'),
-        url('font/NATS.ttf.svg#NATS') format('svg'),
-        url('font/NATS.ttf.eot'),
-        url('font/NATS.ttf.eot?#iefix') format('embedded-opentype'); 
-    font-weight: normal;
-    font-style: normal;
-}
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #BBBBBB;
   opacity: 1; /* Firefox */
@@ -416,7 +405,6 @@ img {
 </style>
 <body>
     <?php
-    error_reporting(0);
     include "navbar.php"
     ?>
 <div class="clients">
@@ -436,9 +424,9 @@ img {
                     <path d="M7.0448 16.1345V9.3051H0.202393V7.02863H7.0448V0.199219H9.3256V7.02863H16.168V9.3051H9.3256V16.1345H7.0448Z" fill="#9C74F5"/>
                     </svg>
                     </button> </div>
-                    <div class="add_set"> <span">Add Clients</span></div>
+                    <a class="add_set" href="add_client.php"> <span">Add Clients</span></a>
                 </div>
-                <div onclick="toast('Set Goals');" class="add_set_client">
+                <div class="add_set_client">
                     <div><button  id="btn1"><svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_9709_21946)">
                         <path d="M14.6048 3.36312H14.6038L16.2798 3.69812C16.3698 3.71612 16.4438 3.78212 16.4698 3.87112C16.4829 3.91435 16.4841 3.96034 16.4732 4.00418C16.4622 4.04803 16.4396 4.08809 16.4078 4.12012L15.0348 5.49412C14.8705 5.65809 14.6479 5.75016 14.4158 5.75012H13.2778L10.4178 8.61112C10.4723 8.81714 10.4824 9.03242 10.4472 9.24263C10.412 9.45283 10.3325 9.65313 10.2138 9.83018C10.0952 10.0072 9.94019 10.157 9.75914 10.2694C9.57809 10.3818 9.37516 10.4544 9.16386 10.4823C8.95257 10.5101 8.73776 10.4927 8.53375 10.431C8.32974 10.3693 8.14122 10.2649 7.98074 10.1246C7.82025 9.98441 7.6915 9.81158 7.60305 9.61767C7.51459 9.42377 7.46848 9.21324 7.46777 9.00012C7.46792 8.77001 7.52098 8.54302 7.62284 8.33668C7.7247 8.13034 7.87263 7.95019 8.05521 7.81013C8.23779 7.67008 8.45013 7.57388 8.67581 7.52897C8.9015 7.48406 9.13449 7.49164 9.35677 7.55112L12.2178 4.68912V3.55212C12.2178 3.32012 12.3098 3.09712 12.4738 2.93312L13.8478 1.55912C13.8798 1.52725 13.9199 1.50465 13.9637 1.49374C14.0076 1.48282 14.0535 1.48399 14.0968 1.49712C14.1858 1.52312 14.2518 1.59712 14.2698 1.68712L14.6048 3.36312Z" fill="#9C74F5"/>
@@ -455,7 +443,7 @@ img {
                     <div class="add_set"> <span>Set Goals</span></div>
                 </div>
 
-                <div onclick="toast('Set Reminders');" class="add_set_client">
+                <div class="add_set_client">
                     <div><button id="btn1"><svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M15.408 3.99334V8.54628H13.8875V3.99334M13.8875 10.0639H15.408V11.5816H13.8875M7.04504 0.199219C6.64177 0.199219 6.25502 0.359113 5.96986 0.643727C5.68471 0.928341 5.52451 1.31436 5.52451 1.71687C5.51917 1.79012 5.51917 1.86367 5.52451 1.93692C3.33494 2.58192 1.72317 4.61557 1.72317 7.02863V11.5816L0.202637 13.0992V13.858H13.8875V13.0992L12.3669 11.5816V7.02863C12.3669 4.61557 10.7551 2.58192 8.56558 1.93692C8.57091 1.86367 8.57091 1.79012 8.56558 1.71687C8.56558 1.31436 8.40538 0.928341 8.12022 0.643727C7.83507 0.359113 7.44831 0.199219 7.04504 0.199219ZM5.52451 14.6169C5.52451 15.0194 5.68471 15.4054 5.96986 15.69C6.25502 15.9746 6.64177 16.1345 7.04504 16.1345C7.44831 16.1345 7.83507 15.9746 8.12022 15.69C8.40538 15.4054 8.56558 15.0194 8.56558 14.6169H5.52451Z" fill="#9C74F5"/>
                     </svg></button>
