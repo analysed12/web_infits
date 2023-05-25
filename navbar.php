@@ -318,9 +318,7 @@ a {
     background: #FFFFFF;
     padding: 15px 20px;
     display: none;
-    /* transition: 0.3s ease-in-out; */
-    /* animation: slideDown 1s forwards; */
-    /* animation: slideUp 1s forwards; */
+   
 }
 
 @keyframes slideDown {
@@ -400,12 +398,12 @@ a {
                 src="<?=$DEFAULT_PATH?>assets/images/chat.svg" class="nav-icon">Messages</a>
         <a id="live" class="sidenavlink" href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg"
                 class="nav-icon">Live</a>
-        <a id="calendar_of_events" class="sidenavlink nav-calendar_of_events" href="calendar_of_events.php"><img
+        <a id="calendar_of_events" class="sidenavlink nav-calendar_of_events" href="appointments.php"><img
                 src="<?=$DEFAULT_PATH?>assets/images/calendar.svg" class="nav-icon">Appoinments</a>
         <a id="client_list"
             class="sidenavlink nav-add_client nav-client_list nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
             href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg" class="nav-icon">Clients</a>
-        <a id="myplan" class="sidenavlink nav-myplan" href="myplan.php"><img
+        <a id="myplan" class="sidenavlink nav-myplan nav-create_plan nav-update_plan" href="myplan.php"><img
                 src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg" class="nav-icon">Diet Plans</a>
         <a id="payments" class="sidenavlink nav-payments" href="billingAndInvoices.php"><img
                 src="<?=$DEFAULT_PATH?>assets/images/payment.svg" class="nav-icon">Payments</a>
@@ -481,7 +479,7 @@ a {
                 Dashboard</a>
             <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/chat.svg">&nbsp&nbsp Messages</a>
             <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg">&nbsp&nbsp Live</a>
-            <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/calendar.svg">&nbsp&nbsp Appoinments</a>
+            <a href="appointments.php"><img src="<?=$DEFAULT_PATH?>assets/images/calendar.svg">&nbsp&nbsp Appoinments</a>
             <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg">&nbsp&nbsp Clients</a>
             <a href="myplan.php"><img src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg">&nbsp&nbsp Diet Plans</a>
             <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/payment.svg">&nbsp&nbsp Payments</a>

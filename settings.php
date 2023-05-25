@@ -26,12 +26,12 @@ $name = explode(" ", $row['dietitianuserID']);
     }
 
 
-    /* new */
+  
     .container {
-        /* display: flex; */
+      
         justify-content: center;
         align-items: center;
-        /* height: 300px; */
+      
     }
 
     .section {
@@ -127,7 +127,7 @@ $name = explode(" ", $row['dietitianuserID']);
     .img-1 {
 
 
-        /* border: 1px solid #000000; */
+      
         color: #f3e7e3 !important;
         background-repeat: no-repeat;
         border-radius: 20px;
@@ -141,7 +141,7 @@ $name = explode(" ", $row['dietitianuserID']);
     .img-2 {
 
 
-        /* border: 1px solid #000000; */
+       
         color: #f3e7e3 !important;
         background-repeat: no-repeat;
         box-shadow: 2px 2px rgb(0, 0, 0)888;
@@ -152,8 +152,6 @@ $name = explode(" ", $row['dietitianuserID']);
 
     .img-3 {
 
-
-        /* border: 1px solid #000000; */
         color: #f3e7e3 !important;
         background-repeat: no-repeat;
         box-shadow: 2px 2px rgb(0, 0, 0)888;
@@ -164,7 +162,7 @@ $name = explode(" ", $row['dietitianuserID']);
     .img-4 {
 
 
-        /* border: 1px solid #000000; */
+       
         color: #f3e7e3 !important;
         background-repeat: no-repeat;
         box-shadow: 2px 2px rgb(0, 0, 0)888;
@@ -175,7 +173,7 @@ $name = explode(" ", $row['dietitianuserID']);
     .img-5 {
 
 
-        /* border: 1px solid #000000; */
+       
         color: #f3e7e3 !important;
         background-repeat: no-repeat;
         box-shadow: 2px 2px rgb(0, 0, 0)888;
@@ -186,7 +184,6 @@ $name = explode(" ", $row['dietitianuserID']);
     .img-6 {
 
 
-        /* border: 1px solid #000000; */
         color: #f3e7e3 !important;
         background-repeat: no-repeat;
         box-shadow: 2px 2px rgb(0, 0, 0)888;
@@ -194,15 +191,7 @@ $name = explode(" ", $row['dietitianuserID']);
         height: 171px;
     }
 
-    /* .info {
-     position: absolute;
-     bottom: 0px;
-    display: flex;
-    justify-content: center;
-    width: inherit;
-    height: inherit;
-    text-align: center;
-} */
+ 
 
     .info {
         position: absolute;
@@ -210,15 +199,7 @@ $name = explode(" ", $row['dietitianuserID']);
         text-align: center;
     }
 
-    /* .info h3 {
-    font-family: 'Pacifico', cursive; 
-    font-weight: 400;
-    color: black;
-    font-size: 42px;
-    margin: 0 30px;
-    padding: 100px 0 0 0;
-    line-height:1.5; 
-} */
+  
 
     .info p {
         color: rgb(9, 9, 9);
@@ -239,16 +220,6 @@ $name = explode(" ", $row['dietitianuserID']);
 
     }
 
-    /* .logout{
-width: 178px;
-height: 52px;
-position:absolute;
-margin-right:3%;
-margin-top:1rem;
-margin-bottom:1rem !important;
-background: #FF0000;
-border-radius: 10px;
-} */
     .mobview {
         display: none;
     }
@@ -301,9 +272,6 @@ border-radius: 10px;
         position: relative;
     }
 </style>
->
-
-
 
 <body>
 
@@ -312,7 +280,7 @@ border-radius: 10px;
     <div class="webview">
         <div class="container">
             <div style="height:175px;" class="d-flex justify-content-center align-items-center gap-5">
-                <img src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" class="h-100 rounded" alt="...">
+                <img <?php if($row['socialLogin'] == 1){ echo "src='{$row['p_p']}'";  }else { ?> src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" <?php  } ?> class="h-100 rounded" alt="...">
                 <h3><?=$_SESSION['name']?></h3>
             </div>
         </div>
@@ -375,7 +343,7 @@ border-radius: 10px;
         <div class="profileimg">
             <img src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" id="pfp"
                 style=" display: block;margin-left: auto;margin-right: auto;width:30%">
-            <p style="font-weight:400;font-size:30px;text-align:center">John Wayne</p>
+            <p style="font-weight:400;font-size:30px;text-align:center"><?=$_SESSION['name']?></p>
         </div>
 
 
@@ -406,7 +374,7 @@ border-radius: 10px;
         
         
         
-        <a style="bottom:-70px" href="logout.php" class="logout">Logout</a>
+        <a style="bottom:-70px;text-decoration:none !important" href="logout.php" class="logout">Logout</a>
     </div>
 
 

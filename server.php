@@ -10,7 +10,21 @@ $errors = array();
 include "constant/config.php";
 include "constant/constant.php";
 global $conn;
-
+function generateCode(){
+    $random =substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 10);
+    return $random;
+}
+function getVerificationCode(){
+    global $conn;
+    $code = generateCode();
+    $sql = "SELECT * FROM dietitian WHERE verification_code = '$code'";
+    $res=  $conn->query($sql);
+    if($res->num_rows>0){
+        return getVerificationCode();
+    }else{
+        return $code;
+    }
+}
 if (isset($_SESSION['login_id'])) {
     header('Location: index.php');
     exit;
@@ -56,14 +70,18 @@ if (isset($_GET['code'])):
             header('Location: index.php');
             exit;
         } else {
+            $verification_code = getVerificationCode();
             // if user not exists we will insert the user
-            $insert = mysqli_query($conn, "INSERT INTO `dietitian`(`dietitianuserID`,`name`,`email`,`p_p`) VALUES('$id','$full_name','$email','$profile_pic')");
-            echo $id;
-            echo $full_name;
-            echo $email;
-            echo $profile_pic;
+            $query = "INSERT INTO `dietitian`(`dietitianuserID`,`name`,`email`,`p_p`,`socialLogin`,`verification_code`) VALUES('$id','$full_name','$email','$profile_pic',1,'$verification_code')";
+            // echo $query; exit;
+            $insert = mysqli_query($conn, $query);
             if ($insert) {
+                $fetch = mysqli_query($conn, "SELECT * FROM `dietitian` WHERE dietitianuserID = '$id'");
+                $dietitian_id = mysqli_fetch_assoc($fetch)['dietitian_id'];
                 $_SESSION['login_id'] = $id;
+                $_SESSION['dietitianuserID'] = $id;
+                $_SESSION['name'] = $full_name;
+                $_SESSION['dietitian_id'] = $dietitian_id;
                 header('Location: index.php');
                 exit;
             } else {
@@ -208,19 +226,11 @@ if (isset($_POST['reg_user'])) {
     // Finally, register user if there are no errors in the form
     if (count($errors) == 0) {
         //	$password = md5($);//encrypt the password before saving in the database
-
-        $query = "INSERT INTO dietitian (dietitianuserID, name, email, mobile, password) 
-  			  VALUES('$dietitianuserID','$name', '$email', '$mobile', '$password')";
+        $verification_code = getVerificationCode();
+        $query = "INSERT INTO dietitian (dietitianuserID, name, email, mobile, password,`verification_code`) 
+  			  VALUES('$dietitianuserID','$name', '$email', '$mobile', '$password','$verification_code')";
         mysqli_query($conn, $query);
 
-        # creating the Session
-        // $_SESSION['dietitianuserID'] = $user['dietitianuserID'];
-        // $_SESSION['name'] = $user['name'];
-        // $_SESSION['dietitian_id'] = $user['dietitian_id'];
-
-        // $_SESSION['name'] = $name;
-        // $_SESSION['success'] = "You are now logged in";
-        // header('location: index.php');
         header('location: login.php');
     }
 }

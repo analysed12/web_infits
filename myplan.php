@@ -1,13 +1,8 @@
 <?php
 require('constant/config.php');
 
-
-
 if(isset($_SESSION['dietitianuserID'])){
     global $conn;
-    if($conn->connect_error){
-        die("Connection failed :" . $conn->connect_error);
-    }
     $tasks_id = $_SESSION['dietitianuserID'];
     $sql="SELECT count(*) FROM create_plan WHERE `dietitianuserID`='$tasks_id'";
     $result = $conn->query($sql);
@@ -15,6 +10,7 @@ if(isset($_SESSION['dietitianuserID'])){
         header('Location:dietplan.php');
     }
 }
+ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,15 +65,11 @@ if(isset($_SESSION['dietitianuserID'])){
     }
 
     .cards {
-            
         margin: 0 auto;
-          
-            gap: 3.5rem;
-           
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
+        gap: 3.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0 30px;
     }
 
     .card-upper {
@@ -116,8 +108,8 @@ if(isset($_SESSION['dietitianuserID'])){
         color: white;
         margin: 5px;
         padding: 5px;
-            border-radius: 10px;
-            margin:1rem 0rem 1rem 1rem  !important;
+        border-radius: 10px;
+        /* margin:1rem 0rem 1rem 1rem  !important; */
     }
 
     .card-middle {
@@ -207,9 +199,6 @@ padding-right: 2rem;
 
 }
 
-.cards {
-place-items: center;
-}
 
 .card-sec {
 display: flex;
@@ -236,13 +225,8 @@ right: 3rem;
 
 }
 
-
-/****************************media query for mediun devices**************************************/
-@media screen and (min-width: 720px) and (max-width: 1200px) {
-.cards {
-place-items: center;
-}
-
+.card{
+    min-height: 280px;
 }
       
 
@@ -257,12 +241,15 @@ place-items: center;
 <body>
     <?php
 include "navbar.php";
+$output = ob_get_contents();
+ob_end_clean();
+echo $output;
 ?>
 
 
 <div class="head-sec" style="padding:1rem; margin-left: 16rem; display: flex;  justify-content: space-between;">
         <div class="col-6" id="heading" style="font-weight:400;font-size:40px;color:black !important;margin-left:0.3rem !important;margin-top:1rem;">Plans</div>
-            <form method="POST">
+            <form method="GET">
                 <div class="search_client" style="align-items:center">
                 <div><button id="btn3" name="search-btn"><img src="<?=$DEFAULT_PATH?>assets/images/search1.svg" ></button> </div>
                 <div style="margin-left:1rem;margin-right:4rem;"> <input type="text" name="search" placeholder="Search Clients"
@@ -276,21 +263,21 @@ include "navbar.php";
     <div class="card-sec" style="display: flex; justify-content:center;">
         <div class="col-md-12">
             <div class="">
-                <div class="cards">
+                <div class="cards row gx-0">
                     <?php
 
-if(isset($_POST['search-btn']))
+if(isset($_GET['search-btn']))
 {
-  if(!empty($_POST['search']))
+  if(!empty($_GET['search']))
 	{
-    $search = $_POST['search'];
-    $sql1 = "SELECT * FROM create_plan WHERE name='$search'";
+    $search = $_GET['search'];
+    $sql1 = "SELECT * FROM create_plan WHERE name like '%$search%'";
  if($result1 = mysqli_query($conn, $sql1)){
      if(mysqli_num_rows($result1) > 0){
              while($row1 = mysqli_fetch_array($result1)){
               ?>
 
-                    <div class="card" container>
+                    <div class="card col-lg-5 p-3" container>
                         <div class="card-upper row">
                             <div class="card-upper-image col-3">
                                 <img src="<?=$DEFAULT_PATH?>assets/images/fruit_salad.svg" alt="">
@@ -318,7 +305,7 @@ if(isset($_POST['search-btn']))
                                         to
                                         <?php $orgDate = $row1['end_date']; $newDate = date("d/m/Y", strtotime($orgDate)); echo $newDate ?>
                                     </div>
-                                    <div class="w-100"></div>
+                                    <div class="w-100 d-flex flex-wrap gap-1"></div>
                                     <?php
                                             $mark=explode(',', $row1['tags']);
                                             foreach($mark as $out) {
@@ -352,6 +339,8 @@ if(isset($_POST['search-btn']))
 
                     <?php
              }
+            }else{
+                echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
             }
           }
 
@@ -365,7 +354,7 @@ else{
              while($row = mysqli_fetch_array($result)){
                ?>
 
-                    <div class="card" container>
+                    <div class="card col-lg-5 p-3" container>
                         <div class="card-upper row">
                             <div class="card-upper-image col-3">
                                 <img src="<?=$DEFAULT_PATH?>assets/images/fruit_salad.svg" alt="">
@@ -404,7 +393,7 @@ else{
                                         to
                                         <?php $orgDate = $row['end_date']; $newDate = date("d/m/Y", strtotime($orgDate)); echo $newDate ?>
                                     </div>
-                                    <div class="w-100"></div>
+                                    <div class="w-100 d-flex flex-wrap gap-1"></div>
                                     <?php
                                             $mark=explode(',', $row['tags']);
                                             foreach($mark as $out) {

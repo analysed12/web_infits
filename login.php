@@ -613,7 +613,7 @@ body {
             <div class="bg">
                 <img src="<?=$DEFAULT_PATH?>assets/images/Vector 1.svg" style="width:25rem">
             </div>
-            <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg" style="margin-top:0.8rem;margin-left:0.8rem">
+            <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg?i=1" style="margin-top:0.8rem;margin-left:0.8rem">
         </div>
         <div class="up">
             <button id="home" onclick="window.location.href = 'index.php';">Home</button>

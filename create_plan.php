@@ -5,6 +5,35 @@ include "navbar.php"
 ?>
 <?php
 require('constant/config.php');
+if (isset($_POST['final_save_btn'])){
+    // For tags
+    global $conn;
+    $name_arr = $_POST['languages'];
+    $tags = implode(" , ",$name_arr);
+    // $tags = "hello" ;
+        $planname = $_POST['plan_name'];
+        // dieticianid....This is a session variable
+        $dietitianuserID = $_SESSION['dietitianuserID'];
+     
+        $duration="hello";
+        $start_date = $_POST['start_date'];
+        $end_date = $_POST['end_date'];
+        $description = $_POST['description'];
+        $price = $_POST['price'];
+        if(isset($_POST['text_arr'])){
+            $myarray = $_POST['text_arr'];
+        }
+        $features = '';
+        if(!empty($myarray)){
+            $features = implode(" , ",$myarray);
+        }
+  
+            $sql1 = "INSERT INTO `create_plan` (`dietitianuserID`,`name`,`tags`, `start_date`, `end_date`,`features`, `description`, `price`) VALUES ('$dietitianuserID','$planname','$tags','$start_date','$end_date','$features','$description','$price')";
+            echo $sql1;
+            $result1=mysqli_query($conn,$sql1);
+            header('Location: myplan.php');
+   
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,8 +49,6 @@ require('constant/config.php');
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     
- 
-   
    
 </head>
 <style>
@@ -642,7 +669,6 @@ width: 100%;
                                             $textValue + '</option>');
                                         $('#fields_u').multiselect('select', ['$textValue']);
 
-                                        console.log('added');
                                         event.preventDefault();
                                         $('#fields_u').multiselect('rebuild');
                                         popup.classList.remove('open');
@@ -732,7 +758,7 @@ width: 100%;
                               <h2 style="font-size: 20px;
                               font-weight: 500;">Add a Feature</h2>
                               <input type="text" id="skill-input" placeholder="Type a Feature here...">
-                              <button id="add-feature-submit-btn">Add</button>
+                              <button type="button" id="add-feature-submit-btn">Add</button>
                             </div>
                           </div>
                           <!----------------------FEATURES POP-UP CODE END------------------>                         
@@ -784,37 +810,7 @@ width: 100%;
 
 
     <!-- Contents End -->
-    <!-- Add everything in database -->
-    <?php
-if (isset($_POST['final_save_btn'])){
-    // For tags
-    $name_arr = $_POST['languages'];
-    $tags = implode(" , ",$name_arr);
-    // $tags = "hello" ;
-        $planname = $_POST['plan_name'];
-        // dieticianid....This is a session variable
-        $dietitianuserID = $_SESSION['dietitianuserID'];
-     
-        $duration="hello";
-        $start_date = $_POST['start_date'];
-        $end_date = $_POST['end_date'];
-        $description = $_POST['description'];
-        $price = $_POST['price'];
-        if(isset($_POST['text_arr'])){
-            $myarray = $_POST['text_arr'];
-        }
-        $features = '';
-        if(!empty($myarray)){
-            $features = implode(" , ",$myarray);
-        }
-  
-            $sql1 = "INSERT INTO `create_plan` (`dietitianuserID`,`name`,`tags`, `start_date`, `end_date`,`features`, `description`, `price`) VALUES ('$dietitianuserID','$planname','$tags','$start_date','$end_date','$features','$description','$price')";
-            echo $sql1;
-            $result1=mysqli_query($conn,$sql1);
-            header('Location: myplan.php');
-   
-}
-            ?>
+
 
     <!-- Pop up ends -->
   
@@ -825,8 +821,8 @@ if (isset($_POST['final_save_btn'])){
 $output = ob_get_clean();
 
 // Modify the headers
-header('Content-Type: text/html');
-header('Cache-Control: no-cache');
+// header('Content-Type: text/html');
+// header('Cache-Control: no-cache');
 
 // Flush the headers to the browser
 ob_end_flush();
