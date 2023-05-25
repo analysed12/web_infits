@@ -3,8 +3,8 @@ require('constant/config.php');
 
 if(isset($_SESSION['dietitianuserID'])){
     global $conn;
-    $tasks_id = $_SESSION['dietitianuserID'];
-    $sql="SELECT count(*) FROM create_plan WHERE `dietitianuserID`='$tasks_id'";
+    $dietitianuser_id = $_SESSION['dietitianuserID'];
+    $sql="SELECT count(*) FROM create_plan WHERE `dietitianuserID`='$dietitianuser_id'";
     $result = $conn->query($sql);
     if(empty($result->fetch_assoc())){
         header('Location:dietplan.php');
@@ -271,7 +271,7 @@ if(isset($_GET['search-btn']))
   if(!empty($_GET['search']))
 	{
     $search = $_GET['search'];
-    $sql1 = "SELECT * FROM create_plan WHERE name like '%$search%'";
+    $sql1 = "SELECT * FROM create_plan WHERE name like '%$search%' AND  dietitianuserID = '$dietitianuser_id' ";
  if($result1 = mysqli_query($conn, $sql1)){
      if(mysqli_num_rows($result1) > 0){
              while($row1 = mysqli_fetch_array($result1)){
@@ -348,7 +348,7 @@ if(isset($_GET['search-btn']))
   }
 }
 else{                       
- $sql = "SELECT * FROM create_plan";
+ $sql = "SELECT * FROM create_plan where dietitianuserID = '$dietitianuser_id' ";
  if($result = mysqli_query($conn, $sql)){
      if(mysqli_num_rows($result) > 0){
              while($row = mysqli_fetch_array($result)){
