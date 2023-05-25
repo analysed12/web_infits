@@ -688,7 +688,7 @@ if (isset($_POST['final_update_btn'])){
         if(!empty($myarray)){
             $features = implode(" , ",$myarray);
         }
-        $sql1 = "UPDATE `create_plan` SET name='$planname',tags='$tags',start_date='$start_date',end_date='$end_date',features='$features',description='$description',price='$price' WHERE plan_id=$id AND dietitianuserID = '$dietitianuserID'";
+        $sql1 = "UPDATE `create_plan` SET name='$planname',tags='$tags',start_date='$start_date',end_date='$end_date',features='$features',description='$description',price='$price' WHERE plan_id='$id'";
         $result1=mysqli_query($conn,$sql1);
         if($result1){
             header('Location: myplan.php');
