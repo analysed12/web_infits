@@ -557,7 +557,7 @@ require('constant/config.php');
                     <p id="bu" class="card-upper-text d-flex" style="margin-left:77px;"><i class="fa-solid fa-clock" style="margin:2px 4px;" ></i> 20:00 </p>
                 </div>
                 <div class="img-dis" style="width:100%; margin-top:-50px; text-align:center;">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/aloo_paratha.svg" style="height:116px; width:175px; margin-left:-15px; object-fit:cover;"/>
+                    <img src="<?=$DEFAULT_PATH?>assets/images/alooparantha.svg" style="height:116px; width:175px; margin-left:-15px;"/>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="card-food"><?php echo $d['drecipe_name'] ?></p>

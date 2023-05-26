@@ -114,7 +114,7 @@ include 'assets/css/all_recipes.css';
                     <p id="bu" class="card-upper-text d-flex" style="margin-left:58px;"><i class="fa-solid fa-clock" style="margin:2px 4px;"></i> 20:00 </p>
                 </div>
                 <div class="img-dis" style="width:100%;margin-top:-35px;text-align:center;">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/aloo_paratha.svg" style="height:115px; width:160px; margin-left:-20px; object-fit:cover;margin-top:-15px;" />
+                    <img src="<?=$DEFAULT_PATH?>assets/images/alooparantha.svg" style="height:115px; width:160px; margin-left:-20px;margin-top:-15px;" />
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="card-food "><?php echo $d['drecipe_name'] ?></p>

@@ -580,7 +580,7 @@ require('constant/config.php');
                     <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt=""> <?php echo $nutritional['Calories'] ?> kcal</p>
                     <div class="d-flex align-items-center card-num">
                         <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
-                        <div class="" style="margin-top:-8px";>steps</div>
+                        <div class="" style="margin-top:-10px";>steps</div>
                     </div>
                 </div>
             </div>
