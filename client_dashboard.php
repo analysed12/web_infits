@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include "navbar.php";
 ?>
     <?php require('constant/config.php');?>
@@ -137,11 +138,20 @@ color: #000000;
 <body>
     <div id="content">
         <?php
-        $client_id = $_GET['client_id'];
-        $sql = "SELECT name FROM addclient where client_id = $client_id";
-        $result = mysqli_query($conn,$sql);
-        $row = mysqli_fetch_assoc($result);
-        $name = $row['name'];
+        if(isset($_GET['client_id'])){
+            $client_id = $_GET['client_id'];
+        }else{
+            header('Location:client_list.php');
+        }
+        $sql = "SELECT name FROM addclient where client_id = '$client_id' AND dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+        global $conn;
+        $result = $conn->query($sql);
+        if($result->num_rows>0){
+            $row = mysqli_fetch_assoc($result);
+            $name = $row['name'];
+        }else{
+            header('Location:client_list.php');
+        }
         ?>
       <h4 class="client_heading">Client Dashboard</h4>
         <br>

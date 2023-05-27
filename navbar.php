@@ -417,7 +417,7 @@ a {
         <div class="menu-bottom">
             <a class="sidenavlink nav-help" href="help.php"><img src="<?=$DEFAULT_PATH?>assets/images/getHelp.svg"
                     class="nav-icon">Get Help</a>
-            <a class="sidenavlink nav-settings" href="settings.php"><img
+            <a class="sidenavlink nav-settings nav-profile_settings_show nav-profile_settings_edit" href="settings.php"><img
                     src="<?=$DEFAULT_PATH?>assets/images/settings.svg" class="nav-icon">Settings</a>
             <a href="logout.php" class="sidenavlink"><img src="<?=$DEFAULT_PATH?>assets/images/logOut.svg"
                     class="nav-icon">Log Out</a>

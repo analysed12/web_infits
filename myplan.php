@@ -1,13 +1,13 @@
 <?php
 require('constant/config.php');
-
+session_start();
 if(isset($_SESSION['dietitianuserID'])){
     global $conn;
     $dietitianuser_id = $_SESSION['dietitianuserID'];
-    $sql="SELECT count(*) FROM create_plan WHERE `dietitianuserID`='$dietitianuser_id'";
+    $sql="SELECT * FROM create_plan WHERE `dietitianuserID`='$dietitianuser_id'";
     $result = $conn->query($sql);
-    if(empty($result->fetch_assoc())){
-        header('Location:dietplan.php');
+    if($result->num_rows == 0){
+        header('Location:dietplan_default.php');
     }
 }
 ob_start();
