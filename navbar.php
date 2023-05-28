@@ -318,7 +318,9 @@ a {
     background: #FFFFFF;
     padding: 15px 20px;
     display: none;
-   
+    /* transition: 0.3s ease-in-out; */
+    /* animation: slideDown 1s forwards; */
+    /* animation: slideUp 1s forwards; */
 }
 
 @keyframes slideDown {
@@ -398,7 +400,7 @@ a {
                 src="<?=$DEFAULT_PATH?>assets/images/chat.svg" class="nav-icon">Messages</a>
         <a id="live" class="sidenavlink" href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg"
                 class="nav-icon">Live</a>
-        <a id="calendar_of_events" class="sidenavlink nav-calendar_of_events" href="appointments.php"><img
+        <a id="calendar_of_events" class="sidenavlink nav-calendar_of_events" href="calendar_of_events.php"><img
                 src="<?=$DEFAULT_PATH?>assets/images/calendar.svg" class="nav-icon">Appoinments</a>
         <a id="client_list"
             class="sidenavlink nav-add_client nav-client_list nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
@@ -415,7 +417,7 @@ a {
         <div class="menu-bottom">
             <a class="sidenavlink nav-help" href="help.php"><img src="<?=$DEFAULT_PATH?>assets/images/getHelp.svg"
                     class="nav-icon">Get Help</a>
-            <a class="sidenavlink nav-settings" href="settings.php"><img
+            <a class="sidenavlink nav-settings nav-profile_settings_show nav-profile_settings_edit" href="settings.php"><img
                     src="<?=$DEFAULT_PATH?>assets/images/settings.svg" class="nav-icon">Settings</a>
             <a href="logout.php" class="sidenavlink"><img src="<?=$DEFAULT_PATH?>assets/images/logOut.svg"
                     class="nav-icon">Log Out</a>
@@ -428,7 +430,7 @@ a {
                     <strong>
                         <?php
                     $id11 = $_SESSION['dietitianuserID'] ;
-                    $sql1 = "SELECT name FROM dietitian WHERE dietitianuserID ='$id11'";
+                    $sql1 = "SELECT * FROM dietitian WHERE dietitianuserID ='$id11'";
                     $res = mysqli_query($conn,$sql1);
                     $user = mysqli_fetch_array($res, MYSQLI_ASSOC);
                     // $row = mysqli_fetch_assoc($res) ; 
@@ -462,7 +464,7 @@ a {
                 <div class="top"><span>Notifications</span><span id="noti-close"><i style="cursor: pointer;"
                             class="fa-solid fa-xmark"></i></span></div>
             </div>
-            <img src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" style="height: 24px; width: 24px"
+            <img <?php if($user['socialLogin'] == 1){ echo "src='{$user['p_p']}'"; }else{ ?> src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" <?php } ?> style="height: 24px; width: 24px; border-radius:50%"
                 id="addusermale">
 
         </div>
@@ -477,18 +479,18 @@ a {
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="index.php" id="defaultOpen"><img src="<?=$DEFAULT_PATH?>assets/images/dashboard.svg">&nbsp&nbsp
                 Dashboard</a>
-            <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/chat.svg">&nbsp&nbsp Messages</a>
-            <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg">&nbsp&nbsp Live</a>
-            <a href="appointments.php"><img src="<?=$DEFAULT_PATH?>assets/images/calendar.svg">&nbsp&nbsp Appoinments</a>
-            <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg">&nbsp&nbsp Clients</a>
+            <a href="chat_home.php"><img src="<?=$DEFAULT_PATH?>assets/images/chat.svg">&nbsp&nbsp Messages</a>
+            <a href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg">&nbsp&nbsp Live</a>
+            <a href="calendar_of_events.php"><img src="<?=$DEFAULT_PATH?>assets/images/calendar.svg">&nbsp&nbsp Appoinments</a>
+            <a href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg">&nbsp&nbsp Clients</a>
             <a href="myplan.php"><img src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg">&nbsp&nbsp Diet Plans</a>
-            <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/payment.svg">&nbsp&nbsp Payments</a>
-            <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/recipies.svg">&nbsp&nbsp Recipies</a>
+            <a href="billingAndInvoices.php"><img src="<?=$DEFAULT_PATH?>assets/images/payment.svg">&nbsp&nbsp Payments</a>
+            <a href="all_recipes.php"><img src="<?=$DEFAULT_PATH?>assets/images/recipies.svg">&nbsp&nbsp Recipies</a>
             <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg">&nbsp&nbsp Health Form</a>
 
-            <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/getHelp.svg">&nbsp&nbsp Get Help</a>
-            <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/settings.svg">&nbsp&nbsp Settings</a>
-            <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/logOut.svg">&nbsp&nbsp Log Out</a>
+            <a href="help.php"><img src="<?=$DEFAULT_PATH?>assets/images/getHelp.svg">&nbsp&nbsp Get Help</a>
+            <a href="settings.php"><img src="<?=$DEFAULT_PATH?>assets/images/settings.svg">&nbsp&nbsp Settings</a>
+            <a href="logout.php"><img src="<?=$DEFAULT_PATH?>assets/images/logOut.svg">&nbsp&nbsp Log Out</a>
         </div>
         <span style="font-size:35px;cursor:pointer; margin: 5px;" onclick="openNav()" id="navbar-res">&#9776;</span>
     </div>
