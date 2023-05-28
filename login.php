@@ -643,7 +643,7 @@ body {
 
                     <form method="post" action="#">
                         <button type="submit" name="login" value="Facebook" class="facebook">
-                            <img style="width: 30px; height: 30px;" src="<?=$DEFAULT_PATH?>assets/images/Facebook.svg"
+                            <img style="width: 30px; height: 30px;" src="<?=$DEFAULT_PATH?>assets/images/facebook.svg"
                                 alt="">
                             <span class="ps-2">Facebook</span>
                         </button>
