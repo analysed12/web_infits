@@ -1,8 +1,8 @@
 <?php 
-$HOSTNAME = "localhost";
-$USERNAME = "root";
-$PASSWORD = "";
-$DBNAME = "infits";
+$HOSTNAME = "www.db4free.net";
+$USERNAME = "infits_free_test";
+$PASSWORD = "EH6.mqRb9QBdY.U";
+$DBNAME = "infits_db";
 
 $conn = new mysqli($HOSTNAME, $USERNAME, $PASSWORD, $DBNAME);
 
