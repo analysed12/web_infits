@@ -64,8 +64,6 @@ a {
    
 } 
 .box p{
- 
-
    font-style: normal;
    font-weight: 400;
    font-size: 35px;
@@ -77,7 +75,7 @@ a {
    text-align: center;
    justify-content: center;
 
-color: #000000;
+   color: #000000;
 }
 .image{
     float: left;
@@ -192,7 +190,7 @@ color: #000000;
 
             <div class="col " style="border: 1px solid #E375B3;
         color: #E375B3;text-align:center;">
-                <?php echo '<a style="color: #E375B3;" href="nameofpage.php?client_id='.$client_id.'">' ?>
+                <?php echo '<a style="color: #E375B3;" href="client_matrics.php?client_id='.$client_id.'">' ?>
                 <div class="topbar" style="display: flex;flex-direction: column;justify-content: space-between;margin-top: -37px;height: 100%;">
                 <div>
                 Metrics
@@ -245,7 +243,7 @@ color: #000000;
             </div>
             <div class="col " style="border: 1px solid #FFA381;
         color: #FFA381;text-align:center;">
-                <?php echo '<a style="color: #FFA381;" href="nameofpage.php?client_id='.$client_id.'">' ?>
+                <?php echo '<a style="color: #FFA381;" href="chat_home.php.php?client_id='.$client_id.'">' ?>
         <div class="topbar" style="display: flex;flex-direction: column;justify-content: space-between;margin-top: -37px;height: 100%;">
                 <div>
                 Chats

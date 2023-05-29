@@ -1095,8 +1095,8 @@ function fetchInformation($client_id)
                     <div id="today_tasks">
                         <?php
                         $query = "SELECT * FROM `dietition_tasks` WHERE dietitianuserID = '{$dietitian_id}' AND date = '{$today->format('Y-m-d')}' ORDER BY date,start_time LIMIT 3";
-                        $con = new mysqli("localhost", "root", "", "infits");
-                        $result = mysqli_query($con, $query);
+                        include('constant/config.php');
+                        $result = $conn->query($query);
                         $rowcount = mysqli_num_rows($result);
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
@@ -1133,9 +1133,8 @@ function fetchInformation($client_id)
                     <div id="upcoming_tasks">
                         <?php
                         $query = "SELECT * FROM `dietition_tasks` WHERE dietitianuserID = '{$dietitian_id}' AND date > '{$today->format('Y-m-d')}' ORDER BY date,start_time LIMIT 3";
-                        $con = new mysqli("localhost", "root", "", "infits");
-                        $result = mysqli_query($con, $query);
-
+                        include('constant/config.php');
+                        $result = $conn->query($query);
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $start = "";

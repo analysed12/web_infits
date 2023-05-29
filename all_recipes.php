@@ -1,16 +1,7 @@
 <?php
 include('navbar.php');
-?>
-
-<?php
 require('constant/config.php');
 ?>
-
-<style>
-<?php
-include 'assets/css/all_recipes.css'; 
-?>
-</style>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +11,7 @@ include 'assets/css/all_recipes.css';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require('constant/head.php');?>
     <title>Infits | All Recipes</title>
+    <link rel="stylesheet" href="<?=$DEFAULT_PATH?>assets/css/all_recipes.css">
 </head>
 <body>
     <div class="header" style="">
@@ -86,6 +78,7 @@ include 'assets/css/all_recipes.css';
     <?php
     $sql = "SELECT * FROM `default_recipes`";
     $res = mysqli_query($conn, $sql);
+
     ?>
 
     <div class="main" >
@@ -93,25 +86,16 @@ include 'assets/css/all_recipes.css';
         while ($d = mysqli_fetch_assoc($res)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
-            $drecipe_nutritional = $d['drecipe_nutritional information'];
-            $drecipe_nutritional = trim($drecipe_nutritional, '{}');
-            $pairs = explode(', ', $drecipe_nutritional);
-            $nutritional = array();
-            foreach ($pairs as $pair) {
-                list($key, $value) = explode(': ', $pair);
-                $key = trim($key, "'");
-                $value = trim($value, "'");
-                $nutritional[$key] = $value;
-            }
+            $nutritional = json_decode($d['drecipe_nutritional_information'],true);
             if ($counter == 5) {
                 break;
             }
             $counter++;
         ?>
-            <div class="card d-flex" style="padding:15px; width:310px; height:208px;border-radius:16px;margin:35px 35px; ">
+            <div class="card d-flex" style="padding:15px; width:310px; height:238px;border-radius:16px;margin:35px 35px; ">
                 <div class="card-upper d-flex justify-content-between">
                     <p id="bu" class="card-upper-text"> Medium </p>
-                    <p id="bu" class="card-upper-text d-flex" style="margin-left:58px;"><i class="fa-solid fa-clock" style="margin:2px 4px;"></i> 20:00 </p>
+                    <p id="bu" class="card-upper-text d-flex" style="margin-left:58px;"><img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:10px"> 20:00 </p>
                 </div>
                 <div class="img-dis" style="width:100%;margin-top:-35px;text-align:center;">
                     <img src="<?=$DEFAULT_PATH?>assets/images/alooparantha.svg" style="height:115px; width:160px; margin-left:-20px;margin-top:-15px;" />
@@ -133,7 +117,7 @@ include 'assets/css/all_recipes.css';
                 </div>
                 <div class="d-flex justify-content-between" style="align-items:center;">
                     <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt=""> <?php echo $nutritional['Calories'] ?> kcal</p>
-                    <div class="d-flex align-items-center card-num">
+                    <div class="d-flex align-items-center card-num" style="margin-bottom:20px">
                         <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
                         <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
                     </div>
@@ -141,7 +125,7 @@ include 'assets/css/all_recipes.css';
             </div>
         <?php } ?>
     </div>
-    <a class="butt" href="_create_recipe.php" style="text-decoration:none;border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
+    <a class="butt" href="create_recipe.php" style="text-decoration:none;border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
 
     <?php require('constant/scripts.php');?>
 </body>

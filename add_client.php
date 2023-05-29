@@ -49,7 +49,8 @@ if (isset($_SESSION['dietitianuserID'])) {
         $result = mysqli_query($conn, $sql2);
 
         $client_id = mysqli_fetch_assoc($result)['client_id'];
-        $sql3 = "UPDATE `client` SET `client_id`='$client_id',`plan`='',`dietitianuserID`='$userid',`verification`='1' WHERE `clientuserID`='$clientuserID'";
+        $sql3 = "UPDATE `client` SET `client_id`='$client_id',`plan`='',`dietitianuserID`='$userid',`dietitian_id`='{$_SESSION['dietitian_id']}',`verification`='1' WHERE `clientuserID`='$clientuserID'";
+        // echo $sql3;
         mysqli_query($conn, $sql3);
 
     }

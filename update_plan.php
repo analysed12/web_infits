@@ -224,6 +224,7 @@ input {
 
     .tag-item {
         font-size: 12px !important;
+        font-weight: 100;
     }
 }
 
@@ -279,7 +280,15 @@ input {
 .dropdown-menu {
     border: none;
 }
-
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+    position: absolute;
+    margin-top: 4px\9;
+    margin-left: -35px;
+    margin-top: 0.5rem;
+}
+.multiselect-selected-text{
+font-size:18px;
+}
 .multiselect-container>li>a>label.checkbox {
     margin: 0;
     background-color: white;
@@ -357,6 +366,7 @@ input {
 
 .features_main {
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
     width: 100%;
 }
@@ -379,7 +389,7 @@ input {
     align-items: center;
     justify-content: space-between;
     padding: 15px;
-    height: 49px;
+    height: 40px;
     width: 70%;
     background: #FFFFFF;
     box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);
@@ -450,6 +460,7 @@ label {
 }
 
 ::placeholder {
+    font-family: 'NATS';
     color: #bbbbbb;
     opacity: 1;
 }
@@ -492,6 +503,7 @@ input[type="date"]::-webkit-datetime-edit-year-field {
     }
 
     .header {
+        font-size:32px;
         margin-left: 2rem !important;
         margin-top: 0px !important;
     }
@@ -527,7 +539,7 @@ input[type="date"]::-webkit-datetime-edit-year-field {
             <div class="event-image">
                 <div class="ev-img" style="position:relative">
                     <div style="background: #7282FB;border-radius:100px;padding:0.5rem;margin-top:3rem;cursor:pointer;">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/pencil.svg" alt="">
+                        <img src="<?=$DEFAULT_PATH?>assets/images/whitepencil.svg" alt="">
                     </div>
                     <img src="<?=$DEFAULT_PATH?>assets/images/fruit_salad.svg" class="edit-plan-img" style="position:absolute;margin-top:2rem; z-index:-2; width: 126px;
                     height: 133px;">
@@ -538,8 +550,7 @@ input[type="date"]::-webkit-datetime-edit-year-field {
                 <!-- Plan name -->
                 <div style="text-align:center !important;;margin-top:2rem;" class="plan_name_box">
                     <input required type="text" placeholder="Plan Name" class="plan_name" name="plan_name"
-                        style="border:none;" value="<?php echo $row['name']?>"><i class="fa-solid fa-pen"
-                        style="color:#7282FB;cursor:pointer;"></i>
+                        style="border:none;" value="<?php echo $row['name']?>"><img src="<?=$DEFAULT_PATH?>assets/images/pencil.svg" alt="">
                 </div>
 
                 <!-- Main form starts -->
@@ -582,7 +593,7 @@ input[type="date"]::-webkit-datetime-edit-year-field {
                                     style="float:right; display: flex;
                                 justify-content: center; align-items: center;width:40px; height: 40px; border:none; text-align: center;"
                                     class="tag-item openButton openBtn  "><i class="fas fa-plus"
-                                        style="font-size:15px;"></i></button>
+                                        style="font-size:25px;"></i></button>
                                 <div class="popup">
                                     <div class="blocker" onclick="hidePopup()"></div>
                                     <div class="contents">
@@ -604,7 +615,7 @@ input[type="date"]::-webkit-datetime-edit-year-field {
                             <div style="display:inline-block;width:46%; margin-right:6%;">
                                 <p style="font-size:17px;color: #6C6F71;">From</p>
                                 <input required class="subject subject-text" type="date" name="start_date" style="height: 40px; background: #FFFFFF;
-                        box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);border-radius: 7px;border:none;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 20px;
+                        box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);border-radius: 7px;border:none;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 20px;padding: 1rem;
                         " id="width" value="<?php echo $row['start_date']?>"
                                     style="height: 45px;width: 226px; background: #FFFFFF;box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);border-radius: 10px;border:none;color: #BBBBBB;opacity: 0.5;padding:15px" />
 
@@ -613,7 +624,7 @@ input[type="date"]::-webkit-datetime-edit-year-field {
                                 <p style="font-size:17px;color: #6C6F71; margin-top:10px;">To</p>
                                 <input required class="subject subject-text" type="date" name="end_date" id="width"
                                     value="<?php echo $row['end_date']?>"
-                                    style="height: 40px; background: #FFFFFF;box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);border-radius: 7px;border:none;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 20px; " />
+                                    style="height: 40px; background: #FFFFFF;box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);border-radius: 7px;border:none;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 20px;padding: 1rem; " />
                             </div>
                         </div>
                         <br>
@@ -631,7 +642,7 @@ input[type="date"]::-webkit-datetime-edit-year-field {
                             font-size: 20px;
                             padding:1.5rem; " />
                         <br />
-                        <label for="" class="subject tag_title">FEATURES</label>
+                        <label for="" class="subject tag_title">Features</label>
                         <div class="features_main">
                             <div class="features_left textbox-wrapper">
                                 <div class="input-group">
@@ -645,7 +656,7 @@ input[type="date"]::-webkit-datetime-edit-year-field {
                                     style="float:right; display: flex;
                                 justify-content: center; align-items: center;width:40px; height: 40px; border:none; text-align: center;"
                                     class="plan_btn_add plan_btn add-textbox"><i class="fas fa-plus"
-                                        style="font-size:15px;"></i></button>
+                                        style="font-size:25px;"></i></button>
                             </div>
                         </div>
                         <br>

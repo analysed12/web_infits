@@ -127,10 +127,10 @@ padding: 1.5rem !important;
 color:black;
 }
 .tag_title {
-font-size: 15px;
+font-size: 20px;
 letter-spacing: 1.5px;
 text-transform: capitalize;
-font-weight: 600;
+font-weight: 600 !important;
 color: #1d1e20;
 }
 
@@ -138,8 +138,7 @@ color: #1d1e20;
 background: #7282fb;
 border-radius: 10px;
 color: white;
-padding: 10px;
-
+/* padding: 10px; */
 width: auto;
 }
 
@@ -164,7 +163,7 @@ height: 40px;
 background: #ffffff;
 border: 2px solid #7282fb;
 border-radius: 10px;
-font-size: 25px;
+font-size: 20px;
 }
 
 .loginPopup {
@@ -230,7 +229,7 @@ border-top: none !important;
 border-left: none !important;
 border-right: none !important;
 outline: none;
-font-size: 20px !important;
+font-size: 30px !important;
 width: 144px
 }
 .plan_name:focus{
@@ -258,7 +257,7 @@ width: 100%;
 width: 90%;
 }
 .tag_title {
-font-size: 12px !important;
+font-size:20px !important;
 }
 
 .tag-item {
@@ -304,8 +303,13 @@ align-items: center;
 padding-left: 1.5rem !important;
 
 }
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+    position: absolute;
+    margin-top: 4px\9;
+    margin-left: -35px;
+}
 .multiselect-selected-text{
-font-size: 12px;
+font-size:18px;
 }
 .dropdown-menu>.active>a{
 background-color: white !important;
@@ -358,34 +362,35 @@ z-index: 999;
 }
 
 .popup .contents p {
-text-align: center;
-margin-top: 5px;
-font-size: 20px;
-font-weight:500;
+    text-align: center;
+    margin-top: 5px;
+    font-size: 36px;
+    font-weight: 500;
 }
 
 .popup .contents input {
-border: 1px solid #ccc !important;
-text-align: center;
-margin-top: 5px;
-height: 40px;
-padding: 1px !important;
-border-radius: 7px;
-font-size: 13px;
+    border: 1px solid #ccc !important;
+    text-align: center;
+    margin-top: 5px;
+    height: 40px;
+    padding: 1px !important;
+    border-radius: 7px;
+    font-size: 20px;
 
 }
 
 .popup .contents button {
-text-align: center;
-margin-top: 15px;
-margin-left: 30%;
-text-decoration: none;
-border: none;
-background: #7D96F8;
-color: white;
-padding: 5px;
-width: 40%;
-border-radius: 5px;
+    text-align: center;
+    margin-top: 15px;
+    margin-left: 30%;
+    text-decoration: none;
+    border: none;
+    background: #7D96F8;
+    color: white;
+    padding: 5px;
+    width: 40%;
+    border-radius: 5px;
+    font-size: 20px;
 
 
 }
@@ -491,7 +496,9 @@ margin-bottom:0px !important;
 }
 
 ::placeholder {
-color: #bbbb
+font-family: 'NATS';
+color: #bbbb;
+opacity: 1;
 }
 
 /* placeholder text style */
@@ -517,19 +524,19 @@ background-color: rgba(0,0,0,0.4); /* Black with opacity */
 }
 
 .modal-content {
-border-radius: 5px;
-width: auto;
-height: auto;
-display: flex-box;
-align-items: center;
-justify-content: center;
-background: #FFF;
-position: fixed;
-top: 50vh;
-left: 50vw;
-transform: translate(-50%, -50%);
-padding: 20px;
-z-index: 999;
+    border-radius: 5px;
+    width: auto;
+    height: auto;
+    display: flex-box;
+    align-items: center;
+    justify-content: center;
+    background: #FFF;
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    z-index: 999;
 }
 
 .close {
@@ -561,25 +568,25 @@ border: none;
 background-color: white;
 }
 #skill-input{
-border: 1px solid #ccc !important;
-text-align: center;
-margin-top: 5px;
-height: 40px;
-padding: 1px !important;
-border-radius: 7px;
-font-size: 13px;
+    border: 1px solid #ccc !important;
+    text-align: center;
+    margin-top: 5px;
+    height: 40px;
+    padding: 1px !important;
+    border-radius: 7px;
+    font-size: 20px;
 }
 #add-feature-submit-btn{
-text-align: center;
-margin-top: 15px;
-/* margin-left: 30%; */
-text-decoration: none;
-border: none;
-background: #7D96F8;
-color: white;
-padding: 5px;
-width: 40%;
-border-radius: 5px;
+    text-align: center;
+    margin-top: 15px;
+    text-decoration: none;
+    border: none;
+    background: #7D96F8;
+    color: white;
+    padding: 5px;
+    width: 40%;
+    border-radius: 5px;
+    font-size: 20px;
 }
 /*************************MEDIA QUERY FOR SMALL DEVICES ******************************/
 @media screen and (max-width: 720px) {
@@ -590,7 +597,7 @@ width: 11rem !important;
 .header{
 margin-left: 2rem !important;
 margin-top:0px !important;
-font-size: 25px !important;
+font-size: 32px !important;
 }
 .event_form{
 width: 100%;
@@ -598,8 +605,10 @@ width: 100%;
 }
 /****************************media query for mediun devices**************************************/
 @media screen and (min-width: 720px) and (max-width: 1200px) {
-.tag-item{
-margin-left: 2px !important;
+.plus-icon{
+font-size: 12px !important;
+font-weight: 100 !important;
+/* margin-left: 2px !important; */
 }
 .evt-form{
 width: 100%;
@@ -616,7 +625,7 @@ width: 100%;
     <!-- Contents Start -->
     <div id="content">
 
-        <h4 style="font-size:40px;margin-left:3.5rem !important;margin-top:3.3rem;font-weight:400 !important" class="header">Create Plan</h4>
+        <h4 style="font-size:40px;margin-left:3.5rem;margin-top:3.3rem;font-weight:400 !important" class="header">Create Plan</h4>
 
         <!-- Other content -->
         <div class="plan_form">
@@ -632,8 +641,8 @@ width: 100%;
             <br>
             <form action="create_plan.php" method="post">
                 <!-- Plan name -->
-                <div style="text-align:center !important;margin-top:2rem;" class="plan_name_box">
-                    <input type="text" placeholder="Plan Name" class="plan_name p-0" name="plan_name" style="border:none;" required><i class="fa-solid fa-pen" style="color:#7282FB;cursor:pointer;"></i>
+                <div style="margin-top:2rem; display: flex; justify-content: center; align-items: center;" class="plan_name_box">
+                    <input type="text" placeholder="Plan Name" class="plan_name p-0" name="plan_name" style="border:none;" required><img src="<?=$DEFAULT_PATH?>assets/images/pencil.svg" alt="">
                 </div>
                 <!-- Main form starts -->
                 <div class="event_form">
@@ -641,7 +650,7 @@ width: 100%;
 
                         <!-- Different Tags -->
                         <div class="tags" style="margin-top:1rem">
-                            <div class="tag_title" style="font-size:30px !important; font-weight:400 !important">Tags</div>
+                            <div class="tag_title">Tags</div>
                             <div class="tag mt-3" style="width:100%;">
                                 <div
                                     style=" height: 40px; display: inline-block; border:none;font-size: 12px; width: 80%; background: white !important;
@@ -680,7 +689,7 @@ width: 100%;
 
 
                                 <button onclick="showPopup()" style="float:right;display: inline-block;width:40px; height: 40px; border:none; text-align: center;"
-                                    class="tag-item openButton openBtn"><i class="fas fa-plus"style="font-size:15px;"></i></button>
+                                    class="tag-item openButton openBtn"><i class="fas fa-plus"style="font-size:25px;" class="plus-icon"></i></button>
                                 <div class="popup">
                                     <div class="blocker" onclick="hidePopup()"></div>
                                     <div class="contents">
@@ -698,7 +707,7 @@ width: 100%;
 
 <!-------------------------------------PLAN DURATION TAG--------------------------------------------->
                         <br>
-                        <label for="" class="subject tag_title" style="font-size:30px !important; font-weight:400 !important">Plan Duration</label>
+                        <label for="" class="subject tag_title">Plan Duration</label>
                         <div style="width:100%;">
                             <div style="display:inline-block;width:46%; margin-right:6%;">
                                 <p style="font-size:18px;color: #6C6F71;">From</p>
@@ -728,7 +737,7 @@ width: 100%;
                         </div>
                         <br>
 <!-------------------------------------FEATURES TAG--------------------------------------------->
-                        <label for="" class="subject tag_title" style="font-size:30px !important; font-weight:400 !important">Features</label>
+                        <label for="" class="subject tag_title">Features</label>
 
                         <div class="features_main mt-2">
                             <div class="features_left textbox-wrapper">
@@ -744,7 +753,7 @@ width: 100%;
                            <div class="features-container">
                             
                             <div class="features_right add-feature">
-                                <button style="font-size:15px" type="button" class="plan_btn_add plan_btn add-textbox add-feature-btn">
+                                <button style="font-size:25px" type="button" class="plan_btn_add plan_btn add-textbox add-feature-btn">
                                 <i class="fas fa-plus"></i>
                                 </button>
                             </div>
@@ -755,8 +764,8 @@ width: 100%;
                           <div id="add-feature-modal" class="modal">
                             <div class="modal-content">
                               <span class="close d-none">&times;</span>
-                              <h2 style="font-size: 20px;
-                              font-weight: 500;">Add a Feature</h2>
+                              <h2 style="text-align: center;margin-top: 5px;font-size: 36px;font-weight: 500;">
+                                Add a Feature</h2>
                               <input type="text" id="skill-input" placeholder="Type a Feature here...">
                               <button type="button" id="add-feature-submit-btn">Add</button>
                             </div>
@@ -768,7 +777,7 @@ width: 100%;
 
                         <br>
                         <!-------------------------------------DESSCRIPTION TAG--------------------------------------------->
-                        <label for="" class="subject tag_title" style="font-size:30px !important; font-weight:400 !important">Description</label>
+                        <label for="" class="subject tag_title">Description</label>
                         <input class="subject mt-3" placeholder="Description" type="text" name="description" style="height: 40px;  background: #FFFFFF;
     box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);
     border-radius: 7px;
@@ -780,7 +789,7 @@ width: 100%;
     padding:1.5rem; " />
                         <br />
                       <!-------------------------------------PRICE TAG--------------------------------------------->
-                        <label for="" class="subject tag_title" style="font-size:30px !important; font-weight:400 !important">Price</label>
+                        <label for="" class="subject tag_title">Price</label>
                         <input class="subject subject-text mt-3" type="number" name="price" placeholder="Rs. /month" style="height: 40px; background: #FFFFFF;
     box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);
     border-radius: 7px;
