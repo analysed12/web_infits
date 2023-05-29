@@ -302,7 +302,7 @@ body{
     width: 300px;
     height: 50px;
     margin: 10px;
-    color: #000000;
+    color: #B4B4B4;
 }
 
 .left_column {
@@ -549,7 +549,7 @@ body{
 
 @media screen and (max-width: 720px) {
     #home {
-        background: #F8F8FF;
+        display:none;
 
     }
 
@@ -608,7 +608,7 @@ body{
                     <div data-onsuccess="onSignIn">
                         <button class="google">
                             <img src="<?=$DEFAULT_PATH?>assets/images/Google.svg" alt="">
-                            <a href="<?php echo $client->createAuthUrl(); ?>" style="color: #4B99FB;font-size:27px;margin-left:0.4rem">Google</a>
+                            <a href="<?php echo $client->createAuthUrl(); ?>" style="color: #4B99FB;font-size:27px;margin-left:0.4rem;text-decoration:none">Google</a>
                         </button>
                     </div>
                     <button class="facebook" style="margin-left:1rem">

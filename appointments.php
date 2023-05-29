@@ -528,10 +528,6 @@ td.today {
         gap: 26rem;
     }
 
-    .light {
-        margin-left: 10% !important;
-    }
-
     .schedule {
         margin-left: 10% !important;
     }
