@@ -36,7 +36,7 @@ body {
  </style>
 </head>
 <body>
-    <p class="help1" style="font-size:40px;font-weight:400">Help</p>
+    <p class="help1" style="font-size:40px;font-weight:400">About Us</p>
   
    <center>
    <div class="content1"style="display:flex;flex-direction:column;gap:3rem">
