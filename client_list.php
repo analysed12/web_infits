@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 ob_start();
 include('navbar.php');
 
@@ -544,6 +544,7 @@ echo $output;
 
 
                         $sql1 = "SELECT * FROM create_plan WHERE `plan_id`= $plan_id";
+
                         $result1 = mysqli_query($conn, $sql1);
                         $row1 = mysqli_fetch_assoc($result1);
                         $date1 = strtotime($row1["start_date"]);
@@ -769,6 +770,8 @@ echo $output;
             popUp.style.display = "inline-flex";
             btn__span.innerHTML = val;
             myCheckBox.forEach((items) => {
+                popUp1.style.display ="none";
+                popUp2.style.display ="none";
                 items.style.display = "block";
             });
         };
@@ -777,6 +780,8 @@ echo $output;
             popUp1.style.display = "inline-flex";
             btn__span1.innerHTML = val;
             myCheckBox.forEach((items) => {
+                popUp.style.display ="none";
+                popUp2.style.display ="none";
                 items.style.display = "block";
             });
         };
@@ -785,6 +790,8 @@ echo $output;
             popUp2.style.display = "inline-flex";
             btn__span2.innerHTML = val;
             myCheckBox.forEach((items) => {
+                popUp.style.display ="none";
+                popUp1.style.display ="none";
                 items.style.display = "block";
             });
         };
