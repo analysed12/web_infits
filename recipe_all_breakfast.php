@@ -17,7 +17,44 @@ $res = mysqli_query($conn, $sql);
         font-weight: 400;
         position: relative;
     }
-
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        margin-top: 0px;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+    .dropdown-content a {
+        color: white;
+        padding: 12px 14px;
+        font-weight: 500;
+        text-decoration: none;
+        display: block;
+    }
+    .dropdown-content .edit-button {
+        background: #A85CF1;
+        text-align: center;
+        border-radius: 7px;
+        margin-bottom: 10px;
+    }
+    .dropdown-content .delete-button {
+        background: #FF3D3D;
+        border-radius: 7px;
+        text-align: center;
+    }
+    .show {
+        display: block !important;
+    }
+    .dropdown-card {
+        background: #FFFFFF;
+        border: 0.723941px solid #E4E4E4;
+        box-shadow: 0px 2.17182px 2.89576px rgba(0, 0, 0, 0.09);
+        border-radius: 13.0309px;
+        padding: 20px;
+    }
     .header {
         display: flex;
         flex-direction: row !important;
@@ -235,7 +272,7 @@ $res = mysqli_query($conn, $sql);
                             <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:-30px;">
                         </div>
 
-                        <div id="myDropdownContent" class="dropdown-content dropdown-card " style="display:none;">
+                        <div id="myDropdownContent" class="dropdown-content dropdown-card">
                             <a style="color: white;" class="edit-button" href="#">Edit</a>
                             <a style="color: white;" class="delete-button" href="#">Delete</a>
                         </div>
