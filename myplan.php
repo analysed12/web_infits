@@ -1,13 +1,13 @@
 <?php
 require('constant/config.php');
-
+session_start();
 if(isset($_SESSION['dietitianuserID'])){
     global $conn;
     $dietitianuser_id = $_SESSION['dietitianuserID'];
-    $sql="SELECT count(*) FROM create_plan WHERE `dietitianuserID`='$dietitianuser_id'";
+    $sql="SELECT * FROM create_plan WHERE `dietitianuserID`='$dietitianuser_id'";
     $result = $conn->query($sql);
-    if(empty($result->fetch_assoc())){
-        header('Location:dietplan.php');
+    if($result->num_rows == 0){
+        header('Location:dietplan_default.php');
     }
 }
 ob_start();
@@ -106,7 +106,7 @@ ob_start();
     .tag-element {
         background-color: #7282FB;
         color: white;
-        margin: 5px;
+        margin: 5px !important;
         padding: 5px;
         border-radius: 10px;
         /* margin:1rem 0rem 1rem 1rem  !important; */
@@ -146,7 +146,7 @@ ob_start();
     
 width: 85px;
 height: 85px;
-margin-right: 0.5rem;
+margin-right:2rem;
 border:none;
 border-radius:50%;
 font-size:40px;
@@ -179,11 +179,11 @@ justify-content: center;
 font-size: 35px !important;
 }
 .search_client{
-        
+    width: 80%;       
 margin-bottom: 2rem;
 }
 .head-sec {
-margin-left: 0rem !important;
+    margin-left: 15.8rem !important;
 display: flex;
 flex-direction: column;
 padding: 0px !important;
@@ -192,6 +192,9 @@ padding: 0px !important;
     }
 
 @media screen and (max-width: 720px) {
+    .head-sec {
+    margin-left:1.8rem !important;
+}
 .card {
 /* margin: auto; */
 width: 100%;
@@ -215,7 +218,7 @@ right: 3rem;
 @media screen and (max-width: 720px) {
 
 .search_client{
-width:80% !important;
+width:94% !important;
 margin-bottom: 2rem;
 }
 #btn1 {
@@ -247,12 +250,12 @@ echo $output;
 ?>
 
 
-<div class="head-sec" style="padding:1rem; margin-left: 16rem; display: flex;  justify-content: space-between;">
-        <div class="col-6" id="heading" style="font-weight:400;font-size:40px;color:black !important;margin-left:0.3rem !important;margin-top:1rem;">Plans</div>
+<div class="head-sec" style="padding: 1rem 2rem 1rem 0rem;margin-left: 16rem; display: flex;  justify-content: space-between;">
+        <div class="col-6" id="heading" style="font-weight:400;font-size:40px;color:black !important;margin-top:1rem;">Plans</div>
             <form method="GET">
                 <div class="search_client" style="align-items:center">
                 <div><button id="btn3" name="search-btn"><img src="<?=$DEFAULT_PATH?>assets/images/search1.svg" ></button> </div>
-                <div style="margin-left:1rem;margin-right:4rem;"> <input type="text" name="search" placeholder="Search Clients"
+                <div style="margin-left:1rem;margin-right:4rem;"> <input type="text" name="search" placeholder="Search"
                         class="seach_clients_text" style="width:100%"></div>
             </form>
         </div>
@@ -453,7 +456,7 @@ else{
                 </div>
             </div>
 
-            <div class="d-flex  justify-content-end">
+            <div class="d-flex  justify-content-end p-3">
                 <a style="background-color:none" class="create_btn" onclick="window.location.href = 'create_plan.php';">+</a>
     </div>
     

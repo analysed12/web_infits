@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include "navbar.php";
 ?>
     <?php require('constant/config.php');?>
@@ -63,8 +64,6 @@ a {
    
 } 
 .box p{
- 
-
    font-style: normal;
    font-weight: 400;
    font-size: 35px;
@@ -76,7 +75,7 @@ a {
    text-align: center;
    justify-content: center;
 
-color: #000000;
+   color: #000000;
 }
 .image{
     float: left;
@@ -137,11 +136,20 @@ color: #000000;
 <body>
     <div id="content">
         <?php
-        $client_id = $_GET['client_id'];
-        $sql = "SELECT name FROM addclient where client_id = $client_id";
-        $result = mysqli_query($conn,$sql);
-        $row = mysqli_fetch_assoc($result);
-        $name = $row['name'];
+        if(isset($_GET['client_id'])){
+            $client_id = $_GET['client_id'];
+        }else{
+            header('Location:client_list.php');
+        }
+        $sql = "SELECT name FROM addclient where client_id = '$client_id' AND dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+        global $conn;
+        $result = $conn->query($sql);
+        if($result->num_rows>0){
+            $row = mysqli_fetch_assoc($result);
+            $name = $row['name'];
+        }else{
+            header('Location:client_list.php');
+        }
         ?>
       <h4 class="client_heading">Client Dashboard</h4>
         <br>
@@ -182,7 +190,7 @@ color: #000000;
 
             <div class="col " style="border: 1px solid #E375B3;
         color: #E375B3;text-align:center;">
-                <?php echo '<a style="color: #E375B3;" href="nameofpage.php?client_id='.$client_id.'">' ?>
+                <?php echo '<a style="color: #E375B3;" href="client_matrics.php?client_id='.$client_id.'">' ?>
                 <div class="topbar" style="display: flex;flex-direction: column;justify-content: space-between;margin-top: -37px;height: 100%;">
                 <div>
                 Metrics
@@ -235,7 +243,7 @@ color: #000000;
             </div>
             <div class="col " style="border: 1px solid #FFA381;
         color: #FFA381;text-align:center;">
-                <?php echo '<a style="color: #FFA381;" href="nameofpage.php?client_id='.$client_id.'">' ?>
+                <?php echo '<a style="color: #FFA381;" href="chat_home.php.php?client_id='.$client_id.'">' ?>
         <div class="topbar" style="display: flex;flex-direction: column;justify-content: space-between;margin-top: -37px;height: 100%;">
                 <div>
                 Chats

@@ -1,7 +1,7 @@
 <?php
 require('constant/config.php');
 
- if (session_status() === PHP_SESSION_NONE) { session_start(); }
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 if (!isset($_SESSION['name'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: login.php');
@@ -318,9 +318,6 @@ a {
     background: #FFFFFF;
     padding: 15px 20px;
     display: none;
-    /* transition: 0.3s ease-in-out; */
-    /* animation: slideDown 1s forwards; */
-    /* animation: slideUp 1s forwards; */
 }
 
 @keyframes slideDown {
@@ -400,7 +397,7 @@ a {
                 src="<?=$DEFAULT_PATH?>assets/images/chat.svg" class="nav-icon">Messages</a>
         <a id="live" class="sidenavlink" href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg"
                 class="nav-icon">Live</a>
-        <a id="calendar_of_events" class="sidenavlink nav-calendar_of_events" href="calendar_of_events.php"><img
+        <a id="calendar_of_events" class="sidenavlink nav-calendar_of_events" href="appointments.php"><img
                 src="<?=$DEFAULT_PATH?>assets/images/calendar.svg" class="nav-icon">Appoinments</a>
         <a id="client_list"
             class="sidenavlink nav-add_client nav-client_list nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
@@ -409,7 +406,7 @@ a {
                 src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg" class="nav-icon">Diet Plans</a>
         <a id="payments" class="sidenavlink nav-payments" href="billingAndInvoices.php"><img
                 src="<?=$DEFAULT_PATH?>assets/images/payment.svg" class="nav-icon">Payments</a>
-        <a id="create_recipe" class="sidenavlink nav-all_recipes nav-create_recipe" href="all_recipes.php"><img
+        <a id="create_recipe" class="sidenavlink nav-all_recipes nav-create_recipe nav-recipe_breakfast nav-recipe_all_breakfast nav-recipe_lunch nav-recipe_all_lunch nav-recipe_snacks nav-recipe_all_snacks nav-recipe_dinner nav-recipe_all_dinner" href="all_recipes.php"><img
                 src="<?=$DEFAULT_PATH?>assets/images/recipies.svg" class="nav-icon">Recipes</a>
         <a id="healthform" class="sidenavlink nav-healthform" href="#"><img
                 src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg" class="nav-icon">Health Form</a>
@@ -417,7 +414,7 @@ a {
         <div class="menu-bottom">
             <a class="sidenavlink nav-help" href="help.php"><img src="<?=$DEFAULT_PATH?>assets/images/getHelp.svg"
                     class="nav-icon">Get Help</a>
-            <a class="sidenavlink nav-settings" href="settings.php"><img
+            <a class="sidenavlink nav-settings nav-profile_settings_show nav-profile_settings_edit" href="settings.php"><img
                     src="<?=$DEFAULT_PATH?>assets/images/settings.svg" class="nav-icon">Settings</a>
             <a href="logout.php" class="sidenavlink"><img src="<?=$DEFAULT_PATH?>assets/images/logOut.svg"
                     class="nav-icon">Log Out</a>
@@ -433,24 +430,14 @@ a {
                     $sql1 = "SELECT * FROM dietitian WHERE dietitianuserID ='$id11'";
                     $res = mysqli_query($conn,$sql1);
                     $user = mysqli_fetch_array($res, MYSQLI_ASSOC);
-                    // $row = mysqli_fetch_assoc($res) ; 
-                    // echo ($_SESSION['dietitianuserID']);
                     echo($user['name']);
-                    // echo $id11;
+                   
                     ?>
                     </strong></span></p>
             <p id="topnav-content-2">Your performance summary this week</p>
         </div>
         <div class="topnav-icons">
 
-            <!-- <img src="images/vec_search.png" style="height: 20px; width: 20px;" class="sea"> -->
-            <!-- <div style="margin-right:2rem;display:flex;gap:1.5rem">
-            <div class="searchbox">
-                <form action="searching.php" method="POST">
-                    <input type="text" name="search" placeholder="Search here" style="border:none;font-size:1rem;margin-left:1rem">
-                    <button><img src="images/vec_search.png" alt=""></button>
-            </div>
-        </div> -->
 
             <div class="search-box">
                 <button onclick="" id="toggleSearch" style="border-style:none;background:white;"><img
@@ -481,7 +468,7 @@ a {
                 Dashboard</a>
             <a href="chat_home.php"><img src="<?=$DEFAULT_PATH?>assets/images/chat.svg">&nbsp&nbsp Messages</a>
             <a href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg">&nbsp&nbsp Live</a>
-            <a href="calendar_of_events.php"><img src="<?=$DEFAULT_PATH?>assets/images/calendar.svg">&nbsp&nbsp Appoinments</a>
+            <a href="appointments.php"><img src="<?=$DEFAULT_PATH?>assets/images/calendar.svg">&nbsp&nbsp Appoinments</a>
             <a href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg">&nbsp&nbsp Clients</a>
             <a href="myplan.php"><img src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg">&nbsp&nbsp Diet Plans</a>
             <a href="billingAndInvoices.php"><img src="<?=$DEFAULT_PATH?>assets/images/payment.svg">&nbsp&nbsp Payments</a>
@@ -505,7 +492,7 @@ a {
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
     }
-    /* Toggle between adding and removing the "responsive" class to sidenav when the user clicks on the icon */
+   
     function myFunction() {
         var x = document.getElementById("navbar-res");
         if (x.className === "nav-res") {
@@ -521,12 +508,10 @@ a {
     });
     document.getElementById('noti-close').addEventListener('click', () => {
         document.getElementsByClassName('noti-box')[0].style.animation = 'slideUp 0.5s forwards';
-        // document.getElementsByClassName('noti-box')[0].style.display = 'none';
-    });
-    // get the url and add active to page 
+      
+    }); 
     const currentPath = window.location.pathname;
     const lastPage = currentPath.split('/').pop().split('.').shift();
-    // document.getElementById(lastPage).classList.add('navactive');
     document.getElementsByClassName('nav-' + lastPage)[0].classList.add('navactive');
     const active_bar = document.querySelector('.navactive');
     iconChange(active_bar);

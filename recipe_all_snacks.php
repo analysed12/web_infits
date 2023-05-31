@@ -1,5 +1,5 @@
 <?php include('navbar.php');
-$sql = "SELECT * FROM `default_recipes` WHERE drecipe_category LIKE 'sn%';";
+$sql = "SELECT * FROM `default_recipes` WHERE drecipe_category = 'snacks';";
 $res = mysqli_query($conn, $sql);
 ?>
 <!DOCTYPE html>
@@ -35,6 +35,8 @@ $res = mysqli_query($conn, $sql);
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
         border-radius: 10px;
         padding: 10px;
+        display: flex;
+        align-items: center;
     }
 
     .card {
@@ -63,7 +65,7 @@ $res = mysqli_query($conn, $sql);
         line-height: 27px;
         letter-spacing: -0.11428570002317429px;
         text-align: left;
-        margin-top: -10px;
+        margin-top: -20px;
 
     }
 
@@ -100,16 +102,19 @@ $res = mysqli_query($conn, $sql);
         padding-left: 70px;
         padding-top: 25px;
     }
-
-    @media screen and (min-width:720px) and (max-width:1500px) {
-        .heading {
-            justify-content: flex-start !important;
-        }
-
+    .flex.row{
+        --bs-gutter-x:0rem;
+    }
+    @media screen and (min-width:720px) and (max-width:1200px) {
         .header {
             display: flex;
             flex-direction: column !important;
             align-items: flex-start !important;
+        }
+    }
+    @media screen and (min-width:720px) and (max-width:1500px) {
+        .heading {
+            justify-content: flex-start !important;
         }
 
         .header h4 {
@@ -129,6 +134,13 @@ $res = mysqli_query($conn, $sql);
 
         .but {
             position: absolute !important;
+        }
+        .card-food{
+            font-size: 23px;
+            font-weight: 500;
+            line-height: 20px;
+            min-width: 180px;
+            margin-bottom: 5px;
         }
     }
 
@@ -153,7 +165,7 @@ $res = mysqli_query($conn, $sql);
         }
 
         .flex.row {
-            margin: auto;
+            padding: 0rem 1rem;
             margin-left: auto !important;
         }
 
@@ -161,16 +173,16 @@ $res = mysqli_query($conn, $sql);
             margin: 10px auto !important;
         }
 
-        .searchbox {
+        /* .searchbox {
             margin-left: 14px !important;
-        }
+        } */
 
         .but {
             position: absolute !important;
         }
 
         .title {
-            margin-left: 13px !important;
+            margin-left: 0px !important;
         }
 
         small {
@@ -181,7 +193,7 @@ $res = mysqli_query($conn, $sql);
 
     @media screen and (min-width:0px) and (max-width:420px) {
         .searchbox {
-            width: 300px;
+            width:100%;
         }
 
     }
@@ -207,22 +219,13 @@ $res = mysqli_query($conn, $sql);
         <?php while ($d = mysqli_fetch_assoc($res)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
-            $drecipe_nutritional = $d['drecipe_nutritional information'];
+            $nutritional = json_decode($d['drecipe_nutritional_information'],true);
 
-            $drecipe_nutritional = trim($drecipe_nutritional, '{}');
-            $pairs = explode(', ', $drecipe_nutritional);
-            $nutritional = array();
-            foreach ($pairs as $pair) {
-                list($key, $value) = explode(': ', $pair);
-                $key = trim($key, "'");
-                $value = trim($value, "'");
-                $nutritional[$key] = $value;
-            }
         ?>
         <div class="card d-flex" style="padding:15px; width:325px; border-radius:16px;height:204px;margin:25px 40px;">
             <div class="card-upper d-flex justify-content-between">
                 <p id="bu" class="card-upper-text"> Medium </p>
-                <p id="bu" class="card-upper-text"><i class="fa-solid fa-clock"></i> 20:00 </p>
+                <p id="bu" class="card-upper-text"><img src="http://www.infits.iceiy.com/assets/images/Clock.svg" style="margin-right:10px"></i> 20:00 </p>
             </div>
             <div class="img-dis" style="width:100%; text-align:center;margin-top:-40px;">
                 <img src="<?=$DEFAULT_PATH?>assets/images/snacks.svg" style="margin-top:-30px;height:144px; width:144px;  object-fit:cover;" />
@@ -232,7 +235,7 @@ $res = mysqli_query($conn, $sql);
                 <div class="header">
                     <div class="dropdown ">
                         <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
-                            <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:-35px;">
+                            <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:-60px;">
                         </div>
 
                         <div id="myDropdownContent" class="dropdown-content dropdown-card " style="display:none;">
@@ -252,8 +255,8 @@ $res = mysqli_query($conn, $sql);
             </div>
         </div>
         <?php } ?>
-        <a class="butt" href="_create_recipe.php"
-            style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
+        <a class="butt" href="create_recipe.php"
+            style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;;box-shadow:0px 0px 30px 0px #9C74F5;">+</a>
     </div>
 
     <?php require('constant/scripts.php'); ?>

@@ -223,61 +223,58 @@ include "navbar.php";
             $data = $result->fetch_assoc();
             ?>
                 <span style="display:flex;flex-direction:column">
-                    User ID <input type="text" class="input_field" placeholder="XXXXX" value="<?=$data['dietitianuserID']?>" >
+                    User ID <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['dietitian_id']?>" >
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Name <input type="text" class="input_field" placeholder="XXXXX" value="<?=$data['name']?>">
+                    Name <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['name']?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Email <input type="text" class="input_field" placeholder="XXXXX" value="<?=$data['email']?>">
+                    Email <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['email']?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Mobile No <input type="text" class="input_field" placeholder="XXXXX" value="<?=$data['mobile']?>">
+                    Mobile No <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['mobile']?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Qualification <input type="text" class="input_field" placeholder="XXXXX" value="<?=$data['qualification']?>">
+                    Qualification <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['qualification']?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
                     Password
                     <span style="display:flex;align-items:center;justify-content:space-between "
-                        class="input_field"><input type="text" id="password" placeholder="XXXXX" value="<?php if($data['socialLogin']==1){echo "Not Available";}else{echo $data['password'];} ?>"  style="border:none;">
+                        class="input_field"><input readonly type="text" id="password" placeholder="Enter Value" value="<?php if($data['socialLogin']==1){echo "Not Available";}else{echo $data['password'];} ?>"  style="border:none;">
                         <img style="cursor: pointer" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon"
                             alt="eye"></span>
                 </span>
-
-
-
 
             </div>
 
             <div class="middle" style="display:flex;flex-direction:column;gap:1rem">
                 <span style="display:flex;flex-direction:column">
-                    Username <input type="text" class="input_field" placeholder="XXXXX" value="<?=$data['dietitianuserID']?>">
+                    Username <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['dietitianuserID']?>">
                 </span>
 
                 <span style="display:flex;flex-direction:column">
-                    Location <input type="text" class="input_field" placeholder="XXXXX" value="<?=$data['location']?>">
+                    Location <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['location']?>">
                 </span>
 
 
                 <span style="display:flex;gap:1.5rem">
                     <span style="display:flex;flex-direction:column">
-                        Gender <input type="text" placeholder="XXXXX" class="gender" value="<?=$data['gender']?>">
+                        Gender <input readonly type="text" placeholder="Enter Value" class="gender" value="<?=$data['gender']?>">
                     </span>
                     <span style="display:flex;flex-direction:column">
-                        Age <input type="text" placeholder="XXXXX" class="gender" value="<?=$data['age']?>">
+                        Age <input readonly type="text" placeholder="Enter Value" class="gender" value="<?=$data['age']?>">
                     </span>
 
                 </span>
 
                 <span style="display:flex;flex-direction:column">
-                    Experience <input type="text" class="input_field" placeholder="XXXXX"  value="<?=$data['experience']?>">
+                    Experience <input readonly type="text" class="input_field" placeholder="Enter Value"  value="<?=$data['experience']?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Refferal Code <input type="text" class="input_field" placeholder="XXXXX" value="<?php //$data['refferal']?>">
+                    Refferal Code <input  readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['referral_code']?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Acheivements and Certificates <input type="text" class="input_field" placeholder="XXXXX"  value="<?php //$data['acheivements']?>" >
+                    Acheivements and Certificates <input readonly type="text" class="input_field" placeholder="Enter Value"  value="<?=$data['achievements']?>" >
                 </span>
 
             </div>

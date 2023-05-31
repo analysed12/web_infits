@@ -29,9 +29,9 @@
     margin-top:1.5rem;
     height:55px;
    }
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+::placeholder {
   color: #BBBBBB;
-  opacity: 1; /* Firefox */
+  opacity: 1; 
 }
 body{
     font-family: 'NATS', sans-serif !important;
@@ -75,7 +75,6 @@ body{
     border: none;
     display: flex;
     align-items: center;
-    /* padding-top: 0.5rem; */
     padding-right: 1rem;
     padding-left:0.5rem;
 }
@@ -125,10 +124,6 @@ body{
     font-size:25px;
 }
 
-/* .clients_container3 {
-    display: none;
-} */
-
 #active {
     border: none;
     background-color: white;
@@ -165,11 +160,7 @@ body{
     gap: 1.5rem;
 }
 
-img {
-    width:87px;
-    height: 87px;
-    border-radius: 100%;
-}
+
 
 #btn4 {
     background-color: white;
@@ -191,9 +182,7 @@ img {
     width: 70%;
     margin: 0 auto;
     margin-bottom: 1rem;
-    /* background-color:rgba(0, 0, 0, 0.1); */
     border-radius: 10px;
-    /* backdrop-filter: blur(10px); */
     display: none;
     transition: all 0.4 ease-in-out !important;
 }
@@ -282,7 +271,6 @@ img {
     
 
     .add_set {
-        /* margin-bottom:1rem; */
         font-size:25px;
         font-weight:400;
     }
@@ -336,15 +324,11 @@ img {
 
 .client-item {
     padding: 30px 10px;
-    /* border: 1px solid grey; */
-    /* text-align: center; */
     margin: 5px;
         padding-left: 30px;
     width: 150px;
     flex-basis: 300px;
     background: #FAFAFA;
-    /* border: 1px solid #D9D9D9; */
-    /* box-shadow: 0px 10px 15px rgba(136, 136, 136, 0.05); */
     border-radius: 15px;
     position: relative;
     
@@ -377,12 +361,7 @@ img {
     border-bottom : 4px solid #4B9AFB;
 
 }
-/* @media screen and(max-width:760px){
-    .clients_operations {
-    display: flex;
-    gap: 2rem !important;
-}
-} */
+
 .bottomborder{
     border-bottom: 0.25rem solid #4B9AFB;
 }
@@ -424,7 +403,7 @@ img {
                     <path d="M7.0448 16.1345V9.3051H0.202393V7.02863H7.0448V0.199219H9.3256V7.02863H16.168V9.3051H9.3256V16.1345H7.0448Z" fill="#9C74F5"/>
                     </svg>
                     </button> </div>
-                    <a class="add_set" href="add_client.php"> <span">Add Clients</span></a>
+                    <a class="add_set" style="color: #9C74F5;" href="add_client.php"> <span>Add Clients</span></a>
                 </div>
                 <div class="add_set_client">
                     <div><button  id="btn1"><svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -440,7 +419,7 @@ img {
                         </defs>
                         </svg>
                         </button> </div>
-                    <div class="add_set"> <span>Set Goals</span></div>
+                        <a class="add_set" style="color: #9C74F5;" href="add_client.php"><span>Set Goals</span></a>
                 </div>
 
                 <div class="add_set_client">
@@ -448,7 +427,7 @@ img {
                     <path d="M15.408 3.99334V8.54628H13.8875V3.99334M13.8875 10.0639H15.408V11.5816H13.8875M7.04504 0.199219C6.64177 0.199219 6.25502 0.359113 5.96986 0.643727C5.68471 0.928341 5.52451 1.31436 5.52451 1.71687C5.51917 1.79012 5.51917 1.86367 5.52451 1.93692C3.33494 2.58192 1.72317 4.61557 1.72317 7.02863V11.5816L0.202637 13.0992V13.858H13.8875V13.0992L12.3669 11.5816V7.02863C12.3669 4.61557 10.7551 2.58192 8.56558 1.93692C8.57091 1.86367 8.57091 1.79012 8.56558 1.71687C8.56558 1.31436 8.40538 0.928341 8.12022 0.643727C7.83507 0.359113 7.44831 0.199219 7.04504 0.199219ZM5.52451 14.6169C5.52451 15.0194 5.68471 15.4054 5.96986 15.69C6.25502 15.9746 6.64177 16.1345 7.04504 16.1345C7.44831 16.1345 7.83507 15.9746 8.12022 15.69C8.40538 15.4054 8.56558 15.0194 8.56558 14.6169H5.52451Z" fill="#9C74F5"/>
                     </svg></button>
                     </div>
-                    <div class="add_set"> <span>Set Reminders</span></div>
+                    <a class="add_set" style="color: #9C74F5;" href="add_client.php"> <span>Set Reminders</span></a>
                 </div>
                 <div class="delete_client">
                     <button id="btn2"><span class="material-symbols-outlined">delete</span></button>
@@ -465,7 +444,7 @@ img {
         <br><br>
 
         <div class="lilac1">   
-                <img src="<?=$DEFAULT_PATH?>assets/images/lilac user icon (1).svg" style="position: absolute;width:332px;height:238px;top:40%; right:7%;" class="image1"> 
+                <img src="<?=$DEFAULT_PATH?>assets/images/lilac user icon.svg" style="position: absolute;width:432px;height:338px;top:50%; right:7%;" class="image1"> 
             </div>
         <div class="container3">   
 
@@ -475,7 +454,7 @@ img {
                 </div>               
         </div>       
         <div class="lilac2">
-            <img src="<?=$DEFAULT_PATH?>assets/images/lilac user icon.svg" style="width:271px;height:168px;position:absolute;left:20vw;bottom:3vh;" class="image2"> 
+            <img src="<?=$DEFAULT_PATH?>assets/images/lilac user icon (1).svg" style="width:371px;height:268px;position:absolute;left:20vw;bottom:2vh;" class="image2"> 
         </div>
         <?php require('constant/scripts.php');?>
 </body>

@@ -1,5 +1,5 @@
 <?php include('navbar.php');
-$sql = "SELECT * FROM `default_recipes` WHERE drecipe_category LIKE 'br%';";
+$sql = "SELECT * FROM `default_recipes` WHERE drecipe_category = 'breakfast'";
 $res = mysqli_query($conn, $sql);
 ?>
 <!DOCTYPE html>
@@ -35,6 +35,8 @@ $res = mysqli_query($conn, $sql);
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
         border-radius: 10px;
         padding: 10px;
+        display:flex;
+        align-items: center;
     }
 
     .card {
@@ -103,16 +105,19 @@ $res = mysqli_query($conn, $sql);
         padding-left: 70px;
         padding-top: 25px;
     }
-
-    @media screen and (min-width:720px) and (max-width:1500px) {
-        .heading {
-            justify-content: flex-start !important;
-        }
-
+    .flex.row{
+        --bs-gutter-x:0rem;
+    }
+    @media screen and (min-width:720px) and (max-width:1200px) {
         .header {
             display: flex;
             flex-direction: column !important;
             align-items: flex-start !important;
+        }
+    }
+    @media screen and (min-width:720px) and (max-width:1500px) {
+        .heading {
+            justify-content: flex-start !important;
         }
 
         .header h4 {
@@ -156,7 +161,7 @@ $res = mysqli_query($conn, $sql);
         }
 
         .flex.row {
-            margin: auto;
+            padding: 0rem 1rem;
             margin-left: auto !important;
         }
 
@@ -165,7 +170,7 @@ $res = mysqli_query($conn, $sql);
         }
 
         .searchbox {
-            margin-left: 14px !important;
+            /* margin-left: 14px !important; */
         }
 
         .but {
@@ -173,7 +178,7 @@ $res = mysqli_query($conn, $sql);
         }
 
         .title {
-            margin-left: 13px !important;
+            margin-left:0px !important;
         }
 
         small {
@@ -184,7 +189,7 @@ $res = mysqli_query($conn, $sql);
 
     @media screen and (min-width:0px) and (max-width:420px) {
         .searchbox {
-            width: 300px;
+            width:100%;
         }
 
     }
@@ -192,7 +197,7 @@ $res = mysqli_query($conn, $sql);
 </head>
 
 <body>
-    <div class="header" style="align-items:center;">
+    <div class="header flex-row" style="align-items:center;">
         <div class="title"
             style="font-size:40px;margin-left:2.8rem;margin-top:1.2rem;font-family:'NATS'; font-weight:400;"">Recipes <small style="
             color: #787885; font-size:20px; margin-left:1rem;">All Breakfast Recipes</small></div>
@@ -201,7 +206,7 @@ $res = mysqli_query($conn, $sql);
                 <button style="background-color:white;border:none;" id="seabtn" name="seabtn"><img
                         src="<?=$DEFAULT_PATH?>assets/images/search_recipe.svg" alt=""></button>
                 <input type="search" name="sinput" placeholder="Search"
-                    style="border:none;font-size:20px;margin-left:1rem;font-weight:400;">
+                    style="border:none;font-size:20px;font-weight:400; width:80%;">
             </div>
         </div>
     </div>
@@ -210,22 +215,13 @@ $res = mysqli_query($conn, $sql);
         <?php while ($d = mysqli_fetch_assoc($res)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
-            $drecipe_nutritional = $d['drecipe_nutritional information'];
+            $nutritional = json_decode($d['drecipe_nutritional_information'],true);
 
-            $drecipe_nutritional = trim($drecipe_nutritional, '{}');
-            $pairs = explode(', ', $drecipe_nutritional);
-            $nutritional = array();
-            foreach ($pairs as $pair) {
-                list($key, $value) = explode(': ', $pair);
-                $key = trim($key, "'");
-                $value = trim($value, "'");
-                $nutritional[$key] = $value;
-            }
         ?>
         <div class="card d-flex" style="padding:15px; width:325px; border-radius:16px;height:204px;margin:25px 40px;">
             <div class="card-upper d-flex justify-content-between">
                 <p id="bu" class="card-upper-text"> Medium </p>
-                <p id="bu" class="card-upper-text"><i class="fa-solid fa-clock"></i> 20:00 </p>
+                <p id="bu" class="card-upper-text"><img src="http://www.infits.iceiy.com/assets/images/Clock.svg" style="margin-right:10px"> 20:00 </p>
             </div>
             <div class="img-dis" style="width:100%; text-align:center;">
                 <img src="<?=$DEFAULT_PATH?>assets/images/Pancake.svg"
@@ -256,8 +252,8 @@ $res = mysqli_query($conn, $sql);
             </div>
         </div>
         <?php } ?>
-        <a class="butt" href="_create_recipe.php"
-            style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
+        <a class="but" href="create_recipe.php"
+            style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;box-shadow:0px 0px 30px 0px #9C74F5;">+</a>
     </div>
 
     <?php require('constant/scripts.php'); ?>

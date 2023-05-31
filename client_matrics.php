@@ -227,7 +227,7 @@
         <div class="" style="flex-direction:column;display:flex;">
         <p  class="img_title">Steps</p>
         <div style="margin-top:-30px !important;">
-        <div class="" style="background-image:url('<?=$DEFAULT_PATH?>assets/images/steps_bg.svg');background-repeat:no-repeat;background-position:center;position:relative;">
+        <div class="" style="background-image:url('<?=$DEFAULT_PATH?>assets/images/matrics_steps_bg.svg');background-repeat:no-repeat;background-position:center;position:relative;">
         <div><img src="<?=$DEFAULT_PATH?>assets/images/Ellipse_matrics.svg" style="margin-left:64px;"></div>
         <div style="position:absolute;left: 40%;right: 33.33%;top: 6.9%;bottom: 34.83%;">
           <p style="color:white;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 40px;line-height: 85px;">500</p>

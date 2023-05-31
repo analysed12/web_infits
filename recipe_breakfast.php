@@ -1,8 +1,5 @@
 <?php
 include('navbar.php');
-?>
-
-<?php
 require('constant/config.php');
 ?>
 
@@ -495,7 +492,7 @@ require('constant/config.php');
     <!-- breakfast lunch dinner -->
     <div class="container1" style="margin-left:20px" id="myDIV1" onscroll="myFunction()">
         <a href="all_recipes.php" style="color: inherit;" class="breakfast" id="btn1">
-        <div class="top-card" style="  background-color: #85B4A1;margin-left:50px;width:320px; height250px;">
+        <div class="top-card" style="  background-color: #85B4A1;margin-left:50px;width:320px; height:250px;">
                 <span class="ci ci1" style="background-color:#75A190;opacity: 0.76;"></span><span class="ci ci2" style="background-color: #75A190;opacity: 0.76;"></span>
                 <img src="<?=$DEFAULT_PATH?>assets/images/breakfast_bowl.svg" class="imag im1" style="top:-40px">
                 <h3 style="margin-bottom:10px;color:#FFFFFF;font-weight: 400;margin-top:30px;margin-right:145px;font-size:32px;">All Recipe</h3>
@@ -505,7 +502,7 @@ require('constant/config.php');
         </a>
 
         <a href="all_recipes.php" style="color: inherit;" class="lunch" id="btn2">
-        <div class="top-card" style=" background-color: #db695f;width:320px; height250px;">
+        <div class="top-card" style=" background-color: #db695f;width:320px; height:250px;">
                 <span class="ci ci1" style="background-color:#BD544B;opacity: 0.76;"></span><span class="ci ci2" style="background-color: #BD544B;opacity: 0.76;"></span>
                 <img src="<?=$DEFAULT_PATH?>assets/images/breakfast_omlet.svg" class="imag im1" style="top:-30px">
                 <h3 style="margin-bottom:10px;color:#FFFFFF;font-weight: 400;margin-top:30px;margin-right:126px;font-size:32px;">All Time fav</h3>
@@ -515,7 +512,7 @@ require('constant/config.php');
         </a>
 
         <a href="all_recipes.php" style="color: inherit;" class="snacks" id="btn3">
-        <div class="top-card" style=" background-color: #6cb7d9;width:320px; height250px;">
+        <div class="top-card" style=" background-color: #6cb7d9;width:320px; height:250px;">
                 <span class="ci ci1" style="background-color:rgb(43 128 153 / 20%);opacity: 0.76;"></span><span class="ci ci2" style="background-color: rgb(43 128 153 / 20%);opacity: 0.76;"></span>
                 <img src="<?=$DEFAULT_PATH?>assets/images/waffers.svg" class="imag im1" style="left:150px;top:-15px;width:205px;height:218px;">
                 <h3 style="margin-bottom:10px;color:#FFFFFF;font-weight: 400;margin-top:30px;margin-right:85px;font-size:32px;">Recommended</h3>
@@ -526,14 +523,14 @@ require('constant/config.php');
     </div>
 
     <!-- all recipes -->
-    <div class="middle_wrapper" style="display:flex;justify-content:space-between;margin-top:20px;margin-left:5rem;margin-right:2.5rem">
+    <div class="middle_wrapper" style="display:flex;justify-content:space-between;margin-top:20px;margin-left:5rem;margin-right:2.5rem;margin-bottom:1rem;">
         <h3 class="recipe" style="font-weight:500;margin-left:50px;color:black; font-size: 30px;">All Recipes</h3>
         <a href="recipe_all_breakfast.php"><h3 style="color:#6A6A6A;font-size:20px; margin-right: 50px;">View All</h3></a>
     </div>
 
     <!-- recipes from db -->
     <?php
-    $sql = "SELECT * FROM `default_recipes` WHERE drecipe_category LIKE 'br%';";
+    $sql = "SELECT * FROM `default_recipes` WHERE drecipe_category = 'breakfast';";
     $res = mysqli_query($conn, $sql);
     ?>
 
@@ -542,23 +539,14 @@ require('constant/config.php');
     while ($d = mysqli_fetch_assoc($res)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
-            $drecipe_nutritional = $d['drecipe_nutritional information'];
+            $nutritional = json_decode($d['drecipe_nutritional_information'],true);
 
-            $drecipe_nutritional = trim($drecipe_nutritional, '{}');
-            $pairs = explode(', ', $drecipe_nutritional);
-            $nutritional = array();
-        foreach ($pairs as $pair) {
-                list($key, $value) = explode(': ', $pair);
-                $key = trim($key, "'");
-                $value = trim($value, "'");
-                $nutritional[$key] = $value;
-            }
             if ($counter == 5) {
                 break; 
             }
             $counter++;
         ?>
-            <div class="card d-flex" style="padding:15px; width:325px; height:204px;border-radius:16px; margin:25px 20px 25px 50px;">
+            <div class="card d-flex" style="padding:15px; width:325px; height:204px;border-radius:16px; margin:25px 20px 25px 50px !important;">
                 <div class="card-upper d-flex justify-content-between">
                     <p id="bu" class="card-upper-text"> Medium </p>
                     <p id="bu" class="card-upper-text d-flex" style="margin-left:73px;"><i class="fa-solid fa-clock" style="margin:2px 4px;"></i> 20:00 </p>
@@ -590,7 +578,7 @@ require('constant/config.php');
                 </div>
             </div>
         <?php } ?>
-        <a class="butt" href="_create_recipe.php" style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
+        <a class="butt" href="create_recipe.php" style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
      </div>
     <?php require('constant/scripts.php');?>
     
