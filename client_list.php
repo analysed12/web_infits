@@ -36,447 +36,447 @@ echo $output;
     <title>Client List</title>
 </head>
 <style>
-    ::placeholder {
-        color: #BBBBBB;
-        opacity: 1;
-    }
+::placeholder {
+    color: #BBBBBB;
+    opacity: 1;
+}
 
-    body {
-        font-family: 'NATS', sans-serif !important;
-        overflow-x: hidden !important;
-    }
+body {
+    font-family: 'NATS', sans-serif !important;
+    overflow-x: hidden !important;
+}
 
+.clients {
+    margin-left: 20rem;
+    font-weight: 400;
+    margin-top: 1.5rem;
+
+}
+
+.clients_container {
+    display: flex;
+}
+
+.clients_operations {
+    display: flex;
+    gap: 3rem;
+}
+
+#btn1 {
+    background-color: white;
+    border: none;
+    color: #9C74F5;
+    width: auto;
+
+}
+
+.add_set_client {
+    width: auto;
+    margin-top: 1rem;
+    color: #9C74F5;
+    background-color: white;
+    box-shadow: 0.7px 0.7px 2.5px 1.5px rgb(231, 208, 253);
+    border-radius: 0.6rem;
+    font-size: 20px;
+    font-weight: 400;
+    border: none;
+    display: flex;
+    padding-top: 0.5rem;
+    padding-right: 1rem;
+    padding-left: 0.5rem;
+}
+
+#btn2 {
+    width: auto;
+    background-color: #FD2B2B;
+    border: none;
+    color: white;
+    margin-top: 1rem;
+    border-radius: 0.6rem;
+    box-shadow: 0.6px 0.6px 2px 1px #ccc;
+    padding: 0.5rem;
+    padding-bottom: 0.3rem;
+}
+
+.search_client {
+    width: 343px;
+    margin-top: 1rem;
+    color: #BBBBBB;
+    background-color: white;
+    box-shadow: 0.6px 0.6px 2px 1px #ccc;
+    border-radius: 0.6rem;
+    font-size: 20px;
+    font-weight: 400;
+    border: none;
+    display: flex;
+    padding-top: 0.5rem;
+    padding-right: 0.5rem;
+    margin-right: 1rem;
+}
+
+#btn3 {
+    width: auto;
+    background-color: white;
+    border: none;
+    color: #ACACAC;
+    margin-left: 0.5rem;
+}
+
+.seach_clients_text {
+    border: none;
+}
+
+.clients_container2 {
+    margin-top: 2rem;
+    font-size: 25px;
+}
+
+
+#active {
+    border: none;
+    background-color: white;
+    font-weight: 500;
+    font-size: 1.2rem;
+    border: 1px solid transparent;
+    width: auto;
+}
+
+#active:hover {
+    border-bottom: 0.25rem solid #4B9AFB;
+    border-radius: 17px;
+}
+
+.client_wrapper1 {
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.client_wrapper2 {
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.client_profile {
+    height: 9rem;
+    width: auto;
+    background-color: #FAFAFA;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+img {
+    width: 87px;
+    height: 87px;
+    border-radius: 100%;
+}
+
+#btn4 {
+    background-color: white;
+    border-color: #4B9AFB;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    margin-top: 0.8rem;
+    width: auto;
+}
+
+#add_set_client {
+    margin-left: 5rem !important;
+}
+
+#goals {
+    position: fixed;
+    bottom: 0;
+    left: 20%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px 5px;
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    display: none;
+    transition: all 0.4 ease-in-out !important;
+}
+
+#del {
+    position: fixed;
+    bottom: 0;
+    left: 20%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px 5px;
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    display: none;
+    transition: all 0.4 ease-in-out !important;
+}
+
+#toast {
+    position: fixed;
+    bottom: 0;
+    left: 20%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px 5px;
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    display: none;
+    transition: all 0.4 ease-in-out !important;
+}
+
+#toast__h1 {
+    font-family: 'NATS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    color: #000000;
+}
+
+.goalbtn {
+    background: #9C74F5;
+    color: #FFFFFF;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    transition: all 0.2 .2 ease-in;
+}
+
+.reminderbtn {
+    background: #9C74F5;
+    color: #FFFFFF;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    transition: all 0.2 .2 ease-in;
+}
+
+.deletebtn {
+    background: red;
+    color: #FFFFFF;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    transition: all 0.2 .2 ease-in;
+}
+
+.btn2 {
+    color: #9C74F5 !important;
+    background: #FFFFFF;
+    border: 1px solid #9C74F5;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.btn {
+    font-family: 'NATS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    margin: 0 5px;
+}
+
+.cancel-btn {
+    color: #9C74F5 !important;
+    background: #FFFFFF;
+    border: 1px solid #9C74F5;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    width: 120px;
+}
+
+.del-btn {
+    background: red;
+    color: #FFFFFF;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    transition: all 0.2 .2 ease-in;
+    width: 120px;
+}
+
+.myCheckboxs {
+    position: absolute;
+    top: 10%;
+    right: 6%;
+    display: none;
+    border: 1px solid #7282FB;
+}
+
+.modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    transition: opacity 500ms;
+    align-items: center;
+
+}
+
+.modal-content {
+    width: 400px;
+    height: 250px;
+    padding: 50px;
+    border-radius: 25px;
+    margin: 200px;
+    margin-left: 550px;
+    margin-top: 220px;
+    overflow: hidden;
+}
+
+.modal-content .pop {
+    margin-left: 15px;
+    text-align: center;
+}
+
+.modal-content .pop br {
+    margin-left: 10px;
+}
+
+.modal-content .delete {
+    margin-top: 20px;
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    background: none;
+    border: none;
+}
+
+
+@media screen and (max-width: 720px) {
     .clients {
-        margin-left: 20rem;
-        font-weight: 400;
-        margin-top: 1.5rem;
-
+        margin-left: 2rem;
     }
 
     .clients_container {
         display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .add_set_client {
+        font-size: 0.8rem;
+    }
+
+    #add_set_client {
+        margin-left: 0% !important;
+    }
+
+    .modal-content {
+        margin-left: 0rem;
+        width: 400px;
+    }
+
+    .add_set {
+        font-size: 25px;
+        font-weight: 400;
+    }
+
+    .client_wrapper1 {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.1rem;
+    }
+
+    .client_wrapper2 {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.1rem;
+    }
+
+    .clients_container3 {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
 
     .clients_operations {
         display: flex;
-        gap: 3rem;
+
+        gap: 0.5rem;
+        max-width: fit-content;
+        margin-left: 0rem !important;
     }
 
-    #btn1 {
-        background-color: white;
-        border: none;
-        color: #9C74F5;
-        width: auto;
-
-    }
-
-    .add_set_client {
-        width: auto;
-        margin-top: 1rem;
-        color: #9C74F5;
-        background-color: white;
-        box-shadow: 0.7px 0.7px 2.5px 1.5px rgb(231, 208, 253);
-        border-radius: 0.6rem;
-        font-size: 20px;
-        font-weight: 400;
-        border: none;
-        display: flex;
-        padding-top: 0.5rem;
-        padding-right: 1rem;
-        padding-left: 0.5rem;
-    }
-
-    #btn2 {
-        width: auto;
-        background-color: #FD2B2B;
-        border: none;
-        color: white;
-        margin-top: 1rem;
-        border-radius: 0.6rem;
-        box-shadow: 0.6px 0.6px 2px 1px #ccc;
-        padding: 0.5rem;
-        padding-bottom: 0.3rem;
-    }
-
-    .search_client {
-        width: 343px;
-        margin-top: 1rem;
-        color: #BBBBBB;
-        background-color: white;
-        box-shadow: 0.6px 0.6px 2px 1px #ccc;
-        border-radius: 0.6rem;
-        font-size: 20px;
-        font-weight: 400;
-        border: none;
-        display: flex;
-        padding-top: 0.5rem;
-        padding-right: 0.5rem;
-        margin-right: 1rem;
-    }
-
-    #btn3 {
-        width: auto;
-        background-color: white;
-        border: none;
-        color: #ACACAC;
-        margin-left: 0.5rem;
-    }
-
-    .seach_clients_text {
-        border: none;
-    }
-
-    .clients_container2 {
-        margin-top: 2rem;
-        font-size: 25px;
-    }
-
-
-    #active {
-        border: none;
-        background-color: white;
-        font-weight: 500;
-        font-size: 1.2rem;
-        border: 1px solid transparent;
-        width: auto;
-    }
-
-    #active:hover {
-        border-bottom: 0.25rem solid #4B9AFB;
-        border-radius: 17px;
-    }
-
-    .client_wrapper1 {
-        padding: 1.5rem;
-        display: flex;
-        gap: 1rem;
-    }
-
-    .client_wrapper2 {
-        padding: 1.5rem;
-        display: flex;
-        gap: 1rem;
-    }
-
-    .client_profile {
-        height: 9rem;
-        width: auto;
-        background-color: #FAFAFA;
-        border-radius: 1rem;
-        padding: 1.5rem;
-        display: flex;
-        gap: 1.5rem;
-    }
-
-    img {
-        width: 87px;
-        height: 87px;
-        border-radius: 100%;
-    }
-
-    #btn4 {
-        background-color: white;
-        border-color: #4B9AFB;
-        border-radius: 0.3rem;
-        font-size: 0.8rem;
-        margin-top: 0.8rem;
-        width: auto;
-    }
-
-    #add_set_client {
-        margin-left: 5rem !important;
-    }
-
-    #goals {
-        position: fixed;
-        bottom: 0;
-        left: 20%;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        padding: 10px 5px;
-        width: 70%;
-        margin: 0 auto;
-        margin-bottom: 1rem;
-        border-radius: 10px;
+    .clients_container3 {
         display: none;
-        transition: all 0.4 ease-in-out !important;
-    }
-
-    #del {
-        position: fixed;
-        bottom: 0;
-        left: 20%;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        padding: 10px 5px;
-        width: 70%;
-        margin: 0 auto;
-        margin-bottom: 1rem;
-        border-radius: 10px;
-        display: none;
-        transition: all 0.4 ease-in-out !important;
     }
 
     #toast {
-        position: fixed;
-        bottom: 0;
-        left: 20%;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        padding: 10px 5px;
+        flex-direction: column;
         width: 70%;
-        margin: 0 auto;
-        margin-bottom: 1rem;
-        border-radius: 10px;
-        display: none;
-        transition: all 0.4 ease-in-out !important;
     }
 
-    #toast__h1 {
-        font-family: 'NATS';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 30px;
-        color: #000000;
+}
+
+.client-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
+}
+
+.client-item {
+    padding: 30px 10px;
+    margin: 5px;
+    width: 150px;
+    flex-basis: 300px;
+    background: #FAFAFA;
+    border-radius: 15px;
+    position: relative;
+}
+
+.client-item:hover {
+    border: 1px solid #D9D9D9;
+    box-shadow: 0px 10px 15px rgba(136, 136, 136, 0.05);
+}
+
+.button-top {
+    border: none;
+    background: white;
+}
+
+
+.button-top:focus {
+    border-bottom: 4px solid #4B9AFB;
+}
+
+.button-top.active {
+    border-bottom: 4px solid #4B9AFB;
+}
+
+.button-top:hover {
+    border-bottom: 4px solid #4B9AFB;
+
+}
+
+
+@media screen and (max-width: 1100px) {
+    .clients_container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem;
     }
 
-    .goalbtn {
-        background: #9C74F5;
-        color: #FFFFFF;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-        border-radius: 10px;
-        transition: all 0.2 .2 ease-in;
+    .clients_operations {
+        margin-left: -5rem;
     }
-
-    .reminderbtn {
-        background: #9C74F5;
-        color: #FFFFFF;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-        border-radius: 10px;
-        transition: all 0.2 .2 ease-in;
-    }
-
-    .deletebtn {
-        background: red;
-        color: #FFFFFF;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-        border-radius: 10px;
-        transition: all 0.2 .2 ease-in;
-    }
-
-    .btn2 {
-        color: #9C74F5 !important;
-        background: #FFFFFF;
-        border: 1px solid #9C74F5;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-        border-radius: 10px;
-    }
-
-    .btn {
-        font-family: 'NATS';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 25px;
-        margin: 0 5px;
-    }
-
-    .cancel-btn {
-        color: #9C74F5 !important;
-        background: #FFFFFF;
-        border: 1px solid #9C74F5;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-        border-radius: 10px;
-        width: 120px;
-    }
-
-    .del-btn {
-        background: red;
-        color: #FFFFFF;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-        border-radius: 10px;
-        transition: all 0.2 .2 ease-in;
-        width: 120px;
-    }
-
-    .myCheckboxs {
-        position: absolute;
-        top: 10%;
-        right: 6%;
-        display: none;
-        border: 1px solid #7282FB;
-    }
-
-    .modal {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        transition: opacity 500ms;
-        align-items: center;
-
-    }
-
-    .modal-content {
-        width: 400px;
-        height: 250px;
-        padding: 50px;
-        border-radius: 25px;
-        margin: 200px;
-        margin-left: 550px;
-        margin-top: 220px;
-        overflow: hidden;
-    }
-
-    .modal-content .pop {
-        margin-left: 15px;
-        text-align: center;
-    }
-
-    .modal-content .pop br {
-        margin-left: 10px;
-    }
-
-    .modal-content .delete {
-        margin-top: 20px;
-    }
-
-    .modal-content .close {
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        transition: all 200ms;
-        font-size: 30px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #333;
-        background: none;
-        border: none;
-    }
-
-
-    @media screen and (max-width: 720px) {
-        .clients {
-            margin-left: 2rem;
-        }
-
-        .clients_container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .add_set_client {
-            font-size: 0.8rem;
-        }
-
-        #add_set_client {
-            margin-left: 0% !important;
-        }
-
-        .modal-content {
-            margin-left: 0rem;
-            width: 400px;
-        }
-
-        .add_set {
-            font-size: 25px;
-            font-weight: 400;
-        }
-
-        .client_wrapper1 {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            padding: 0.1rem;
-        }
-
-        .client_wrapper2 {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            padding: 0.1rem;
-        }
-
-        .clients_container3 {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .clients_operations {
-            display: flex;
-
-            gap: 0.5rem;
-            max-width: fit-content;
-            margin-left: 0rem !important;
-        }
-
-        .clients_container3 {
-            display: none;
-        }
-
-        #toast {
-            flex-direction: column;
-            width: 70%;
-        }
-
-    }
-
-    .client-container {
-        display: flex;
-        flex-wrap: wrap;
-        max-width: 1000px;
-    }
-
-    .client-item {
-        padding: 30px 10px;
-        margin: 5px;
-        width: 150px;
-        flex-basis: 300px;
-        background: #FAFAFA;
-        border-radius: 15px;
-        position: relative;
-    }
-
-    .client-item:hover {
-        border: 1px solid #D9D9D9;
-        box-shadow: 0px 10px 15px rgba(136, 136, 136, 0.05);
-    }
-
-    .button-top {
-        border: none;
-        background: white;
-    }
-
-
-    .button-top:focus {
-        border-bottom: 4px solid #4B9AFB;
-    }
-
-    .button-top.active {
-        border-bottom: 4px solid #4B9AFB;
-    }
-
-    .button-top:hover {
-        border-bottom: 4px solid #4B9AFB;
-
-    }
-
-
-    @media screen and (max-width: 1100px) {
-        .clients_container {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 0.5rem;
-        }
-
-        .clients_operations {
-            margin-left: -5rem;
-        }
-    }
+}
 </style>
 
 <body>
@@ -516,16 +516,12 @@ echo $output;
         </div>
 
         <div class="clients_container2">
-            <a href="?active-btn"
-                class="button-top <?php if (!isset($_GET['pending-btn'])) {
+            <a href="?active-btn" class="button-top <?php if (!isset($_GET['pending-btn'])) {
                     echo 'active';
-                } ?> active-button text-dark"
-                name="active-btn">Active</a>
-            <a href="?pending-btn"
-                class="button-top <?php if (isset($_GET['pending-btn'])) {
+                } ?> active-button text-dark" name="active-btn">Active</a>
+            <a href="?pending-btn" class="button-top <?php if (isset($_GET['pending-btn'])) {
                     echo 'active';
-                } ?> pending-btn text-dark"
-                name="pending-btn" style="margin-left:2rem">Pending</a>
+                } ?> pending-btn text-dark" name="pending-btn" style="margin-left:2rem">Pending</a>
         </div>
         <br><br>
 
@@ -713,156 +709,156 @@ echo $output;
 
 
     <script>
-        document.getElementsByClassName('client-item').onclick = function () {
-            var checkbox = document.getElementById('chk');
-            checkbox.checked = !checkbox.checked;
-        }
-        var modal = document.getElementById("myModal");
-        // Get the button that opens the modal
-        var btns = document.getElementById("myBtn");
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-        // When the user clicks the button, open the modal 
-        btns.onclick = function () {
-            event.preventDefault(); //keeps page from refreshing
-            modal.style.display = "block";
-        }
+    document.getElementsByClassName('client-item').onclick = function() {
+        var checkbox = document.getElementById('chk');
+        checkbox.checked = !checkbox.checked;
+    }
+    var modal = document.getElementById("myModal");
+    // Get the button that opens the modal
+    var btns = document.getElementById("myBtn");
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    // When the user clicks the button, open the modal 
+    btns.onclick = function() {
+        event.preventDefault(); //keeps page from refreshing
+        modal.style.display = "block";
+    }
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
             modal.style.display = "none";
         }
+    }
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
+    const popUp = document.querySelector("#goals");
+    const popUp1 = document.querySelector("#toast");
+    const popUp2 = document.querySelector("#del");
+    const goalbtn = document.querySelector(".goalbtn");
+    const btn2 = document.querySelector(".btn2");
+    const reminderbtn = document.querySelector(".reminderbtn");
+    const deletebtn = document.querySelector(".deletebtn");
+    const delbtn = document.querySelector(".del-btn");
+    const cancelbtn = document.querySelector(".cancel-btn");
+    const btn__span = document.querySelector(".btn__span");
+    const btn__span1 = document.querySelector(".btn__span1");
+    const btn__span2 = document.querySelector(".btn__span2");
+    const myCheckBox = document.querySelectorAll(".myCheckboxs");
+    const form = document.querySelector("#form");
+    const form__input = document.querySelector("#form__input");
+    const form1 = document.querySelector("#form1");
+    const form__input1 = document.querySelector("#form__input1");
+    const form2 = document.querySelector("#form1");
+    const form__input2 = document.querySelector("#form__input2");
+
+
+    let selectedClients = [];
+
+    // display checkBox and popUp here...
+    const goals = (val) => {
+        popUp.style.display = "inline-flex";
+        btn__span.innerHTML = val;
+        myCheckBox.forEach((items) => {
+            items.style.display = "block";
+        });
+    };
+
+    const toast = (val) => {
+        popUp1.style.display = "inline-flex";
+        btn__span1.innerHTML = val;
+        myCheckBox.forEach((items) => {
+            items.style.display = "block";
+        });
+    };
+
+    const del = (val) => {
+        popUp2.style.display = "inline-flex";
+        btn__span2.innerHTML = val;
+        myCheckBox.forEach((items) => {
+            items.style.display = "block";
+        });
+    };
+
+
+    // after checking the checkbox...the further opration...
+    goalbtn.addEventListener("click", () => {
+        if (btn__span.innerHTML == "Set Goals") { //the set goals page linking and sending the data...
+            myCheckBox.forEach((items) => {
+                if (items.checked) {
+                    selectedClients.push(items.value);
+                }
+                form__input.value = JSON.stringify(selectedClients);
+                form.action = "setgoals.php";
+                console.log("setgoals", selectedClients);
+            });
+            window.location.href = "setgoals.php";
         }
-
-        const popUp = document.querySelector("#goals");
-        const popUp1 = document.querySelector("#toast");
-        const popUp2 = document.querySelector("#del");
-        const goalbtn = document.querySelector(".goalbtn");
-        const btn2 = document.querySelector(".btn2");
-        const reminderbtn = document.querySelector(".reminderbtn");
-        const deletebtn = document.querySelector(".deletebtn");
-        const delbtn = document.querySelector(".del-btn");
-        const cancelbtn = document.querySelector(".cancel-btn");
-        const btn__span = document.querySelector(".btn__span");
-        const btn__span1 = document.querySelector(".btn__span1");
-        const btn__span2 = document.querySelector(".btn__span2");
-        const myCheckBox = document.querySelectorAll(".myCheckboxs");
-        const form = document.querySelector("#form");
-        const form__input = document.querySelector("#form__input");
-        const form1 = document.querySelector("#form1");
-        const form__input1 = document.querySelector("#form__input1");
-        const form2 = document.querySelector("#form1");
-        const form__input2 = document.querySelector("#form__input2");
-
-
-        let selectedClients = [];
-
-        // display checkBox and popUp here...
-        const goals = (val) => {
-            popUp.style.display = "inline-flex";
-            btn__span.innerHTML = val;
+    });
+    reminderbtn.addEventListener("click", () => {
+        if (btn__span1.innerHTML == "Set Reminders") { //the set Reminders page linking and sending the data...
             myCheckBox.forEach((items) => {
-                items.style.display = "block";
+                if (items.checked) {
+                    selectedClients.push(items.value);
+                }
+                form__input1.value = JSON.stringify(selectedClients);
+                form1.action = 'set_reminders.php';
+                console.log("Set Reminders", selectedClients);
             });
-        };
+            window.location.href = "set_reminders.php";
+        }
+    });
 
-        const toast = (val) => {
-            popUp1.style.display = "inline-flex";
-            btn__span1.innerHTML = val;
+    deletebtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (btn__span2.innerHTML == "Delete Clients") {
             myCheckBox.forEach((items) => {
-                items.style.display = "block";
+                if (items.checked) {
+                    selectedClients.push(items.value);
+                }
             });
-        };
-
-        const del = (val) => {
-            popUp2.style.display = "inline-flex";
-            btn__span2.innerHTML = val;
-            myCheckBox.forEach((items) => {
-                items.style.display = "block";
+            form__input2.value = JSON.stringify(selectedClients);
+            console.log("Delete Clients", selectedClients);
+            delbtn.addEventListener("click", () => {
+                document.getElementById("form2").submit();
             });
-        };
-
-
-        // after checking the checkbox...the further opration...
-        goalbtn.addEventListener("click", () => {
-            if (btn__span.innerHTML == "Set Goals") { //the set goals page linking and sending the data...
-                myCheckBox.forEach((items) => {
-                    if (items.checked) {
-                        selectedClients.push(items.value);
-                    }
-                    form__input.value = JSON.stringify(selectedClients);
-                    form.action = "setgoals.php";
-                    console.log("setgoals", selectedClients);
-                });
-                window.location.href = "setgoals.php";
-            }
+        }
+    })
+    btn2.addEventListener("click", (e) => {
+        e.preventDefault();
+        popUp.style.display = "none";
+        myCheckBox.forEach((items) => {
+            items.style.display = "none";
         });
-        reminderbtn.addEventListener("click", () => {
-            if (btn__span1.innerHTML == "Set Reminders") { //the set Reminders page linking and sending the data...
-                myCheckBox.forEach((items) => {
-                    if (items.checked) {
-                        selectedClients.push(items.value);
-                    }
-                    form__input1.value = JSON.stringify(selectedClients);
-                    form1.action = 'set_reminders.php';
-                    console.log("Set Reminders", selectedClients);
-                });
-                window.location.href = "set_reminders.php";
-            }
-        });
+    });
 
-        deletebtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            if (btn__span2.innerHTML == "Delete Clients") {
-                myCheckBox.forEach((items) => {
-                    if (items.checked) {
-                        selectedClients.push(items.value);
-                    }
-                });
-                form__input2.value = JSON.stringify(selectedClients);
-                console.log("Delete Clients", selectedClients);
-                delbtn.addEventListener("click", () => {
-                    document.getElementById("form2").submit();
-                });
-            }
-        })
-        btn2.addEventListener("click", (e) => {
-            e.preventDefault();
-            popUp.style.display = "none";
-            myCheckBox.forEach((items) => {
-                items.style.display = "none";
-            });
+    btn2.addEventListener("click", (e) => {
+        e.preventDefault();
+        popUp1.style.display = "none";
+        myCheckBox.forEach((items) => {
+            items.style.display = "none";
         });
+    });
 
-        btn2.addEventListener("click", (e) => {
-            e.preventDefault();
-            popUp1.style.display = "none";
-            myCheckBox.forEach((items) => {
-                items.style.display = "none";
-            });
+    btn2.addEventListener("click", (e) => {
+        e.preventDefault();
+        popUp2.style.display = "none";
+        myCheckBox.forEach((items) => {
+            items.style.display = "none";
         });
+    });
 
-        btn2.addEventListener("click", (e) => {
-            e.preventDefault();
-            popUp2.style.display = "none";
-            myCheckBox.forEach((items) => {
-                items.style.display = "none";
-            });
+    cancelbtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        modal.style.display = "none";
+        myCheckBox.forEach((items) => {
+            items.style.display = "none";
         });
-
-        cancelbtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            modal.style.display = "none";
-            myCheckBox.forEach((items) => {
-                items.style.display = "none";
-            });
-        });
+    });
     </script>
 </body>
 

@@ -1,8 +1,8 @@
 <?php
 require('constant/config.php');
 // Client Id
-if(isset($_GET['id'])){
-    $clientId = $_GET['id'];
+if(isset($_GET['client_id'])){
+    $clientId = $_GET['client_id'];
 }else{
     header('location: index.php');
 }
@@ -1011,7 +1011,8 @@ $j = count($pastActivityData);
                 <div class="tsd-left-b table-activity">
                     <div class="heading">
                         <p>Past Activity</p>
-                        <a href="past_activities_weight.php?id=<?php echo ($clientId) ?>"><span>View All</span></a>
+                        <a href="past_activities_weight.php?client_id=<?php echo ($clientId) ?>"><span>View
+                                All</span></a>
                     </div>
                     <div class="heading-border"></div>
                     <div class="activity-container">
@@ -1044,7 +1045,8 @@ $progressBarData = fetchDataSql($clientId, "", $today->format('Y-m-d'), 2);
             <div class="col-lg-4 tsd-right">
                 <div class="heading">
                     <p>Daily Progress</p>
-                    <a href="past_activities_weight.php?id=<?php echo ($clientId) ?>"><span>View Activity</span></a>
+                    <a href="past_activities_weight.php?client_id=<?php echo ($clientId) ?>"><span>View
+                            Activity</span></a>
                 </div>
                 <div class="progress-bar-container">
                     <div id="progress-percent" class="progress-circle">
