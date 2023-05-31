@@ -13,6 +13,10 @@
         body{
             font-family: 'NATS';
         }
+        ::placeholder {
+        color: #AEAEAE;
+        padding: 10px;
+    }
         .cheader{
             padding: 20px;
             display: flex;
@@ -100,7 +104,7 @@
             gap: 20px;
             cursor: pointer;
         }
-        span.plus {
+        .plus {
             border: 2px solid;
             font-size: 50px;
             font-weight: 600;
@@ -108,6 +112,8 @@
             line-height: 15px;
             border-radius: 10px;
             color: #BD59EB;
+            text-decoration: none;
+            background-color: white;
         }
         .ingre-icards {
             display: flex;
@@ -122,7 +128,7 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            gap: 40px;
+            justify-content: space-between;
             margin-bottom: 25px;
         }
         .icard img {
@@ -168,6 +174,14 @@
 box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);
 border-radius: 10px;
         }
+        @media screen and (max-width: 1200px){
+            .popup {
+            margin-left: 10% !important;
+            margin-right: 10% !important;
+            width: auto !important;
+        }
+
+        }
         @media screen and (max-width: 720px){
             .rtab-content-group {
             width: 100%;
@@ -200,7 +214,72 @@ border-radius: 10px;
     align-items: center;
             
         }
+        
+        .directions{
+            width: auto !important;
         }
+        }
+        
+        .overlay {
+            position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.6);
+        transition: opacity 500ms;
+       display:none;
+    }
+
+    .popup {
+        margin: 290px;
+margin-left: 550px;
+padding: 20px;
+background: #fff;
+box-shadow: 0px 0px 34.0377px rgba(0, 0, 0, 0.25);
+border-radius: 25.5283px;
+width: 400px;
+position: relative;
+transition: all 5s ease-in-out;
+display:flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap:0.5rem;
+    }
+.directions{
+    background: #FFFFFF;
+border: 1.74869px solid #D4D4D4;
+border-radius: 10px;
+width: 350.43px;
+height: 57.71px;
+}
+.ingredient{
+    background: #FFFFFF;
+border: 1.74869px solid #D4D4D4;
+border-radius: 10px;
+width: 300.43px;
+height: 57.71px; 
+}
+.direction_btn{
+    background: #A85CF1;
+border-radius: 10px;
+color:white;
+padding: 1% 10%;
+border:none;
+font-size: 30px;
+
+
+}
+.popup2_wrapper{
+    display:flex;
+    gap:1rem;
+    align-items: center;
+}
+.direction_li{
+    padding-bottom: 12px;
+}
+
     </style>
   </head>
   <body>
@@ -210,27 +289,6 @@ border-radius: 10px;
      }else{
         $action = 'createRecipe';
      }
-        // $rid = $_POST['RID'];  
-        // $tableName = isset($_POST['tableName']); 
-        //   if(!$rid || $rid == null){   // check weather id is present or not...
-        //         session_start();
-        //         $_SESSION['NoID'] = "Oops! need recipes id to edit.";
-        //         return;
-        //     }  
-        //     if($tableName == 'default'){
-        //         $sql= "select * from `default_recipes` where `drecipe_id` = '$rid'";                
-        //     }else{
-        //         $sql= "select * from `custom_recipes` where `drecipe_id` = '$rid'";
-        //     }
-        //     $result = $conn ->query($sql);
-        //     if($result ->num_rows > 0){
-        //       while($row= $result ->fetch_assoc()){
-        //         $ingredient = json_decode($row['drecipe_nutritional_information'],true);
-        //         $Rname =  $row['drecipe_name'];                           
-        //         $category =   $row['drecipe_category'];
-        //     }}
-
-            // update or edit recipe code start here...
             if(isset($_POST['editRcp'])){
                 $rname = $_POST['recipeName'];
                 $name1 = $_POST['name1'];
@@ -307,7 +365,7 @@ border-radius: 10px;
         <div id="content" class="container-fluid">
             <div class="row">
                 <div class="col cheader d-flex justify-content-between">
-                    <span>New Recipe</span>
+                    <span style="font-size:40px;margin-top:0.5rem;margin-left:1.5rem">New Recipe</span>
                     <button name='<?=$action?>' type="submit" id='submit_btn' class="btn btn-save"><?php if($action == 'createRecipe'){ echo "Save";} else { echo "Edit";}?></button>
                 </div>
             </div>
@@ -381,36 +439,45 @@ border-radius: 10px;
                     </div>
                     <div class="rtab-content ingredient-tab">
                        <div class="add-ingredient">
-                            <span class="plus">+</span>
+                       <button  class="plus" id="btn_plus2">+</button>
                             <span>Add Ingredients</span>
                        </div>
-                       <div class="ingre-icards">
-                            <div class="icard">
+                       <div class="ingre-icards" id="ingredients_box">
+                            <div class="icard" >
                                 <img src="<?=$DEFAULT_PATH?>assest/images/salt.svg" alt="" srcset="">
                                 <span class="igre-name">Salt</span>
                                 <span class="igre-amount">1/4 table Spoon</span>
-                                <input type="checkbox" name="ingredient[]" id="" value="1" class="input_bar">
+                                <input type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
                             </div>
                             <div class="icard">
                                 <img src="<?=$DEFAULT_PATH?>assest/images/salt.svg" alt="" srcset="">
                                 <span class="igre-name">Salt</span>
                                 <span class="igre-amount">1/4 table Spoon</span>
-                                <input type="checkbox" name="ingredient[]" id="" value="1" class="input_bar">
+                                <input type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
                             </div>
+                            <div class="icard">
+                                <img src="<?=$DEFAULT_PATH?>assest/images/salt.svg" alt="" srcset="">
+                                <span class="igre-name">Salt</span>
+                                <span class="igre-amount">1/4 table Spoon</span>
+                                <input type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
+                            </div>
+                           
+                            
                        </div>
                     </div>
                     <div class="rtab-content direction-tab">
                         <div class="add-actions">
                             <div class="add-direction">
-                                <span class="plus">+</span>
+                                <button  class="plus" id="btn_plus">+</button>
+                               
                                 <span>Add Direction</span>
                             </div>
                             <div class="add-video">
-                                <div class="upload-url"><img src="<?=$DEFAULT_PATH?>assest/images/UploadUrl.svg" alt="" srcset=""><span>Upload URL</span></div>
+                               <button style="background:none;border:none;text-decoration:none" id="url_button"> <div class="upload-url"><img src="<?=$DEFAULT_PATH?>assets/images/Upload_Url.svg" alt="" srcset="" style="margin-right:0.5rem"><span>Upload URL</span></div></button>
                             </div>
                         </div>
-                        <div class="direction-list">
-                            <ul class="direcions">
+                        <div class="direction-list" >
+                            <ul class="direcions" id="direcions">
                                 <li class="direction">In a large bowl, mix all-purpose flour, whole wheat flour, salt, baking powder and sugar. </li>
                                 <li class="direction">In a large bowl, mix all-purpose flour, whole wheat flour, salt, baking powder and sugar. </li>
                                 <li class="direction">In a large bowl, mix all-purpose flour, whole wheat flour, salt, baking powder and sugar. </li>
@@ -423,6 +490,53 @@ border-radius: 10px;
         </div>
     </form>
 
+
+    <!-------------------------------------- popups------------------------------------------------------------------------------------------------ -->
+    <!----Add Direction--->
+    <div id="popup1" class="overlay">
+        <div class="popup">
+            <p style="font-size:40px">Add Directions</p>
+            <form action="">
+                <input type="text" value="" placeholder="Type Directions Here" id="add_direction" class="directions">
+            </form>
+            <p style="color: #7B62FB;font-size:31px"> Add more Directions</p>
+            <button onclick="add_direction()" class="direction_btn">+ Add</button>
+
+        </div>  
+    </div>
+
+     <!----Add Ingredient--->
+     <div id="popup2" class="overlay">
+        <div class="popup" style="padding:20px 60px !important">
+        <p style="font-size:40px">Add Ingredients</p>
+        <div class="popup2_wrapper">
+            <a  href="#" class="plus" style="height:50px">+</a>
+            <div>
+                <form action="">
+                        <input type="text" value="" placeholder="Name Of the ingredient" id="ingredient_name" class="ingredient">
+                        <input type="text" value="" placeholder="Quantity" id="quantity" class="ingredient" style="margin-top:1rem">
+                </form>
+
+            </div>
+
+        </div>
+        <p style="color: #7B62FB;font-size:31px"> Add more Ingredients</p>
+            <button onclick="add_ingredient()" class="direction_btn">+ Add</button>
+            
+
+        </div>
+        
+    </div>
+    <!----Add URL--->
+    <div id="popup3" class="overlay">
+        <div class="popup">
+        <p style="font-size:40px">Add Video</p>
+        <form action="">
+                <input type="text" value="" placeholder="Type URL Here" id="add_video" class="directions">
+            </form>
+            <button onclick="add_video()" class="direction_btn">Upload</button>
+        </div>  
+    </div>
 <?php require('constant/scripts.php');?>
 
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
@@ -439,6 +553,62 @@ border-radius: 10px;
         });
         $('#toggle-recipe').trigger('click');
     });
+
+    var modal = document.getElementById("popup1");
+        var btn = document.getElementById("btn_plus");
+        
+        btn.onclick = function () {
+            event.preventDefault();
+            modal.style.display = "block";
+        }
+        var modal2 = document.getElementById("popup2");
+        var btn2 = document.getElementById("btn_plus2"); 
+        btn2.onclick = function () {
+            event.preventDefault();
+            modal2.style.display = "block";
+        }
+        var modal3 = document.getElementById("popup3");
+        var btn3 = document.getElementById("url_button"); 
+        btn3.onclick = function () {
+            event.preventDefault();
+            modal3.style.display = "block";
+        }
+       
+   
+    </script>
+
+    <script>
+        function add_direction(){
+const node = document.createElement("li");
+node.classList.add("direction_li");
+var text = document.getElementById("add_direction").value;
+const textnode = document.createTextNode(text);
+node.appendChild(textnode);
+document.getElementById("direcions").appendChild(node);
+var div = document.getElementById("popup1");
+div.style.display = "none";
+
+    }
+
+    function add_ingredient(){
+    const div = document.getElementById("ingredients_box");
+     const icard = document.createElement("div");
+     icard.classList.add("icard");
+     icard.innerHTML=`
+     <img src="<?=$DEFAULT_PATH?>assest/images/salt.svg" alt="" srcset="">
+     <span class="igre-name">${document.getElementById("ingredient_name").value}</span>
+         <span class="igre-amount">${document.getElementById("quantity").value}</span>
+        <input type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
+     `
+     div.appendChild(icard);
+     const div2 = document.getElementById("popup2");
+    div2.style.display = "none";
+
+   }
+   function add_video(){
+    const div3 = document.getElementById("popup3");
+    div3.style.display = "none";
+   }
     </script>
   </body>
 </html>
