@@ -539,7 +539,7 @@ require('constant/config.php');
             }
             $counter++;
         ?>
-            <div class="card d-flex" style="padding:15px; width:330px; height:205px;border-radius:16px; margin-left:45px;margin-right:-5px;margin-top:30px;">
+            <div class="card d-flex" style="padding:15px; width:330px; height:205px;border-radius:16px; margin:25px 20px 25px 50px !important;">
                 <div class="card-upper d-flex justify-content-between">
                     <p id="bu" class="card-upper-text"> Medium </p>
                     <p id="bu" class="card-upper-text d-flex" style="margin-left:78px;"><i class="fa-solid fa-clock" style="margin:2px 4px;"></i> 20:00 </p>
