@@ -62,7 +62,7 @@ include('navbar.php');
 
     .main__Div {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
       flex-direction: row;
       padding: 20px 40px;
     }
@@ -98,20 +98,20 @@ include('navbar.php');
       flex-direction: column;
     }
 
-    .main__right__wrapper {
+    .main__right__wrapper{
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
       border-radius: 15px;
-      width: 80%;
+      width: 100%;
       margin: 0 auto;
       display: flex;
-      flex-direction: column;
+      /* flex-direction: column; */
       margin-bottom: 20px;
-      justify-content: center;
-      align-items: center;
-      padding: 10px 5px;
+      justify-content:space-between;
+      /* align-items: center; */
+      padding: 10px 25px;
       position: relative;
     }
-    .main__right__plus {
+    .main__right__Plus Math {
       position: absolute;
       right: 25px;
       top: 8px;
@@ -120,17 +120,17 @@ include('navbar.php');
      
       font-style: normal;
       font-weight: 500;
-      font-size: 18px;
+      font-size: 25px;
       color: #0e0e2c;
     }
     .main__right__p {
       
       font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
+      font-weight: 500;
+      font-size: 20px;
       line-height: 171.5%;
-      width: 70%;
-      margin: 10px auto;
+      /* width: 70%; */
+      /* margin: 10px auto; */
       color: rgba(14, 14, 44, 0.6);
     }
 
@@ -159,11 +159,13 @@ include('navbar.php');
   .main__right__p {
     width: 90%;
   }
-  .main__right__plus {
+  .main__right__Plus Math {
     right: 6px;
   }
 }
-
+::placeholder{
+  color:#b8d3f2;
+}
 @media only screen and (max-width: 720px) {
   .right__side{
     margin-left: auto !important;
@@ -179,31 +181,31 @@ include('navbar.php');
             <span class="search__icon">
               <img src="<?=$DEFAULT_PATH?>assets/images/Bluesearch.svg">
             </span>
-            <input type="text" placeholder="search" class="input" />
+            <input type="text" placeholder="search" class="input"/>
           </div>
 
           <div class="main__Div">
             <div class="main__left">
               <h3 class="small__faq">FAQ</h3>
               <h1 class="main__title">
-                Here are Some Answer For Frequntly asked Questions.
+                Here are some answers for frequntly asked questions!
               </h1>
               <p class="main__p">
-                We got alot of Message With the same Questions so here are some
-                fast answer for populare Question.
+                We get a lot of messages with the same questions so here are some
+                fast answers for popular questions.
               </p>
             </div>
             <div class="main__right">
-              <div class="main__right__wrapper rows">
+              <div class="main__right__wrapper">
                 <h1 class="main__right__h1">
                   Lorem ipsum dolor sit amet, adipiscing elit.
                 </h1>
-                <span class="main__right__plus">
-                <img src="<?=$DEFAULT_PATH?>assets/images/plus.svg">
+                <span class="main__right__Plus Math">
+                <img src="<?=$DEFAULT_PATH?>assets/images/Plus Math.svg">
               
                 </span>
               </div>
-              <div class="main__right__wrapper">
+              <div class="main__right__wrapper  rows" style="flex-direction:column;">
                 <h1 class="main__right__h1">
                   Lorem ipsum dolor sit amet, adipiscing elit.
                 </h1>
@@ -218,8 +220,8 @@ include('navbar.php');
                 <h1 class="main__right__h1">
                   Lorem ipsum dolor sit amet, adipiscing elit.
                 </h1>
-                <span class="main__right__plus">
-                <img src="<?=$DEFAULT_PATH?>assets/images/plus.svg">
+                <span class="main__right__Plus Math">
+                <img src="<?=$DEFAULT_PATH?>assets/images/Plus Math.svg">
               
                 </span>
               </div>
@@ -227,8 +229,8 @@ include('navbar.php');
                 <h1 class="main__right__h1">
                   Lorem ipsum dolor sit amet, adipiscing elit.
                 </h1>
-                <span class="main__right__plus">
-                <img src="<?=$DEFAULT_PATH?>assets/images/plus.svg">
+                <span class="main__right__Plus Math">
+                <img src="<?=$DEFAULT_PATH?>assets/images/Plus Math.svg">
               
                 </span>
               </div>

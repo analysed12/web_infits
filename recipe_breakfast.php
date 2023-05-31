@@ -492,7 +492,7 @@ require('constant/config.php');
     <!-- breakfast lunch dinner -->
     <div class="container1" style="margin-left:20px" id="myDIV1" onscroll="myFunction()">
         <a href="all_recipes.php" style="color: inherit;" class="breakfast" id="btn1">
-        <div class="top-card" style="  background-color: #85B4A1;margin-left:50px;width:320px; height:250px;">
+        <div class="top-card" style="  background-color: #85B4A1;margin-left:50px;width:320px;">
                 <span class="ci ci1" style="background-color:#75A190;opacity: 0.76;"></span><span class="ci ci2" style="background-color: #75A190;opacity: 0.76;"></span>
                 <img src="<?=$DEFAULT_PATH?>assets/images/breakfast_bowl.svg" class="imag im1" style="top:-40px">
                 <h3 style="margin-bottom:10px;color:#FFFFFF;font-weight: 400;margin-top:30px;margin-right:145px;font-size:32px;">All Recipe</h3>
@@ -502,7 +502,7 @@ require('constant/config.php');
         </a>
 
         <a href="all_recipes.php" style="color: inherit;" class="lunch" id="btn2">
-        <div class="top-card" style=" background-color: #db695f;width:320px; height:250px;">
+        <div class="top-card" style=" background-color: #db695f;width:320px; ">
                 <span class="ci ci1" style="background-color:#BD544B;opacity: 0.76;"></span><span class="ci ci2" style="background-color: #BD544B;opacity: 0.76;"></span>
                 <img src="<?=$DEFAULT_PATH?>assets/images/breakfast_omlet.svg" class="imag im1" style="top:-30px">
                 <h3 style="margin-bottom:10px;color:#FFFFFF;font-weight: 400;margin-top:30px;margin-right:126px;font-size:32px;">All Time fav</h3>
@@ -512,7 +512,7 @@ require('constant/config.php');
         </a>
 
         <a href="all_recipes.php" style="color: inherit;" class="snacks" id="btn3">
-        <div class="top-card" style=" background-color: #6cb7d9;width:320px; height:250px;">
+        <div class="top-card" style=" background-color: #6cb7d9;width:320px;">
                 <span class="ci ci1" style="background-color:rgb(43 128 153 / 20%);opacity: 0.76;"></span><span class="ci ci2" style="background-color: rgb(43 128 153 / 20%);opacity: 0.76;"></span>
                 <img src="<?=$DEFAULT_PATH?>assets/images/waffers.svg" class="imag im1" style="left:150px;top:-15px;width:205px;height:218px;">
                 <h3 style="margin-bottom:10px;color:#FFFFFF;font-weight: 400;margin-top:30px;margin-right:85px;font-size:32px;">Recommended</h3>

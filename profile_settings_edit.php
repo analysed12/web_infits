@@ -453,7 +453,7 @@ include "navbar.php";
                         <span style="display:flex;align-items:center;justify-content:space-between "
                             class="input_field"><input disabled type="text" id="password" placeholder="XXXXX"  value="<?php if($data['socialLogin']==1){echo "Not Available";}else{echo $data['password'];} ?>" style="border:none;" required>
                             <?php if($data['socialLogin']==0){ ?>
-                            <img style="cursor: pointer" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon" alt="eye">
+                            <img style="cursor: pointer;width:25px;" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon" alt="eye">
                             <?php } ?>
                             </span>
                             
@@ -470,7 +470,7 @@ include "navbar.php";
 
             <div class="middle" style="display:flex;flex-direction:column;gap:1rem">
                 <span style="display:flex;flex-direction:column">
-                    Username <input type="text" class="input_field" <?php if($data['socialLogin']==1){echo "readonly";}else{echo "name='dietitianuserID'";} ?> placeholder="<?=$data['dietitianuserID ']?>" value="<?=$data['dietitianuserID']?>"  required>
+                    Username <input type="text" class="input_field" <?php if($data['socialLogin']==1){echo "readonly";}else{echo "name='dietitianuserID'";} ?>  placeholder="<?=$data['dietitianuserID']?>" value="<?=$data['dietitianuserID']?>" required>
                 </span>
 
                 <span style="display:flex;flex-direction:column">

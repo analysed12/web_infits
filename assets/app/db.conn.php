@@ -3,7 +3,7 @@
 $HOSTNAME = "localhost";
 $USERNAME = "root";
 $PASSWORD = "";
-$DBNAME = "infits";
+$DBNAME = "infits_db";
 
 $conn1 = mysqli_connect($HOSTNAME, $USERNAME, $PASSWORD, $DBNAME);
 
