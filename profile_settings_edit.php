@@ -172,8 +172,109 @@ include "navbar.php";
         max-height: 30%;
         overflow: auto;
     }
+    .editbutton{
+width: 342px;
+height: 48px;
+background: #0177FD;
+border-radius: 10px;
+color:white;
+border:none;
+font-size: 29px;
+display:flex;
+justify-content: center;
+align-items: center;
+text-decoration: none;
+margin-top: 3rem;
+    }
+    .sharebutton{
+        width: 342px;
+height: 48px;
+border-radius: 10px;
+font-size: 29px;
+background: #FFFFFF;
+border: 2px solid #0177FD;
+display:flex;
+justify-content: center;
+align-items: center;
+text-decoration: none;
+margin-top: 3rem;
+color: #0177FD;
 
-    .my-modal {
+    }
+    .footer{
+        display:flex;
+        gap:14.5%;
+
+    }
+       
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+.modal2 {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.modal2:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+    
+  margin: 290px ;
+  margin-left:550px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0px 0px 34.0377px rgba(0, 0, 0, 0.25);
+border-radius: 25.5283px;
+  width: 400px;
+  position: relative;
+  transition: all 5s ease-in-out;
+  
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+ 
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+  background:none;
+  border:none;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+.my-modal {
         position: fixed;
         top: 0;
         bottom: 0;
@@ -257,7 +358,6 @@ include "navbar.php";
         max-height: 30%;
         overflow: auto;
     }
-
     .modal {
         position: fixed;
         width: 100%;
@@ -477,6 +577,7 @@ include "navbar.php";
                     Location <input type="text" class="input_field" name="location" placeholder="<?=$data['location']?>" value="<?=$data['location']?>" required>
                 </span>
 
+</div>
 
                 <span style="display:flex;gap:1.5rem">
                     <span style="display:flex;flex-direction:column">
@@ -657,5 +758,4 @@ include "navbar.php";
     </script>
     <?php require('constant/scripts.php'); ?>
 </body>
-
 </html>
