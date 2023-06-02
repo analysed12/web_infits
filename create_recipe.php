@@ -1,6 +1,41 @@
 <?php 
-    include('navbar.php');
-    require('constant/config.php')?>
+session_start();
+require('constant/config.php');
+if(isset($_POST['add'])){
+    global $conn;
+    $query = "INSERT INTO `dietitian_recipes`( `dietitian_id`, `dietitianuserID`, `recipe_name`, `recipe_ingredients`, `recipe_recipe`, `recipe_nutritional_information`, `recipe_category`) VALUES ('{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','{$_POST['recipeName']}','{$_POST['recipeingredients']}','{$_POST['recipeDirections']}','{$_POST['nutriDetails']}','{$_POST['recipeCourse']}')";
+    $conn->query($query);
+
+    $query = "SELECT recipe_id FROM dietitian_recipes ORDER BY lastupdate DESC LIMIT 1";
+    $result = $conn->query($query);
+    $newRecipeId = $result->fetch_assoc()['recipe_id'];
+    if($_GET['action'] == 'editRecipe'){
+        if($_GET['isDefault'] == true){
+            $query = "SELECT * FROM default_recipes WHERE drecipe_id = '{$_GET['recipe_id']}'";
+            $result = $conn->query($query);
+            $isDeleted = $result->fetch_assoc()['isDeleted'];
+            $toAdd = array();
+            if($isDeleted == ''){
+                $toAdd = array(
+                    "{$_SESSION['dietitian_id']}"
+                );
+                $toAdd = json_encode($toAdd);
+            }else{
+                $isDeleted = json_decode($isDeleted,true);
+                array_push($isDeleted,$_SESSION['dietitian_id']);
+                $toAdd = json_encode($isDeleted);
+            }
+            $query = "UPDATE default_recipes SET isDeleted = '$toAdd' WHERE drecipe_id = '{$_GET['recipe_id']}'";
+            $conn->query($query);
+            header("Location:create_recipe.php?recipe_id={$newRecipeId}&action=editRecipe&isDefault=false");
+        }
+    }
+
+}
+include('navbar.php');
+
+    
+?>
 
 <!doctype html>
 <html lang="en">
@@ -289,93 +324,51 @@ font-size: 30px;
      }else{
         $action = 'createRecipe';
      }
-            if(isset($_POST['editRcp'])){
-                $rname = $_POST['recipeName'];
-                $name1 = $_POST['name1'];
-                echo $rname.$name1;
-                $Calories = $_POST['Calories'];
-                $fat = $_POST['fat'];
-                $saturates = $_POST['saturates'];
-                $Carbohydrates = $_POST['Carbohydrates'];
-                $sugars = $_POST['sugars'];
-                $Fibre = $_POST['Fibre'];
-                $Protein = $_POST['Protein'];
-                $Salt = $_POST['Salt'];
-                $category = $_POST['category'];
-                $obj = array(
-                    'Calories'=>$Calories,
-                    'Fat (g)'=>$fat,
-                    'of which saturates (g)'=>$saturates,
-                    'Carbohydrates (g)'=>$Carbohydrates,
-                    'of which sugars (g)' => $sugars,
-                    'Fibre (g)' => $Fibre,
-                    'Protein (g)' => $Protein,
-                    'Salt (mg)' => $Salt,
-                );
-                $nutritionData = json_encode($obj);
-                $sql = "UPDATE `custom_recipes` set `drecipe_name` = '$name1',`drecipe_category` = '$category', `drecipe_nutritional_information` = '$nutritionData' where `drecipe_id` = '$rid'";
-                if($conn -> query($sql)==true){
-                   echo '<div class="alert alert-primary" role="alert" style="text-align:center;">
-                        Recipes Updated;
-                      </div>';
-                    } else {
-                    echo  '<div class="alert alert-primary" role="alert" style="text-align:center;">
-                        Recipes not updated;
-                      </div>';
-                 }
-            }
 
-            // add new recipe code start here...
-            if(isset($_POST['saveRec'])){
-                $rname = $_POST['recipeName'];
-                $name1 = $_POST['name1'];
-                $Calories = $_POST['Calories'];
-                $fat = $_POST['fat'];
-                $saturates = $_POST['saturates'];
-                $Carbohydrates = $_POST['Carbohydrates'];
-                $sugars = $_POST['sugars'];
-                $Fibre = $_POST['Fibre'];
-                $Protein = $_POST['Protein'];
-                $Salt = $_POST['Salt'];
-                $category = $_POST['category'];
-                $obj = array(
-                    'Calories'=>$Calories,
-                    'Fat (g)'=>$fat,
-                    'of which saturates (g)'=>$saturates,
-                    'Carbohydrates (g)'=>$Carbohydrates,
-                    'of which sugars (g)' => $sugars,
-                    'Fibre (g)' => $Fibre,
-                    'Protein (g)' => $Protein,
-                    'Salt (mg)' => $Salt,
-                );
-                $nutritionData = json_encode($obj);
-                $Newsql = "INSERT INTO `custom_recipes` (drecipe_name,drecipe_category,drecipe_nutritional_information) VALUES ('$rname','$category','$nutritionData')";
-                if($conn -> query($Newsql)==true){
-                    echo '<div class="alert alert-primary" role="alert" style="text-align:center;">
-                        Recipes Updated;
-                      </div>';
-                    } else {
-                    echo  '<div class="alert alert-primary" role="alert" style="text-align:center;">
-                        Recipes not updated;
-                      </div>';
-                    }
-                }
+    if($action == 'editRecipe'){
+        global $conn;
+        if($_GET['isDefault']== 'true'){
+            $query = "SELECT * FROM `default_recipes` WHERE drecipe_id = '{$_GET['recipe_id']}'";
+            $result = $conn->query($query);
+            $data = $result->fetch_assoc();
+            $edit['name'] = $data['drecipe_name'];
+            $edit['ingredients'] = json_decode($data['drecipe_ingredients'],true);
+            $edit['directions'] = json_decode($data['drecipe_recipe'],true);
+            $edit['nutritional'] = json_decode($data['drecipe_nutritional_information'],true);
+            $edit['course'] = $data['drecipe_category'];
+            $edit['category'] = $data['drecipe_category'];
+        }else{
+            $query = "SELECT * FROM `dietitian_recipes` WHERE recipe_id = '{$_GET['recipe_id']}'";
+            $result = $conn->query($query);
+            $data = $result->fetch_assoc();
+            $edit['name'] = $data['recipe_name'];
+            $edit['ingredients'] = json_decode($data['recipe_ingredients'],true);
+            $edit['directions'] = json_decode($data['recipe_recipe'],true);
+            $edit['nutritional'] = json_decode($data['recipe_nutritional_information'],true);
+            $edit['course'] = $data['recipe_category'];
+            $edit['category'] = $data['recipe_category'];
+        }
+    }
     ?>
     <form action="" method="post">
         <div id="content" class="container-fluid">
             <div class="row">
                 <div class="col cheader d-flex justify-content-between">
                     <span style="font-size:40px;margin-top:0.5rem;margin-left:1.5rem">New Recipe</span>
-                    <button name='<?=$action?>' type="submit" id='submit_btn' class="btn btn-save"><?php if($action == 'createRecipe'){ echo "Save";} else { echo "Edit";}?></button>
+                    <button name='<?=$action?>' type="button" id='submit_btn' class="btn btn-save"><?php if($action == 'createRecipe'){ echo "Save";} else { echo "Save Changes";}?></button>
                 </div>
             </div>
             <div class="ctop">
                 <div class="left uploadImg">
+                    <?php if($action=='editRecipe'){ ?>
+                        <img src="<?=$DEFAULT_PATH?>assets/images/alooparantha.svg" alt="" id="camera" style="width:60%">
+                    <?php }else{ ?>
                     <img src="<?=$DEFAULT_PATH?>assets/images/camera.svg" alt="" id="camera" style="width:60%">
-                    <input type="file"  id="recipeImg" style="display:none"  name="recipeImg">
+                    <?php } ?>
+                    <input data-name="recipeImage" type="file"  id="recipeImg" style="display:none"  name="recipeImage">
                 </div>
                 <div class="right">
-                    <input class="form-control" style="border:none;font-size:30px" type="text" value="<?php if($action == 'editRecipe')echo $edit['name']; ?>" name="recipeName" id="" placeholder="Recipe Name">
+                    <input data-name="recipeName"  class="form-control" style="border:none;font-size:30px" type="text" value="<?php if($action == 'editRecipe')echo $edit['name']; ?>" name="recipeName" id="" placeholder="Recipe Name">
                     <span style="font-size:20px">(auto sync)</span>
                 </div>
             </div>
@@ -393,46 +386,45 @@ font-size: 30px;
                                     <input class="form-control input_bar" type="text" class="form-control" placeholder="Recipe Name" value="<?php if($action == 'editRecipe'){echo $edit['name'];} ?>">
                                 </div>
                                 <div class="col dropdown-container" >
-                                <select name="courses" id="" class="form-control input_bar" style="color: #212529 !important"  placeholder="Courses">
+                                <select  data-validate name="courses" id="recipeCourse" class="form-control input_bar" style="color: #212529 !important"  placeholder="Courses">
                                 <?php if($action == 'editRecipe'){echo "<option value='{$edit['course']}'>{$edit['course']}</option>";} ?>
-                                <option value="Breakfast">Breakfast</option>
-                                <option value="Lunch">Lunch</option>
-                                <option value="Snack">Snack</option>
-                                <option value="Dinner">Dinner</option>
+                                    <option value="Breakfast">Breakfast</option>
+                                    <option value="Lunch">Lunch</option>
+                                    <option value="Snack">Snack</option>
+                                    <option value="Dinner">Dinner</option>
                                 </select>
                                 </div>
                             </div>
                             <div class="row w-100">
                             <div class="col dropdown-container" >
-                                <select name="category" id="" class="form-control input_bar" style="color: #212529 !important" placeholder="Categories">
+                                <select data-name="recipeCategory" name="category" id="" class="form-control input_bar" style="color: #212529 !important" placeholder="Categories">
                                 <?php if($action == 'editRecipe'){echo "<option value='{$edit['category']}'>{$edit['category']}</option>";} ?>
-                                <option value="Breakfast">Pancake</option>
-                                <option value="Lunch">Juice</option>
-                                <option value="Snack">Butter Bread</option>
-                                <option value="Dinner">Waffle</option>
+                                    <option value="Breakfast">Pancake</option>
+                                    <option value="Lunch">Juice</option>
+                                    <option value="Snack">Butter Bread</option>
+                                    <option value="Dinner">Waffle</option>
                                 </select>
                                 </div>
                                 <div class="col">
-                                    <input name="Preparationtime" class="form-control input_bar" type="text" class="form-control" placeholder="Preparation Time" >
+                                    <input data-name="recipePrepTime"  name="Preparationtime" class="form-control input_bar" type="text" class="form-control" placeholder="Preparation Time" >
                                 </div>
                             </div>
                             
                             <h3 class="text-center">Nutritional Details</h3>
                             <div class="row w-75">
                                 <div class="col">
-                                    <input name="Calories" class="form-control input_bar" type="text" class="form-control" placeholder="Calories" value="<?php if($action == 'editRecipe'){echo $edit['calories'];} ?>">
+                                    <input data-nutri="Calories"  name="Calories" class="form-control input_bar" type="text" class="form-control" placeholder="Calories" value="<?php if($action == 'editRecipe'){echo $edit['nutritional']['Calories'];} ?>">
                                 </div>
                                 <div class="col">
-                                    <input name="Protien" class="form-control input_bar" type="text" class="form-control" value="<?php if($action == 'editRecipe'){echo $edit['Protin'];} ?>" placeholder="Protien">
+                                    <input data-nutri="Protein (g)"  name="Protien" class="form-control input_bar" type="text" class="form-control" value="<?php if($action == 'editRecipe'){echo $edit['nutritional']['Protein (g)'];} ?>" placeholder="Protien">
                                 </div>
                             </div>
                             <div class="row w-75">
                                 <div class="col">
-                                    <input name="Fats" class="form-control input_bar" type="text" class="form-control" placeholder="saturates" value="<?php if($action == 'editRecipe'){echo $edit['name'];} ?>" placeholder="Fats">
+                                    <input data-nutri="Fat (g)"  name="Fats" class="form-control input_bar" type="text" class="form-control" placeholder="saturates" value="<?php if($action == 'editRecipe'){echo $edit['nutritional']['Fat (g)'];} ?>" placeholder="Fats">
                                 </div>
                                 <div class="col">
-                                    <input name="Cars" class="form-control input_bar" type="text" class="form-control" placeholder="Cars" value="<?php if($action == 'editRecipe'){echo $edit['name'];} ?>">
-                                     <input name="RID" hidden  type="text"   value="<?php echo $rid; ?>">
+                                    <input data-nutri="Carbohydrates (g)"  name="Cars" class="form-control input_bar" type="text" class="form-control" placeholder="Cars" value="<?php if($action == 'editRecipe'){echo $edit['nutritional']['Carbohydrates (g)'];} ?>">
                                 </div>
                             </div>
                         </div>
@@ -443,24 +435,15 @@ font-size: 30px;
                             <span>Add Ingredients</span>
                        </div>
                        <div class="ingre-icards" id="ingredients_box">
+                        <!-- Dont Remove this code it will help in edit page -->
+                        <?php if(isset($edit['ingredients'])):
+                            foreach($edit['ingredients'] as $ingre): ?>
                             <div class="icard" >
-                                <img src="<?=$DEFAULT_PATH?>assest/images/salt.svg" alt="" srcset="">
-                                <span class="igre-name">Salt</span>
-                                <span class="igre-amount">1/4 table Spoon</span>
-                                <input type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
+                                <img src="<?=$DEFAULT_PATH?>assets/images/salt.svg" alt="" srcset="">
+                                <span class="igre-name"><?=$ingre?></span>
+                                <input data-ingredient-name="<?=$ingre?>" data-ingredient="true" checked type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
                             </div>
-                            <div class="icard">
-                                <img src="<?=$DEFAULT_PATH?>assest/images/salt.svg" alt="" srcset="">
-                                <span class="igre-name">Salt</span>
-                                <span class="igre-amount">1/4 table Spoon</span>
-                                <input type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
-                            </div>
-                            <div class="icard">
-                                <img src="<?=$DEFAULT_PATH?>assest/images/salt.svg" alt="" srcset="">
-                                <span class="igre-name">Salt</span>
-                                <span class="igre-amount">1/4 table Spoon</span>
-                                <input type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
-                            </div>
+                        <?php endforeach; endif; ?>
                            
                             
                        </div>
@@ -478,10 +461,11 @@ font-size: 30px;
                         </div>
                         <div class="direction-list" >
                             <ul class="direcions" id="direcions">
-                                <li class="direction">In a large bowl, mix all-purpose flour, whole wheat flour, salt, baking powder and sugar. </li>
-                                <li class="direction">In a large bowl, mix all-purpose flour, whole wheat flour, salt, baking powder and sugar. </li>
-                                <li class="direction">In a large bowl, mix all-purpose flour, whole wheat flour, salt, baking powder and sugar. </li>
-                                <li class="direction">In a large bowl, mix all-purpose flour, whole wheat flour, salt, baking powder and sugar. </li>
+                                <!-- dont delete this code  -->
+                                <?php if(isset($edit['directions'])):
+                                    foreach($edit['directions'] as $dir): ?>
+                                    <li data-direction="<?=$dir?>" class="direction"><?=$dir?></li>
+                                <?php endforeach; endif; ?>
                             </ul>
                         </div>
                     </div>
@@ -579,36 +563,128 @@ font-size: 30px;
 
     <script>
         function add_direction(){
-const node = document.createElement("li");
-node.classList.add("direction_li");
-var text = document.getElementById("add_direction").value;
-const textnode = document.createTextNode(text);
-node.appendChild(textnode);
-document.getElementById("direcions").appendChild(node);
-var div = document.getElementById("popup1");
-div.style.display = "none";
+            const node = document.createElement("li");
+            node.classList.add("direction_li");
+            var text = document.getElementById("add_direction").value;
+            const textnode = document.createTextNode(text);
+            node.setAttribute('data-direction',text);
+            node.appendChild(textnode);
+            document.getElementById("direcions").appendChild(node);
+            var div = document.getElementById("popup1");
+            div.style.display = "none";
 
     }
 
     function add_ingredient(){
     const div = document.getElementById("ingredients_box");
      const icard = document.createElement("div");
+     const ingredient_name = document.getElementById("ingredient_name");
+     const quantity = document.getElementById("quantity");
+     if(ingredient_name.value == "" || quantity.value== ""){
+        console.log('snskjc');
+        ingredient_name.style.border = "1px solid red";
+        quantity.style.border = "1px solid red";
+        return;
+     }
      icard.classList.add("icard");
      icard.innerHTML=`
-     <img src="<?=$DEFAULT_PATH?>assest/images/salt.svg" alt="" srcset="">
-     <span class="igre-name">${document.getElementById("ingredient_name").value}</span>
-         <span class="igre-amount">${document.getElementById("quantity").value}</span>
-        <input type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
+     <img src="<?=$DEFAULT_PATH?>assets/images/salt.svg" alt="" srcset="">
+     <span class="igre-name">${ingredient_name.value}</span>
+         <span class="igre-amount">${quantity.value}</span>
+        <input data-ingredient-name="${ingredient_name.value} ${quantity.value}" data-ingredient="true" checked  type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
      `
      div.appendChild(icard);
+     ingredient_name.value = "";
+        quantity.value = "";
      const div2 = document.getElementById("popup2");
     div2.style.display = "none";
+    checkBoxEvent();
 
    }
    function add_video(){
     const div3 = document.getElementById("popup3");
     div3.style.display = "none";
    }
+
+   function checkBoxEvent(){
+    const allCheckBoxs =document.querySelectorAll('[data-ingredient]');
+    console.log(allCheckBoxs);
+    allCheckBoxs.forEach(element => {
+        element.addEventListener('click',()=>{
+            if (element.checked) {
+                element.setAttribute('data-ingredient',true);
+            }else{
+                element.setAttribute('data-ingredient',false);
+            }
+        });
+    });
+   }
+   checkBoxEvent();
+
+   const submit_btn =document.getElementById('submit_btn');
+
+   submit_btn.addEventListener('click',()=>{
+
+    const allIngredient =document.querySelectorAll('[data-ingredient-name]');
+    const recipeDetails =document.querySelectorAll('[data-name]');
+    const recipeName =document.querySelector('[data-name="recipeName"]');
+    const recipeCourse =document.querySelector('#recipeCourse');
+    const recipeNutri =document.querySelectorAll('[data-nutri]');
+    const recipeDirections =document.querySelectorAll('[data-direction]');
+
+    // const recipeImg =document.querySelector('#recipeImg');
+    // const file = recipeImg.files[0];
+
+    // const recipeImage = new FormData();
+    // recipeImage.append("file", file);
+    // recipeImage.append("filename", file.name);
+
+
+
+    console.log(allIngredient);
+    console.log(recipeDetails);
+    console.log(recipeDirections);
+
+    const finalJson = {};
+    
+    ingredientArray = [];
+    allIngredient.forEach(i=>{
+        if(i.checked){
+            const ingre = i.getAttribute('data-ingredient-name');
+            ingredientArray.push(ingre);
+        }
+    });
+    nutriArray = {};
+    recipeNutri.forEach(nut=>{
+        const nutri = nut.getAttribute('data-nutri');
+        nutriArray[nutri] = nut.value;
+    });
+    
+    directionArray = [];
+    recipeDirections.forEach(d=>{
+        const nutri = d.getAttribute('data-direction');
+        directionArray.push(nutri);
+    });
+
+    console.log(directionArray);
+
+    console.log(JSON.stringify(nutriArray));
+
+    console.log(ingredientArray);
+
+    const form = $('<form action="" method="post"></form>');
+    form.append(`<input type="hidden" name="add" value="true">`);
+    form.append(`<input type="hidden" name="recipeName" value="${recipeName.value}">`);
+    form.append(`<input type="hidden" name="recipeCourse" value="${recipeCourse.value}">`);
+    form.append(`<input type="hidden" name="nutriDetails" value='${JSON.stringify(nutriArray)}'>`);
+    form.append(`<input type="hidden" name="recipeDirections" value='${JSON.stringify(directionArray)}'>`);
+    form.append(`<input type="hidden" name="recipeingredients" value='${JSON.stringify(ingredientArray)}'>`);
+    $('body').append(form);
+    form.submit();
+
+   });
+
+
     </script>
   </body>
 </html>
