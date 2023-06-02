@@ -341,6 +341,7 @@ require('constant/config.php');
         width: 85px;
         height: 85px;
         font-size: 40px;
+        text-decoration:none;
     }
     @media screen and (min-width: 720px) and (max-width:1500px) {
         .heading{
@@ -365,6 +366,7 @@ require('constant/config.php');
         }
         .container1{
             left:30px;
+            gap:80px;
         }
         .row{
             margin:none !important;
@@ -422,13 +424,16 @@ require('constant/config.php');
             grid-template-columns: auto auto auto auto;
             left: -1px;
             margin-right: 420px;
-            gap: 0.5rem;
+            gap: 50px;
         }
         .recipe{
             margin-left: -200px;
         }
         .middle_wrapper a {
             margin-top:10px;    
+        }
+        .middle_wrapper{
+            margin: 20px auto !important;
         }
         .row{
             margin:10px auto !important;
@@ -463,6 +468,9 @@ require('constant/config.php');
         }
         h3.recipe{
             margin-left:-20px !important;
+        }
+        .middle_wrapper{
+            margin-left:3rem !important;
         }
     }
 </style>
@@ -519,7 +527,7 @@ require('constant/config.php');
 
     <!-- all recipes --> <div class="middle_wrapper" style="display:flex;justify-content:space-between;margin-top:20px;margin-left:5rem;margin-right:2.5rem">
         <h3 class="recipe" style="font-weight:500;margin-left:50px;color:black; font-size: 30px;">All Recipes</h3>
-        <a href="recipe_all_dinner.php"><h3 style="color:#6A6A6A;font-size:20px; margin-right: 50px;">View All</h3></a>
+        <a href="recipe_all_dinner.php" style="text-decoration:none;"><h3 style="color:#6A6A6A;font-size:20px; margin-right: 50px;">View All</h3></a>
     </div>
 
     <!-- recipes from db -->
@@ -539,10 +547,10 @@ require('constant/config.php');
             }
             $counter++;
         ?>
-            <div class="card d-flex" style="padding:15px; width:330px; height:205px;border-radius:16px; margin:25px 20px 25px 50px !important;">
+            <div class="card d-flex" style="padding:15px; width:330px; height:205px;border-radius:16px; margin:25px 20px 25px 50px;">
                 <div class="card-upper d-flex justify-content-between">
                     <p id="bu" class="card-upper-text"> Medium </p>
-                    <p id="bu" class="card-upper-text d-flex" style="margin-left:78px;"><i class="fa-solid fa-clock" style="margin:2px 4px;"></i> 20:00 </p>
+                    <p id="bu" class="card-upper-text d-flex" style="margin-left:78px;"><img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:10px"></i> 20:00 </p>
                 </div>
                 <div class="img-dis" style="width:100%; text-align:center;">
                     <img src="<?=$DEFAULT_PATH?>assets/images/Dinner.svg" style="margin-top:-50px;height:101px; width:145px; margin-left:-5px; object-fit:cover;" />
@@ -571,7 +579,7 @@ require('constant/config.php');
                 </div>
             </div>
        <?php } ?>
-        <a class="butt" href="create_recipe.php" style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
+        <a class="butt" href="create_recipe.php" style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;text-decoration:none;">+</a>
        </div>
     <?php require('constant/scripts.php');?>
 

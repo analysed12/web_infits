@@ -84,7 +84,7 @@ $res = mysqli_query($conn, $sql);
     }
 
     .card-upper-text {
-        font-size: 20px;
+        /* font-size: 20px; */
         font-weight: bold;
         padding: 5px 10px;
         background-color: #FEA945;
@@ -92,7 +92,7 @@ $res = mysqli_query($conn, $sql);
         border-radius: 8px;
         color: white;
         font-weight: 500;
-        font-size: 12px;
+        font-size: 15px;
         line-height: 18px;
     }
 
@@ -262,7 +262,7 @@ $res = mysqli_query($conn, $sql);
         <div class="card d-flex" style="padding:15px; width:325px; border-radius:16px;height:204px;margin:25px 40px;">
             <div class="card-upper d-flex justify-content-between">
                 <p id="bu" class="card-upper-text"> Medium </p>
-                <p id="bu" class="card-upper-text"><img src="http://www.infits.iceiy.com/assets/images/Clock.svg" style="margin-right:10px"></i> 20:00 </p>
+                <p id="bu" class="card-upper-text"><img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:10px"></i> 20:00 </p>
             </div>
             <div class="img-dis" style="width:100%; text-align:center;margin-top:-40px;">
                 <img src="<?=$DEFAULT_PATH?>assets/images/snacks.svg" style="margin-top:-30px;height:144px; width:144px;  object-fit:cover;" />

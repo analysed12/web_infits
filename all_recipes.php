@@ -26,7 +26,7 @@ require('constant/config.php');
         </div>
     </div>
 
-    <div class="container1"  id="myDIV" onscroll="myFunction()" >
+    <div class="container1"  id="myDIV" onscroll="myFunction()" style="gap:30px;">
     <a href="recipe_breakfast.php" style="color: inherit; margin-left: -5px;" class="breakfast" id="btn1">
             <div class="top-card" style=" background-color: #61de99;">
                 <span class="ci ci1" style="background-color:#CCF5CD;"></span><span class="ci ci2" style="background-color: #CCF5CD"></span>
