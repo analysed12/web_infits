@@ -7,7 +7,7 @@ if(isset($_POST['clientList'])){
 if(!isset($_SESSION)){
     session_start();
 }
-$dietitianuserID = $_SESSION['dietitianuserID'];
+$dietitianuserID = $_SESSION['dietitian_id'];
 
 // handle Ajax here
 if(isset($_POST['update_goal'])){
@@ -17,7 +17,7 @@ if(isset($_POST['update_goal'])){
     $dietitianuserID = $_POST['dietitianuserID'];
     foreach ($clients as $c_id) {
         $isSame =false;
-        $query = "SELECT `{$type}` FROM `goals` WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+        $query = "SELECT `{$type}` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
         $result = $conn->query($query) or die('Query Failed');
         if($result->num_rows > 0){
             while($row = $result->fetch_assoc()){
@@ -31,10 +31,10 @@ if(isset($_POST['update_goal'])){
         if($isSame){
             continue;
         }
-        $query = "UPDATE `goals` SET {$type} = '{$goal}' WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+        $query = "UPDATE `goals` SET {$type} = '{$goal}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
         $result = $conn->query($query) or die("Query Failed");
         if ($conn->affected_rows == 0) {
-            $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `{$type}`) VALUES ('{$dietitianuserID}',{$c_id},'{$goal}')";
+            $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `{$type}`) VALUES ('{$dietitianuserID}',{$c_id},'{$goal}')";
             $result = $conn->query($query) or die("Query Failed");
         }
     }
@@ -48,10 +48,10 @@ if(isset($_POST['update'])){
     $goal = $_POST['goal'];
     $dietitianuserID = $_POST['dietitianuserID'];
    
-    $query = "UPDATE `goals` SET `{$type}` = '{$goal}' WHERE `client_id` = '{$client}' AND `dietition_id` = '{$dietitianuserID}'";
+    $query = "UPDATE `goals` SET `{$type}` = '{$goal}' WHERE `client_id` = '{$client}' AND `dietitian_id` = '{$dietitianuserID}'";
     $result = $conn->query($query) or die("Query Failed");
     if ($conn->affected_rows == 0) {
-        $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `{$type}`) VALUES ('{$dietitianuserID}',{$client},'{$goal}')";
+        $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `{$type}`) VALUES ('{$dietitianuserID}',{$client},'{$goal}')";
         $result = $conn->query($query) or die("Query Failed");
     }
     print_r($result);
@@ -65,7 +65,7 @@ if(isset($_POST['create_goal'])){
         $steps = $_POST['create_goal_steps'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `steps` FROM `goals` WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "SELECT `steps` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -78,11 +78,11 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET steps = '{$steps}' WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "UPDATE `goals` SET steps = '{$steps}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             echo($query);
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `steps`) VALUES ('{$dietitianuserID}',{$c_id},'{$steps}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `steps`) VALUES ('{$dietitianuserID}',{$c_id},'{$steps}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -92,7 +92,7 @@ if(isset($_POST['create_goal'])){
         $heart = $_POST['create_goal_heart'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `heart` FROM `goals` WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "SELECT `heart` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -105,10 +105,10 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET heart = '{$heart}' WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "UPDATE `goals` SET heart = '{$heart}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `heart`) VALUES ('{$dietitianuserID}',{$c_id},'{$heart}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `heart`) VALUES ('{$dietitianuserID}',{$c_id},'{$heart}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
             
@@ -119,7 +119,7 @@ if(isset($_POST['create_goal'])){
         $sleep = $_POST['create_goal_sleep'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `sleep` FROM `goals` WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "SELECT `sleep` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -132,11 +132,11 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET sleep = '{$sleep}' WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "UPDATE `goals` SET sleep = '{$sleep}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             echo($query);
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `sleep`) VALUES ('{$dietitianuserID}',{$c_id},'{$sleep}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `sleep`) VALUES ('{$dietitianuserID}',{$c_id},'{$sleep}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -146,7 +146,7 @@ if(isset($_POST['create_goal'])){
         $sleep = $_POST['create_goal_sleep'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `sleep` FROM `goals` WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "SELECT `sleep` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -159,11 +159,11 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET sleep = '{$sleep}' WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "UPDATE `goals` SET sleep = '{$sleep}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             echo($query);
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `sleep`) VALUES ('{$dietitianuserID}',{$c_id},'{$sleep}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `sleep`) VALUES ('{$dietitianuserID}',{$c_id},'{$sleep}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -173,7 +173,7 @@ if(isset($_POST['create_goal'])){
         $weight = $_POST['create_goal_weight'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `weight` FROM `goals` WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "SELECT `weight` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -186,11 +186,11 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET weight = '{$weight}' WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "UPDATE `goals` SET weight = '{$weight}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             echo($query);
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `weight`) VALUES ('{$dietitianuserID}',{$c_id},'{$weight}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `weight`) VALUES ('{$dietitianuserID}',{$c_id},'{$weight}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -200,7 +200,7 @@ if(isset($_POST['create_goal'])){
         $water = $_POST['create_goal_water'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `water` FROM `goals` WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "SELECT `water` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -213,11 +213,11 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET water = '{$water}' WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "UPDATE `goals` SET water = '{$water}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             echo($query);
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `water`) VALUES ('{$dietitianuserID}',{$c_id},'{$water}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `water`) VALUES ('{$dietitianuserID}',{$c_id},'{$water}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -227,7 +227,7 @@ if(isset($_POST['create_goal'])){
         $calorie = $_POST['create_goal_calorie'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `calorie` FROM `goals` WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "SELECT `calorie` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -240,11 +240,12 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET calorie = '{$calorie}' WHERE `client_id` = {$c_id} AND `dietition_id` = '{$dietitianuserID}'";
+            $query = "UPDATE `goals` SET calorie = '{$calorie}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
             echo($query);
+            exit;
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `calorie`) VALUES ('{$dietitianuserID}',{$c_id},'{$calorie}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `calorie`) VALUES ('{$dietitianuserID}',{$c_id},'{$calorie}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -940,7 +941,7 @@ margin-top: 2.5rem;
             <!---------------------------------------------------------------------------------------------->
 <?php
 $map_steps = $map;
-$sql_steps = "SELECT steps, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND steps != '' GROUP BY steps ORDER BY time DESC";
+$sql_steps = "SELECT steps, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND steps != '' GROUP BY steps ORDER BY time DESC";
 $result_steps = mysqli_query($conn, $sql_steps) or die('failed');
 if (mysqli_num_rows($result_steps) > 0) {
     $i = 0;
@@ -975,7 +976,7 @@ $i++;
                  <!---------------------------------------------------------------------------------------------->
 <?php
 $map_heart = $map;
-$sql_heart = "SELECT heart, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND heart != '' GROUP BY heart ORDER BY time DESC";
+$sql_heart = "SELECT heart, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND heart != '' GROUP BY heart ORDER BY time DESC";
 $result_heart = mysqli_query($conn, $sql_heart) or die('failed');
 if (mysqli_num_rows($result_heart) > 0) {
     $i = 0;
@@ -1010,7 +1011,7 @@ $i++;
                  <!---------------------------------------------------------------------------------------------->
 <?php
 $map_water = $map;
-$sql_water = "SELECT water, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND water != '' GROUP BY water ORDER BY time DESC";
+$sql_water = "SELECT water, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND water != '' GROUP BY water ORDER BY time DESC";
 $result_water = mysqli_query($conn, $sql_water) or die('failed');
 if (mysqli_num_rows($result_water) > 0) {
     $i = 0;
@@ -1045,7 +1046,7 @@ $i++;
                  <!---------------------------------------------------------------------------------------------->
 <?php
 $map_sleep = $map;
-$sql_sleep = "SELECT sleep, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND sleep != '' GROUP BY sleep ORDER BY time DESC";
+$sql_sleep = "SELECT sleep, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND sleep != '' GROUP BY sleep ORDER BY time DESC";
 $result_sleep = mysqli_query($conn, $sql_sleep) or die('failed');
 if (mysqli_num_rows($result_sleep) > 0) {
     $i = 0;
@@ -1079,7 +1080,7 @@ $i++;
                  <!---------------------------------------------------------------------------------------------->
 <?php
 $map_weight = $map;
-$sql_weight = "SELECT weight, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND weight != '' GROUP BY weight ORDER BY time DESC";
+$sql_weight = "SELECT weight, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND weight != '' GROUP BY weight ORDER BY time DESC";
 $result_weight = mysqli_query($conn, $sql_weight) or die('failed');
 if (mysqli_num_rows($result_weight) > 0) {
     $i = 0;
@@ -1114,7 +1115,7 @@ $i++;
                  <!---------------------------------------------------------------------------------------------->
 <?php
 $map_calorie = $map;
-$sql_calorie = "SELECT calorie, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND calorie != '' GROUP BY calorie ORDER BY time DESC";
+$sql_calorie = "SELECT calorie, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND calorie != '' GROUP BY calorie ORDER BY time DESC";
 $result_calorie = mysqli_query($conn, $sql_calorie) or die('failed');
 if (mysqli_num_rows($result_calorie) > 0) {
     $i = 0;
@@ -1163,7 +1164,7 @@ $i++;
 <!----------------------------------------------------------------------------------------------------------------------->
 <?php
 $map_steps = $map;
-$sql_steps = "SELECT steps, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND steps != '' GROUP BY steps ORDER BY time DESC";
+$sql_steps = "SELECT steps, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND steps != '' GROUP BY steps ORDER BY time DESC";
 $result_steps = mysqli_query($conn, $sql_steps) or die('failed');
 if (mysqli_num_rows($result_steps) > 0) {
     $i = 0;
@@ -1236,7 +1237,7 @@ $i++;
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------> 
 <?php
 $map_heart = $map;
-$sql_heart = "SELECT heart, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND heart != '' GROUP BY heart ORDER BY time DESC";
+$sql_heart = "SELECT heart, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND heart != '' GROUP BY heart ORDER BY time DESC";
 $result_heart = mysqli_query($conn, $sql_heart) or die('failed');
 if (mysqli_num_rows($result_heart) > 0) {
     $i = 0;
@@ -1303,7 +1304,7 @@ $i++;
     <!------------------------------------------------------------------------------------------------------------------------------------------->        
 <?php
 $map_water = $map;
-$sql_water = "SELECT water, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND water != '' GROUP BY water ORDER BY time DESC";
+$sql_water = "SELECT water, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND water != '' GROUP BY water ORDER BY time DESC";
 $result_water = mysqli_query($conn, $sql_water) or die('failed');
 if (mysqli_num_rows($result_water) > 0) {
     $i = 0;
@@ -1370,7 +1371,7 @@ $i++;
 <!---------------------------------------------------------------------------------------------------------------------------------------------------------------->        
 <?php
 $map_sleep = $map;
-$sql_sleep = "SELECT sleep, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND sleep != '' GROUP BY sleep ORDER BY time DESC";
+$sql_sleep = "SELECT sleep, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND sleep != '' GROUP BY sleep ORDER BY time DESC";
 $result_sleep = mysqli_query($conn, $sql_sleep) or die('failed');
 if (mysqli_num_rows($result_sleep) > 0) {
     $i = 0;
@@ -1431,7 +1432,7 @@ $i++;
     <!---------------------------------------------------------------------------------------------------------------------------------------------------------------->        
 <?php
 $map_weight = $map;
-$sql_weight = "SELECT weight, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND weight != '' GROUP BY weight ORDER BY time DESC";
+$sql_weight = "SELECT weight, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND weight != '' GROUP BY weight ORDER BY time DESC";
 $result_weight = mysqli_query($conn, $sql_weight) or die('failed');
 if (mysqli_num_rows($result_weight) > 0) {
     $i = 0;
@@ -1496,7 +1497,7 @@ $i++;
     <!--------------------------------------------------------------------------------------------------------------------------------------------------------------------->        
 <?php
 $map_calorie = $map;
-$sql_calorie = "SELECT calorie, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietition_id` = '{$dietitianuserID}' AND calorie != '' GROUP BY calorie ORDER BY time DESC";
+$sql_calorie = "SELECT calorie, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND calorie != '' GROUP BY calorie ORDER BY time DESC";
 $result_calorie = mysqli_query($conn, $sql_calorie) or die('failed');
 if (mysqli_num_rows($result_calorie) > 0) {
     $i = 0;
