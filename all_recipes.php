@@ -1,6 +1,7 @@
 <?php
 include('navbar.php');
 require('constant/config.php');
+
 ?>
 
 <!DOCTYPE html>

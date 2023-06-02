@@ -1,4 +1,6 @@
-<?php include('navbar.php');
+<?php 
+error_reporting(0);
+include('navbar.php');
 if(isset($_GET['category'])){
     $sql = "SELECT * FROM `default_recipes` WHERE drecipe_category = '{$_GET['category']}'";
 }else{
@@ -182,17 +184,11 @@ $res = mysqli_query($conn, $sql);
         <?php while ($d = mysqli_fetch_assoc($res)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
-            $drecipe_nutritional = $d['drecipe_nutritional information'];
+            $drecipe_nutritional = $d['drecipe_nutritional_information'];
 
             $drecipe_nutritional = trim($drecipe_nutritional, '{}');
             $pairs = explode(', ', $drecipe_nutritional);
-            $nutritional = array();
-            foreach ($pairs as $pair) {
-                list($key, $value) = explode(': ', $pair);
-                $key = trim($key, "'");
-                $value = trim($value, "'");
-                $nutritional[$key] = $value;
-            }
+            $nutritional = json_decode($d['drecipe_nutritional_information'],true);
         ?>
             <div class="card d-flex" style="padding:15px; width:310px; border-radius:16px;height:auto;margin:25px 40px;">
                 <div class="card-upper d-flex justify-content-between">
