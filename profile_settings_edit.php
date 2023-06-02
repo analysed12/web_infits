@@ -172,109 +172,8 @@ include "navbar.php";
         max-height: 30%;
         overflow: auto;
     }
-    .editbutton{
-width: 342px;
-height: 48px;
-background: #0177FD;
-border-radius: 10px;
-color:white;
-border:none;
-font-size: 29px;
-display:flex;
-justify-content: center;
-align-items: center;
-text-decoration: none;
-margin-top: 3rem;
-    }
-    .sharebutton{
-        width: 342px;
-height: 48px;
-border-radius: 10px;
-font-size: 29px;
-background: #FFFFFF;
-border: 2px solid #0177FD;
-display:flex;
-justify-content: center;
-align-items: center;
-text-decoration: none;
-margin-top: 3rem;
-color: #0177FD;
 
-    }
-    .footer{
-        display:flex;
-        gap:14.5%;
-
-    }
-       
-.overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.6);
-  transition: opacity 500ms;
-  visibility: hidden;
-  opacity: 0;
-}
-.overlay:target {
-  visibility: visible;
-  opacity: 1;
-}
-.modal2 {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.6);
-  transition: opacity 500ms;
-  visibility: hidden;
-  opacity: 0;
-}
-.modal2:target {
-  visibility: visible;
-  opacity: 1;
-}
-
-.popup {
-    
-  margin: 290px ;
-  margin-left:550px;
-  padding: 20px;
-  background: #fff;
-  box-shadow: 0px 0px 34.0377px rgba(0, 0, 0, 0.25);
-border-radius: 25.5283px;
-  width: 400px;
-  position: relative;
-  transition: all 5s ease-in-out;
-  
-}
-
-.popup h2 {
-  margin-top: 0;
-  color: #333;
-  font-family: Tahoma, Arial, sans-serif;
-}
-.popup .close {
- 
-  transition: all 200ms;
-  font-size: 30px;
-  font-weight: bold;
-  text-decoration: none;
-  color: #333;
-  background:none;
-  border:none;
-}
-.popup .close:hover {
-  color: #06D85F;
-}
-.popup .content {
-  max-height: 30%;
-  overflow: auto;
-}
-.my-modal {
+    .my-modal {
         position: fixed;
         top: 0;
         bottom: 0;
@@ -358,6 +257,7 @@ border-radius: 25.5283px;
         max-height: 30%;
         overflow: auto;
     }
+
     .modal {
         position: fixed;
         width: 100%;
@@ -531,6 +431,7 @@ border-radius: 25.5283px;
             global $conn;
             $result = $conn->query($sql);
             $data = $result->fetch_assoc();
+        
             ?>
                 <span style="display:flex;flex-direction:column">
                     User ID <input readonly type="text" class="input_field" placeholder="<?=$data['dietitian_id']?>" value="<?=$data['dietitian_id']?>" required>
@@ -551,7 +452,8 @@ border-radius: 25.5283px;
                     <span>
                         Password
                         <span style="display:flex;align-items:center;justify-content:space-between "
-                            class="input_field"><input disabled type="text" id="password" placeholder="XXXXX"  value="<?php if($data['socialLogin']==1){echo "Not Available";}else{echo $data['password'];} ?>" style="border:none;" required>
+                            class="input_field"><input disabled type="<?php if($data['socialLogin']==1){echo "text";}else{echo 'password';} ?>" id="password" placeholder="XXXXX"
+                            value="<?php if($data['socialLogin']==1){echo "Not Available";}else{echo $data['password'];} ?>" style="border:none;" required>
                             <?php if($data['socialLogin']==0){ ?>
                             <img style="cursor: pointer;width:25px;" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon" alt="eye">
                             <?php } ?>
@@ -577,7 +479,6 @@ border-radius: 25.5283px;
                     Location <input type="text" class="input_field" name="location" placeholder="<?=$data['location']?>" value="<?=$data['location']?>" required>
                 </span>
 
-</div>
 
                 <span style="display:flex;gap:1.5rem">
                     <span style="display:flex;flex-direction:column">
@@ -629,41 +530,15 @@ border-radius: 25.5283px;
                             src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg"><span>Instagram</span></div>
                 </div>
 
+
                 <button type="button" id="myBtn" style="border:none; background:none;"><img
                         src="<?= $DEFAULT_PATH ?>assets/images/edit.svg"></button>
-
-                <div id="myModal" class="modal">
-                    <!--Modal content-->
-                    <div class="modal-content">
-                        <span class="close"></span>
-
-                        <form method="post" action="" enctype="multipart/form-data">
-                            <div class="form-floating">
-                                <select select class="form-select" id="socials"
-                                    aria-label="Floating label select example">
-                                    <option selected>Platform</option>
-                                    <option value="whatsapp"><img
-                                            src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg">WhatsApp</option>
-                                    <option value="twitter">Twitter</option>
-                                    <option value="facebook">Facebook</option>
-                                    <option value="linkedin">LinkedIn</option>
-                                    <option value="instagram">Instagram</option>
-                                </select>
-                                <br>
-                                <input type="text" placeholder="Copy link here..." name="link"
-                                    style="width:100%;height:50px;background-color:white;box-shadow: 0px 1.76208px 5.28625px rgba(0, 0, 0, 0.25);border-radius: 8.81041px; color: #BBBBBB;border:none">
-                                <br>
-                                <div style="display:flex;justify-content:space-evenly;margin-top:35px;">
-                                    <button type="submit" class="addBtn1" name="save_socials">Save Changes</button>
-                                    <button class="discard">Discard</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
 
         </form>
+        
+                
+
         <div class="footer">
             <button class="editbutton">Confirm Changes</button>
             <a id="sharebutton" class="sharebutton" style="text-decoration: none;" href="#popup1"> Share Profile</a>
@@ -718,44 +593,83 @@ border-radius: 25.5283px;
         </div>
     </div>
 
+    <div id="myModal" class="modal">
+        <!--Modal content-->
+        <div class="modal-content">
+            <span class="close"></span>
+            <form method="post" action="" enctype="multipart/form-data">
+                            <div class="form-floating">
+                                <select select class="form-select" id="socials"
+                                    aria-label="Floating label select example">
+                                    <option selected>Platform</option>
+                                    <option value="whatsapp"><img
+                                            src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg">WhatsApp</option>
+                                    <option value="twitter">Twitter</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="linkedin">LinkedIn</option>
+                                    <option value="instagram">Instagram</option>
+                                </select>
+                                <br>
+                                <input type="text" placeholder="Copy link here..." name="link"
+                                    style="width:100%;height:50px;background-color:white;box-shadow: 0px 1.76208px 5.28625px rgba(0, 0, 0, 0.25);border-radius: 8.81041px; color: #BBBBBB;border:none">
+                                <br>
+                                <div style="display:flex;justify-content:space-evenly;margin-top:35px;">
+                                    <button type="submit" class="addBtn1" name="save_socials">Save Changes</button>
+                                    <button class="discard">Discard</button>
+                                </div>
+                            </div>
+                        </form>
+                        
+         </div>
+        </div>
+    </div>
 
     <script>
         let eyeicon = document.getElementById("eyeicon");
         let password = document.getElementById("password");
-        eyeicon.onclick = function () {
-            if (password.type == "password") {
-                password.type = "text";
-                eyeicon.src = "<?= $DEFAULT_PATH ?>assets/images/eye-open.png";
-            } else {
-                password.type = "password";
-                eyeicon.src = "<?= $DEFAULT_PATH ?>assets/images/eye.svg";
-            }
-        }
-
         var upload = document.getElementById("upload-btn");
         var chooseimage = document.getElementById("chooseimage");
-
-        function clickMe() {
-            chooseimage.click();
-        }
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
         var span = document.getElementsByClassName("close")[0];
-        btn.onclick = function () {
-            event.preventDefault();
+    //  this condition is because in the socialLogin the "eyeicon == null" 
+    //  as it is null in the socialLogin it will not run the code below...
+        if(eyeicon !== null){
+       
+            eyeicon.addEventListener('click',()=>{
+                if(password.type == 'password'){
+                    password.type = "text";
+                    eyeicon.src = "<?= $DEFAULT_PATH ?>assets/images/eye-open.png";
+                   
+                }
+                else if(password.type == 'text'){
+                    password.type = "password";
+                    eyeicon.src = "<?= $DEFAULT_PATH ?>assets/images/eye.svg";
+                    
+                }
+            })
+        } 
+        const clickMe = () => {
+            chooseimage.click();
+        }
+
+//      this block is for show and hide of the popUp named "myModel"
+        btn.addEventListener('click', (e)=> {
+            e.preventDefault();
+            console.log("clicked myBtn")
             modal.style.display = "block";
-        }
-        span.onclick = function () {
+        })
+        span.addEventListener('click', ()=> {
             modal.style.display = "none";
-        }
+        })
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
 
-
     </script>
     <?php require('constant/scripts.php'); ?>
 </body>
+
 </html>
