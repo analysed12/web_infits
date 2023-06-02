@@ -669,10 +669,10 @@ margin-top: 2.5rem;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   margin-left: 2rem;
   padding: 1rem;
-  background: url('<?=$DEFAULT_PATH?>assets/images/Vector 1.svg');
+  background: url('<?=$DEFAULT_PATH?>assets/images/Goals_Vector1.svg');
   background-repeat: no-repeat;
   background-attachment: scroll;
-  background-position: bottom left;
+  background-position: bottom right;
 }
 
 
