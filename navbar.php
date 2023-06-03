@@ -439,7 +439,7 @@ a {
         <a id="healthform" class="sidenavlink nav-healthform"><img
                 src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg" class="nav-icon">Health Form</a>
             <div class="dropdown-container" style="display:none;">
-                <a class="nav-# sidenavlink2" href="#">&nbsp;&nbsp;&nbsp; My Forms</a>
+                <a class="nav-# sidenavlink2" href="forms_and_documents.php">&nbsp;&nbsp;&nbsp; My Forms</a>
             </div>
             <script>
                 // Get all dropdown buttons
@@ -524,7 +524,7 @@ a {
             <a href="myplan.php"><img src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg">&nbsp&nbsp Diet Plans</a>
             <a href="billingAndInvoices.php"><img src="<?=$DEFAULT_PATH?>assets/images/payment.svg">&nbsp&nbsp Payments</a>
             <a href="all_recipes.php"><img src="<?=$DEFAULT_PATH?>assets/images/recipies.svg">&nbsp&nbsp Recipies</a>
-            <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg">&nbsp&nbsp Health Form</a>
+            <a href="forms_and_documents.php"><img src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg">&nbsp&nbsp Health Form</a>
 
             <a href="help.php"><img src="<?=$DEFAULT_PATH?>assets/images/getHelp.svg">&nbsp&nbsp Get Help</a>
             <a href="settings.php"><img src="<?=$DEFAULT_PATH?>assets/images/settings.svg">&nbsp&nbsp Settings</a>

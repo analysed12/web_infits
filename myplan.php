@@ -251,8 +251,8 @@ echo $output;
 
 
 <div class="head-sec" style="padding: 1rem 2rem 1rem 0rem;margin-left: 16rem; display: flex;  justify-content: space-between;">
-        <div class="col-6" id="heading" style="font-weight:400;font-size:40px;color:black !important;margin-top:1rem;">Plans</div>
-            <form method="GET">
+        <div class="col-6" id="heading" style="font-weight:400;font-size:40px;color:black !important;margin-top:1rem;margin-left:1rem">Plans</div>
+            <form method="GET" style="margin-left:1rem">
                 <div class="search_client" style="align-items:center">
                 <div><button id="btn3" name="search-btn"><img src="<?=$DEFAULT_PATH?>assets/images/search1.svg" ></button> </div>
                 <div style="margin-left:1rem;margin-right:4rem;"> <input type="text" name="search" placeholder="Search"
@@ -266,7 +266,7 @@ echo $output;
     <div class="card-sec" style="display: flex; justify-content:center;">
         <div class="col-md-12">
             <div class="">
-                <div class="cards row gx-0">
+                <div class="cards row gx-0" style="margin-left:1rem">
                     <?php
 
 if(isset($_GET['search-btn']))
