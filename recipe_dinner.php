@@ -566,8 +566,8 @@ require('constant/config.php');
                     </div>
 
                     <div id="myDropdownContent" class="dropdown-content dropdown-card ">
-                        <a style="color: white;" class="edit-button" href="#">Edit</a>
-                        <a style="color: white;" class="delete-button" href="#">Delete</a>
+                        <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?=$d['recipe_id']?>&action=editRecipe&isDefault=false">Edit</a>
+                        <a style="color: white;" class="delete-button" href="deleteRecipe.php?recipeId=<?=$d['recipe_id']?>&isDefault=false">Delete</a>
                     </div>
                 </div>
             </div>
@@ -614,7 +614,7 @@ require('constant/config.php');
 
                             <div id="myDropdownContent" class="dropdown-content dropdown-card ">
                                 <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?=$d['drecipe_id']?>&action=editRecipe&isDefault=true">Edit</a>
-                                <a style="color: white;" class="delete-button" href="#">Delete</a>
+                                <a style="color: white;" class="delete-button" href="deleteRecipe.php?recipeId=<?=$d['drecipe_id']?>&isDefault=true">Delete</a>
                             </div>
                         </div>
                     </div>
