@@ -538,13 +538,57 @@ require('constant/config.php');
 
     <!-- recipes from db -->
     <?php
-    $sql = "SELECT * FROM `default_recipes` WHERE drecipe_category = 'breakfast';";
+    $sql = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_category = 'breakfast'";
+    $sql2 = "SELECT * FROM `default_recipes` WHERE drecipe_category = 'breakfast';";
     $res = mysqli_query($conn, $sql);
+    $res2 = mysqli_query($conn, $sql2);
     ?>
 
     <div class="flex row">
         <?php $counter = 0;  
-    while ($d = mysqli_fetch_assoc($res)) {
+  while ($d = mysqli_fetch_assoc($res)) {
+    $recipe_recipe = explode(',', $d['recipe_recipe']);
+    $steps = count($recipe_recipe);
+    $nutritional = json_decode($d['recipe_nutritional_information'],true);
+
+    if ($counter == 5) {
+        break; 
+    }
+    $counter++;
+?>
+    <div class="card d-flex" style="padding:15px; width:325px; height:204px;border-radius:16px; margin:25px 20px 25px 50px;">
+        <div class="card-upper d-flex justify-content-between">
+            <p id="bu" class="card-upper-text"> Medium </p>
+            <p id="bu" class="card-upper-text d-flex" style="margin-left:73px;"><img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:10px"></i></i> 20:00 </p>
+        </div>
+        <div class="img-dis" style="width:100%; text-align:center;">
+            <img src="<?=$DEFAULT_PATH?>assets/images/Pancake.svg" style="margin-top:-60px;height:126px; width:201px;margin-left:15px; object-fit:cover;" />
+        </div>
+        <div class="d-flex justify-content-between">
+            <p class="card-food"><?php echo $d['recipe_name'] ?></p>
+            <div class="header">
+                <div class="dropdown ">
+                    <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
+                        <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:9px;">
+                    </div>
+
+                    <div id="myDropdownContent" class="dropdown-content dropdown-card ">
+                        <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?=$d['recipe_id']?>&action=editRecipe&isDefault=false">Edit</a>
+                        <a style="color: white;" class="delete-button" href="#">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between" style="align-items:center;">
+            <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt=""> <?php echo $nutritional['Calories'] ?> kcal</p>
+            <div class="d-flex align-items-center card-num">
+                <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
+                <div class="" style="margin-top:-8px;">steps</div>
+            </div>
+        </div>
+    </div>
+<?php }
+    while ($d = mysqli_fetch_assoc($res2)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
             $nutritional = json_decode($d['drecipe_nutritional_information'],true);
@@ -571,7 +615,7 @@ require('constant/config.php');
                             </div>
 
                             <div id="myDropdownContent" class="dropdown-content dropdown-card ">
-                                <a style="color: white;" class="edit-button" href="#">Edit</a>
+                                <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?=$d['drecipe_id']?>&action=editRecipe&isDefault=true">Edit</a>
                                 <a style="color: white;" class="delete-button" href="#">Delete</a>
                             </div>
                         </div>

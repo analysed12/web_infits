@@ -2,11 +2,14 @@
 error_reporting(0);
 include('navbar.php');
 if(isset($_GET['category'])){
-    $sql = "SELECT * FROM `default_recipes` WHERE drecipe_category = '{$_GET['category']}'";
+    $sql = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_category = '{$_GET['category']}'";
+    $sql2 = "SELECT * FROM `default_recipes` WHERE drecipe_category = '{$_GET['category']}'";
 }else{
-    $sql = "SELECT * FROM `default_recipes`";
+    $sql = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}'";
+    $sql2 = "SELECT * FROM `default_recipes`";
 }
 $res = mysqli_query($conn, $sql);
+$res2 = mysqli_query($conn, $sql2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -182,6 +185,53 @@ $res = mysqli_query($conn, $sql);
 
     <div class="flex row" style="margin-left:260px;">
         <?php while ($d = mysqli_fetch_assoc($res)) {
+           $recipe_recipe = explode(',', $d['recipe_recipe']);
+           $steps = count($recipe_recipe);
+           $recipe_nutritional = $d['recipe_nutritional_information'];
+           
+           $recipe_nutritional = trim($recipe_nutritional, '{}');
+           $pairs = explode(', ', $recipe_nutritional);
+           $nutritional = json_decode($d['recipe_nutritional_information'],true);
+           ?>
+           <div class="card d-flex" style="padding:15px; width:310px; border-radius:16px;height:auto;margin:25px 40px;">
+               <div class="card-upper d-flex justify-content-between">
+                   <p id="bu" class="card-upper-text"> Medium </p>
+                   <p id="bu" class="card-upper-text"><i class="fa-solid fa-clock"></i> 20:00 </p>
+               </div>
+               <div class="img-dis" style="width:100%; text-align:center;">
+                   <img src="<?=$DEFAULT_PATH?>assets/images/Alooparantha.svg" style="height:116px; width:200px; object-fit:cover;margin-top:-52px;margin-left:-13px;margin-bottom:12px" />
+               </div>
+               <div class="d-flex justify-content-between">
+                   <p class="card-food"><?php echo $d['recipe_name'] ?></p>
+                   <div class="header">
+                       <div class="dropdown ">
+                           <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
+                               <img class="" src="./icons/vertical-three-dots.svg" alt="" style="margin-top:-27px;">
+                           </div>
+           
+                           <div id="myDropdownContent" class="dropdown-content dropdown-card " style="display:none;">
+                               <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?=$d['recipe_id']?>&action=editRecipe&isDefault=false">Edit</a>
+                               <a style="color: white;" class="delete-button" href="#">Delete</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="d-flex justify-content-between" style="align-items:center;margin-top:-30px;">
+                   <p class="card-calorie"> <img src="./icons/calorie.svg" alt=""> <?php echo $nutritional['Calories'] ?> kcal</p>
+                   <div class="d-flex align-items-center card-num">
+                       <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
+                       <div class="">steps</div>
+                   </div>
+               </div>
+           </div>
+        <?php } ?>
+        <?php while ($d = mysqli_fetch_assoc($res2)) {
+            if($d['isDeleted'] != ""){
+                $flag = false;
+                $isDeleted = json_decode($d['isDeleted']);
+                foreach($isDeleted as $deleted){if($deleted === $_SESSION['dietitian_id']){$flag =true;break;}}
+                if($flag == true){continue;}
+            }
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
             $drecipe_nutritional = $d['drecipe_nutritional_information'];
@@ -207,7 +257,7 @@ $res = mysqli_query($conn, $sql);
                             </div>
 
                             <div id="myDropdownContent" class="dropdown-content dropdown-card " style="display:none;">
-                                <a style="color: white;" class="edit-button" href="#">Edit</a>
+                                <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?=$d['drecipe_id']?>&action=editRecipe&isDefault=true">Edit</a>
                                 <a style="color: white;" class="delete-button" href="#">Delete</a>
                             </div>
                         </div>

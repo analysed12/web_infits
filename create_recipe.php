@@ -9,7 +9,7 @@ if(isset($_POST['add'])){
     $query = "SELECT recipe_id FROM dietitian_recipes ORDER BY lastupdate DESC LIMIT 1";
     $result = $conn->query($query);
     $newRecipeId = $result->fetch_assoc()['recipe_id'];
-    if($_GET['action'] == 'editRecipe'){
+    if(isset($_GET['action']) && $_GET['action'] == 'editRecipe'){
         if($_GET['isDefault'] == true){
             $query = "SELECT * FROM default_recipes WHERE drecipe_id = '{$_GET['recipe_id']}'";
             $result = $conn->query($query);
@@ -27,10 +27,9 @@ if(isset($_POST['add'])){
             }
             $query = "UPDATE default_recipes SET isDeleted = '$toAdd' WHERE drecipe_id = '{$_GET['recipe_id']}'";
             $conn->query($query);
-            header("Location:create_recipe.php?recipe_id={$newRecipeId}&action=editRecipe&isDefault=false");
         }
     }
-
+    header("Location:create_recipe.php?recipe_id={$newRecipeId}&action=editRecipe&isDefault=false");
 }
 include('navbar.php');
 
