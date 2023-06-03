@@ -48,9 +48,9 @@ echo $output;
     }
 
     .clients {
-        margin-left: 20rem;
+        margin-left: 17rem;
         font-weight: 400;
-        margin-top: 1.5rem;
+        margin-top: 2rem;
 
     }
 
@@ -362,6 +362,9 @@ echo $output;
         .clients {
             margin-left: 2rem;
         }
+        .search_client{
+            width:auto;
+        }
 
         .clients_container {
             display: flex;
@@ -475,7 +478,14 @@ echo $output;
         }
 
         .clients_operations {
-            margin-left: -5rem;
+            
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-left:-10rem;
+        }
+        .search_client{
+            width:auto;
         }
     }
 </style>

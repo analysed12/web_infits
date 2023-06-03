@@ -65,15 +65,15 @@ include('navbar.php');
             color: #000000;
         }
         .btn-save{
-            height:46px;
-            width:151px;
-            background:#D257E6; 
-            color:white;
-            text-align:center; 
-            border:none;
-            border-radius:15px;
-            box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);
-            font-size: 24px;
+            height: 46px;
+    background: #D257E6;
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);
+    font-size: 24px;
+    padding: 0 25px;
         }
         .ctop {
             display: flex;
@@ -85,8 +85,8 @@ include('navbar.php');
         .right {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: left;
+            
         }
         .bottom {
             display: flex;
@@ -209,6 +209,7 @@ include('navbar.php');
 box-shadow: 0px 1.7px 5px rgba(0, 0, 0, 0.25);
 border-radius: 10px;
         }
+       
         @media screen and (max-width: 1200px){
             .popup {
             margin-left: 10% !important;
@@ -314,6 +315,9 @@ font-size: 30px;
 .direction_li{
     padding-bottom: 12px;
 }
+.dropdown-container{
+    margin-left:0;
+}
 
     </style>
   </head>
@@ -369,7 +373,7 @@ font-size: 30px;
                 </div>
                 <div class="right">
                     <input data-name="recipeName"  class="form-control" style="border:none;font-size:30px" type="text" value="<?php if($action == 'editRecipe')echo $edit['name']; ?>" name="recipeName" id="" placeholder="Recipe Name">
-                    <span style="font-size:20px">(auto sync)</span>
+                    <span style="font-size:20px;margin-left:22px">(auto sync)</span>
                 </div>
             </div>
             <div class="row bottom">
@@ -388,7 +392,8 @@ font-size: 30px;
                                 <div class="col dropdown-container" >
                                 <select  data-validate name="courses" id="recipeCourse" class="form-control input_bar" style="color: #212529 !important"  placeholder="Courses">
                                 <?php if($action == 'editRecipe'){echo "<option value='{$edit['course']}'>{$edit['course']}</option>";} ?>
-                                    <option value="Breakfast">Breakfast</option>
+                                <option value="Courses" selected>Courses</option>    
+                                <option value="Breakfast">Breakfast</option>
                                     <option value="Lunch">Lunch</option>
                                     <option value="Snack">Snack</option>
                                     <option value="Dinner">Dinner</option>
@@ -396,10 +401,11 @@ font-size: 30px;
                                 </div>
                             </div>
                             <div class="row w-100">
-                            <div class="col dropdown-container" >
+                            <div class="col dropdown-container " >
                                 <select data-name="recipeCategory" name="category" id="" class="form-control input_bar" style="color: #212529 !important" placeholder="Categories">
                                 <?php if($action == 'editRecipe'){echo "<option value='{$edit['category']}'>{$edit['category']}</option>";} ?>
-                                    <option value="Breakfast">Pancake</option>
+                                <option value="Categories" selected>Categories</option>    
+                                <option value="Breakfast">Pancake</option>
                                     <option value="Lunch">Juice</option>
                                     <option value="Snack">Butter Bread</option>
                                     <option value="Dinner">Waffle</option>
