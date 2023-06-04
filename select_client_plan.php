@@ -449,7 +449,7 @@ else{
             </div>
             </div>
             </div>
-        <a class="butt" href="create_plan.php" style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
+        <a class="butt" href="create_plan.php" style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;display:flex;justify-content:center;align-items:center;">+</a>
             
            
 </body>

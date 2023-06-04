@@ -236,6 +236,13 @@ $res2 = mysqli_query($conn, $sql2);
         }
 
     }
+    @media screen and (max-width: 720px){
+    .dropdown-content {
+    position: absolute !important;
+    
+    right: 50px !important;
+}
+    }
     </style>
 </head>
 
