@@ -70,8 +70,8 @@ ob_start();
 include('navbar.php');
 $dietition = $_SESSION['name'];
 // Client Id
-if (isset($_GET['id'])) {
-    $clientId = $_GET['id'];
+if (isset($_GET['client_id'])) {
+    $clientId = $_GET['client_id'];
 } else {
     header(("Location: index.php}"));
 }
@@ -993,7 +993,8 @@ tst-left-t {
                 <div class="tsd-left-b table-activity">
                     <div class="heading">
                         <p>Past Activity</p>
-                        <a href="past_activities_calorie.php?id=<?php echo ($clientId) ?>"><span>View All</span></a>
+                        <a href="past_activities_calorie.php?client_id=<?php echo ($clientId) ?>"><span>View
+                                All</span></a>
                     </div>
                     <div class="heading-border"></div>
                     <div class="activity-container">
@@ -1050,7 +1051,8 @@ tst-left-t {
             <div class="col-lg-5 tsd-right">
                 <div class="heading">
                     <p>Daily Progress</p>
-                    <a href="past_activities_calorie.php?id=<?php echo ($clientId) ?>"><span>View Activity</span></a>
+                    <a href="past_activities_calorie.php?client_id=<?php echo ($clientId) ?>"><span>View
+                            Activity</span></a>
                 </div>
                 <div class="progress-bar-container">
                     <div class="total-consumed">
