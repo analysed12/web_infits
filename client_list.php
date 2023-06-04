@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 ob_start();
 include('navbar.php');
 
@@ -46,11 +47,10 @@ body {
     overflow-x: hidden !important;
 }
 
-.clients {
-    margin-left: 20rem;
-    font-weight: 400;
-    margin-top: 1.5rem;
-
+    .clients {
+        margin-left: 17rem;
+        font-weight: 400;
+        margin-top: 2rem;
 }
 
 .clients_container {
@@ -409,10 +409,51 @@ img {
     .clients_operations {
         display: flex;
 
-        gap: 0.5rem;
-        max-width: fit-content;
-        margin-left: 0rem !important;
-    }
+    @media screen and (max-width: 720px) {
+        .clients {
+            margin-left: 2rem;
+        }
+        .search_client{
+            width:auto;
+        }
+
+        .clients_container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .add_set_client {
+            font-size: 0.8rem;
+        }
+
+        #add_set_client {
+            margin-left: 0% !important;
+        }
+
+        .modal-content {
+            margin-left: 0rem;
+            width: 400px;
+        }
+
+        .add_set {
+            font-size: 25px;
+            font-weight: 400;
+        }
+
+        .client_wrapper1 {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 0.1rem;
+        }
+
+        .client_wrapper2 {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 0.1rem;
+        }
 
     .clients_container3 {
         display: none;
@@ -473,8 +514,24 @@ img {
         gap: 0.5rem;
     }
 
-    .clients_operations {
-        margin-left: -5rem;
+
+    @media screen and (max-width: 1100px) {
+        .clients_container {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.5rem;
+        }
+
+        .clients_operations {
+            
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-left:-10rem;
+        }
+        .search_client{
+            width:auto;
+        }
     }
 }
 </style>
@@ -539,6 +596,7 @@ img {
 
 
                         $sql1 = "SELECT * FROM create_plan WHERE `plan_id`= $plan_id";
+
                         $result1 = mysqli_query($conn, $sql1);
                         $row1 = mysqli_fetch_assoc($result1);
                         $date1 = strtotime($row1["start_date"]);
@@ -768,13 +826,40 @@ img {
         });
     };
 
-    const toast = (val) => {
-        popUp1.style.display = "inline-flex";
-        btn__span1.innerHTML = val;
-        myCheckBox.forEach((items) => {
-            items.style.display = "block";
-        });
-    };
+        const popUp = document.querySelector("#goals");
+        const popUp1 = document.querySelector("#toast");
+        const popUp2 = document.querySelector("#del");
+        const goalbtn = document.querySelector(".goalbtn");
+        const btn2 = document.querySelector(".btn2");
+        const reminderbtn = document.querySelector(".reminderbtn");
+        const deletebtn = document.querySelector(".deletebtn");
+        const delbtn = document.querySelector(".del-btn");
+        const cancelbtn = document.querySelector(".cancel-btn");
+        const btn__span = document.querySelector(".btn__span");
+        const btn__span1 = document.querySelector(".btn__span1");
+        const btn__span2 = document.querySelector(".btn__span2");
+        const myCheckBox = document.querySelectorAll(".myCheckboxs");
+        const form = document.querySelector("#form");
+        const form__input = document.querySelector("#form__input");
+        const form1 = document.querySelector("#form1");
+        const form__input1 = document.querySelector("#form__input1");
+        const form2 = document.querySelector("#form1");
+        const form__input2 = document.querySelector("#form__input2");
+
+
+        let selectedClients = [];
+
+        // display checkBox and popUp here...
+        const goals = (val) => {
+            popUp.style.display = "inline-flex";
+            btn__span.innerHTML = val;
+            myCheckBox.forEach((items) => {
+                popUp1.style.display ="none";
+                popUp2.style.display ="none";
+                items.style.display = "block";
+            });
+        };
+
 
     const del = (val) => {
         popUp2.style.display = "inline-flex";
@@ -789,12 +874,9 @@ img {
     goalbtn.addEventListener("click", () => {
         if (btn__span.innerHTML == "Set Goals") { //the set goals page linking and sending the data...
             myCheckBox.forEach((items) => {
-                if (items.checked) {
-                    selectedClients.push(items.value);
-                }
-                form__input.value = JSON.stringify(selectedClients);
-                form.action = "setgoals.php";
-                console.log("setgoals", selectedClients);
+                popUp.style.display ="none";
+                popUp2.style.display ="none";
+                items.style.display = "block";
             });
             window.location.href = "setgoals.php";
         }
@@ -802,12 +884,9 @@ img {
     reminderbtn.addEventListener("click", () => {
         if (btn__span1.innerHTML == "Set Reminders") { //the set Reminders page linking and sending the data...
             myCheckBox.forEach((items) => {
-                if (items.checked) {
-                    selectedClients.push(items.value);
-                }
-                form__input1.value = JSON.stringify(selectedClients);
-                form1.action = 'set_reminders.php';
-                console.log("Set Reminders", selectedClients);
+                popUp.style.display ="none";
+                popUp1.style.display ="none";
+                items.style.display = "block";
             });
             window.location.href = "set_reminders.php";
         }

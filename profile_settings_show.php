@@ -20,7 +20,7 @@ include "navbar.php";
     }
 
     ::placeholder {
-        color: #AEAEAE;
+        color: #AEAEAE !important;
         padding: 10px;
     }
 
@@ -240,9 +240,10 @@ include "navbar.php";
                 <span style="display:flex;flex-direction:column">
                     Password
                     <span style="display:flex;align-items:center;justify-content:space-between "
-                        class="input_field"><input readonly type="text" id="password" placeholder="Enter Value" value="<?php if($data['socialLogin']==1){echo "Not Available";}else{echo $data['password'];} ?>"  style="border:none;">
-                        <img style="cursor: pointer" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon"
-                            alt="eye"></span>
+                        class="input_field"><input readonly type="text" id="password" placeholder="Enter Value" value="<?php if($data['socialLogin']==1){echo "Not Available";}else{echo $data['password'];} ?>"  style="border:none;color: #AEAEAE;">
+        
+                        <img style="cursor: pointer;width:25px;" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon"
+                            alt="eye" ></span>
                 </span>
 
             </div>
