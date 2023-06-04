@@ -15,6 +15,7 @@ include "server.php";
 body{
     font-family: 'NATS';
     font-style: normal;
+    overflow-x: hidden;
 }
 .top_bar {
     display: flex;

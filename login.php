@@ -60,21 +60,19 @@ include "server.php";
 }
 
 body {
-    S max-height: 100vh;
+ overflow-x: hidden;
     margin: 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
     font-family: 'NATS', sans-serif;
 }
 
 .top_bar {
     display: flex;
     justify-content: space-between;
-    S
+    
 }
 
 .top_bar img {
-    S margin-top: -20px;
+    margin-top: -20px;
     width: 210px;
     height: auto;
 }
@@ -83,11 +81,11 @@ body {
     position: absolute;
     margin-top: -10px;
     z-index: -1;
-    S
+    
 }
 
 #home {
-    font-family: 'NATS';
+ 
     font-style: normal;
     font-weight: 500;
     font-size: 30px;
@@ -109,24 +107,25 @@ body {
     border: none;
     margin-top: 2rem;
     margin-right: 2rem;
-    font-family: 'NATS';
+  
     font-style: normal;
     font-weight: 500;
     font-size: 30px;
     color: #8081F9;
-    S margin-left: 0.7rem;
+    margin-left: 0.7rem;
 }
 
 .mobile img {
-    width: 550px;
-    height: 550px;
-    margin-top: 6rem;
+    width: 90%;
+    height: 90%;
+    
 }
 
 .col-sm-6 {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-left: 2rem
 
 }
 
@@ -147,24 +146,24 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: left;
-    margin-right: 15%;
+    
     flex-direction: column;
     padding: 20px;
 }
 
 .left_links span {
-    font-family: 'NATS';
+   
     font-style: normal;
     font-weight: 400;
     font-size: 30px;
     line-height: 40px;
     letter-spacing: 0.02em;
     color: #4F1963;
-    S
+    
 }
 
 .link {
-    font-family: 'NATS';
+   
     font-style: normal;
     font-weight: 400;
     font-size: 25px;
@@ -214,11 +213,11 @@ body {
     width: 176px;
     height: 64px;
     margin-right: 10px;
-    S
+    
 }
 
 .content p {
-    font-family: 'Calibri';
+   
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -227,7 +226,7 @@ body {
 }
 
 .content span {
-    font-family: 'Calibri';
+  
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -253,7 +252,7 @@ body {
 }
 
 .play p {
-    font-family: 'Calibri';
+  
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -262,7 +261,7 @@ body {
 }
 
 .play span {
-    font-family: 'Calibri';
+   
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -300,8 +299,7 @@ body {
     margin-bottom: -110px;
 }
 
-.copy {
-    font-family: 'NATS';
+.copy { 
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -311,7 +309,6 @@ body {
 }
 
 .vec-sub {
-    font-family: 'NATS';
     font-size: 25px;
     font-weight: 500;
     text-align: center;
@@ -333,6 +330,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding-top:1rem;
 
 }
 
@@ -344,7 +342,6 @@ body {
 }
 
 .header_sigin span {
-    font-family: 'NATS';
     font-style: normal;
     font-weight: 800;
     font-size: 50px;
@@ -520,9 +517,7 @@ body {
     color: #4B99FB;
 }
 
-.row {
-    margin-left: 2rem;
-}
+
 
 .down {
     display: flex;
@@ -537,73 +532,16 @@ body {
     margin-top: 3rem;
     gap: 2rem;
 }
-
-@media screen and (max-width: 720px) {
-    .sform {
-        margin-left: 9rem;
+@media screen and (max-width: 768px){
+    #home{
+        display:none;
     }
-}
-
-@media screen and (max-width: 720px) {
-    #home {
-        margin-left: 13rem;
-    }
-
-    .mobile img {
-        width: 400px;
-        height: 400px;
-        margin-left: 6rem;
-    }
-
-    .left_links {
-        margin-left: 8rem;
-    }
-
-    .right_links {
-        margin-left: 3rem;
-        margin-top: 2rem;
-    }
-
-    .sign {
-        margin-left: 2rem;
-    }
-
-    #hr {
-
-        display: none;
-    }
-
-    #btml {
-        margin-left: 4rem;
-    }
-
-}
-
-@media screen and (max-width: 768px) {
     #parent-lg {
         display: none !important;
     }
-
 }
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
-    .mobile img {
-        width: 400px;
-        height: 400px;
 
-    }
-
-    .bottom_patch {
-        margin-left: -530px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .sign {
-        margin-left: 11rem;
-    }
-
-}
 </style>
 
 <body>
@@ -698,7 +636,7 @@ body {
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="mobile">
+            <div class="mobile" style="display:flex;justify-content:center">
                 <img src="<?=$DEFAULT_PATH?>assets/images/mobile.svg" alt="">
             </div>
 
@@ -788,13 +726,12 @@ body {
         </div>
     </div>
     <!--------------------------------------mobile-view---------------------------------------------------->
-    <div class="row  d-lg-none d-md-none d-xl-none" id="parent" style="margin-top:2rem">
-        <!-- component-1 -->
-        <div class="col-sm-8" style="margin-bottom:12rem;">
+    <div class="row  d-lg-none d-md-none d-xl-none" id="parent" >
+        <div class="col-sm-8" style="margin-bottom:6rem;">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="left_links">
-                        <span class="link" style="margin-top:3rem; color: #4F1963;">Company</span>
+                        <span class="link" style=" color: #4F1963;">Company</span>
                         <a class="link" style="color: #8E8E8E; text-decoration: none;">About</a>
                         <a class="link" style="color: #8E8E8E;text-decoration: none;">Features</a>
                         <a class="link" style="color: #8E8E8E;text-decoration: none;">Testimonials</a>

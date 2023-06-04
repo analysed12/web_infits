@@ -382,17 +382,17 @@ a {
     display: flex;
     flex-direction: column;
 }
-.dropdown-container{
-   margin-left: 17%;
-   align-items: flex-start;
+.fixing{
+   margin-left: 17% !important;
+   align-items: flex-start !important;
    text-decoration: none !important;
 }
 .dropdown-container a {
-   margin-left: 10%;
-   display: grid;
-   padding: 4px;
-   gap: 12px;
-   width: 75%;
+   margin-left: 10% !important;
+   display: grid !important;
+   padding: 4px !important;
+   gap: 12px !important;
+   width: 75% !important;
    text-decoration: none !important;
 }
 
@@ -419,27 +419,28 @@ a {
         <a id="client_list"
             class="sidenavlink nav-add_client nav-client_list nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
             href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg" class="nav-icon">Clients</a>
-        <a id="myplan" class="sidenavlink nav-create_plan nav-update_plan"><img
+        <a id="myplan" class="sidenavlink nav-update_plan"><img
                 src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg" class="nav-icon">Diet Plans</a>
-            <div class="dropdown-container" style="display:none;">
-                <a class="nav-myplan sidenavlink2" href="myplan.php">&nbsp;&nbsp;&nbsp; My Plans</a>
+            <div class="dropdown-container fixing" style="display:none;">
+                <a class="nav-myplan nav-create_plan nav-dietplan_default sidenavlink2" href="myplan.php">&nbsp;&nbsp;&nbsp; My Plans</a>
             </div>
-        <a id="payments" class="sidenavlink nav-payments"><img  
+        <a id="payments" class="sidenavlink"><img  
                 src="<?=$DEFAULT_PATH?>assets/images/payment.svg" class="nav-icon">Payments</a>
-            <div class="dropdown-container" style="display:none;">
+            <div class="dropdown-container fixing" style="display:none;">
                 <a class="nav-billingAndInvoices sidenavlink2" href="billingAndInvoices.php">&nbsp;&nbsp;&nbsp; Your Bills</a>
-                <a class="nav-# sidenavlink2" href="payments.php">&nbsp;&nbsp;&nbsp; Client Payment</a>
+                <a class="nav-payments sidenavlink2" href="payments.php">&nbsp;&nbsp;&nbsp; Client Payment</a>
             </div>
-        <a id="create_recipe" class="sidenavlink nav-create_recipe nav-recipe_breakfast nav-recipe_all_breakfast nav-recipe_lunch nav-recipe_all_lunch nav-recipe_snacks nav-recipe_all_snacks nav-recipe_dinner nav-recipe_all_dinner"><img
+        <a id="create_recipe" class="sidenavlink nav-recipe_breakfast nav-recipe_all_breakfast nav-recipe_lunch nav-recipe_all_lunch 
+                nav-recipe_snacks nav-recipe_all_snacks nav-recipe_dinner nav-recipe_all_dinner"><img
                 src="<?=$DEFAULT_PATH?>assets/images/recipies.svg" class="nav-icon">Recipes</a>
-            <div class="dropdown-container" style="display:none;">
+            <div class="dropdown-container fixing" style="display:none;">
                 <a class="nav-all_recipes sidenavlink2" href="all_recipes.php">&nbsp;&nbsp;&nbsp; My Recipes</a>
-                <a class="nav-# sidenavlink2" href="create_recipe.php">&nbsp;&nbsp;&nbsp; Add Recipe</a>
+                <a class="nav-create_recipe sidenavlink2" href="create_recipe.php">&nbsp;&nbsp;&nbsp; Add Recipe</a>
             </div>
         <a id="healthform" class="sidenavlink nav-healthform"><img
                 src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg" class="nav-icon">Health Form</a>
-            <div class="dropdown-container" style="display:none;">
-                <a class="nav-# sidenavlink2" href="forms_and_documents.php">&nbsp;&nbsp;&nbsp; My Forms</a>
+            <div class="dropdown-container fixing" style="display:none;">
+                <a class="nav-forms_and_documents nav-health_detail_form_blank sidenavlink2" href="forms_and_documents.php">&nbsp;&nbsp;&nbsp; My Forms</a>
             </div>
             <script>
                 // Get all dropdown buttons
