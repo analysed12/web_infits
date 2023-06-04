@@ -957,6 +957,7 @@ function updateDOM(){
 
 
 $on = array();
+
 $off = array();
     $sql = "SELECT client_id FROM `addclient`";
     $result = $conn->query($sql);
@@ -964,23 +965,24 @@ $off = array();
     if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $c_id = $row['client_id'];
-        $sq = "SELECT * FROM `goals` WHERE `Client_id` = $c_id ORDER BY 'time' LIMIT 1";
+        $sq = "SELECT * FROM `goals` WHERE `client_id` = $c_id ORDER BY 'time' LIMIT 1";
         $result1 = $conn->query($sq);
         if ($result1->num_rows > 0){
         while ($row = $result1->fetch_assoc()) {
         $c_id1 = $row['client_id'];
-        $q = "SELECT clientUserID FROM `dietitian_client` WHERE  `Client_id` = $c_id1";
+        $q = "SELECT clientuserID FROM `addclient` WHERE  `client_id` = $c_id1";
         $res = $conn->query($q);
         if ($res->num_rows > 0){
         while ($c_name = $res->fetch_assoc()) {
-        $cname = $c_name['clientUserID'];
+        $cname = $c_name['clientuserID'];
+        
         $on[$i]['name'] = $cname;
         $off[$i]['name'] = $cname;
         $dat = date('Y-m-d');
 
         //some changes is needed while linking.
         //for steps
-        $step = "SELECT steps FROM `steptracker` WHERE clientid = '$cname' AND `dateandtime` >= '2023-03-10 00:00:00' AND `dateandtime` < '{$dat} 23:59:59'";
+        $step = "SELECT steps FROM `steptracker` WHERE clientuserID= '$cname' AND `dateandtime` >= '2023-03-10 00:00:00' AND `dateandtime` < '{$dat} 23:59:59'";
         $stepgoal = $conn->query($step);
         $stepgoal1 = mysqli_fetch_assoc($stepgoal);
         if ($stepgoal1 != null) {
@@ -997,7 +999,7 @@ $off = array();
         }
 
         //for heart rate
-        $heart = "SELECT average FROM `heartrate` WHERE clientID = '$cname' AND `dateandtime` >= '2023-03-12 00:00:00' AND `dateandtime` < '{$dat} 23:59:59'";
+        $heart = "SELECT average FROM `heartrate` WHERE clientuserID = '$cname' AND `dateandtime` >= '2023-03-12 00:00:00' AND `dateandtime` < '{$dat} 23:59:59'";
         $heartgoal = $conn->query($heart);
         $heartgoal1 = mysqli_fetch_assoc($heartgoal);
         if ($heartgoal1 != null) {
@@ -1013,7 +1015,7 @@ $off = array();
             $off[$i]['heart'] = '-1';
         }
         //for weight
-        $weight = "SELECT goal FROM `weighttracker` WHERE clientID = '$cname' AND `date` >= '2022-03-09 00:00:00' AND `date` < '{$dat} 23:59:59'";
+        $weight = "SELECT goal FROM `weighttracker` WHERE clientuserID = '$cname' AND `dateandtime` >= '2022-03-09 00:00:00' AND `dateandtime` < '{$dat} 23:59:59'";
         $weightgoal = $conn->query($weight);
         $weightgoal1 = mysqli_fetch_assoc($weightgoal);
         if ($weightgoal1 != null) {
@@ -1033,21 +1035,25 @@ $off = array();
         }
 
         //for sleep
-        $sleep = "SELECT hrsSlept FROM `sleeptracker` WHERE clientID = '$cname' AND `sleeptime` >= '2022-03-09 00:00:00' AND `sleeptime` < '{$dat} 23:59:59'";
+        $sleep = "SELECT hrsSlept FROM `sleeptracker` WHERE clientuserID = '$cname' AND `sleeptime` >= '2022-03-09 00:00:00' AND `sleeptime` < '{$dat} 23:59:59'";
         $sleepgoal = $conn->query($sleep);
         $sleepgoal1 = mysqli_fetch_assoc($sleepgoal);
         if ($sleepgoal1 != null) {
             if ($sleepgoal1['hrsSlept'] >= $row['sleep']) {
+               
                 $on[$i]['sleep'] = $sleepgoal1['hrsSlept'];
+                
                 $off[$i]['sleep'] = '-1';
             } else {
                 $on[$i]['sleep'] = '-1';
+                
                 $off[$i]['sleep'] = $sleepgoal1['hrsSlept'];
             }
         } else {
             $on[$i]['sleep'] = '-1';
             $off[$i]['sleep'] = '-1';
         }
+
 
         $i++;
     }
@@ -1057,28 +1063,34 @@ $off = array();
 
 }
     }
+    
 ?>
-
+ 
     <div class="webview_progressdetails">
         <div class="detailed_progress_container2" id="container2">
             <?php
+            if(count($on) == 0){
+                echo("<h5>Set Goal To Fetch Data Here</h5>");
+            }
     foreach ($on as $r) {
     echo ('<div class="container2_wrapper1">');
     if ($r['steps'] != '-1' || $r['heart'] != '-1' || $r['weight'] != '-1' || $r['sleep'] != '-1') {
-        echo ('<div style="display: flex; justify-content: center; align-items: center;"><span><img src="'.$DEFAULT_PATH.'assets/images/ronald2.svg"  style="width:2rem; background-color:#f8f6f6;border-radius:1rem;margin-right:0.5rem"> <b style="font-weight: 600;">' . $r["name"] . '</b></span></a></span></div>');
+        echo ('<div style="display: flex; justify-content: center; align-items: center;"><span><img src="'.$DEFAULT_PATH.'assets/images/ronald.svg"  style="width:2rem; background-color:#f8f6f6;border-radius:1rem;margin-right:0.5rem"> <b style="font-weight: 600;">' . $r["name"] . '</b></span></a></span></div>');
     }
     echo('<div class="stats-col">');
     if ($r['steps'] != '-1') {
-        echo ('<div class="info"><span>Steps</span><div class="symbols"><div><img class="stat-bar" src="{$DEFAULT_PATH}assets/images/orange.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["steps"] . ' steps</span></div></div></div>');
+        echo ('<div class="info"><span>Steps</span><div class="symbols"><div><img class="stat-bar" src="'.$DEFAULT_PATH.'assets/images/orange.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["steps"] . ' steps</span></div></div></div>');
     }
+   
     if ($r['heart'] != '-1') {
-        echo (' <div class="info"><span>Heart Rate</span> <div class="symbols"><div><img class="stat-bar" src="{$DEFAULT_PATH}assets/images/pink.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["heart"] . ' bpm</span></div></div></div>');
+        echo (' <div class="info"><span>Heart Rate</span> <div class="symbols"><div><img class="stat-bar" src="'.$DEFAULT_PATH.'assets/images/pink.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["heart"] . ' bpm</span></div></div></div>');
     }
     if ($r['weight'] != '-1') {
-        echo ('<div class="info"><span>Weight</span> <div class="symbols"><div><img class="stat-bar" src="{$DEFAULT_PATH}assets/images/blue.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["weight"] . ' Kgs</span></div></div></div>');
+        echo ('<div class="info"><span>Weight</span> <div class="symbols"><div><img class="stat-bar" src="'.$DEFAULT_PATH.'assets/images/blue.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["weight"] . ' Kgs</span></div></div></div>');
     }
+    
     if ($r['sleep'] != '-1') {
-        echo ('<div class="info"><span>Sleep</span> <div class="symbols"><div><img class="stat-bar" src="{$DEFAULT_PATH}assets/images/purple.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["sleep"] . ' hours</span></div></div></div>');
+        echo ('<div class="info"><span>Sleep</span> <div class="symbols"><div><img class="stat-bar" src="'.$DEFAULT_PATH.'assets/images/purple.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["sleep"] . ' hours</span></div></div></div>');
     }
     echo ('</div>');
     echo('</div> ');
@@ -1088,10 +1100,13 @@ $off = array();
        
         <div class="detailed_progress_container2" id="container3">
             <?php
+             if(count($off) == 0){
+                echo("<h5>Set Goal To Fetch Data Here</h5>");
+            }
 foreach ($off as $r) {
     echo ('<div class="container2_wrapper1">');
     if ($r['steps'] != '-1' || $r['heart'] != '-1' || $r['weight'] != '-1' || $r['sleep'] != '-1') {
-        echo ('<div style="display: flex; justify-content: center; align-items: center;"><span><img src="{$DEFAULT_PATH}assets/images/ronald2.svg" style="width:2rem; background-color:#f8f6f6;border-radius:1rem;margin-right:0.5rem"> <b style="font-weight: 600;">' . $r["name"] . '</b></span></a></span></div>');
+        echo ('<div style="display: flex; justify-content: center; align-items: center;"><span><img src="'.$DEFAULT_PATH.'assets/images/ronald.svg" style="width:2rem; background-color:#f8f6f6;border-radius:1rem;margin-right:0.5rem"> <b style="font-weight: 600;">' . $r["name"] . '</b></span></a></span></div>');
     }
     echo('<div class="stats-col">');
     if ($r['steps'] != '-1') {
@@ -1099,7 +1114,7 @@ foreach ($off as $r) {
         <div class="symbols" style="display: flex;
             flex-wrap: wrap;" >
             <div>
-                <img class="stat-bar" src="{$DEFAULT_PATH}assets/images/orange.svg" alt="">
+                <img class="stat-bar" src="'.$DEFAULT_PATH.'assets/images/orange.svg" alt="">
             </div>
             <div style="margin-top:0.1rem">
                 <span style="margin-left:0.5rem">' . $r["steps"] . ' steps
@@ -1109,14 +1124,15 @@ foreach ($off as $r) {
     </div>');
     }
     if ($r['heart'] != '-1') {
-        echo ('<div class="info"><span>Heart Rate</span> <div class="symbols"><div><img class="stat-bar" src="{$DEFAULT_PATH}assets/images/pink.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["heart"] . ' bpm</span></div></div></div>');
+        echo ('<div class="info"><span>Heart Rate</span> <div class="symbols"><div><img class="stat-bar" src="'.$DEFAULT_PATH.'assets/images/pink.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["heart"] . ' bpm</span></div></div></div>');
     }
     if ($r['weight'] != '-1') {
-        echo ('<div class="info"><span>Weight</span> <div class="symbols"><div><img class="stat-bar" src="{$DEFAULT_PATH}assets/images/pink.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["weight"] . ' kgs</span></div></div></div>');
+        echo ('<div class="info"><span>Weight</span> <div class="symbols"><div><img class="stat-bar" src="'.$DEFAULT_PATH.'assets/images/blue.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["weight"] . ' kgs</span></div></div></div>');
     }
     if ($r['sleep'] != '-1') {
-        echo ('<div class="info"><span>Sleep </span> <div class="symbols"><div><img class="stat-bar" src="{$DEFAULT_PATH}assets/images/pink.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["sleep"] . ' hours</span></div></div></div>');
+        echo ('<div class="info"><span>Sleep </span> <div class="symbols"><div><img class="stat-bar" src="'.$DEFAULT_PATH.'assets/images/purple.svg" alt=""></div><div style="margin-top:0.1rem"><span style="margin-left:0.5rem">' . $r["sleep"] . ' hours</span></div></div></div>');
     }
+    
     echo ('</div> ');
    echo('</div> ');
 }
@@ -1168,7 +1184,7 @@ foreach ($off as $r) {
             <div class="mob_container1_wrapper1">
                 <?php
                     if ($r['steps'] != '-1' || $r['heart'] != '-1' || $r['weight'] != '-1' || $r['sleep'] != '-1') {
-                    echo ('<span><a href="" style=" color:black;font-weight:500; border:none; margin-top:1rem;background-color:white; margin-left:1rem"><span><img src="{$DEFAULT_PATH}assets/images/ronald2.svg" style="width:2rem;border-radius:1rem">'. $r["name"].'</span></a></span>');}
+                    echo ('<span><a href="" style=" color:black;font-weight:500; border:none; margin-top:1rem;background-color:white; margin-left:1rem"><span><img src="'.$DEFAULT_PATH.'assets/images/ronald.svg" style="width:2rem;border-radius:1rem">'. $r["name"].'</span></a></span>');}
                     ?>
                 <div class="row1" style="display:flex; gap:2rem ">
                     <div class="steps">
