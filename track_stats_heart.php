@@ -1,110 +1,111 @@
 <?php
 require('constant/config.php');
 // Client Id
-if(isset($_GET['id'])){
-    $clientId = $_GET['id'];
-}else{
+if (isset($_GET['client_id'])) {
+    $clientId = $_GET['client_id'];
+} else {
     header('location: index.php');
 }
 // Configure Dates
 date_default_timezone_set("Asia/Calcutta");
 $today = new DateTime();
 // Goal Insertion
-if(isset($_POST['savegoal'])){
+if (isset($_POST['savegoal'])) {
     $client = $_POST['clientid'];
     $dietition = $_POST['dietition'];
-    $goal =$_POST['setgoal'];
-    $isSame =false;
+    $goal = $_POST['setgoal'];
+    $isSame = false;
     $query = "SELECT `heart` FROM `goals` WHERE `client_id` = '{$client}'";
     $result = $conn->query($query) or die('Query Failed');
-    if($result->num_rows > 0){
-        while($row = $result->fetch_assoc()){
-            if($row['heart'] == $goal){
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            if ($row['heart'] == $goal) {
                 $isSame = true;
                 break;
             }
         }
     }
-    if(!$isSame){
+    if (!$isSame) {
         $query = "UPDATE `goals` SET `heart` = $goal WHERE `client_id` = $client";
         $result = $conn->query($query) or die("Query Failed");
-        if($conn->affected_rows == 0){
-            $query="INSERT INTO `goals`(`dietition_id`, `client_id`, `heart`) VALUES ('{$dietition}','{$client}','{$goal}')";
+        if ($conn->affected_rows == 0) {
+            $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `heart`) VALUES ('{$dietition}','{$client}','{$goal}')";
             $result = $conn->query($query) or die("Query Failed");
         }
-        
-        if($result){
+
+        if ($result) {
             unset($_POST["savegoal"]);
             unset($_POST["setgoal"]);
-            header(("Location: track_stats_heart.php?id={$clientId}"));
+            header(("Location: track_stats_heart.php?client_id={$clientId}"));
         }
     }
 }
 // funtion to fetch
 // This can be more Simple by String Concatination
-function fetchDataSql($clientId,$from_date, $to_date, $isCustom=0){
+function fetchDataSql($clientId, $from_date, $to_date, $isCustom = 0)
+{
     require('constant/config.php');
     // For Sum of All Data Till Today
-    if($isCustom==1){
-        $query="SELECT SUM(average) FROM heartrate WHERE client_id= '$clientId' AND 
+    if ($isCustom == 1) {
+        $query = "SELECT SUM(average) FROM heartrate WHERE client_id= '$clientId' AND 
                 `dateandtime` <= '{$to_date} 23:59:59';";
-    // for sum of Data between two dates
-    }else if($isCustom==2){
+        // for sum of Data between two dates
+    } else if ($isCustom == 2) {
         $query = "SELECT SUM(average) FROM heartrate WHERE client_id= '$clientId' AND 
                 `dateandtime` >= '{$from_date} 00:00:00'
                 AND `dateandtime` <= '{$to_date} 23:59:59';";
-    // for average of data end to end (monthly)
-    }else if($isCustom==3){
-        $query="SELECT avg(average) FROM heartrate WHERE client_id= '$clientId' AND 
+        // for average of data end to end (monthly)
+    } else if ($isCustom == 3) {
+        $query = "SELECT avg(average) FROM heartrate WHERE client_id= '$clientId' AND 
             `dateandtime` >= '{$from_date} 00:00:00'
             AND `dateandtime` < '{$to_date} 00:00:00';";
-    // for get latest goal from goals table
-    }else if($isCustom==4){
-        $query="SELECT heart FROM goals WHERE client_id = {$clientId}";
-    // for getting past actvities 
-    }else if($isCustom==5){
+        // for get latest goal from goals table
+    } else if ($isCustom == 4) {
+        $query = "SELECT heart FROM goals WHERE client_id = {$clientId}";
+        // for getting past actvities 
+    } else if ($isCustom == 5) {
         $query = "SELECT * FROM `heartrate` WHERE client_id = '$clientId' AND `dateandtime` >= '{$from_date} 00:00:00'
-        AND `dateandtime` < '{$to_date} 23:59:59' ORDER BY dateandtime DESC;" ;
-    // for average of data of one full day
-    }else if($isCustom==6){
+        AND `dateandtime` < '{$to_date} 23:59:59' ORDER BY dateandtime DESC;";
+        // for average of data of one full day
+    } else if ($isCustom == 6) {
         $query = "SELECT SUM(maximum) FROM heartrate WHERE client_id= '$clientId' AND 
                 `dateandtime` >= '{$from_date} 00:00:00'
                 AND `dateandtime` <= '{$to_date} 23:59:59';";
-    // for average of data end to end (monthly)
-    }else if($isCustom==7){
+        // for average of data end to end (monthly)
+    } else if ($isCustom == 7) {
         $query = "SELECT SUM(minimum) FROM heartrate WHERE client_id= '$clientId' AND 
                 `dateandtime` >= '{$from_date} 00:00:00'
                 AND `dateandtime` <= '{$to_date} 23:59:59';";
-    // for average of data end to end (monthly)
-    }else{
-    $query="SELECT avg(average) FROM heartrate WHERE client_id= '$clientId' AND 
+        // for average of data end to end (monthly)
+    } else {
+        $query = "SELECT avg(average) FROM heartrate WHERE client_id= '$clientId' AND 
             `dateandtime` >= '{$from_date} 00:00:00'
             AND `dateandtime` <= '{$to_date} 23:59:59';";
     }
     $result = $conn->query($query) or die("Query Failed");
     $data = array();
-    while($row = $result->fetch_assoc()){
-        $data[] =  $row;
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
     }
     $conn->close();
     return ($data);
 }
-if(isset($_POST['from_date']) AND isset($_POST['to_date'])){
+if (isset($_POST['from_date']) and isset($_POST['to_date'])) {
     $CustomData = array(
         'value' => array(),
         'date' => array(),
         'range' => "",
     );
-    $CustomDay_1 = new DateTime(substr($_POST['from_date'],4,11));
-    $CustomDay_2 = new DateTime(substr($_POST['to_date'],4,11));
-    $CustomData['range'] =  $CustomDay_1->format('d M Y') ." - ". $CustomDay_2->format('d M Y') ;
-    
+    $CustomDay_1 = new DateTime(substr($_POST['from_date'], 4, 11));
+    $CustomDay_2 = new DateTime(substr($_POST['to_date'], 4, 11));
+    $CustomData['range'] = $CustomDay_1->format('d M Y') . " - " . $CustomDay_2->format('d M Y');
+
     while ($CustomDay_2 >= $CustomDay_1) {
-        $CustomDataValue = (int) fetchDataSql($clientId,$CustomDay_1->format('Y-m-d'), $CustomDay_1->format('Y-m-d'),2)[0]['SUM(average)'];
+        $CustomDataValue = (int) fetchDataSql($clientId, $CustomDay_1->format('Y-m-d'), $CustomDay_1->format('Y-m-d'), 2)[0]['SUM(average)'];
         array_push($CustomData['value'], $CustomDataValue);
         array_push($CustomData['date'], $CustomDay_1->format('d'));
         $CustomDay_1->modify("+1 day");
-    } 
+    }
     $CustomData = json_encode($CustomData);
     header('Content-Type: application/json');
     echo ($CustomData);
@@ -864,37 +865,37 @@ tst-left-t {
                 <div class="tst-left-t">
                     <div class="card-container">
                         <div class="client-card" style="color:#FF6C6CCA ;border: 1px solid #FF6C6CCA;">
-                            <a href="track_stats_steps.php?id=<?php echo($clientId) ?>">
+                            <a href="track_stats_steps.php?client_id=<?php echo ($clientId) ?>">
                                 <i class="fa-solid fa-shoe-prints" style="color:#FF6C6CCA; rotate: -90deg;"></i>
                                 <p style="color: #FF6C6CCA;">Steps</p>
                             </a>
                         </div>
                         <div class="client-card client-card-calorie" style="color:#E266A9; border: 1px solid #E266A9;">
-                            <a href="track_stats_heart.php?id=<?php echo($clientId) ?>">
+                            <a href="track_stats_heart.php?client_id=<?php echo ($clientId) ?>">
                                 <img src="<?= $DEFAULT_PATH ?>assets/images/heart.svg" alt="" />
                                 <p style="color:#FFFFFF;">Heart<br>Rate</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#52A4FF; border: 1px solid #52A4FF;">
-                            <a href="track_stats_water.php?id=<?php echo($clientId) ?>">
+                            <a href="track_stats_water.php?client_id=<?php echo ($clientId) ?>">
                                 <i style="color:#52A4FF;" class="fa-solid fa-droplet"></i>
                                 <p style="color:#52A4FF;">Water</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#7D5DE6; border: 1px solid #7D5DE6;">
-                            <a href="track_stats_weight.php?id=<?php echo($clientId) ?>">
+                            <a href="track_stats_weight.php?client_id=<?php echo ($clientId) ?>">
                                 <i style="color:#7D5DE6;" class="fa-solid fa-weight-hanging"></i>
                                 <p style="color:#7D5DE6;">Weight<br>Track</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#54AFAC; border: 1px solid #54AFAC;">
-                            <a href="track_stats_sleep.php?id=<?php echo($clientId) ?>">
+                            <a href="track_stats_sleep.php?client_id=<?php echo ($clientId) ?>">
                                 <i style="color:#54AFAC;" class="fa-solid fa-moon"></i>
                                 <p style="color:#54AFAC;">Sleep</p>
                             </a>
                         </div>
                         <div class="client-card " style="color:#E3738D; border: 1px solid #E3738D;">
-                            <a href="track_stats_calorie.php?id=<?php echo($clientId) ?>">
+                            <a href="track_stats_calorie.php?client_id=<?php echo ($clientId) ?>">
                                 <i class="fa-solid fa-stopwatch-20" style="color:#E3738D"></i>
                                 <p style="color:#E3738D;">Calorie<br>Track</p>
                             </a>
@@ -984,7 +985,7 @@ tst-left-t {
                     </div>
                 </div>
             </div>
-            <?php $progressBarData = fetchDataSql($clientId, '', '',4); ?>
+            <?php $progressBarData = fetchDataSql($clientId, '', '', 4); ?>
             <div class="col-lg-4 tst-right">
                 <div class="set-goal">
                     <div class="heading">
@@ -994,29 +995,29 @@ tst-left-t {
                     </div>
                     <img src="<?= $DEFAULT_PATH ?>assets/images/equipment.svg" alt="">
                     <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-                        <input hidden name="dietition" value="<?php echo($dietition) ?>">
-                        <input name="setgoal" required min="1" value="<?=$progressBarData[0]['heart']?>" type="number"
+                        <input hidden name="dietition" value="<?php echo ($dietition) ?>">
+                        <input name="setgoal" required min="1" value="<?= $progressBarData[0]['heart'] ?>" type="number"
                             id="set-goal" placeholder="00000 BPM">
-                        <input name="clientid" type="hidden" value="<?php echo($clientId) ?>">
+                        <input name="clientid" type="hidden" value="<?php echo ($clientId) ?>">
                         <button type="submit" name="savegoal" id="save-goal">Set</button>
                     </form>
                 </div>
             </div>
         </div>
-        <?php 
-// All Data Total Sum
-$allDataSum = fetchDataSql($clientId, '', $today->format('Y-3-d'), 1)[0]['SUM(average)'];
-// Today Data Sum
-$todayData = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'),2)[0]['SUM(average)'];
-// Week Average
-$pastWeek =new DateTime();
-$pastWeek->modify('-1 week');
-$weekAvg = fetchDataSql($clientId,$pastWeek->format('Y-m-d'), $today->format('Y-m-d'))[0]['avg(average)'];
-// Month Average
-$pastMonth = new DateTime();
-$pastMonth->modify('-1 month');
-$monthAvg = fetchDataSql($clientId,$pastMonth->format('Y-m-d'), $today->format('Y-m-d'))[0]['avg(average)'];
-?>
+        <?php
+        // All Data Total Sum
+        $allDataSum = fetchDataSql($clientId, '', $today->format('Y-3-d'), 1)[0]['SUM(average)'];
+        // Today Data Sum
+        $todayData = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 2)[0]['SUM(average)'];
+        // Week Average
+        $pastWeek = new DateTime();
+        $pastWeek->modify('-1 week');
+        $weekAvg = fetchDataSql($clientId, $pastWeek->format('Y-m-d'), $today->format('Y-m-d'))[0]['avg(average)'];
+        // Month Average
+        $pastMonth = new DateTime();
+        $pastMonth->modify('-1 month');
+        $monthAvg = fetchDataSql($clientId, $pastMonth->format('Y-m-d'), $today->format('Y-m-d'))[0]['avg(average)'];
+        ?>
         <div class="row ts-down">
             <div class="col-lg-7 tsd-left">
                 <div class="tsd-left-t">
@@ -1025,202 +1026,225 @@ $monthAvg = fetchDataSql($clientId,$pastMonth->format('Y-m-d'), $today->format('
                         <div class="stat-btn">
                             <div class="stat-data">
                                 <span class="title">Daily Count</span>
-                                <span id="daily-count" class="value"><?php echo(ceil($todayData)) ?></span><span
-                                    class="unit">Bpm</span>
+                                <span id="daily-count" class="value">
+                                    <?php echo (ceil($todayData)) ?>
+                                </span><span class="unit">Bpm</span>
                             </div>
                         </div>
                         <div class="stat-btn">
                             <div class="stat-data">
                                 <span class="title">Weekly Avg</span>
-                                <span id="weekly-avg" class="value"><?php echo(ceil($weekAvg)) ?></span><span
-                                    class="unit">Bpm</span>
+                                <span id="weekly-avg" class="value">
+                                    <?php echo (ceil($weekAvg)) ?>
+                                </span><span class="unit">Bpm</span>
                             </div>
                         </div>
                         <div class="stat-btn">
                             <div class="stat-data">
                                 <span class="title">Monthly Avg</span>
-                                <span id="monthly-avg" class="value"><?php echo(ceil($monthAvg)) ?></span><span
-                                    class="unit">Bpm</span>
+                                <span id="monthly-avg" class="value">
+                                    <?php echo (ceil($monthAvg)) ?>
+                                </span><span class="unit">Bpm</span>
                             </div>
                         </div>
                         <div class="stat-btn">
                             <div class="stat-data">
                                 <span class="title">Total</span>
-                                <span id="total" class="value"><?php echo(ceil($allDataSum)) ?></span><span
-                                    class="unit">Bpm</span>
+                                <span id="total" class="value">
+                                    <?php echo (ceil($allDataSum)) ?>
+                                </span><span class="unit">Bpm</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php
-$pastActivityData = fetchDataSql($clientId,$today->format('Y-m-d'),$today->format('Y-m-d'),5);
-$k = 0;
-$j = count($pastActivityData);
-?>
+                $pastActivityData = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 5);
+                $k = 0;
+                $j = count($pastActivityData);
+                ?>
                 <div class="tsd-left-b table-activity">
                     <div class="heading">
                         <p>Past Activity</p>
-                        <a href="past_activities_heart.php?id=<?php echo ($clientId) ?>"><span>View All</span></a>
+                        <a href="past_activities_heart.php?client_id=<?php echo ($clientId) ?>"><span>View
+                                All</span></a>
                     </div>
                     <div class="heading-border"></div>
                     <div class="activity-container">
-                        <?php while($k<$j){
-    $date = new DateTime($pastActivityData[$k]['dateandtime']);
-?>
+                        <?php while ($k < $j) {
+                            $date = new DateTime($pastActivityData[$k]['dateandtime']);
+                            ?>
                         <div class="activity-box">
                             <div class="activity-date">
-                                <span class="up"><?php echo ($date->format('D')) ?></span>
-                                <span class="down"><?php echo ($date->format('d')) ?></span>
+                                <span class="up">
+                                    <?php echo ($date->format('D')) ?>
+                                </span>
+                                <span class="down">
+                                    <?php echo ($date->format('d')) ?>
+                                </span>
                             </div>
                             <div class="activity-border"></div>
                             <div class="activity-data">
-                                <span class="up"><?php echo 'heartrate' ?></span>
-                                <span class="down"><?php echo ($pastActivityData[$k]['average']) ?> Bpm</span>
+                                <span class="up">
+                                    <?php echo 'heartrate' ?>
+                                </span>
+                                <span class="down">
+                                    <?php echo ($pastActivityData[$k]['average']) ?> Bpm
+                                </span>
                             </div>
                             <div class="activity-time">
-                                <span><?php echo ($date->format('h:i A')) ?></span>
+                                <span>
+                                    <?php echo ($date->format('h:i A')) ?>
+                                </span>
                             </div>
                         </div>
-                        <?php $k++; } ?>
+                        <?php $k++;
+                        } ?>
 
                     </div>
                 </div>
             </div>
             <?php
-$progressBarData = fetchDataSql($clientId, '', '',4);
-$calorieConsumed = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 2);
-$heartRateM = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 6);
-$heartRatem = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 7);
-if(empty($heartRateM)){
-    $heartRateM = 0;
-}else{
-    $heartRateM = $heartRateM[0]['SUM(maximum)'];
-}
-if(empty($heartRatem)){
-    $heartRatem = 0;
-}else{
-    $heartRatem = $heartRatem[0]['SUM(minimum)'];
-}
-if(empty($calorieConsumed)){
-    $calorieConsumed = 0;
-}else{
-    $calorieConsumed = $calorieConsumed[0]['SUM(average)'];
-}
-if(empty($progressBarData) OR $progressBarData[0]['heart'] == 0){
-    $currentGoal =  0;
-    $progressPercent = 0;
-}else{
-    $progressPercent = $calorieConsumed;
-}
-?>
+            $progressBarData = fetchDataSql($clientId, '', '', 4);
+            $calorieConsumed = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 2);
+            $heartRateM = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 6);
+            $heartRatem = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 7);
+            if (empty($heartRateM)) {
+                $heartRateM = 0;
+            } else {
+                $heartRateM = $heartRateM[0]['SUM(maximum)'];
+            }
+            if (empty($heartRatem)) {
+                $heartRatem = 0;
+            } else {
+                $heartRatem = $heartRatem[0]['SUM(minimum)'];
+            }
+            if (empty($calorieConsumed)) {
+                $calorieConsumed = 0;
+            } else {
+                $calorieConsumed = $calorieConsumed[0]['SUM(average)'];
+            }
+            if (empty($progressBarData) or $progressBarData[0]['heart'] == 0) {
+                $currentGoal = 0;
+                $progressPercent = 0;
+            } else {
+                $progressPercent = $calorieConsumed;
+            }
+            ?>
             <div class="col-lg-5 tsd-right">
                 <div class="heading">
                     <p>Daily Progress</p>
-                    <a href="past_activities_heart.php?id=<?php echo ($clientId) ?>"><span>View Activity</span></a>
+                    <a href="past_activities_heart.php?client_id=<?php echo ($clientId) ?>"><span>View
+                            Activity</span></a>
                 </div>
                 <div class="progress-bar-container">
 
                     <div id="progress-percent" class="progress-circle">
                         <div class="progress-circle-fill">
                             <div class="progress-circle-value"><span
-                                    id="progress-percent">❤️<?php echo((int)($calorieConsumed)) ?></span><span>Bpm</span>
+                                    id="progress-percent">❤️<?php echo ((int) ($calorieConsumed)) ?></span><span>Bpm</span>
                             </div>
                         </div>
                     </div>
                     <div class="heart_beat_box">
                         <div class="avg">
                             <span>Avg</span>
-                            <p><?php echo ( (int) $calorieConsumed)?> BPM</p>
+                            <p>
+                                <?php echo ((int) $calorieConsumed) ?> BPM
+                            </p>
                         </div>
                         <div class="max">
                             <span>Max</span>
-                            <p><?php echo($heartRateM)?> BPM</p>
+                            <p>
+                                <?php echo ($heartRateM) ?> BPM
+                            </p>
                         </div>
                         <div class="low">
                             <span>Low</span>
-                            <p><?php echo($heartRatem)?> BPM</p>
+                            <p>
+                                <?php echo ($heartRatem) ?> BPM
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
             <script>
             const progressPercent = document.getElementById('progress-percent');
-            console.log(<?php echo($progressPercent) ?>);
+            console.log(<?php echo ($progressPercent) ?>);
             progressPercent.style.setProperty("background",
-                "conic-gradient(#F9E0E7 <?php echo(100 - $progressPercent) ?>% , #C986CF 0)");
+                "conic-gradient(#F9E0E7 <?php echo (100 - $progressPercent) ?>% , #C986CF 0)");
             </script>
         </div>
     </div>
     <?php
-// To Get - Yearly data
-$year_pop = 0;
-$wholeYearData = array(
-    'value' => array(),
-    'month' => array()
-);
-$yearly_month = new DateTime();
-$yearly_last_month = new DateTime();
-$yearly_month->setDate($yearly_month->format('Y'),01,01);
-if($today->format('m') == '01'){
-    $yearly_month->setDate($yearly_month->format('Y')-1,01,01);
-    $yearly_last_month->setDate($yearly_last_month->format('Y')-1,12,31);
-    $year_pop = 1;
-}
-while($yearly_last_month >= $yearly_month){
-    
-    $yearly_Month_1 = $yearly_month->format('Y-m')."-"."01";
-    $yearly_Month_2 =  $yearly_month->format('Y-m')."-". $yearly_month->format('t');
-    $yearly_Data = (int) fetchDataSql($clientId, $yearly_Month_1, $yearly_Month_2,3)[0]['avg(average)'];
+    // To Get - Yearly data
+    $year_pop = 0;
+    $wholeYearData = array(
+        'value' => array(),
+        'month' => array()
+    );
+    $yearly_month = new DateTime();
+    $yearly_last_month = new DateTime();
+    $yearly_month->setDate($yearly_month->format('Y'), 01, 01);
+    if ($today->format('m') == '01') {
+        $yearly_month->setDate($yearly_month->format('Y') - 1, 01, 01);
+        $yearly_last_month->setDate($yearly_last_month->format('Y') - 1, 12, 31);
+        $year_pop = 1;
+    }
+    while ($yearly_last_month >= $yearly_month) {
 
-    array_push($wholeYearData['value'], $yearly_Data);
-    array_push($wholeYearData['month'], $yearly_month->format('M'));
-    $yearly_month->modify('+1 month');
-}
-$month_pop = 0;
-$wholeMonthData = array(
-    'value' => array(),
-    'date' => array(),
-);
-$monthly_Month = new DateTime();
-$monthly_LastDay = new DateTime();
-$monthly_Month->modify("first day of this month");
+        $yearly_Month_1 = $yearly_month->format('Y-m') . "-" . "01";
+        $yearly_Month_2 = $yearly_month->format('Y-m') . "-" . $yearly_month->format('t');
+        $yearly_Data = (int) fetchDataSql($clientId, $yearly_Month_1, $yearly_Month_2, 3)[0]['avg(average)'];
 
-if($today->format('d') == '01'){
-    $monthly_Month->modify("first day of previous month");
-    $monthly_LastDay->modify("last day of previous month");
-    $month_pop = 1;
-}
-while ($monthly_LastDay >= $monthly_Month) {
-    $monthly_Data = (int) fetchDataSql($clientId,$monthly_Month->format('Y-m-d'), $monthly_Month->format('Y-m-d'),2)[0]['SUM(average)'];
+        array_push($wholeYearData['value'], $yearly_Data);
+        array_push($wholeYearData['month'], $yearly_month->format('M'));
+        $yearly_month->modify('+1 month');
+    }
+    $month_pop = 0;
+    $wholeMonthData = array(
+        'value' => array(),
+        'date' => array(),
+    );
+    $monthly_Month = new DateTime();
+    $monthly_LastDay = new DateTime();
+    $monthly_Month->modify("first day of this month");
 
-    array_push($wholeMonthData['value'],$monthly_Data);
-    array_push($wholeMonthData['date'], $monthly_Month->format('d'));
-    $monthly_Month->modify("+1 day");
-    
-}
-// To Get - Weekly Data
-$week_pop = 0;
-$wholeWeekData = array(
-    'value' => array(),
-    'day' => array(),
-);
-$weekly_Day = new DateTime();
-$weekly_Day->modify('previous monday');
-$weekly_lastDay =new DateTime();
+    if ($today->format('d') == '01') {
+        $monthly_Month->modify("first day of previous month");
+        $monthly_LastDay->modify("last day of previous month");
+        $month_pop = 1;
+    }
+    while ($monthly_LastDay >= $monthly_Month) {
+        $monthly_Data = (int) fetchDataSql($clientId, $monthly_Month->format('Y-m-d'), $monthly_Month->format('Y-m-d'), 2)[0]['SUM(average)'];
 
-if($today->format('l')== "Monday"){
-    $weekly_lastDay->modify('previous sunday');
-    $week_pop = 1;
-}
+        array_push($wholeMonthData['value'], $monthly_Data);
+        array_push($wholeMonthData['date'], $monthly_Month->format('d'));
+        $monthly_Month->modify("+1 day");
 
-while($weekly_Day <= $weekly_lastDay){
-    $weekly_Data = fetchDataSql($clientId, $weekly_Day->format('Y-m-d'), $weekly_Day->format('Y-m-d'),2);
+    }
+    // To Get - Weekly Data
+    $week_pop = 0;
+    $wholeWeekData = array(
+        'value' => array(),
+        'day' => array(),
+    );
+    $weekly_Day = new DateTime();
+    $weekly_Day->modify('previous monday');
+    $weekly_lastDay = new DateTime();
 
-    array_push($wholeWeekData['value'], (int) $weekly_Data[0]['SUM(average)']);
-    array_push($wholeWeekData['day'], $weekly_Day->format('D'));
-    $weekly_Day->modify("+1 day");
-}
-?>
+    if ($today->format('l') == "Monday") {
+        $weekly_lastDay->modify('previous sunday');
+        $week_pop = 1;
+    }
+
+    while ($weekly_Day <= $weekly_lastDay) {
+        $weekly_Data = fetchDataSql($clientId, $weekly_Day->format('Y-m-d'), $weekly_Day->format('Y-m-d'), 2);
+
+        array_push($wholeWeekData['value'], (int) $weekly_Data[0]['SUM(average)']);
+        array_push($wholeWeekData['day'], $weekly_Day->format('D'));
+        $weekly_Day->modify("+1 day");
+    }
+    ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -1232,7 +1256,7 @@ while($weekly_Day <= $weekly_lastDay){
     const i_buttons = document.getElementsByClassName('i-button');
     const i_pop = document.getElementsByClassName('i-pop');
 
-    if (<?php echo($year_pop) ?>) {
+    if (<?php echo ($year_pop) ?>) {
         year_pop.innerText =
             "As it is fresh year, we are showing you the previous year's data until the latest data is synced for this month!";
         london_pop.innerText =
@@ -1242,14 +1266,14 @@ while($weekly_Day <= $weekly_lastDay){
         london_pop.innerText = "We are showing you the ongoing year's data and it keeps updating realtime!";
     }
 
-    if (<?php echo($month_pop) ?>) {
+    if (<?php echo ($month_pop) ?>) {
         month_pop.innerText =
             "As it is fresh month, we are showing you the previous month's data until the latest data is synced for this month!";
     } else {
         month_pop.innerText = "We are showing you the ongoing month's data and it keeps updating realtime!";
     }
 
-    if (<?php echo($week_pop) ?>) {
+    if (<?php echo ($week_pop) ?>) {
         week_pop.innerText =
             "As it is fresh week, we are showing you the previous week's data until the latest data is synced for the week!";
     } else {
@@ -1273,7 +1297,7 @@ while($weekly_Day <= $weekly_lastDay){
         window.customChart.destroy();
         $.ajax({
             type: "POST",
-            url: "track_stats_heart.php?id=<?php echo ($clientId) ?>",
+            url: "track_stats_heart.php?client_id=<?php echo ($clientId) ?>",
             data: {
                 from_date: from_date,
                 to_date: to_date
@@ -1353,13 +1377,13 @@ while($weekly_Day <= $weekly_lastDay){
     window.customChart = new Chart(defaultChart, {
         type: 'line',
         data: {
-            labels: [<?php echo("'". implode("','", $wholeYearData['month']). "'") ?>],
+            labels: [<?php echo ("'" . implode("','", $wholeYearData['month']) . "'") ?>],
             datasets: [{
                 fill: false,
                 lineTension: 0,
                 backgroundColor: "#C986CF",
                 borderColor: "#C986CF",
-                data: [<?php echo(implode(', ', $wholeYearData['value'])) ?>],
+                data: [<?php echo (implode(', ', $wholeYearData['value'])) ?>],
                 borderWidth: 1
             }]
         },
@@ -1406,13 +1430,13 @@ while($weekly_Day <= $weekly_lastDay){
     new Chart(yearlyChart, {
         type: 'line',
         data: {
-            labels: [<?php echo("'". implode("','", $wholeYearData['month']). "'") ?>],
+            labels: [<?php echo ("'" . implode("','", $wholeYearData['month']) . "'") ?>],
             datasets: [{
                 fill: false,
                 lineTension: 0,
                 backgroundColor: "#C986CF",
                 borderColor: "#C986CF",
-                data: [<?php echo(implode(', ', $wholeYearData['value'])) ?>],
+                data: [<?php echo (implode(', ', $wholeYearData['value'])) ?>],
                 borderWidth: 1
             }]
         },
@@ -1459,13 +1483,13 @@ while($weekly_Day <= $weekly_lastDay){
     new Chart(monthlyChart, {
         type: 'line',
         data: {
-            labels: [<?php echo("'" . implode("','", $wholeMonthData['date']) . "'") ?>],
+            labels: [<?php echo ("'" . implode("','", $wholeMonthData['date']) . "'") ?>],
             datasets: [{
                 fill: false,
                 lineTension: 0,
                 backgroundColor: "#C986CF",
                 borderColor: "#C986CF",
-                data: [<?php echo(implode(', ', $wholeMonthData['value'])) ?>],
+                data: [<?php echo (implode(', ', $wholeMonthData['value'])) ?>],
                 borderWidth: 1
             }]
         },
@@ -1515,15 +1539,15 @@ while($weekly_Day <= $weekly_lastDay){
         data: {
             labels: [
                 <?php
-         echo("'" . implode("','", $wholeWeekData['day']) . "'") 
-    ?>
+                echo ("'" . implode("','", $wholeWeekData['day']) . "'")
+                    ?>
             ],
             datasets: [{
                 fill: false,
                 lineTension: 0,
                 backgroundColor: "#C986CF",
                 borderColor: "#C986CF",
-                data: [<?php echo( implode(', ',$wholeWeekData['value'])) ?>],
+                data: [<?php echo (implode(', ', $wholeWeekData['value'])) ?>],
                 borderWidth: 1
             }]
         },

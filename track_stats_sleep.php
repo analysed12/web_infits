@@ -1,8 +1,8 @@
 <?php
 require('constant/config.php');
 // Client Id
-if (isset($_GET['id'])) {
-    $clientId = $_GET['id'];
+if (isset($_GET['client_id'])) {
+    $clientId = $_GET['client_id'];
 } else {
     header('location: index.php');
 }
@@ -36,7 +36,7 @@ if (isset($_POST['savegoal'])) {
         if ($result) {
             unset($_POST["savegoal"]);
             unset($_POST["setgoal"]);
-            header(("Location:track_stats_sleep.php?id={$clientId}"));
+            header(("Location:track_stats_sleep.php?client_id={$clientId}"));
         }
     }
 }
@@ -1169,37 +1169,37 @@ div[role="progressbar2"]::before {
                 <div class="tst-left-t">
                     <div class="card-container">
                         <div class="client-card " style="color:#FF6C6CCA ;border: 1px solid #FF6C6CCA;">
-                            <a href="track_stats_steps.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_steps.php?client_id=<?php echo ($clientId) ?>">
                                 <i class="fa-solid fa-shoe-prints" style="color:#FF6C6CCA; rotate: -90deg;"></i>
                                 <p style="color: #FF6C6CCA;">Steps</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#E266A9; border: 1px solid #E266A9;">
-                            <a href="track_stats_heart.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_heart.php?client_id=<?php echo ($clientId) ?>">
                                 <i style="color:#E266A9;" class="fa-solid fa-heart-pulse"></i>
                                 <p style="color:#E266A9;">Heart<br>Rate</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#52A4FF; border: 1px solid #52A4FF;">
-                            <a href="track_stats_water.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_water.php?client_id=<?php echo ($clientId) ?>">
                                 <i style="color:#52A4FF;" class="fa-solid fa-droplet"></i>
                                 <p style="color:#52A4FF;">Water</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#7D5DE6; border: 1px solid #7D5DE6;">
-                            <a href="track_stats_weight.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_weight.php?client_id=<?php echo ($clientId) ?>">
                                 <i style="color:#7D5DE6;" class="fa-solid fa-weight-hanging"></i>
                                 <p style="color:#7D5DE6;">Weight<br>Track</p>
                             </a>
                         </div>
                         <div class="client-card client-card-sleep" style="color:#54AFAC; border: 1px solid #54AFAC;">
-                            <a href="track_stats_sleep.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_sleep.php?client_id=<?php echo ($clientId) ?>">
                                 <img src="<?= $DEFAULT_PATH ?>assets/images/moon.svg" alt="">
                                 <p style="color:#FFFFFF;">Sleep</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#E3738D; border: 1px solid #E3738D;">
-                            <a href="track_stats_calorie.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_calorie.php?client_id=<?php echo ($clientId) ?>">
                                 <i class="fa-solid fa-stopwatch-20" style="color:#E3738D"></i>
                                 <p style="color:#E3738D;">Calorie<br>Track</p>
                             </a>
@@ -1219,8 +1219,7 @@ div[role="progressbar2"]::before {
                         <button class="tablinks graph_button_right" onclick="openCity(event, 'Week')">Week</button>
                     </div>
                     <div class="graph">
-                        /*
-                        <!-- Tab content --> */
+
                         <div id="London" class="tab_content">
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
                             <canvas id="myChart"></canvas>
@@ -1315,7 +1314,7 @@ div[role="progressbar2"]::before {
         $allDataSum = fetchDataSql($clientId, '', $today->format('Y-3-d'), 1)[0]['SUM(hrsSlept)'];
         // Today Data Sum
         $todayData = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 2)[0]['SUM(hrsSlept)'];
-// Week Average
+        // Week Average
         $pastWeek = new DateTime();
         $pastWeek->modify('-1 week');
         $weekAvg = fetchDataSql($clientId, $pastWeek->format('Y-m-d'), $today->format('Y-m-d'))[0]['avg(hrsSlept)'];
@@ -1370,7 +1369,8 @@ div[role="progressbar2"]::before {
                 <div class="tsd-left-b table-activity">
                     <div class="heading">
                         <p>Past Activity</p>
-                        <a href="past_activities_sleep.php?id=<?php echo ($clientId) ?>"><span>View All</span></a>
+                        <a href="past_activities_sleep.php?client_id=<?php echo ($clientId) ?>"><span>View
+                                All</span></a>
                     </div>
                     <div class="heading-border"></div>
                     <div class="activity-container">
@@ -1436,7 +1436,8 @@ div[role="progressbar2"]::before {
             <div class="col-lg-5 tsd-right">
                 <div class="heading">
                     <p>Daily Progress</p>
-                    <a href="past_activities_sleep.php?id=<?php echo ($clientId) ?>"><span>View Activity</span></a>
+                    <a href="past_activities_sleep.php?client_id=<?php echo ($clientId) ?>"><span>View
+                            Activity</span></a>
                 </div>
                 <div class="pbc">
                     <div class="progress-bar-container">
@@ -1605,7 +1606,7 @@ div[role="progressbar2"]::before {
         window.customChart.destroy();
         $.ajax({
             type: "POST",
-            url: "track_stats_sleep.php?id=<?php echo ($clientId) ?>",
+            url: "track_stats_sleep.php?client_id=<?php echo ($clientId) ?>",
             data: {
                 from_date: from_date,
                 to_date: to_date

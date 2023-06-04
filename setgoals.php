@@ -3,21 +3,22 @@ require('constant/config.php');
 $client_array = array();
 if(isset($_POST['clientList'])){
      $client_array = json_decode($_POST['clientList']);
+
 }
 if(!isset($_SESSION)){
     session_start();
 }
-$dietitianuserID = $_SESSION['dietitian_id'];
+$dietitian_id = $_SESSION['dietitian_id'];
 
 // handle Ajax here
 if(isset($_POST['update_goal'])){
     $type = $_POST['update_goal'];
     $clients = $_POST['clients'];
     $goal = $_POST['goal'];
-    $dietitianuserID = $_POST['dietitianuserID'];
+    $dietitian_id = $_POST['dietitian_id'];
     foreach ($clients as $c_id) {
         $isSame =false;
-        $query = "SELECT `{$type}` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
+        $query = "SELECT `{$type}` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
         $result = $conn->query($query) or die('Query Failed');
         if($result->num_rows > 0){
             while($row = $result->fetch_assoc()){
@@ -31,10 +32,10 @@ if(isset($_POST['update_goal'])){
         if($isSame){
             continue;
         }
-        $query = "UPDATE `goals` SET {$type} = '{$goal}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
+        $query = "UPDATE `goals` SET {$type} = '{$goal}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
         $result = $conn->query($query) or die("Query Failed");
         if ($conn->affected_rows == 0) {
-            $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `{$type}`) VALUES ('{$dietitianuserID}',{$c_id},'{$goal}')";
+            $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `{$type}`) VALUES ('{$dietitian_id}',{$c_id},'{$goal}')";
             $result = $conn->query($query) or die("Query Failed");
         }
     }
@@ -46,12 +47,12 @@ if(isset($_POST['update'])){
     $type = $_POST['update'];
     $client = $_POST['client'];
     $goal = $_POST['goal'];
-    $dietitianuserID = $_POST['dietitianuserID'];
+    $dietitian_id = $_POST['dietitian_id'];
    
-    $query = "UPDATE `goals` SET `{$type}` = '{$goal}' WHERE `client_id` = '{$client}' AND `dietitian_id` = '{$dietitianuserID}'";
+    $query = "UPDATE `goals` SET `{$type}` = '{$goal}' WHERE `client_id` = '{$client}' AND `dietitian_id` = '{$dietitian_id}'";
     $result = $conn->query($query) or die("Query Failed");
     if ($conn->affected_rows == 0) {
-        $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `{$type}`) VALUES ('{$dietitianuserID}',{$client},'{$goal}')";
+        $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `{$type}`) VALUES ('{$dietitian_id}',{$client},'{$goal}')";
         $result = $conn->query($query) or die("Query Failed");
     }
     print_r($result);
@@ -65,7 +66,7 @@ if(isset($_POST['create_goal'])){
         $steps = $_POST['create_goal_steps'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `steps` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
+            $query = "SELECT `steps` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -78,11 +79,10 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET steps = '{$steps}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
-            echo($query);
+            $query = "UPDATE `goals` SET steps = '{$steps}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `steps`) VALUES ('{$dietitianuserID}',{$c_id},'{$steps}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `steps`) VALUES ('{$dietitian_id}',{$c_id},'{$steps}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -92,7 +92,7 @@ if(isset($_POST['create_goal'])){
         $heart = $_POST['create_goal_heart'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `heart` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
+            $query = "SELECT `heart` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -105,10 +105,10 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET heart = '{$heart}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
+            $query = "UPDATE `goals` SET heart = '{$heart}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `heart`) VALUES ('{$dietitianuserID}',{$c_id},'{$heart}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `heart`) VALUES ('{$dietitian_id}',{$c_id},'{$heart}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
             
@@ -119,7 +119,7 @@ if(isset($_POST['create_goal'])){
         $sleep = $_POST['create_goal_sleep'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `sleep` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
+            $query = "SELECT `sleep` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -132,11 +132,10 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET sleep = '{$sleep}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
-            echo($query);
+            $query = "UPDATE `goals` SET sleep = '{$sleep}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `sleep`) VALUES ('{$dietitianuserID}',{$c_id},'{$sleep}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `sleep`) VALUES ('{$dietitian_id}',{$c_id},'{$sleep}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -146,7 +145,7 @@ if(isset($_POST['create_goal'])){
         $sleep = $_POST['create_goal_sleep'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `sleep` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
+            $query = "SELECT `sleep` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -159,11 +158,10 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET sleep = '{$sleep}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
-            echo($query);
+            $query = "UPDATE `goals` SET sleep = '{$sleep}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `sleep`) VALUES ('{$dietitianuserID}',{$c_id},'{$sleep}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `sleep`) VALUES ('{$dietitian_id}',{$c_id},'{$sleep}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -173,7 +171,7 @@ if(isset($_POST['create_goal'])){
         $weight = $_POST['create_goal_weight'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `weight` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
+            $query = "SELECT `weight` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -186,11 +184,10 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET weight = '{$weight}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
-            echo($query);
+            $query = "UPDATE `goals` SET weight = '{$weight}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `weight`) VALUES ('{$dietitianuserID}',{$c_id},'{$weight}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `weight`) VALUES ('{$dietitian_id}',{$c_id},'{$weight}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -200,7 +197,7 @@ if(isset($_POST['create_goal'])){
         $water = $_POST['create_goal_water'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `water` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
+            $query = "SELECT `water` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -213,11 +210,10 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET water = '{$water}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
-            echo($query);
+            $query = "UPDATE `goals` SET water = '{$water}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `water`) VALUES ('{$dietitianuserID}',{$c_id},'{$water}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `water`) VALUES ('{$dietitian_id}',{$c_id},'{$water}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -227,7 +223,7 @@ if(isset($_POST['create_goal'])){
         $calorie = $_POST['create_goal_calorie'];
         foreach ($client_array as $c_id) {
             $isSame =false;
-            $query = "SELECT `calorie` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
+            $query = "SELECT `calorie` FROM `goals` WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
             $result = $conn->query($query) or die('Query Failed');
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
@@ -240,12 +236,11 @@ if(isset($_POST['create_goal'])){
             if($isSame){
                 continue;
             }
-            $query = "UPDATE `goals` SET calorie = '{$calorie}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitianuserID}'";
-            echo($query);
-            exit;
+            $query = "UPDATE `goals` SET calorie = '{$calorie}' WHERE `client_id` = {$c_id} AND `dietitian_id` = '{$dietitian_id}'";
+            // exit;
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
-                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `calorie`) VALUES ('{$dietitianuserID}',{$c_id},'{$calorie}')";
+                $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `calorie`) VALUES ('{$dietitian_id}',{$c_id},'{$calorie}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
         }
@@ -253,11 +248,10 @@ if(isset($_POST['create_goal'])){
 
     
     $conn->close();
-    header(("Location: setgoals.php"));
 }
 
 include('navbar.php');
-$sql = "SELECT GROUP_CONCAT(client_id) FROM `addclient` WHERE dietitian_id = '{$dietitianuserID}';";
+$sql = "SELECT GROUP_CONCAT(client_id) FROM `addclient` WHERE dietitian_id = '{$dietitian_id}';";
 $result = mysqli_query($conn, $sql) or die('failed');
 if(mysqli_num_rows($result)>0){
     $allClients = array();
@@ -266,8 +260,8 @@ if(mysqli_num_rows($result)>0){
         $map = explode(',',$row['GROUP_CONCAT(client_id)']);
     }
 }
-function getClientName($ID,$conn,$dietitianuserID){
-    $query = "SELECT name FROM `addclient` WHERE client_id = {$ID} AND dietitian_id = '{$dietitianuserID}'";
+function getClientName($ID,$conn,$dietitian_id){
+    $query = "SELECT name FROM `addclient` WHERE client_id = {$ID} AND dietitian_id = '{$dietitian_id}'";
     $name = mysqli_query($conn, $query);
     while ($row = mysqli_fetch_assoc($name)) {
         return ($row['name']);
@@ -287,14 +281,12 @@ function getClientName($ID,$conn,$dietitianuserID){
     
 <style>
 body{
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     font-family: 'NATS', sans-serif;
 }
 .setgoals{
     margin-top: 2rem;
     margin-left: 14rem;
-    height: 100vh;
-    overflow-y: auto;
   
 }
 
@@ -567,7 +559,7 @@ margin-top: 2.5rem;
   }
 .rightside_wrapper1{
     width: 347px;
-    height: auto;
+    min-height: 80vh;
     background: #FFFFFF;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
@@ -833,10 +825,10 @@ margin-top: 2.5rem;
                             <span style="color: #633FDD;">Daily Sleep Hours</span> <br>
                             <img src="<?=$DEFAULT_PATH?>assets/images/Sleepgoal.svg" style="margin-left:3.5rem"><br>
                             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-                            <input name="create_goal_sleep" id="label1" min="0" type="number" placeholder="0000 Hours">
-                            <input name="create_goal" hidden>
-                            <input hidden name="clientList" value='<?=$_POST['clientList']?>'>
-                            <button type="submit" id="button6" class="setbutton">Set</button>
+                                <input name="create_goal_sleep" id="label1" min="0" type="number" placeholder="0000 Hours">
+                                <input name="create_goal" hidden>
+                                <input hidden name="clientList" value='<?=$_POST['clientList']?>'>
+                                <button type="submit" id="button6" class="setbutton">Set</button>
                             </form>
                         </div>
                         
@@ -941,7 +933,7 @@ margin-top: 2.5rem;
             <!---------------------------------------------------------------------------------------------->
 <?php
 $map_steps = $map;
-$sql_steps = "SELECT steps, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND steps != '' GROUP BY steps ORDER BY time DESC";
+$sql_steps = "SELECT steps, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND steps != '' GROUP BY steps ORDER BY time DESC";
 $result_steps = mysqli_query($conn, $sql_steps) or die('failed');
 if (mysqli_num_rows($result_steps) > 0) {
     $i = 0;
@@ -976,7 +968,7 @@ $i++;
                  <!---------------------------------------------------------------------------------------------->
 <?php
 $map_heart = $map;
-$sql_heart = "SELECT heart, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND heart != '' GROUP BY heart ORDER BY time DESC";
+$sql_heart = "SELECT heart, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND heart != '' GROUP BY heart ORDER BY time DESC";
 $result_heart = mysqli_query($conn, $sql_heart) or die('failed');
 if (mysqli_num_rows($result_heart) > 0) {
     $i = 0;
@@ -1011,7 +1003,7 @@ $i++;
                  <!---------------------------------------------------------------------------------------------->
 <?php
 $map_water = $map;
-$sql_water = "SELECT water, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND water != '' GROUP BY water ORDER BY time DESC";
+$sql_water = "SELECT water, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND water != '' GROUP BY water ORDER BY time DESC";
 $result_water = mysqli_query($conn, $sql_water) or die('failed');
 if (mysqli_num_rows($result_water) > 0) {
     $i = 0;
@@ -1046,7 +1038,7 @@ $i++;
                  <!---------------------------------------------------------------------------------------------->
 <?php
 $map_sleep = $map;
-$sql_sleep = "SELECT sleep, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND sleep != '' GROUP BY sleep ORDER BY time DESC";
+$sql_sleep = "SELECT sleep, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND sleep != '' GROUP BY sleep ORDER BY time DESC";
 $result_sleep = mysqli_query($conn, $sql_sleep) or die('failed');
 if (mysqli_num_rows($result_sleep) > 0) {
     $i = 0;
@@ -1080,7 +1072,7 @@ $i++;
                  <!---------------------------------------------------------------------------------------------->
 <?php
 $map_weight = $map;
-$sql_weight = "SELECT weight, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND weight != '' GROUP BY weight ORDER BY time DESC";
+$sql_weight = "SELECT weight, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND weight != '' GROUP BY weight ORDER BY time DESC";
 $result_weight = mysqli_query($conn, $sql_weight) or die('failed');
 if (mysqli_num_rows($result_weight) > 0) {
     $i = 0;
@@ -1115,7 +1107,7 @@ $i++;
                  <!---------------------------------------------------------------------------------------------->
 <?php
 $map_calorie = $map;
-$sql_calorie = "SELECT calorie, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND calorie != '' GROUP BY calorie ORDER BY time DESC";
+$sql_calorie = "SELECT calorie, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND calorie != '' GROUP BY calorie ORDER BY time DESC";
 $result_calorie = mysqli_query($conn, $sql_calorie) or die('failed');
 if (mysqli_num_rows($result_calorie) > 0) {
     $i = 0;
@@ -1164,7 +1156,7 @@ $i++;
 <!----------------------------------------------------------------------------------------------------------------------->
 <?php
 $map_steps = $map;
-$sql_steps = "SELECT steps, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND steps != '' GROUP BY steps ORDER BY time DESC";
+$sql_steps = "SELECT steps, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND steps != '' GROUP BY steps ORDER BY time DESC";
 $result_steps = mysqli_query($conn, $sql_steps) or die('failed');
 if (mysqli_num_rows($result_steps) > 0) {
     $i = 0;
@@ -1206,10 +1198,10 @@ if (mysqli_num_rows($result_steps) > 0) {
                 <div id="mob_steps_selected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <?php foreach ($list as $c) {
 
-                        $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                        $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'mob_steps_unselected<?php echo($i) ?>','mob_steps_selected<?php echo($i) ?>','steps','mob_past_goal_steps<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
 
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem;margin-right:2.5rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'mob_steps_unselected<?php echo($i) ?>','mob_steps_selected<?php echo($i) ?>','steps','mob_past_goal_steps<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
 
                     <?php } ?>
@@ -1217,7 +1209,7 @@ if (mysqli_num_rows($result_steps) > 0) {
 
                 <div id="mob_steps_unselected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                 <?php foreach ($map_steps as $r) {
-                $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                $c_name = getClientName($r, $conn,$dietitian_id); ?>
                 <div><input onclick="selectClient(this,'mob_steps_selected<?php echo($i) ?>','mob_steps_unselected<?php echo($i) ?>','steps','mob_past_goal_steps<?php echo($i) ?>')" type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                 <label id="checklabel" ><?php echo($c_name) ?></label></div>
                 <?php } ?>
@@ -1237,7 +1229,7 @@ $i++;
 <!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------> 
 <?php
 $map_heart = $map;
-$sql_heart = "SELECT heart, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND heart != '' GROUP BY heart ORDER BY time DESC";
+$sql_heart = "SELECT heart, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND heart != '' GROUP BY heart ORDER BY time DESC";
 $result_heart = mysqli_query($conn, $sql_heart) or die('failed');
 if (mysqli_num_rows($result_heart) > 0) {
     $i = 0;
@@ -1276,14 +1268,14 @@ if (mysqli_num_rows($result_heart) > 0) {
                 </div>
                 <div id="mob_heart_unselected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <?php foreach ($list as $c) {
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem;margin-right:2.5rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'mob_heart_unselected<?php echo($i) ?>','mob_heart_selected<?php echo($i) ?>','heart','mob_past_goal_heart<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
                     <?php } ?>
                 </div>
 
                 <div id="mob_heart_selected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                     <?php foreach ($map_heart as $r) {
-                    $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($r, $conn,$dietitian_id); ?>
                     <div><input onclick="selectClient(this,'mob_heart_selected<?php echo($i) ?>','mob_heart_unselected<?php echo($i) ?>','heart','mob_past_goal_heart<?php echo($i) ?>')" type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                     <label id="checklabel" ><?php echo($c_name) ?></label></div>
                     <?php } ?>
@@ -1304,7 +1296,7 @@ $i++;
     <!------------------------------------------------------------------------------------------------------------------------------------------->        
 <?php
 $map_water = $map;
-$sql_water = "SELECT water, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND water != '' GROUP BY water ORDER BY time DESC";
+$sql_water = "SELECT water, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND water != '' GROUP BY water ORDER BY time DESC";
 $result_water = mysqli_query($conn, $sql_water) or die('failed');
 if (mysqli_num_rows($result_water) > 0) {
     $i = 0;
@@ -1344,7 +1336,7 @@ if (mysqli_num_rows($result_water) > 0) {
                 </div>
                 <div id="mob_water_unselected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <?php foreach ($list as $c) {
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem;margin-right:2.5rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'mob_water_unselected<?php echo($i) ?>','mob_water_selected<?php echo($i) ?>','water','mob_past_goal_water<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
                     <?php } ?>
                 </div>
@@ -1352,7 +1344,7 @@ if (mysqli_num_rows($result_water) > 0) {
                 <div id="mob_water_selected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                     <?php foreach ($map_water as $r) {
 
-                    $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($r, $conn,$dietitian_id); ?>
                     <div><input onclick="selectClient(this,'mob_water_selected<?php echo($i) ?>','mob_water_unselected<?php echo($i) ?>','water','mob_past_goal_water<?php echo($i) ?>')" type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                     <label id="checklabel" ><?php echo($c_name) ?></label></div>
                     <?php } ?>
@@ -1371,7 +1363,7 @@ $i++;
 <!---------------------------------------------------------------------------------------------------------------------------------------------------------------->        
 <?php
 $map_sleep = $map;
-$sql_sleep = "SELECT sleep, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND sleep != '' GROUP BY sleep ORDER BY time DESC";
+$sql_sleep = "SELECT sleep, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND sleep != '' GROUP BY sleep ORDER BY time DESC";
 $result_sleep = mysqli_query($conn, $sql_sleep) or die('failed');
 if (mysqli_num_rows($result_sleep) > 0) {
     $i = 0;
@@ -1410,14 +1402,14 @@ if (mysqli_num_rows($result_sleep) > 0) {
                 </div>
                 <div id="mob_sleep_selected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <?php foreach ($list as $c) {
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem;margin-right:2.5rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'mob_sleep_unselected<?php echo($i) ?>','mob_sleep_selected<?php echo($i) ?>','sleep','mob_past_goal_sleep<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
                     <?php } ?>
                 </div>
 
                 <div id="mob_sleep_unselected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                     <?php foreach ($map_sleep as $r) {
-                    $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($r, $conn,$dietitian_id); ?>
                     <div><input onclick="selectClient(this,'mob_sleep_selected<?php echo($i) ?>','mob_sleep_unselected<?php echo($i) ?>','sleep','mob_past_goal_sleep<?php echo($i) ?>')" type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                     <label id="checklabel" ><?php echo($c_name) ?></label></div>
                     <?php } ?>
@@ -1432,7 +1424,7 @@ $i++;
     <!---------------------------------------------------------------------------------------------------------------------------------------------------------------->        
 <?php
 $map_weight = $map;
-$sql_weight = "SELECT weight, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND weight != '' GROUP BY weight ORDER BY time DESC";
+$sql_weight = "SELECT weight, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND weight != '' GROUP BY weight ORDER BY time DESC";
 $result_weight = mysqli_query($conn, $sql_weight) or die('failed');
 if (mysqli_num_rows($result_weight) > 0) {
     $i = 0;
@@ -1473,14 +1465,14 @@ if (mysqli_num_rows($result_weight) > 0) {
                 </div>
                 <div id="mob_weight_selected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <?php foreach ($list as $c) {
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem;margin-right:2.5rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'mob_weight_unselected<?php echo($i) ?>','mob_weight_selected<?php echo($i) ?>','weight','mob_past_goal_weight<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
                     <?php } ?>
                 </div>
 
                 <div id="mob_weight_unselected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                     <?php foreach ($map_weight as $r) {
-                    $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($r, $conn,$dietitian_id); ?>
                     <div><input onclick="selectClient(this,'mob_weight_selected<?php echo($i) ?>','mob_weight_unselected<?php echo($i) ?>','weight','mob_past_goal_weight<?php echo($i) ?>')"  type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                     <label id="checklabel" ><?php echo($c_name) ?></label></div>
                     <?php } ?>
@@ -1497,7 +1489,7 @@ $i++;
     <!--------------------------------------------------------------------------------------------------------------------------------------------------------------------->        
 <?php
 $map_calorie = $map;
-$sql_calorie = "SELECT calorie, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitianuserID}' AND calorie != '' GROUP BY calorie ORDER BY time DESC";
+$sql_calorie = "SELECT calorie, GROUP_CONCAT(client_id) FROM `goals` WHERE `dietitian_id` = '{$dietitian_id}' AND calorie != '' GROUP BY calorie ORDER BY time DESC";
 $result_calorie = mysqli_query($conn, $sql_calorie) or die('failed');
 if (mysqli_num_rows($result_calorie) > 0) {
     $i = 0;
@@ -1536,14 +1528,14 @@ if (mysqli_num_rows($result_calorie) > 0) {
                 </div>
                 <div id="mob_calorie_selected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <?php foreach ($list as $c) {
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem;margin-right:2.5rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'mob_calorie_unselected<?php echo($i) ?>','mob_calorie_selected<?php echo($i) ?>','calorie','mob_past_goal_calorie<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
                     <?php } ?>
                 </div>
 
                 <div id="mob_calorie_unselected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                 <?php foreach ($map_calorie as $r) {
-                $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                $c_name = getClientName($r, $conn,$dietitian_id); ?>
                 <div><input onclick="selectClient(this,'mob_calorie_selected<?php echo($i) ?>','mob_calorie_unselected<?php echo($i) ?>','calorie','mob_past_goal_calorie<?php echo($i) ?>')" type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                 <label id="checklabel" ><?php echo($c_name) ?></label></div>
                 <?php } ?>
@@ -1593,7 +1585,7 @@ if (mysqli_num_rows($result_steps) > 0) {
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <div id="steps_selected<?php echo($i) ?>" style="display:flex;flex-wrap: wrap;gap: 12px;">
                     <?php foreach ($list as $c) {
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'steps_unselected<?php echo($i) ?>','steps_selected<?php echo($i) ?>','steps','past_goal_steps<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
                     <?php } ?>
                     </div>
@@ -1601,7 +1593,7 @@ if (mysqli_num_rows($result_steps) > 0) {
 
                 <div id="steps_unselected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                 <?php foreach ($map_steps as $r) {
-                $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                $c_name = getClientName($r, $conn,$dietitian_id); ?>
                 <div><input onclick="selectClient(this,'steps_selected<?php echo($i) ?>','steps_unselected<?php echo($i) ?>','steps','past_goal_steps<?php echo($i) ?>')" type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                 <label id="checklabel" ><?php echo($c_name) ?></label></div>
                 <?php } ?>
@@ -1640,7 +1632,7 @@ if (mysqli_num_rows($result_heart) > 0) {
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <div id="heart_selected<?php echo($i) ?>" style="display:flex;flex-wrap: wrap;gap: 12px;">
                     <?php foreach ($list as $c) {
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem"><?php echo($c_name) ?> <span  onclick="deselectClient(this,'heart_unselected<?php echo($i) ?>','heart_selected<?php echo($i) ?>','heart','past_goal_heart<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
                     <?php } ?>
                     </div>
@@ -1648,7 +1640,7 @@ if (mysqli_num_rows($result_heart) > 0) {
 
                 <div id="heart_unselected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                 <?php foreach ($map_heart as $r) {
-                $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                $c_name = getClientName($r, $conn,$dietitian_id); ?>
                 <div><input onclick="selectClient(this,'heart_selected<?php echo($i) ?>','heart_unselected<?php echo($i) ?>','heart','past_goal_heart<?php echo($i) ?>')" type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                 <label id="checklabel" ><?php echo($c_name) ?></label></div>
                 <?php } ?>
@@ -1686,7 +1678,7 @@ if (mysqli_num_rows($result_sleep) > 0) {
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <div id="sleep_selected<?php echo($i) ?>" style="display:flex;flex-wrap: wrap;gap: 12px;">
                     <?php foreach ($list as $c) {
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem"><?php echo($c_name) ?> <span  onclick="deselectClient(this,'sleep_unselected<?php echo($i) ?>','sleep_selected<?php echo($i) ?>','sleep','past_goal_sleep<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
                     <?php } ?>
                     </div>
@@ -1694,7 +1686,7 @@ if (mysqli_num_rows($result_sleep) > 0) {
 
                 <div id="sleep_unselected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                 <?php foreach ($map_sleep as $r) {
-                $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                $c_name = getClientName($r, $conn,$dietitian_id); ?>
                 <div><input onclick="selectClient(this,'sleep_selected<?php echo($i) ?>','sleep_unselected<?php echo($i) ?>','sleep','past_goal_sleep<?php echo($i) ?>')" type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                 <label id="checklabel" ><?php echo($c_name) ?></label></div>
                 <?php } ?>
@@ -1731,7 +1723,7 @@ if (mysqli_num_rows($result_water) > 0) {
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <div id="water_selected<?php echo($i) ?>" style="display:flex;flex-wrap: wrap;gap: 12px;">
                     <?php foreach ($list as $c) {
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'water_unselected<?php echo($i) ?>','water_selected<?php echo($i) ?>','water','past_goal_water<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span><span hidden><?php echo($c) ?></span></span>
                     
                     <?php } ?>
@@ -1740,7 +1732,7 @@ if (mysqli_num_rows($result_water) > 0) {
 
                 <div id="water_unselected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                 <?php foreach ($map_water as $r) {
-                $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                $c_name = getClientName($r, $conn,$dietitian_id); ?>
                 <div><input onclick="selectClient(this,'water_selected<?php echo($i) ?>','water_unselected<?php echo($i) ?>','water','past_goal_water<?php echo($i) ?>')" type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                 <label id="checklabel" ><?php echo($c_name) ?></label></div>
                 <?php } ?>
@@ -1778,7 +1770,7 @@ if (mysqli_num_rows($result_weight) > 0) {
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <div id="weight_selected<?php echo($i) ?>" style="display:flex;flex-wrap: wrap;gap: 12px;">
                     <?php foreach ($list as $c) {
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'weight_unselected<?php echo($i) ?>','weight_selected<?php echo($i) ?>','weight','past_goal_weight<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
                     <?php } ?>
                     </div>
@@ -1786,7 +1778,7 @@ if (mysqli_num_rows($result_weight) > 0) {
 
                 <div id="weight_unselected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                 <?php foreach ($map_weight as $r) {
-                $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                $c_name = getClientName($r, $conn,$dietitian_id); ?>
                 <div><input onclick="selectClient(this,'weight_selected<?php echo($i) ?>','weight_unselected<?php echo($i) ?>','weight','past_goal_weight<?php echo($i) ?>')" type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                 <label id="checklabel" ><?php echo($c_name) ?></label></div>
                 <?php } ?>
@@ -1824,7 +1816,7 @@ if (mysqli_num_rows($result_calorie) > 0) {
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
                     <div id="calorie_selected<?php echo($i) ?>" style="display:flex;flex-wrap: wrap;gap: 12px;">
                     <?php foreach ($list as $c) {
-                    $c_name = getClientName($c, $conn,$dietitianuserID); ?>
+                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'calorie_unselected<?php echo($i) ?>','calorie_selected<?php echo($i) ?>','calorie','past_goal_calorie<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
                     <?php } ?>
                     </div>
@@ -1832,7 +1824,7 @@ if (mysqli_num_rows($result_calorie) > 0) {
 
                 <div id="calorie_unselected<?php echo($i) ?>" class="checkbox" style="padding-left:2rem">
                 <?php foreach ($map_steps as $r) {
-                $c_name = getClientName($r, $conn,$dietitianuserID); ?>
+                $c_name = getClientName($r, $conn,$dietitian_id); ?>
                 <div><input onclick="selectClient(this,'calorie_selected<?php echo($i) ?>','calorie_unselected<?php echo($i) ?>','calorie','past_goal_calorie<?php echo($i) ?>')" type="checkbox" id="clientscheck" value="<?php echo($r) ?>" >
                 <label id="checklabel" ><?php echo($c_name) ?></label></div>
                 <?php } ?>
@@ -2003,7 +1995,7 @@ $i++;
         $.ajax({
             type: "POST",
             url: "setgoals.php",
-            data: {update_goal: type,clients: client_list,dietitianuserID:'<?php echo($dietitianuserID) ?>',goal:goal},
+            data: {update_goal: type,clients: client_list,dietitian_id:'<?php echo($dietitian_id) ?>',goal:goal},
             success: function(data) {
                 // Handle the response here
                 console.log(data);
@@ -2030,7 +2022,7 @@ $i++;
         $.ajax({
             type: "POST",
             url: "setgoals.php",
-            data: {update: type,client: client.value,dietitianuserID:'<?php echo($dietitianuserID) ?>',goal:goal_value},
+            data: {update: type,client: client.value,dietitian_id:'<?php echo($dietitian_id) ?>',goal:goal_value},
             success: function(data) {
                 // Handle the response here
                 console.log(data);
@@ -2051,7 +2043,7 @@ $i++;
         $.ajax({
             type: "POST",
             url: "setgoals.php",
-            data: {update: type,client: client.nextElementSibling.innerHTML ,dietitianuserID:'<?php echo($dietitianuserID) ?>',goal:0},
+            data: {update: type,client: client.nextElementSibling.innerHTML ,dietitian_id:'<?php echo($dietitian_id) ?>',goal:0},
             success: function(data) {
                 // Handle the response here
                 console.log(data);
