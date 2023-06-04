@@ -10,7 +10,7 @@ if (isset($_GET['client_id'])) {
 } else {
   header('Location:client_list.php');
 }
-$sql1 = "SELECT * FROM goals where client_id = '$client_id' AND dietition_id = '{$_SESSION['dietitian_id']}'";
+$sql1 = "SELECT * FROM goals where client_id = '$client_id' AND dietitian_id = '{$_SESSION['dietitian_id']}'";
 $result1 = $conn->query($sql1);
 if ($result1->num_rows > 0) {
   $row1 = mysqli_fetch_assoc($result1);
