@@ -328,6 +328,7 @@ require('constant/config.php');
         border-radius: 50px;
     }
     .butt{
+        text-decoration:none;
         background: #9C74F5;
         border: 0px;
         color: white;
@@ -363,6 +364,7 @@ require('constant/config.php');
         }
         .container1{
             left:30px;
+            gap:80px;
         }
         .row{
             margin:0px auto !important;
@@ -428,13 +430,16 @@ require('constant/config.php');
             grid-template-columns: auto auto auto auto;
             left: -1px;
             margin-right: 420px;
-            gap: 0.5rem;
+            gap: 50px;
         }
         .recipe{
             margin-left: -200px;
             }
-        .middle_wrapper a {
+            .middle_wrapper a {
             margin-top:10px;    
+        }
+        .middle_wrapper{
+            margin: 20px auto !important;
         }
         .card{
             margin:20px auto !important;
@@ -467,6 +472,9 @@ require('constant/config.php');
         }
         h3.recipe{
             margin-left:-20px !important;
+        }
+        .middle_wrapper{
+            margin-left:3rem !important;
         }
     }
 </style>
@@ -525,18 +533,62 @@ require('constant/config.php');
     <!-- all recipes -->
     <div class="middle_wrapper" style="display:flex;justify-content:space-between;margin-top:20px;margin-left:5rem;margin-right:2.5rem;margin-bottom:1rem;">
         <h3 class="recipe" style="font-weight:500;margin-left:50px;color:black; font-size: 30px;">All Recipes</h3>
-        <a href="recipe_all_breakfast.php"><h3 style="color:#6A6A6A;font-size:20px; margin-right: 50px;">View All</h3></a>
+        <a href="recipe_all_breakfast.php" style="text-decoration:none;"><h3 style="color:#6A6A6A;font-size:20px; margin-right: 50px;">View All</h3></a>
     </div>
 
     <!-- recipes from db -->
     <?php
-    $sql = "SELECT * FROM `default_recipes` WHERE drecipe_category = 'breakfast';";
+    $sql = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_category = 'breakfast'";
+    $sql2 = "SELECT * FROM `default_recipes` WHERE drecipe_category = 'breakfast';";
     $res = mysqli_query($conn, $sql);
+    $res2 = mysqli_query($conn, $sql2);
     ?>
 
     <div class="flex row">
         <?php $counter = 0;  
-    while ($d = mysqli_fetch_assoc($res)) {
+  while ($d = mysqli_fetch_assoc($res)) {
+    $recipe_recipe = explode(',', $d['recipe_recipe']);
+    $steps = count($recipe_recipe);
+    $nutritional = json_decode($d['recipe_nutritional_information'],true);
+
+    if ($counter == 5) {
+        break; 
+    }
+    $counter++;
+?>
+    <div class="card d-flex" style="padding:15px; width:325px; height:204px;border-radius:16px; margin:25px 20px 25px 50px;">
+        <div class="card-upper d-flex justify-content-between">
+            <p id="bu" class="card-upper-text"> Medium </p>
+            <p id="bu" class="card-upper-text d-flex" style="margin-left:73px;"><img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:10px"></i></i> 20:00 </p>
+        </div>
+        <div class="img-dis" style="width:100%; text-align:center;">
+            <img src="<?=$DEFAULT_PATH?>assets/images/Pancake.svg" style="margin-top:-60px;height:126px; width:201px;margin-left:15px; object-fit:cover;" />
+        </div>
+        <div class="d-flex justify-content-between">
+            <p class="card-food"><?php echo $d['recipe_name'] ?></p>
+            <div class="header">
+                <div class="dropdown ">
+                    <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
+                        <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:9px;">
+                    </div>
+
+                    <div id="myDropdownContent" class="dropdown-content dropdown-card ">
+                        <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?=$d['recipe_id']?>&action=editRecipe&isDefault=false">Edit</a>
+                        <a style="color: white;" class="delete-button" href="deleteRecipe.php?recipeId=<?=$d['recipe_id']?>&isDefault=false">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between" style="align-items:center;">
+            <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt=""> <?php echo $nutritional['Calories'] ?> kcal</p>
+            <div class="d-flex align-items-center card-num">
+                <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
+                <div class="" style="margin-top:-8px;">steps</div>
+            </div>
+        </div>
+    </div>
+<?php }
+    while ($d = mysqli_fetch_assoc($res2)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
             $nutritional = json_decode($d['drecipe_nutritional_information'],true);
@@ -546,10 +598,10 @@ require('constant/config.php');
             }
             $counter++;
         ?>
-            <div class="card d-flex" style="padding:15px; width:325px; height:204px;border-radius:16px; margin:25px 20px 25px 50px !important;">
+            <div class="card d-flex" style="padding:15px; width:325px; height:204px;border-radius:16px; margin:25px 20px 25px 50px;">
                 <div class="card-upper d-flex justify-content-between">
                     <p id="bu" class="card-upper-text"> Medium </p>
-                    <p id="bu" class="card-upper-text d-flex" style="margin-left:73px;"><i class="fa-solid fa-clock" style="margin:2px 4px;"></i> 20:00 </p>
+                    <p id="bu" class="card-upper-text d-flex" style="margin-left:73px;"><img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:10px"></i></i> 20:00 </p>
                 </div>
                 <div class="img-dis" style="width:100%; text-align:center;">
                     <img src="<?=$DEFAULT_PATH?>assets/images/Pancake.svg" style="margin-top:-60px;height:126px; width:201px;margin-left:15px; object-fit:cover;" />
@@ -563,8 +615,8 @@ require('constant/config.php');
                             </div>
 
                             <div id="myDropdownContent" class="dropdown-content dropdown-card ">
-                                <a style="color: white;" class="edit-button" href="#">Edit</a>
-                                <a style="color: white;" class="delete-button" href="#">Delete</a>
+                                <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?=$d['drecipe_id']?>&action=editRecipe&isDefault=true">Edit</a>
+                                <a style="color: white;" class="delete-button" href="deleteRecipe.php?recipeId=<?=$d['drecipe_id']?>&isDefault=true">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -578,7 +630,7 @@ require('constant/config.php');
                 </div>
             </div>
         <?php } ?>
-        <a class="butt" href="create_recipe.php" style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
+        <a class="butt" href="create_recipe.php" style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;text-decoration:none;">+</a>
      </div>
     <?php require('constant/scripts.php');?>
     

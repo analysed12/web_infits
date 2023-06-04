@@ -431,6 +431,7 @@ include "navbar.php";
             global $conn;
             $result = $conn->query($sql);
             $data = $result->fetch_assoc();
+        
             ?>
                 <span style="display:flex;flex-direction:column">
                     User ID <input readonly type="text" class="input_field" placeholder="<?=$data['dietitian_id']?>" value="<?=$data['dietitian_id']?>" required>
@@ -451,7 +452,8 @@ include "navbar.php";
                     <span>
                         Password
                         <span style="display:flex;align-items:center;justify-content:space-between "
-                            class="input_field"><input disabled type="text" id="password" placeholder="XXXXX"  value="<?php if($data['socialLogin']==1){echo "Not Available";}else{echo $data['password'];} ?>" style="border:none;" required>
+                            class="input_field"><input disabled type="<?php if($data['socialLogin']==1){echo "text";}else{echo 'password';} ?>" id="password" placeholder="XXXXX"
+                            value="<?php if($data['socialLogin']==1){echo "Not Available";}else{echo $data['password'];} ?>" style="border:none;" required>
                             <?php if($data['socialLogin']==0){ ?>
                             <img style="cursor: pointer;width:25px;" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon" alt="eye">
                             <?php } ?>
@@ -528,41 +530,15 @@ include "navbar.php";
                             src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg"><span>Instagram</span></div>
                 </div>
 
+
                 <button type="button" id="myBtn" style="border:none; background:none;"><img
                         src="<?= $DEFAULT_PATH ?>assets/images/edit.svg"></button>
-
-                <div id="myModal" class="modal">
-                    <!--Modal content-->
-                    <div class="modal-content">
-                        <span class="close"></span>
-
-                        <form method="post" action="" enctype="multipart/form-data">
-                            <div class="form-floating">
-                                <select select class="form-select" id="socials"
-                                    aria-label="Floating label select example">
-                                    <option selected>Platform</option>
-                                    <option value="whatsapp"><img
-                                            src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg">WhatsApp</option>
-                                    <option value="twitter">Twitter</option>
-                                    <option value="facebook">Facebook</option>
-                                    <option value="linkedin">LinkedIn</option>
-                                    <option value="instagram">Instagram</option>
-                                </select>
-                                <br>
-                                <input type="text" placeholder="Copy link here..." name="link"
-                                    style="width:100%;height:50px;background-color:white;box-shadow: 0px 1.76208px 5.28625px rgba(0, 0, 0, 0.25);border-radius: 8.81041px; color: #BBBBBB;border:none">
-                                <br>
-                                <div style="display:flex;justify-content:space-evenly;margin-top:35px;">
-                                    <button type="submit" class="addBtn1" name="save_socials">Save Changes</button>
-                                    <button class="discard">Discard</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
 
         </form>
+        
+                
+
         <div class="footer">
             <button class="editbutton">Confirm Changes</button>
             <a id="sharebutton" class="sharebutton" style="text-decoration: none;" href="#popup1"> Share Profile</a>
@@ -617,42 +593,80 @@ include "navbar.php";
         </div>
     </div>
 
+    <div id="myModal" class="modal">
+        <!--Modal content-->
+        <div class="modal-content">
+            <span class="close"></span>
+            <form method="post" action="" enctype="multipart/form-data">
+                            <div class="form-floating">
+                                <select select class="form-select" id="socials"
+                                    aria-label="Floating label select example">
+                                    <option selected>Platform</option>
+                                    <option value="whatsapp"><img
+                                            src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg">WhatsApp</option>
+                                    <option value="twitter">Twitter</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="linkedin">LinkedIn</option>
+                                    <option value="instagram">Instagram</option>
+                                </select>
+                                <br>
+                                <input type="text" placeholder="Copy link here..." name="link"
+                                    style="width:100%;height:50px;background-color:white;box-shadow: 0px 1.76208px 5.28625px rgba(0, 0, 0, 0.25);border-radius: 8.81041px; color: #BBBBBB;border:none">
+                                <br>
+                                <div style="display:flex;justify-content:space-evenly;margin-top:35px;">
+                                    <button type="submit" class="addBtn1" name="save_socials">Save Changes</button>
+                                    <button class="discard">Discard</button>
+                                </div>
+                            </div>
+                        </form>
+                        
+         </div>
+        </div>
+    </div>
 
     <script>
         let eyeicon = document.getElementById("eyeicon");
         let password = document.getElementById("password");
-        eyeicon.onclick = function () {
-            if (password.type == "password") {
-                password.type = "text";
-                eyeicon.src = "<?= $DEFAULT_PATH ?>assets/images/eye-open.png";
-            } else {
-                password.type = "password";
-                eyeicon.src = "<?= $DEFAULT_PATH ?>assets/images/eye.svg";
-            }
-        }
-
         var upload = document.getElementById("upload-btn");
         var chooseimage = document.getElementById("chooseimage");
-
-        function clickMe() {
-            chooseimage.click();
-        }
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
         var span = document.getElementsByClassName("close")[0];
-        btn.onclick = function () {
-            event.preventDefault();
+    //  this condition is because in the socialLogin the "eyeicon == null" 
+    //  as it is null in the socialLogin it will not run the code below...
+        if(eyeicon !== null){
+       
+            eyeicon.addEventListener('click',()=>{
+                if(password.type == 'password'){
+                    password.type = "text";
+                    eyeicon.src = "<?= $DEFAULT_PATH ?>assets/images/eye-open.png";
+                   
+                }
+                else if(password.type == 'text'){
+                    password.type = "password";
+                    eyeicon.src = "<?= $DEFAULT_PATH ?>assets/images/eye.svg";
+                    
+                }
+            })
+        } 
+        const clickMe = () => {
+            chooseimage.click();
+        }
+
+//      this block is for show and hide of the popUp named "myModel"
+        btn.addEventListener('click', (e)=> {
+            e.preventDefault();
+            console.log("clicked myBtn")
             modal.style.display = "block";
-        }
-        span.onclick = function () {
+        })
+        span.addEventListener('click', ()=> {
             modal.style.display = "none";
-        }
+        })
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
-
 
     </script>
     <?php require('constant/scripts.php'); ?>
