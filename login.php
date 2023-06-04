@@ -126,7 +126,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 2rem
 
 }
 
@@ -533,6 +532,16 @@ body {
     margin-top: 3rem;
     gap: 2rem;
 }
+.row{
+    margin:0 !important;
+    
+}
+.col-sm-8{
+    margin: 0 !important;
+}
+.col-sm-6{
+    margin: 0 !important;
+}
 @media screen and (max-width: 768px){
     #home{
         display:none;
@@ -550,7 +559,7 @@ body {
     <div class="top_bar">
         <div class="left">
             <div class="bg">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 1.svg" style="width:25rem">
+                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 1.svg" style="width:100%">
             </div>
             <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg?i=1" style="margin-top:0.8rem;margin-left:0.8rem">
         </div>
@@ -561,7 +570,7 @@ body {
     </div>
 
 
-    <div class="row">
+    <div class="row" style="margin-right:0">
         <div class="col-sm-6">
 
             <div class="sform">
@@ -642,7 +651,7 @@ body {
             </div>
 
         </div>
-        <hr id="hr" style="border: 2px solid #EDEDFE; width: 1204px;">
+        <hr id="hr" style="border: 2px solid #F3F3FF;width: 80%;margin-left:10%">
     </div>
     <div class="row" id="parent-lg" style="margin-top:2rem">
         <div class="col-sm-4 " id="btml">
@@ -664,9 +673,9 @@ body {
             </div>
 
         </div>
-        <div class="col-sm-8">
-            <div class="row">
-                <div class="col-sm-6">
+        <div class="col-sm-8" style="margin:0">
+            <div class="row" style="margin:0">
+                <div class="col-sm-6" style="padding:0">
                     <div class="left_links" style="margin-right: 10rem;">
                         <span class="link" style="margin-top:3rem; color: #4F1963;">Company</span>
                         <a class="link" style="color: #8E8E8E; text-decoration: none;">About</a>
@@ -678,7 +687,7 @@ body {
                 <div class="col-sm-6">
                     <div class="right_links">
                         <img class="get-vec" src="<?=$DEFAULT_PATH?>assets/images/Vector 3.svg"
-                            style="width:30rem;height:8rem">
+                            style="height:8rem">
                         <span style="color: #4F1963;font-size:25px">Get the app</span>
 
                         <div style="display: flex; gap:1rem;">
@@ -728,9 +737,9 @@ body {
     </div>
     <!--------------------------------------mobile-view---------------------------------------------------->
     <div class="row  d-lg-none d-md-none d-xl-none" id="parent" >
-        <div class="col-sm-8" style="margin-bottom:6rem;">
-            <div class="row">
-                <div class="col-sm-6">
+        <div class="col-sm-8" style="margin:1 0 !important;margin-bottom:6rem;">
+            <div class="row" style="margin:0 !importnat">
+                <div class="col-sm-6" style="padding:0 !important;margin:0 important">
                     <div class="left_links">
                         <span class="link" style=" color: #4F1963;">Company</span>
                         <a class="link" style="color: #8E8E8E; text-decoration: none;">About</a>
@@ -739,7 +748,7 @@ body {
                         <a class="link" style="color: #8E8E8E;text-decoration: none;">Get in touch</a>
                     </div>
                 </div>
-                <div class="col-sm-6 mt-5">
+                <div class="col-sm-6 mt-5" style="padding:0 !important;margin:0 important">
                     <div class="right_links">
                         <img class="get-vec" src="assets/images/Vector 3.svg" style="width:30rem;height:8rem;">
                         <span style="color: #4F1963;font-size:30px">Get the app</span>
