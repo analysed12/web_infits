@@ -36,7 +36,7 @@ if (isset($_POST['savegoal'])) {
         if ($result) {
             unset($_POST["savegoal"]);
             unset($_POST["setgoal"]);
-            header(("Location:track_stats_water.php?id={$clientId}"));
+            header(("Location:track_stats_water.php?client_id={$clientId}"));
         }
     }
 }
@@ -118,692 +118,692 @@ $dietition = $_SESSION['name']; ?>
 
 </head>
 <style>
-.content {
-    padding: 10px 20px;
-    display: flex;
-    flex-direction: column;
-}
-
-tst-left-t {
-    padding-left: 3%;
-}
-
-.title {
-    width: 96%;
-    margin-left: 2rem;
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 40px;
-}
-
-.heading p {
-    font-size: 32px;
-    font-family: 'NATS';
-    font-style: normal;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5%;
-    padding-left: 1%;
-}
-
-.client-card {
-    width: 100px;
-    height: 120px;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-.client-card a {
-    display: flex;
-    flex-direction: column;
-    gap: 23px;
-    height: 65%;
-    margin-top: 15px;
-}
-
-.client-card-calorie {
-    background: linear-gradient(37.35deg, #E2809B 0%, #EBD3C8 100%);
-}
-
-.client-card i {
-    scale: 2;
-}
-
-.client-card a img {
-    height: 30px;
-    width: auto;
-    margin-bottom: -15px;
-}
-
-.client-card p {
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    font-size: 22px;
-    margin: 0;
-}
-
-/* tst-left b */
-.tst-left-b {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 20px;
-    gap: 20px;
-}
-
-/* Style the buttons that are used to open the tab content */
-.tab {
-    background-color: #f1f1f1;
-    border: 1px solid #F8F5F5;
-    max-width: 365px;
-    width: 100%;
-    height: 31px;
-    border-top-left-radius: 1em;
-    border-bottom-left-radius: 1em;
-    border-top-right-radius: 1em;
-    border-bottom-right-radius: 1em;
-    position: relative;
-}
-
-.tablinks {
-    background: #FFFFFF;
-    border: 1px solid #FCFBFB;
-    border-radius: 0px;
-    width: 24%;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    transition: 0.3s;
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 27px;
-    color: #4D4D4D;
-}
-
-/* border for side buttons */
-.graph_button_left {
-    border-top-left-radius: 1em;
-    border-bottom-left-radius: 1em;
-    width: 28%;
-}
-
-.drop {
-    position: absolute;
-    color: #4D4D4D;
-    top: 5px;
-    left: 80px;
-    margin-left: 8px;
-    cursor: pointer;
-
-}
-
-#daterange {
-    border: none;
-    background: transparent;
-    height: 0px;
-    width: 0px;
-    z-index: -1;
-    position: absolute;
-    left: 71px;
-    top: 20px;
-}
-
-.graph_button_right {
-    border-top-right-radius: 1em;
-    border-bottom-right-radius: 1em;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-    background-color: #63AEFF;
-}
-
-.tab button.active {
-    background-color: #63AEFF;
-    color: white !important;
-}
-
-.graph {
-    max-width: 487px;
-    max-height: 240px;
-    width: 100%;
-    height: 100%;
-    background: #FFFFFF;
-    border: 1px solid #F1F1F1;
-    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.16);
-    border-radius: 11px;
-    padding: 10px;
-}
-
-.tab_content {
-    position: relative;
-    display: none;
-    width: 100%;
-    height: 100%;
-}
-
-.tab_content canvas {
-    width: 100%;
-    height: 100%;
-}
-
-.i-button-box {
-    position: absolute;
-    top: 1%;
-    right: -17%;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-}
-
-.i-button-box span {
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19px;
-    color: #9C74F5;
-}
-
-.i-pop {
-    background: #ffffff;
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 25px;
-    line-height: 27px;
-    position: absolute;
-    right: -12%;
-    top: 12%;
-    box-shadow: 0px 1.74334px 13.0751px rgb(0 0 0 / 25%);
-    border: 1px solid #EFEFEF;
-    padding: 10px 15px;
-    width: 500px;
-    text-align: center;
-    border-radius: 15px;
-    display: none;
-    transition: 2s ease-in-out;
-}
-
-/* Goal Dialog */
-.tst-right {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    margin: 25px 0;
-}
-
-.set-goal {
-    width: 100%;
-    height: 100%;
-    max-width: 380px;
-    max-height: 450px;
-    border: 1px solid #EFEFEF;
-    background: url('./images/goal-bg.svg');
-    background-repeat: no-repeat;
-    background-position: inherit;
-    box-shadow: 0px 1.74334px 13.0751px rgba(0, 0, 0, 0.25);
-    border-radius: 13.0751px;
-    position: relative;
-    padding: 10px;
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
-    align-items: center;
-}
-
-.set-goal .heading {
-    position: relative;
-    padding-left: 10px;
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-}
-
-#g-set-success {
-    position: absolute;
-    top: 40px;
-    right: 15px;
-    font-size: 20px;
-    letter-spacing: 2px;
-}
-
-.set-goal img {
-    width: 211px;
-    height: 166px;
-}
-
-.set-goal span {
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 23px;
-    line-height: 40px;
-    color: #5CA7F8;
-    margin-top: -10px;
-}
-
-.set-goal form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.set-goal input {
-    width: 163px;
-    height: 45px;
-    border: 1px solid #DFDFDF;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
-    border-radius: 10px;
-    padding: 8px 25px;
-}
-
-.set-goal input::placeholder {
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 25px;
-    color: #ABA3A3;
-    text-align: center;
-}
-
-#save-goal {
-    margin-top: 20px;
-    border: none;
-    width: 124px;
-    height: 45px;
-    background: linear-gradient(263.28deg, #FA8686 0%, #9FB0F2 0.01%, #5CA7F8 93.31%);
-    box-shadow: 0px 3.48718px 3.48718px rgba(0, 0, 0, 0.28);
-    border-radius: 10px;
-    color: #ffffff;
-    font-size: 19px;
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 500;
-}
-
-/* page down */
-.tsd-left-t {
-    padding: 25px 0 25px 10px;
-}
-
-.stats-btn-container {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 0 10px;
-}
-
-.stat-btn {
-    height: 57.45px;
-    width: 150px;
-    background: #FFFFFF;
-    border: 1px solid #F1F1F1;
-    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.08);
-    border-radius: 16px;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    margin: 10px;
-
-}
-
-.stat-data {
-    width: 100%;
-    height: 100%;
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 400;
-}
-
-.stat-data .title {
-    font-size: 18px;
-    line-height: 0;
-    color: #5D5D5D;
-    margin-left: 10px;
-}
-
-.stat-data .value {
-    font-size: 25px;
-    line-height: 0;
-    text-align: center;
-    color: #000000;
-    margin-left: 20px;
-}
-
-.stat-data .unit {
-    font-size: 17px;
-    line-height: 0;
-    color: #6B6B6B;
-    margin-left: 5px;
-}
-
-/* Table Activity */
-.tsd-left-b {
-    padding-left: 30px;
-}
-
-.tsd-left-b .heading {
-    width: 100%;
-    max-width: 549px;
-    padding: 5px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.tsd-left-b .heading p {
-    font-size: 25px;
-    line-height: 53px;
-}
-
-.tsd-left-b .heading span {
-    font-size: 13px;
-    font-weight: bold;
-    color: #A4A4A4;
-}
-
-.heading-border {
-    margin-top: -10px;
-    width: 100%;
-    max-width: 549px;
-    height: 2px;
-    background-color: #F5F5F5;
-}
-
-.activity-container {
-    width: 100%;
-    max-width: 549px;
-    margin-top: 15px;
-}
-
-.activity-box {
-    margin: 5px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 400;
-    line-height: 0;
-}
-
-.activity-date {
-    display: flex;
-    flex-direction: column;
-    width: 17%;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.activity-box .up {
-    font-size: 20px;
-    line-height: 10px;
-    letter-spacing: 0.03em;
-    color: #63AEFF;
-}
-
-.activity-box .down {
-    font-size: 23px;
-    line-height: 49px;
-    /* identical to box height */
-    letter-spacing: 0.03em;
-    color: #000000;
-}
-
-.activity-border {
-    height: 50px;
-    width: 5px;
-    background-color: #63AEFF;
-    margin: 0 20px;
-}
-
-.activity-data {
-    display: flex;
-    flex-direction: column;
-    width: 55%;
-    align-items: center;
-}
-
-.activity-time {
-    font-size: 19px;
-    line-height: 40px;
-    letter-spacing: 0.03em;
-    color: #000000;
-    opacity: 0.44;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    height: 70px;
-}
-
-/* progress bar */
-.tsd-right {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.tsd-right .heading {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.tsd-right .heading p {
-    font-size: 22px;
-    line-height: 28px;
-    color: #000000;
-}
-
-.tsd-right .heading span {
-    font-size: 16px;
-    line-height: 28px;
-    color: #5FA8F8;
-}
-
-.progress-bar-container {
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 400;
-    color: #000000;
-    position: relative;
-    padding: 1rem 0rem;
-    margin-left: 5px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    right: 57px;
-}
-
-.total-consumed {
-    position: absolute;
-    top: 20px;
-    right: -112px
-}
-
-.total-consumed span,
-.total-remaining span {
-    font-size: 25px;
-    line-height: 0;
-    letter-spacing: 0.03em;
-    color: #000000;
-}
-
-.total-consumed p,
-.total-remaining p {
-    font-size: 22px;
-    line-height: 50px;
-    letter-spacing: 0.03em;
-}
-
-.total-remaining {
-    position: absolute;
-    bottom: -10px;
-    right: -112px
-}
-
-.progress-circle {
-    width: 214px;
-    height: 214px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.progress-circle-fill {
-    width: 175px;
-    height: 175px;
-    border-radius: 50%;
-    background: #fff;
-}
-
-.progress-circle-value {
-    width: 175px;
-    height: 175px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.progress-circle-value span {
-    font-size: 20px;
-    line-height: 35px;
-}
-
-#progress-percent {
-    font-size: 48px;
-    line-height: 50px;
-}
-
-/* -------------------- */
-
-
-.client-card-water {
-    background: linear-gradient(216.13deg, #5CA7F8 9.2%, #ABB3F0 91.57%);
-    border: 1px solid #52A4FF;
-    border-radius: 10px;
-}
-
-.client-card-water p {
-    font-family: 'NATS';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19px;
-    line-height: 120%;
-    /* or 23px */
-
-    text-align: center;
-    color: #FFFFFF;
-
-}
-
-/* media */
-@media (max-width:367px) {
+    .content {
+        padding: 10px 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    tst-left-t {
+        padding-left: 3%;
+    }
+
+    .title {
+        width: 96%;
+        margin-left: 2rem;
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 40px;
+    }
+
+    .heading p {
+        font-size: 32px;
+        font-family: 'NATS';
+        font-style: normal;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5%;
+        padding-left: 1%;
+    }
+
+    .client-card {
+        width: 100px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .client-card a {
+        display: flex;
+        flex-direction: column;
+        gap: 23px;
+        height: 65%;
+        margin-top: 15px;
+    }
+
+    .client-card-calorie {
+        background: linear-gradient(37.35deg, #E2809B 0%, #EBD3C8 100%);
+    }
+
+    .client-card i {
+        scale: 2;
+    }
+
+    .client-card a img {
+        height: 30px;
+        width: auto;
+        margin-bottom: -15px;
+    }
+
+    .client-card p {
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1;
+        font-size: 22px;
+        margin: 0;
+    }
+
+    /* tst-left b */
     .tst-left-b {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
         padding: 20px;
+        gap: 20px;
     }
 
-    .tsd-left-t {
-        padding-left: 0;
+    /* Style the buttons that are used to open the tab content */
+    .tab {
+        background-color: #f1f1f1;
+        border: 1px solid #F8F5F5;
+        max-width: 365px;
+        width: 100%;
+        height: 31px;
+        border-top-left-radius: 1em;
+        border-bottom-left-radius: 1em;
+        border-top-right-radius: 1em;
+        border-bottom-right-radius: 1em;
+        position: relative;
     }
 
-    .tsd-left-b {
-        padding-left: 0;
+    .tablinks {
+        background: #FFFFFF;
+        border: 1px solid #FCFBFB;
+        border-radius: 0px;
+        width: 24%;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        transition: 0.3s;
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 27px;
+        color: #4D4D4D;
     }
 
-    .tsd-right {
-        scale: 0.8;
-    }
-
-    .progress-bar-container {
-        scale: 0.8;
-    }
-
+    /* border for side buttons */
     .graph_button_left {
-        line-height: 14px;
-    }
-
-    .i-button-box {
-        right: -21% !important;
+        border-top-left-radius: 1em;
+        border-bottom-left-radius: 1em;
+        width: 28%;
     }
 
     .drop {
-        top: 7px;
-        left: 50px
+        position: absolute;
+        color: #4D4D4D;
+        top: 5px;
+        left: 80px;
+        margin-left: 8px;
+        cursor: pointer;
+
     }
 
-    .title {
-        margin-left: 0rem !important;
+    #daterange {
+        border: none;
+        background: transparent;
+        height: 0px;
+        width: 0px;
+        z-index: -1;
+        position: absolute;
+        left: 71px;
+        top: 20px;
     }
-}
 
-/*************************MEDIA QUERY FOR SMALL DEVICES ******************************/
-@media screen and (min-width:367px) and (max-width: 720px) {
+    .graph_button_right {
+        border-top-right-radius: 1em;
+        border-bottom-right-radius: 1em;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #63AEFF;
+    }
+
+    .tab button.active {
+        background-color: #63AEFF;
+        color: white !important;
+    }
+
+    .graph {
+        max-width: 487px;
+        max-height: 240px;
+        width: 100%;
+        height: 100%;
+        background: #FFFFFF;
+        border: 1px solid #F1F1F1;
+        box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.16);
+        border-radius: 11px;
+        padding: 10px;
+    }
+
+    .tab_content {
+        position: relative;
+        display: none;
+        width: 100%;
+        height: 100%;
+    }
+
+    .tab_content canvas {
+        width: 100%;
+        height: 100%;
+    }
+
+    .i-button-box {
+        position: absolute;
+        top: 1%;
+        right: -17%;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .i-button-box span {
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 19px;
+        color: #9C74F5;
+    }
+
+    .i-pop {
+        background: #ffffff;
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 25px;
+        line-height: 27px;
+        position: absolute;
+        right: -12%;
+        top: 12%;
+        box-shadow: 0px 1.74334px 13.0751px rgb(0 0 0 / 25%);
+        border: 1px solid #EFEFEF;
+        padding: 10px 15px;
+        width: 500px;
+        text-align: center;
+        border-radius: 15px;
+        display: none;
+        transition: 2s ease-in-out;
+    }
+
+    /* Goal Dialog */
+    .tst-right {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin: 25px 0;
+    }
+
+    .set-goal {
+        width: 100%;
+        height: 100%;
+        max-width: 380px;
+        max-height: 450px;
+        border: 1px solid #EFEFEF;
+        background: url('./images/goal-bg.svg');
+        background-repeat: no-repeat;
+        background-position: inherit;
+        box-shadow: 0px 1.74334px 13.0751px rgba(0, 0, 0, 0.25);
+        border-radius: 13.0751px;
+        position: relative;
+        padding: 10px;
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .set-goal .heading {
+        position: relative;
+        padding-left: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+
+    #g-set-success {
+        position: absolute;
+        top: 40px;
+        right: 15px;
+        font-size: 20px;
+        letter-spacing: 2px;
+    }
+
+    .set-goal img {
+        width: 211px;
+        height: 166px;
+    }
+
+    .set-goal span {
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 23px;
+        line-height: 40px;
+        color: #5CA7F8;
+        margin-top: -10px;
+    }
+
+    .set-goal form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .set-goal input {
+        width: 163px;
+        height: 45px;
+        border: 1px solid #DFDFDF;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+        border-radius: 10px;
+        padding: 8px 25px;
+    }
+
+    .set-goal input::placeholder {
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 25px;
+        color: #ABA3A3;
+        text-align: center;
+    }
+
+    #save-goal {
+        margin-top: 20px;
+        border: none;
+        width: 124px;
+        height: 45px;
+        background: linear-gradient(263.28deg, #FA8686 0%, #9FB0F2 0.01%, #5CA7F8 93.31%);
+        box-shadow: 0px 3.48718px 3.48718px rgba(0, 0, 0, 0.28);
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 19px;
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 500;
+    }
+
+    /* page down */
+    .tsd-left-t {
+        padding: 25px 0 25px 10px;
+    }
+
+    .stats-btn-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 0 10px;
+    }
+
+    .stat-btn {
+        height: 57.45px;
+        width: 150px;
+        background: #FFFFFF;
+        border: 1px solid #F1F1F1;
+        box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        margin: 10px;
+
+    }
+
+    .stat-data {
+        width: 100%;
+        height: 100%;
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 400;
+    }
+
+    .stat-data .title {
+        font-size: 18px;
+        line-height: 0;
+        color: #5D5D5D;
+        margin-left: 10px;
+    }
+
+    .stat-data .value {
+        font-size: 25px;
+        line-height: 0;
+        text-align: center;
+        color: #000000;
+        margin-left: 20px;
+    }
+
+    .stat-data .unit {
+        font-size: 17px;
+        line-height: 0;
+        color: #6B6B6B;
+        margin-left: 5px;
+    }
+
+    /* Table Activity */
+    .tsd-left-b {
+        padding-left: 30px;
+    }
+
+    .tsd-left-b .heading {
+        width: 100%;
+        max-width: 549px;
+        padding: 5px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .tsd-left-b .heading p {
+        font-size: 25px;
+        line-height: 53px;
+    }
+
+    .tsd-left-b .heading span {
+        font-size: 13px;
+        font-weight: bold;
+        color: #A4A4A4;
+    }
+
+    .heading-border {
+        margin-top: -10px;
+        width: 100%;
+        max-width: 549px;
+        height: 2px;
+        background-color: #F5F5F5;
+    }
+
+    .activity-container {
+        width: 100%;
+        max-width: 549px;
+        margin-top: 15px;
+    }
+
+    .activity-box {
+        margin: 5px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 400;
+        line-height: 0;
+    }
+
+    .activity-date {
+        display: flex;
+        flex-direction: column;
+        width: 17%;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .activity-box .up {
+        font-size: 20px;
+        line-height: 10px;
+        letter-spacing: 0.03em;
+        color: #63AEFF;
+    }
+
+    .activity-box .down {
+        font-size: 23px;
+        line-height: 49px;
+        /* identical to box height */
+        letter-spacing: 0.03em;
+        color: #000000;
+    }
+
+    .activity-border {
+        height: 50px;
+        width: 5px;
+        background-color: #63AEFF;
+        margin: 0 20px;
+    }
+
+    .activity-data {
+        display: flex;
+        flex-direction: column;
+        width: 55%;
+        align-items: center;
+    }
+
+    .activity-time {
+        font-size: 19px;
+        line-height: 40px;
+        letter-spacing: 0.03em;
+        color: #000000;
+        opacity: 0.44;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: 70px;
+    }
+
+    /* progress bar */
+    .tsd-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tsd-right .heading {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .tsd-right .heading p {
+        font-size: 22px;
+        line-height: 28px;
+        color: #000000;
+    }
+
+    .tsd-right .heading span {
+        font-size: 16px;
+        line-height: 28px;
+        color: #5FA8F8;
+    }
+
     .progress-bar-container {
-        scale: 0.8;
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 400;
+        color: #000000;
+        position: relative;
+        padding: 1rem 0rem;
+        margin-left: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        right: 57px;
     }
 
-    .tsd-right {
-        scale: 0.8;
+    .total-consumed {
+        position: absolute;
+        top: 20px;
+        right: -112px
     }
 
-    .title {
-        margin-left: 0rem !important;
+    .total-consumed span,
+    .total-remaining span {
+        font-size: 25px;
+        line-height: 0;
+        letter-spacing: 0.03em;
+        color: #000000;
     }
 
-    .drop {
-        top: 15px;
-        margin-left: -43px;
+    .total-consumed p,
+    .total-remaining p {
+        font-size: 22px;
+        line-height: 50px;
+        letter-spacing: 0.03em;
     }
 
-    .i-button-box {
-        right: -14% !important;
-    }
-}
-
-/****************************media query for mediun devices**************************************/
-@media screen and (min-width: 720px) and (max-width: 1310px) {
-    .tsd-right {
-        scale: 0.8;
+    .total-remaining {
+        position: absolute;
+        bottom: -10px;
+        right: -112px
     }
 
-    .i-button-box {
-        right: -10%;
+    .progress-circle {
+        width: 214px;
+        height: 214px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
-    .left {
-        margin-right: 5%;
+    .progress-circle-fill {
+        width: 175px;
+        height: 175px;
+        border-radius: 50%;
+        background: #fff;
     }
-}
+
+    .progress-circle-value {
+        width: 175px;
+        height: 175px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .progress-circle-value span {
+        font-size: 20px;
+        line-height: 35px;
+    }
+
+    #progress-percent {
+        font-size: 48px;
+        line-height: 50px;
+    }
+
+    /* -------------------- */
+
+
+    .client-card-water {
+        background: linear-gradient(216.13deg, #5CA7F8 9.2%, #ABB3F0 91.57%);
+        border: 1px solid #52A4FF;
+        border-radius: 10px;
+    }
+
+    .client-card-water p {
+        font-family: 'NATS';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 19px;
+        line-height: 120%;
+        /* or 23px */
+
+        text-align: center;
+        color: #FFFFFF;
+
+    }
+
+    /* media */
+    @media (max-width:367px) {
+        .tst-left-b {
+            padding: 20px;
+        }
+
+        .tsd-left-t {
+            padding-left: 0;
+        }
+
+        .tsd-left-b {
+            padding-left: 0;
+        }
+
+        .tsd-right {
+            scale: 0.8;
+        }
+
+        .progress-bar-container {
+            scale: 0.8;
+        }
+
+        .graph_button_left {
+            line-height: 14px;
+        }
+
+        .i-button-box {
+            right: -21% !important;
+        }
+
+        .drop {
+            top: 7px;
+            left: 50px
+        }
+
+        .title {
+            margin-left: 0rem !important;
+        }
+    }
+
+    /*************************MEDIA QUERY FOR SMALL DEVICES ******************************/
+    @media screen and (min-width:367px) and (max-width: 720px) {
+        .progress-bar-container {
+            scale: 0.8;
+        }
+
+        .tsd-right {
+            scale: 0.8;
+        }
+
+        .title {
+            margin-left: 0rem !important;
+        }
+
+        .drop {
+            top: 15px;
+            margin-left: -43px;
+        }
+
+        .i-button-box {
+            right: -14% !important;
+        }
+    }
+
+    /****************************media query for mediun devices**************************************/
+    @media screen and (min-width: 720px) and (max-width: 1310px) {
+        .tsd-right {
+            scale: 0.8;
+        }
+
+        .i-button-box {
+            right: -10%;
+        }
+
+        .left {
+            margin-right: 5%;
+        }
+    }
 </style>
 
 <body>
@@ -816,37 +816,37 @@ tst-left-t {
                 <div class="tst-left-t">
                     <div class="card-container">
                         <div class="client-card" style="color:#FF6C6CCA ;border: 1px solid #FF6C6CCA;">
-                            <a href="track_stats_steps.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_steps.php?client_id=<?php echo ($clientId) ?>">
                                 <i class="fa-solid fa-shoe-prints" style="color:#FF6C6CCA; rotate: -90deg;"></i>
                                 <p style="color: #FF6C6CCA;">Steps</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#E266A9; border: 1px solid #E266A9;">
-                            <a href="track_stats_heart.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_heart.php?client_id=<?php echo ($clientId) ?>">
                                 <i style="color:#E266A9;" class="fa-solid fa-heart-pulse"></i>
                                 <p style="color:#E266A9;">Heart<br>Rate</p>
                             </a>
                         </div>
                         <div class="client-card client-card-water" style="color:#52A4FF; border: 1px solid #52A4FF;">
-                            <a href="track_stats_water.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_water.php?client_id=<?php echo ($clientId) ?>">
                                 <img src="<?= $DEFAULT_PATH ?>assets/images/water_selected.svg" alt="">
                                 <p style="color:#FFFFFF;">Water</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#7D5DE6; border: 1px solid #7D5DE6;">
-                            <a href="track_stats_weight.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_weight.php?client_id=<?php echo ($clientId) ?>">
                                 <i style="color:#7D5DE6;" class="fa-solid fa-weight-hanging"></i>
                                 <p style="color:#7D5DE6;">Weight<br>Track</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#54AFAC; border: 1px solid #54AFAC;">
-                            <a href="track_stats_sleep.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_sleep.php?client_id=<?php echo ($clientId) ?>">
                                 <i style="color:#54AFAC;" class="fa-solid fa-moon"></i>
                                 <p style="color:#54AFAC;">Sleep</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#E3738D; border: 1px solid #E3738D;">
-                            <a href="track_stats_calorie.php?id=<?php echo ($clientId) ?>">
+                            <a href="track_stats_calorie.php?client_id=<?php echo ($clientId) ?>">
                                 <i class="fa-solid fa-stopwatch-20" style="color:#E3738D"></i>
                                 <p style="color:#E3738D;">Calorie<br>Track</p>
                             </a>
@@ -909,29 +909,29 @@ tst-left-t {
                         </div>
 
                         <script>
-                        function openCity(evt, cityName) {
-                            /* Declare all variables */
-                            var i, tab_content, tablinks;
+                            function openCity(evt, cityName) {
+                                /* Declare all variables */
+                                var i, tab_content, tablinks;
 
-                            /* // Get all elements with class="tab_content" and hide them */
-                            tab_content = document.getElementsByClassName("tab_content");
-                            for (i = 0; i < tab_content.length; i++) {
-                                tab_content[i].style.display = "none";
+                                /* // Get all elements with class="tab_content" and hide them */
+                                tab_content = document.getElementsByClassName("tab_content");
+                                for (i = 0; i < tab_content.length; i++) {
+                                    tab_content[i].style.display = "none";
+                                }
+
+                                /* // Get all elements with class="tablinks" and remove the class "active" */
+                                tablinks = document.getElementsByClassName("tablinks");
+                                for (i = 0; i < tablinks.length; i++) {
+                                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                                }
+
+                                /* // Show the current tab, and add an "active" class to the button that opened the tab */
+                                document.getElementById(cityName).style.display = "block";
+                                evt.currentTarget.className += " active";
                             }
 
-                            /* // Get all elements with class="tablinks" and remove the class "active" */
-                            tablinks = document.getElementsByClassName("tablinks");
-                            for (i = 0; i < tablinks.length; i++) {
-                                tablinks[i].className = tablinks[i].className.replace(" active", "");
-                            }
-
-                            /* // Show the current tab, and add an "active" class to the button that opened the tab */
-                            document.getElementById(cityName).style.display = "block";
-                            evt.currentTarget.className += " active";
-                        }
-
-                        /* // Get the element with id="defaultOpen" and click on it */
-                        document.getElementsByClassName('graph_button_right')[0].click();
+                            /* // Get the element with id="defaultOpen" and click on it */
+                            document.getElementsByClassName('graph_button_right')[0].click();
                         </script>
                     </div>
                 </div>
@@ -1025,31 +1025,31 @@ tst-left-t {
                         <?php while ($k < $j) {
                             $date = new DateTime($pastActivityData[$k]['dateandtime']);
                             ?>
-                        <div class="activity-box">
-                            <div class="activity-date">
-                                <span class="up">
-                                    <?php echo ($date->format('D')) ?>
-                                </span>
-                                <span class="down">
-                                    <?php echo ($date->format('d')) ?>
-                                </span>
+                            <div class="activity-box">
+                                <div class="activity-date">
+                                    <span class="up">
+                                        <?php echo ($date->format('D')) ?>
+                                    </span>
+                                    <span class="down">
+                                        <?php echo ($date->format('d')) ?>
+                                    </span>
+                                </div>
+                                <div class="activity-border"></div>
+                                <div class="activity-data">
+                                    <span class="up">
+                                        <?php echo (ucwords($pastActivityData[$k]['drinkConsumed'])) ?>
+                                    </span>
+                                    <span class="down">
+                                        <?php echo ($pastActivityData[$k]['amount']) ?> Liters
+                                    </span>
+                                </div>
+                                <div class="activity-time">
+                                    <span>
+                                        <?php echo ($date->format('h:i A')) ?>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="activity-border"></div>
-                            <div class="activity-data">
-                                <span class="up">
-                                    <?php echo (ucwords($pastActivityData[$k]['drinkConsumed'])) ?>
-                                </span>
-                                <span class="down">
-                                    <?php echo ($pastActivityData[$k]['amount']) ?> Liters
-                                </span>
-                            </div>
-                            <div class="activity-time">
-                                <span>
-                                    <?php echo ($date->format('h:i A')) ?>
-                                </span>
-                            </div>
-                        </div>
-                        <?php $k++;
+                            <?php $k++;
                         } ?>
 
                     </div>
@@ -1102,9 +1102,9 @@ tst-left-t {
                 </div>
             </div>
             <script>
-            const progressPercent = document.getElementById('progress-percent');
-            progressPercent.style.setProperty("background",
-                "conic-gradient(#63AEFF <?php echo (100 - $progressPercent) ?>% , #B1D4Fa 0)");
+                const progressPercent = document.getElementById('progress-percent');
+                progressPercent.style.setProperty("background",
+                    "conic-gradient(#63AEFF <?php echo (100 - $progressPercent) ?>% , #B1D4Fa 0)");
             </script>
         </div>
     </div>
@@ -1182,142 +1182,142 @@ tst-left-t {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-    const london_pop = document.getElementById('london_pop');
-    const year_pop = document.getElementById('year_pop');
-    const month_pop = document.getElementById('month_pop');
-    const week_pop = document.getElementById('week_pop');
-    const i_buttons = document.getElementsByClassName('i-button');
-    const i_pop = document.getElementsByClassName('i-pop');
+        const london_pop = document.getElementById('london_pop');
+        const year_pop = document.getElementById('year_pop');
+        const month_pop = document.getElementById('month_pop');
+        const week_pop = document.getElementById('week_pop');
+        const i_buttons = document.getElementsByClassName('i-button');
+        const i_pop = document.getElementsByClassName('i-pop');
 
-    if (<?php echo ($year_pop) ?>) {
-        year_pop.innerText =
-            "As it is fresh year, we are showing you the previous year's data until the latest data is synced for this month!";
-        london_pop.innerText =
-            "As it is fresh year, we are showing you the previous year's data until the latest data is synced for this month!";
-    } else {
-        year_pop.innerText = "We are showing you the ongoing year's data and it keeps updating realtime!";
-        london_pop.innerText = "We are showing you the ongoing year's data and it keeps updating realtime!";
-    }
+        if (<?php echo ($year_pop) ?>) {
+            year_pop.innerText =
+                "As it is fresh year, we are showing you the previous year's data until the latest data is synced for this month!";
+            london_pop.innerText =
+                "As it is fresh year, we are showing you the previous year's data until the latest data is synced for this month!";
+        } else {
+            year_pop.innerText = "We are showing you the ongoing year's data and it keeps updating realtime!";
+            london_pop.innerText = "We are showing you the ongoing year's data and it keeps updating realtime!";
+        }
 
-    if (<?php echo ($month_pop) ?>) {
-        month_pop.innerText =
-            "As it is fresh month, we are showing you the previous month's data until the latest data is synced for this month!";
-    } else {
-        month_pop.innerText = "We are showing you the ongoing month's data and it keeps updating realtime!";
-    }
+        if (<?php echo ($month_pop) ?>) {
+            month_pop.innerText =
+                "As it is fresh month, we are showing you the previous month's data until the latest data is synced for this month!";
+        } else {
+            month_pop.innerText = "We are showing you the ongoing month's data and it keeps updating realtime!";
+        }
 
-    if (<?php echo ($week_pop) ?>) {
-        week_pop.innerText =
-            "As it is fresh week, we are showing you the previous week's data until the latest data is synced for the week!";
-    } else {
-        week_pop.innerText = "We are showing you the ongoing week's data and it keeps updating realtime!";
-    }
+        if (<?php echo ($week_pop) ?>) {
+            week_pop.innerText =
+                "As it is fresh week, we are showing you the previous week's data until the latest data is synced for the week!";
+        } else {
+            week_pop.innerText = "We are showing you the ongoing week's data and it keeps updating realtime!";
+        }
 
 
-    for (let i = 0; i < i_buttons.length; i++) {
-        i_buttons[i].addEventListener('mouseover', () => {
-            i_pop[i].style.display = "Block";
-        });
-        i_buttons[i].addEventListener('mouseout', () => {
-            i_pop[i].style.display = "none";
-        });
-    }
-    // --------------Charts--------------
-    // Default Chart (Function)
-    const defaultChart = document.getElementById('myChart');
+        for (let i = 0; i < i_buttons.length; i++) {
+            i_buttons[i].addEventListener('mouseover', () => {
+                i_pop[i].style.display = "Block";
+            });
+            i_buttons[i].addEventListener('mouseout', () => {
+                i_pop[i].style.display = "none";
+            });
+        }
+        // --------------Charts--------------
+        // Default Chart (Function)
+        const defaultChart = document.getElementById('myChart');
 
-    function CustomChart_Data(from_date, to_date) {
-        window.customChart.destroy();
-        $.ajax({
-            type: "POST",
-            url: "track_stats_water.php?id=<?php echo ($clientId) ?>",
-            data: {
-                from_date: from_date,
-                to_date: to_date
-            },
-            success: function(result) {
-                london_pop.innerHTML = "We are showing you the data in range <br>" + result['range'] + " !";
-                window.customChart = new Chart(defaultChart, {
-                    type: 'line',
-                    data: {
-                        labels: result['date'],
-                        datasets: [{
-                            fill: false,
-                            lineTension: 0,
-                            backgroundColor: "#63AEFF",
-                            borderColor: "#63AEFF",
-                            data: result['value'],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display: false,
-                                },
-                                ticks: {
-                                    fontFamily: 'NATS',
-                                    fontStyle: 'bold',
-                                    fontSize: 11,
-                                    fontColor: '#9D9D9D',
-                                }
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                    fontFamily: 'NATS',
-                                    fontStyle: 'bold',
-                                    fontSize: 13,
-                                    fontColor: '#9D9D9D',
-                                },
-                            }],
+        function CustomChart_Data(from_date, to_date) {
+            window.customChart.destroy();
+            $.ajax({
+                type: "POST",
+                url: "track_stats_water.php?client_id=<?php echo ($clientId) ?>",
+                data: {
+                    from_date: from_date,
+                    to_date: to_date
+                },
+                success: function (result) {
+                    london_pop.innerHTML = "We are showing you the data in range <br>" + result['range'] + " !";
+                    window.customChart = new Chart(defaultChart, {
+                        type: 'line',
+                        data: {
+                            labels: result['date'],
+                            datasets: [{
+                                fill: false,
+                                lineTension: 0,
+                                backgroundColor: "#63AEFF",
+                                borderColor: "#63AEFF",
+                                data: result['value'],
+                                borderWidth: 1
+                            }]
                         },
-                        legend: {
-                            display: false,
-                        },
-                        tooltips: {
-                            enabled: true,
-                        },
-                        layout: {
-                            padding: {
-                                left: 5,
-                                right: 5,
-                                top: 0,
-                                bottom: 5,
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    gridLines: {
+                                        display: false,
+                                    },
+                                    ticks: {
+                                        fontFamily: 'NATS',
+                                        fontStyle: 'bold',
+                                        fontSize: 11,
+                                        fontColor: '#9D9D9D',
+                                    }
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        fontFamily: 'NATS',
+                                        fontStyle: 'bold',
+                                        fontSize: 13,
+                                        fontColor: '#9D9D9D',
+                                    },
+                                }],
                             },
-                        },
-                    }
-                });
-            }
+                            legend: {
+                                display: false,
+                            },
+                            tooltips: {
+                                enabled: true,
+                            },
+                            layout: {
+                                padding: {
+                                    left: 5,
+                                    right: 5,
+                                    top: 0,
+                                    bottom: 5,
+                                },
+                            },
+                        }
+                    });
+                }
+            });
+            document.getElementsByClassName('graph_button_left')[0].click();
+        }
+        const date_btn = document.getElementById('daterange-btn');
+        date_btn.addEventListener('click', () => {
+            fp.toggle();
         });
-        document.getElementsByClassName('graph_button_left')[0].click();
-    }
-    const date_btn = document.getElementById('daterange-btn');
-    date_btn.addEventListener('click', () => {
-        fp.toggle();
-    });
-    const fp = flatpickr("input[type = date-range]", {
-        maxDate: "today",
-        dateFormat: "Y-m-d",
-        mode: "range",
-        onClose: [
-            function(selectedDates) {
-                CustomChart_Data(selectedDates[0], selectedDates[1]);
-            }
-        ]
-    });
+        const fp = flatpickr("input[type = date-range]", {
+            maxDate: "today",
+            dateFormat: "Y-m-d",
+            mode: "range",
+            onClose: [
+                function (selectedDates) {
+                    CustomChart_Data(selectedDates[0], selectedDates[1]);
+                }
+            ]
+        });
 
-    window.customChart = new Chart(defaultChart, {
-        type: 'line',
-        data: {
-            labels: [<?php echo ("'" . implode("','", $wholeYearData['month']) . "'") ?>],
-            datasets: [{
-                fill: false,
-                lineTension: 0,
-                backgroundColor: "#63AEFF",
-                borderColor: "#63AEFF",
-                data: [<?php echo (implode(', ', $wholeYearData['value'])) ?>],
-                borderWidth: 1
+        window.customChart = new Chart(defaultChart, {
+            type: 'line',
+            data: {
+                labels: [<?php echo ("'" . implode("','", $wholeYearData['month']) . "'") ?>],
+                datasets: [{
+                    fill: false,
+                    lineTension: 0,
+                    backgroundColor: "#63AEFF",
+                    borderColor: "#63AEFF",
+                    data: [<?php echo (implode(', ', $wholeYearData['value'])) ?>],
+        borderWidth: 1
             }]
         },
         options: {
@@ -1333,14 +1333,14 @@ tst-left-t {
                         fontColor: '#9D9D9D',
                     }
                 }],
-                yAxes: [{
-                    ticks: {
-                        fontFamily: 'NATS',
-                        fontStyle: 'bold',
-                        fontSize: 13,
-                        fontColor: '#9D9D9D',
-                    },
-                }],
+                    yAxes: [{
+                        ticks: {
+                            fontFamily: 'NATS',
+                            fontStyle: 'bold',
+                            fontSize: 13,
+                            fontColor: '#9D9D9D',
+                        },
+                    }],
             },
             legend: {
                 display: false,
@@ -1351,26 +1351,26 @@ tst-left-t {
             layout: {
                 padding: {
                     left: 5,
-                    right: 5,
-                    top: 5,
-                    bottom: 5,
+                        right: 5,
+                            top: 5,
+                                bottom: 5,
                 },
             },
         }
     });
-    // Yearly Chart
-    const yearlyChart = document.getElementById('myChartYearly');
-    new Chart(yearlyChart, {
-        type: 'line',
-        data: {
-            labels: [<?php echo ("'" . implode("','", $wholeYearData['month']) . "'") ?>],
-            datasets: [{
-                fill: false,
-                lineTension: 0,
-                backgroundColor: "#63AEFF",
-                borderColor: "#63AEFF",
-                data: [<?php echo (implode(', ', $wholeYearData['value'])) ?>],
-                borderWidth: 1
+        // Yearly Chart
+        const yearlyChart = document.getElementById('myChartYearly');
+        new Chart(yearlyChart, {
+            type: 'line',
+            data: {
+                labels: [<?php echo ("'" . implode("','", $wholeYearData['month']) . "'") ?>],
+                datasets: [{
+                    fill: false,
+                    lineTension: 0,
+                    backgroundColor: "#63AEFF",
+                    borderColor: "#63AEFF",
+                    data: [<?php echo (implode(', ', $wholeYearData['value'])) ?>],
+        borderWidth: 1
             }]
         },
         options: {
@@ -1386,14 +1386,14 @@ tst-left-t {
                         fontColor: '#9D9D9D',
                     }
                 }],
-                yAxes: [{
-                    ticks: {
-                        fontFamily: 'NATS',
-                        fontStyle: 'bold',
-                        fontSize: 13,
-                        fontColor: '#9D9D9D',
-                    },
-                }],
+                    yAxes: [{
+                        ticks: {
+                            fontFamily: 'NATS',
+                            fontStyle: 'bold',
+                            fontSize: 13,
+                            fontColor: '#9D9D9D',
+                        },
+                    }],
             },
             legend: {
                 display: false,
@@ -1404,26 +1404,26 @@ tst-left-t {
             layout: {
                 padding: {
                     left: 5,
-                    right: 5,
-                    top: 5,
-                    bottom: 5,
+                        right: 5,
+                            top: 5,
+                                bottom: 5,
                 },
             },
         }
     });
-    // Monthly Chart
-    const monthlyChart = document.getElementById('myChartMonthly');
-    new Chart(monthlyChart, {
-        type: 'line',
-        data: {
-            labels: [<?php echo ("'" . implode("','", $wholeMonthData['date']) . "'") ?>],
-            datasets: [{
-                fill: false,
-                lineTension: 0,
-                backgroundColor: "#63AEFF",
-                borderColor: "#63AEFF",
-                data: [<?php echo (implode(', ', $wholeMonthData['value'])) ?>],
-                borderWidth: 1
+        // Monthly Chart
+        const monthlyChart = document.getElementById('myChartMonthly');
+        new Chart(monthlyChart, {
+            type: 'line',
+            data: {
+                labels: [<?php echo ("'" . implode("','", $wholeMonthData['date']) . "'") ?>],
+                datasets: [{
+                    fill: false,
+                    lineTension: 0,
+                    backgroundColor: "#63AEFF",
+                    borderColor: "#63AEFF",
+                    data: [<?php echo (implode(', ', $wholeMonthData['value'])) ?>],
+        borderWidth: 1
             }]
         },
         options: {
@@ -1439,49 +1439,49 @@ tst-left-t {
                         fontColor: '#9D9D9D',
                     }
                 }],
-                yAxes: [{
-                    ticks: {
-                        fontFamily: 'NATS',
-                        fontStyle: 'bold',
-                        fontSize: 12,
-                        fontColor: '#9D9D9D',
-                    },
-                }],
+                    yAxes: [{
+                        ticks: {
+                            fontFamily: 'NATS',
+                            fontStyle: 'bold',
+                            fontSize: 12,
+                            fontColor: '#9D9D9D',
+                        },
+                    }],
             },
             legend: {
                 display: false,
             },
             responsive: true,
-            tooltips: {
+                tooltips: {
                 enabled: true,
             },
             layout: {
                 padding: {
                     left: 5,
-                    right: 5,
-                    top: 5,
-                    bottom: 5,
+                        right: 5,
+                            top: 5,
+                                bottom: 5,
                 },
             },
         }
     });
-    // Weekly Chart
-    const weeklyChart = document.getElementById('myChartWeekly');
-    new Chart(weeklyChart, {
-        type: 'line',
-        data: {
-            labels: [
+        // Weekly Chart
+        const weeklyChart = document.getElementById('myChartWeekly');
+        new Chart(weeklyChart, {
+            type: 'line',
+            data: {
+                labels: [
                 <?php
                 echo ("'" . implode("','", $wholeWeekData['day']) . "'")
                     ?>
             ],
-            datasets: [{
-                fill: false,
-                lineTension: 0,
-                backgroundColor: "#63AEFF",
-                borderColor: "#63AEFF",
-                data: [<?php echo (implode(', ', $wholeWeekData['value'])) ?>],
-                borderWidth: 1
+                datasets: [{
+                    fill: false,
+                    lineTension: 0,
+                    backgroundColor: "#63AEFF",
+                    borderColor: "#63AEFF",
+                    data: [<?php echo (implode(', ', $wholeWeekData['value'])) ?>],
+        borderWidth: 1
             }]
         },
         options: {
@@ -1497,28 +1497,28 @@ tst-left-t {
                         fontColor: '#9D9D9D',
                     },
                 }],
-                yAxes: [{
-                    ticks: {
-                        fontFamily: 'NATS',
-                        fontStyle: 'bold',
-                        fontSize: 12,
-                        fontColor: '#9D9D9D',
-                    },
-                }],
+                    yAxes: [{
+                        ticks: {
+                            fontFamily: 'NATS',
+                            fontStyle: 'bold',
+                            fontSize: 12,
+                            fontColor: '#9D9D9D',
+                        },
+                    }],
             },
             legend: {
                 display: false,
             },
             responsive: true,
-            tooltips: {
+                tooltips: {
                 enabled: true,
             },
             layout: {
                 padding: {
                     left: 5,
-                    right: 5,
-                    top: 5,
-                    bottom: 5,
+                        right: 5,
+                            top: 5,
+                                bottom: 5,
                 },
             },
         }
