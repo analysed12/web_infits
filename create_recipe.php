@@ -123,7 +123,7 @@ include('navbar.php');
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin-bottom: 500px;
+            
         }
         .rtab-content {
             display: none;

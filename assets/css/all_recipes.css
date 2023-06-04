@@ -418,3 +418,10 @@ body {
         width:300px;
     }
 }
+@media screen and (max-width: 720px){
+    .dropdown-content {
+    position: absolute !important;
+    
+    right: 50px !important;
+}
+    }

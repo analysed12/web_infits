@@ -477,6 +477,13 @@ require('constant/config.php');
             margin-left:3rem !important;
         }
     }
+    @media screen and (max-width: 720px){
+    .dropdown-content {
+    position: absolute !important;
+    
+    right: 50px !important;
+}
+    }
 </style>
 <!-- link ref -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -498,7 +505,7 @@ require('constant/config.php');
     </div>
 
     <!-- breakfast lunch dinner -->
-    <div class="container1" style="margin-left:20px" id="myDIV1" onscroll="myFunction()">
+    <div class="container1"  id="myDIV1" onscroll="myFunction()">
         <a href="all_recipes.php" style="color: inherit;" class="breakfast" id="btn1">
         <div class="top-card" style="  background-color: #85B4A1;margin-left:50px;width:320px;">
                 <span class="ci ci1" style="background-color:#75A190;opacity: 0.76;"></span><span class="ci ci2" style="background-color: #75A190;opacity: 0.76;"></span>

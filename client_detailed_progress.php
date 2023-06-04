@@ -151,6 +151,7 @@ width: 88%;
 display: flex;
 gap: 2rem;
 flex-wrap: wrap;
+justify-content: center;
 
 }
 
