@@ -1,5 +1,6 @@
 <?php
 include "server.php";
+require "constant/config.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +61,7 @@ include "server.php";
 }
 
 body {
- overflow-x: hidden;
+ overflow-x: hidden !important;
     margin: 0;
     font-family: 'NATS', sans-serif;
 }

@@ -1,5 +1,6 @@
 <?php
 include "server.php";
+require "constant/config.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +16,6 @@ include "server.php";
 body{
     font-family: 'NATS';
     font-style: normal;
-    overflow-x: hidden;
 }
 .top_bar {
     display: flex;
@@ -667,19 +667,19 @@ body{
                                 <p class="modal-subtitle">LEGAL AGREEMENT</p>
                                 <div class="modal-para d-flex justify-content-center">
                                     <p>This user agreement (“<b style="color:
-                                #4F1963;font-weight: 400;">Agreement</b>”) is an agreement between you and iNFITS
+                                        #4F1963;font-weight: 400;">Agreement</b>”) is an agreement between you and iNFITS
                                         Products And Services Private Limited (“<b style="color:
-                                #4F1963;font-weight: 400;">INFITS</b>” or “<b style="color:
-                                #4F1963;font-weight: 400;">we</b>” or “<b style="color:
-                                #4F1963;font-weight: 400;">us</b>” as the context requires) governing your use of
-                                        INFITS's products, software and/or services (referred to collectively as the “<b
+                                           #4F1963;font-weight: 400;">INFITS</b>” or “<b style="color:
+                                         #4F1963;font-weight: 400;">we</b>” or “<b style="color:
+                                           #4F1963;font-weight: 400;">us</b>” as the context requires) governing your use of
+                                             INFITS's products, software and/or services (referred to collectively as the “<b
                                             style="color:
-                                #4F1963;font-weight: 400;">Services</b>”) with the characteristics and features as
-                                        described on www.Infits.com (“<b style="color:
-                                #4F1963;font-weight: 400;">Website</b>”) and the INFITS mobile App (“<b style="color:
-                                #4F1963;font-weight: 400;">App</b>”). INFITS may have subsidiaries and affiliated legal
+                                            #4F1963;font-weight: 400;">Services</b>”) with the characteristics and features as
+                                            described on www.Infits.com (“<b style="color:
+                                            #4F1963;font-weight: 400;">Website</b>”) and the INFITS mobile App (“<b style="color:
+                                             #4F1963;font-weight: 400;">App</b>”). INFITS may have subsidiaries and affiliated legal
                                         entities worldwide (“<b style="color:
-                                #4F1963;font-weight: 400;">Sunsidairies and Affiliates</b>”), providing the Services to
+                                            #4F1963;font-weight: 400;">Sunsidairies and Affiliates</b>”), providing the Services to
                                         you on behalf of INFITS. You acknowledge and agree that the Subsidiaries and
                                         Affiliates will be entitled to provide the Services to you under the terms of
                                         this Agreement.</p>
@@ -761,7 +761,7 @@ body{
     </div>
 
 
-    <hr id="hr" style="border: 2px solid #F3F3FF;width: 1204px;margin-left:9rem">
+    <hr id="hr" style="border: 2px solid #F3F3FF;width: 890px;margin-left:9rem">
     </div>
     <div class="row" style="margin-top:2rem">
         <div class="col-sm-4" id="btml">
@@ -796,7 +796,7 @@ body{
                 </div>
                 <div class="col-sm-6">
                     <div class="right_links">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/Vector 4.svg" style="width:30rem;height:8rem">
+                        <img src="<?=$DEFAULT_PATH?>assets/images/Vector 4.svg" style="width:20rem;height:8rem">
                         <span style="color: #4F1963;font-size:30px">Get the app</span>
                         <div class="play_store">
                             <div class="apple" style="padding:0.5rem">

@@ -550,12 +550,12 @@ margin-top: 2.5rem;
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    padding-left:2rem;
   }
 
   .pastreminders{
     display: flex;
-    justify-content:space-between;
-    margin-right:4rem;
+    gap:5%;
   }
 .rightside_wrapper1{
     width: 347px;
