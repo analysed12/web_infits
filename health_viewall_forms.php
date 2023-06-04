@@ -307,13 +307,15 @@ overflow-y: scroll;
             <div class="form-card-container">
 
                 <?php
-                    for ($i = 0; $i < 10; $i++) {
+                   $sql = "SELECT * from dietitian_forms where dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+                   $result = $conn->query($sql);
+                       while($form = $result->fetch_assoc()) {
                 ?>
                 <div class="form-cards">
                     <img class="vector" src="<?=$DEFAULT_PATH?>assets/images/form-card-vector.svg">
                     <div class="form-content">
-                    <h4>Form 1 (Default)</h4>
-                        <p><span>20</span> Question</p>
+                    <h4><?=$form['form_name']?></h4>
+                        <p><span><?=$form['total_que']?></span> Question</p>
                     </div>
                     <div class="options" onclick="showPopup(this)">
                         <img src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="options" title="options">

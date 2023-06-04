@@ -491,8 +491,8 @@ padding-bottom:0.5rem;
                                 <img src="<?=$DEFAULT_PATH?>assets/images/Form_Profile.svg" alt="Profile" id="clientProfile">
                                 <p> <?=$row['clientuserID']?> </p>
                                 <div class="btn-box">
-                                    <a href="health_detail_form.php?form=show" id="clientForm">Form</a>
-                                    <a href="health_detail_form.php?document=show" id="clientDocument">Documents</a>
+                                    <a href="health_detail_form.php?form=show&client_id=<?=$row['client_id']?>" id="clientForm">Form</a>
+                                    <a href="health_detail_form.php?document=show&client_id=<?=$row['client_id']?>" id="clientDocument">Documents</a>
                                 </div>
                             </div>
                         </div>

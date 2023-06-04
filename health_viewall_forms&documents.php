@@ -260,7 +260,7 @@ img.vector{
             <div class="client-card-container">
                 
                 <?php
-                    $sql = "SELECT DISTINCT ClientName FROM `clientcon` ";
+                    $sql = "SELECT * FROM client_forms_docs WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
@@ -270,10 +270,10 @@ img.vector{
                             <img class="vector" src="<?=$DEFAULT_PATH?>assets/images/client-card-vector.svg">
                             <div class="card-content">
                                 <img src="<?=$DEFAULT_PATH?>assets/images/Form_Profile.svg" alt="Profile" id="clientProfile">
-                                <p> <?php echo $row["ClientName"]; ?> </p>
+                                <p> <?php echo $row["clientuserID"]; ?> </p>
                                 <div class="btn-box">
-                                <a href="health_detail_form.php?form=show" id="clientForm">Form</a>
-                                    <a href="health_detail_form.php?document=show" id="clientDocument">Documents</a>
+                                <a href="health_detail_form.php?form=show&client_id=<?=$row['client_id']?>" id="clientForm">Form</a>
+                                    <a href="health_detail_form.php?document=show&client_id=<?=$row['client_id']?>" id="clientDocument">Documents</a>
                                 </div>
                             </div>
                         </div>

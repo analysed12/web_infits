@@ -1,11 +1,10 @@
 <?php
 include 'navbar.php';
 require('constant/config.php');
-error_reporting(0);
 if(isset($_GET['client_id'])){
-
     $client_id = $_GET['client_id'];
-    
+}else{
+    header("Location:forms_and_documents.php");
 }
 ?>
 <!DOCTYPE html>
@@ -198,6 +197,7 @@ if(isset($_GET['client_id'])){
     display: flex;
     flex-direction: column;
     align-items: center;
+    display: none;
 }
 
 /* width */
@@ -622,12 +622,16 @@ if(isset($_GET['client_id'])){
         
         if (isset($_GET['form'])) {
             ?>
+            formDetails.style.display = "flex";
             formDocuments.style.display = "none";
-        <?php
-        } elseif (isset($_GET['documents'])) {
+            borderBottom.classList.add("left");
+            borderBottom.classList.remove("right");
+            <?php
+        } 
+        if (isset($_GET['document'])) {
             ?>
-            console.log('doc');
             formDetails.style.display = "none";
+            formDocuments.style.display = "flex";
             borderBottom.classList.add("right");
             borderBottom.classList.remove("left");
 
