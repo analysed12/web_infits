@@ -866,9 +866,7 @@ function fetchInformation($client_id)
                     icon.classList.toggle("rotate");
                 }
                 </script>
-
             </div>
-
         </div>
         <?php
         $today = new DateTime();
