@@ -1,5 +1,6 @@
 <?php
 include "server.php";
+require "constant/config.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +16,7 @@ include "server.php";
 body{
     font-family: 'NATS';
     font-style: normal;
-    overflow-x: hidden;
+    overflow-y: auto;
 }
 .top_bar {
     display: flex;
@@ -547,8 +548,31 @@ body{
     text-decoration: none;
     cursor: pointer;
 }
+.row{
+    margin:0 !important;
+    
+}
+.col-sm-8{
+    margin: 0 !important;
+}
+.col-sm-6{
+    margin: 0 !important;
+}
+.down {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'NATS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 124.84%;
+    color: #A6A6A6;
+    margin-top: 3rem;
+    gap: 2rem;
+}
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 768px) {
     #home {
         display:none;
 
@@ -557,23 +581,10 @@ body{
     #hr {
         display: none;
     }
-
-    .modal-title {
-        font-size: large;
+    #parent-lg {
+        display: none !important;
     }
 
-    .modal-subtitle {
-        font-size: large;
-    }
-
-    .modal-para {
-        font-size: small;
-        padding-right: 1rem;
-    }
-
-    .modal-para::-webkit-scrollbar {
-        width: 6px;
-    }
 }
 </style>
 
@@ -581,7 +592,7 @@ body{
     <div class="top_bar">
         <div class="left">
             <div class="bg">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 1.svg" style="width:25rem">
+                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 1.svg" style="width:100%">
             </div>
             <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg" style="margin-top:0.8rem;margin-left:0.8rem">
         </div>
@@ -667,19 +678,19 @@ body{
                                 <p class="modal-subtitle">LEGAL AGREEMENT</p>
                                 <div class="modal-para d-flex justify-content-center">
                                     <p>This user agreement (“<b style="color:
-                                #4F1963;font-weight: 400;">Agreement</b>”) is an agreement between you and iNFITS
+                                        #4F1963;font-weight: 400;">Agreement</b>”) is an agreement between you and iNFITS
                                         Products And Services Private Limited (“<b style="color:
-                                #4F1963;font-weight: 400;">INFITS</b>” or “<b style="color:
-                                #4F1963;font-weight: 400;">we</b>” or “<b style="color:
-                                #4F1963;font-weight: 400;">us</b>” as the context requires) governing your use of
-                                        INFITS's products, software and/or services (referred to collectively as the “<b
+                                           #4F1963;font-weight: 400;">INFITS</b>” or “<b style="color:
+                                         #4F1963;font-weight: 400;">we</b>” or “<b style="color:
+                                           #4F1963;font-weight: 400;">us</b>” as the context requires) governing your use of
+                                             INFITS's products, software and/or services (referred to collectively as the “<b
                                             style="color:
-                                #4F1963;font-weight: 400;">Services</b>”) with the characteristics and features as
-                                        described on www.Infits.com (“<b style="color:
-                                #4F1963;font-weight: 400;">Website</b>”) and the INFITS mobile App (“<b style="color:
-                                #4F1963;font-weight: 400;">App</b>”). INFITS may have subsidiaries and affiliated legal
+                                            #4F1963;font-weight: 400;">Services</b>”) with the characteristics and features as
+                                            described on www.Infits.com (“<b style="color:
+                                            #4F1963;font-weight: 400;">Website</b>”) and the INFITS mobile App (“<b style="color:
+                                             #4F1963;font-weight: 400;">App</b>”). INFITS may have subsidiaries and affiliated legal
                                         entities worldwide (“<b style="color:
-                                #4F1963;font-weight: 400;">Sunsidairies and Affiliates</b>”), providing the Services to
+                                            #4F1963;font-weight: 400;">Sunsidairies and Affiliates</b>”), providing the Services to
                                         you on behalf of INFITS. You acknowledge and agree that the Subsidiaries and
                                         Affiliates will be entitled to provide the Services to you under the terms of
                                         this Agreement.</p>
@@ -740,7 +751,7 @@ body{
             <div class="left_column">
 
                 <div class="mobile d-none d-sm-block">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/mobile.svg" style="width:500px;height:500px">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/mobile.svg" style="width:90%;height:90%">
                 </div>
                 <span class="referral_text">Have a referral code? Verify here</span>
                 <div class="refferal_code">
@@ -754,21 +765,19 @@ body{
         </div>
     </div>
 
-    </div>
-    </div>
-    </div>
-
-    </div>
 
 
-    <hr id="hr" style="border: 2px solid #F3F3FF;width: 1204px;margin-left:9rem">
-    </div>
-    <div class="row" style="margin-top:2rem">
-        <div class="col-sm-4" id="btml">
+    <hr id="hr" style="border: 2px solid #F3F3FF;width: 80%;margin-left:10%">
+
+
+
+
+    <div class="row" id="parent-lg" style="margin-top:2rem">
+        <div class="col-sm-4 " id="btml">
             <div class="bottom_logo">
                 <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg" alt="">
-                <span
-                    style="font-size:30px !important,font-weight:500;text-align:center !important">Fitter.Healthier.Happier</span>
+                <div class="vec-sub"><span>Fitter</span><span class="ms-2">. Healthier</span><span class="ms-2">.
+                        Happier</span></div>
                 <div class="social_links">
                     <img src="<?=$DEFAULT_PATH?>assets/images/Facebook.svg" alt="">
                     <img src="<?=$DEFAULT_PATH?>assets/images/Twitter.svg" alt="">
@@ -783,38 +792,61 @@ body{
             </div>
 
         </div>
-        <div class="col-sm-8">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="left_links">
-                        <span style="font-size:35px;margin-top:3rem;">Company</span>
-                        <div class="link" style="color: #8E8E8E;">About</div>
-                        <div class="link" style="color: #8E8E8E;">Features</div>
-                        <div class="link" style="color: #8E8E8E;">Testimonials</div>
-                        <div class="link" style="color: #8E8E8E;">Get in touch</div>
+        <div class="col-sm-8" style="margin:0">
+            <div class="row" style="margin:0">
+                <div class="col-sm-6" style="padding:0">
+                    <div class="left_links" style="margin-right: 10rem;">
+                        <span class="link" style="margin-top:3rem; color: #4F1963;">Company</span>
+                        <a class="link" style="color: #8E8E8E; text-decoration: none;">About</a>
+                        <a class="link" style="color: #8E8E8E; text-decoration: none;">Features</a>
+                        <a class="link" style="color: #8E8E8E; text-decoration: none;">Testimonials</a>
+                        <a class="link" style="color: #8E8E8E; text-decoration: none;">Get in touch</a>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="right_links">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/Vector 4.svg" style="width:30rem;height:8rem">
-                        <span style="color: #4F1963;font-size:30px">Get the app</span>
-                        <div class="play_store">
-                            <div class="apple" style="padding:0.5rem">
-                                <img src="<?=$DEFAULT_PATH?>assets/images/Apple.svg" alt="">
-                                <div class="content">
-                                    <p>Download on the</p>
-                                    <span>App Store</span>
-                                </div>
+                        <img class="get-vec" src="<?=$DEFAULT_PATH?>assets/images/Vector 3.svg"
+                            style="height:8rem">
+                        <span style="color: #4F1963;font-size:25px">Get the app</span>
 
-                            </div>
-
-                            <div class="play" style="padding:0.5rem">
-                                <img src="<?=$DEFAULT_PATH?>assets/images/Google Play.svg" alt="">
-                                <div class="content">
-                                    <p style="font-size:16px">Get it on</p>
-                                    <span style="font-size:14px; font-weight:600 !important">Google Play</span>
+                        <div style="display: flex; gap:1rem;">
+                            <a href="#"
+                                style="width: 176px;height: 64px;justify-content: space-around;justify-content: center;align-items: center;background: #FFFFFF;border: 2px solid #817FF8;border-radius: 50px; display: flex; flex-direction: row; padding:2px; text-decoration: none;">
+                                <div><img style="margin-right: 0.5rem;margin-bottom:0" src="<?=$DEFAULT_PATH?>assets/images/Apple.svg"
+                                        alt="apple"></div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <div>
+                                        <p
+                                            style=" margin-top: 1rem; font-weight: 400;font-size: 12px;line-height: 90.84%;color: #000000;">
+                                            Download on the</p>
+                                    </div>
+                                    <div>
+                                        <p style=" font-weight:600;font-size: 18px;line-height: 90.84%;color: #000000;">
+                                            App Store</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
+                            <a href="#"
+                                style="width: 176px;height: 64px;justify-content: space-around;justify-content: center;align-items: center;background: #FFFFFF;border: 2px solid #817FF8;border-radius: 50px; display: flex; flex-direction: row; padding:2px;text-decoration: none;">
+                                <div><img style="margin-right: 0.5rem;margin-bottom:0"
+                                        src="<?=$DEFAULT_PATH?>assets/images/Google Play.svg" alt="apple">
+                                </div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <div>
+                                        <p
+                                            style=" margin-top: 1rem; font-weight: 400;font-size: 12px;line-height: 90.84%;color: #000000;">
+                                            GET IT ON</p>
+                                    </div>
+                                    <div>
+                                        <p style=" font-weight:600;font-size: 18px;line-height: 90.84%;color: #000000;">
+                                            Google Play</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="down">
+                            <h6>Terms of use</h6>
+                            <h6>Privacy Policy</h6>
                         </div>
                     </div>
                 </div>
@@ -822,7 +854,88 @@ body{
 
         </div>
     </div>
+    <!--------------------------------------mobile-view---------------------------------------------------->
+    <div class="row  d-lg-none d-md-none d-xl-none" id="parent" >
+        <div class="col-sm-8" style="margin:1 0 !important;margin-bottom:6rem;">
+            <div class="row" style="margin:0 !importnat">
+                <div class="col-sm-6" style="padding:0 !important;margin:0 important">
+                    <div class="left_links">
+                        <span class="link" style=" color: #4F1963;">Company</span>
+                        <a class="link" style="color: #8E8E8E; text-decoration: none;">About</a>
+                        <a class="link" style="color: #8E8E8E;text-decoration: none;">Features</a>
+                        <a class="link" style="color: #8E8E8E;text-decoration: none;">Testimonials</a>
+                        <a class="link" style="color: #8E8E8E;text-decoration: none;">Get in touch</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 mt-5" style="padding:0 !important;margin:0 important">
+                    <div class="right_links">
+                        <img class="get-vec" src="assets/images/Vector 3.svg" style="width:30rem;height:8rem;">
+                        <span style="color: #4F1963;font-size:30px">Get the app</span>
+                        <div style="display: flex; gap:1rem;">
+                            <a href="#"
+                                style="width: 176px;height: 64px;justify-content: space-around;justify-content: center;align-items: center;background: #FFFFFF;border: 2px solid #817FF8;border-radius: 50px; display: flex; flex-direction: row; padding:2px; text-decoration: none;">
+                                <div><img style="margin-right: 0.5rem;" src="<?=$DEFAULT_PATH?>assets/images/Apple.svg"
+                                        alt="apple"></div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <div>
+                                        <p
+                                            style=" margin-top: 1rem; font-weight: 400;font-size: 12px;line-height: 90.84%;color: #000000;">
+                                            Download on the</p>
+                                    </div>
+                                    <div>
+                                        <p style=" font-weight:600;font-size: 18px;line-height: 90.84%;color: #000000;">
+                                            App Store</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#"
+                                style="width: 176px;height: 64px;justify-content: space-around;justify-content: center;align-items: center;background: #FFFFFF;border: 2px solid #817FF8;border-radius: 50px; display: flex; flex-direction: row; padding:2px;text-decoration: none;">
+                                <div><img style="margin-right: 0.5rem;"
+                                        src="<?=$DEFAULT_PATH?>assets/images/Google Play.svg" alt="google"></div>
+                                <div style="display: flex; flex-direction: column;">
+                                    <div>
+                                        <p
+                                            style=" margin-top: 1rem; font-weight: 400;font-size: 12px;line-height: 90.84%;color: #000000;">
+                                            GET IT ON</p>
+                                    </div>
+                                    <div>
+                                        <p style=" font-weight:600;font-size: 18px;line-height: 90.84%;color: #000000;">
+                                            Google Play</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="down">
+                            <h6>Terms of use</h6>
+                            <h6>Privacy Policy</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+        <!-- component-2 -->
+        <div class="col-sm-4" id="btml" style="padding-top: 9rem;">
+            <div class="bottom_logo">
+                <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg" alt="">
+                <div class="vec-sub"><span>Fitter</span><span class="ms-2">. Healthier</span><span class="ms-2">.
+                        Happier</span></div>
+                <div class="social_links">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/Facebook.svg" alt="">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/Twitter.svg" alt="">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/Linkedin.svg" alt="">
+
+                </div>
+                <span class="copy">Copyright 2022 Infits. All rights reserved.</span>
+            </div>
+
+            <div class="bottom_patch">
+                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 2.svg" style="margin-left:3rem">
+            </div>
+
+        </div>
+    </div>
+    </div>
 
     <?php require "constant/scripts.php";?>
     <script type="text/javascript">
