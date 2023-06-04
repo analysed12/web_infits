@@ -692,6 +692,8 @@ margin-top: 2.5rem;
         left: 25px;
         top: 307.5px;
         position: absolute;
+        background-image: none;
+        background: #FFFFFF;
       }
       .pastreminders_leftside{
         display: none;
@@ -705,6 +707,7 @@ margin-top: 2.5rem;
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        margin: 0 10px;
       }
       .rightside_wrapper1{
         display: flex;
@@ -1201,7 +1204,6 @@ if (mysqli_num_rows($result_steps) > 0) {
                         $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'mob_steps_unselected<?php echo($i) ?>','mob_steps_selected<?php echo($i) ?>','steps','mob_past_goal_steps<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
 
-                    $c_name = getClientName($c, $conn,$dietitian_id); ?>
                     <span class="bluetext" style="margin-left:1rem;margin-right:2.5rem"><?php echo($c_name) ?> <span onclick="deselectClient(this,'mob_steps_unselected<?php echo($i) ?>','mob_steps_selected<?php echo($i) ?>','steps','mob_past_goal_steps<?php echo($i); ?>')" class="close" id="close2">&times;</span><span hidden><?php echo($c) ?></span></span>
 
                     <?php } ?>

@@ -561,7 +561,7 @@ td.today {
 
 @media screen and (max-width:480px) {
     .fc-toolbar.fc-header-toolbar {
-        margin: 1rem auto 2rem auto;
+        margin: 7% 7%;
         display: flex;
         width: fit-content;
         flex-direction: column;
@@ -588,7 +588,7 @@ td.today {
     }
 
     .flex-item {
-        margin-top: 50px;
+        margin-top: 10px;
     }
 }
 
@@ -609,6 +609,8 @@ td.today {
 
     .calender {
         display: flex;
+        align-items: center;
+    gap: 2rem;
     }
 
     .calender h3 {

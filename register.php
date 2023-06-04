@@ -874,7 +874,7 @@ body{
                         <div style="display: flex; gap:1rem;">
                             <a href="#"
                                 style="width: 176px;height: 64px;justify-content: space-around;justify-content: center;align-items: center;background: #FFFFFF;border: 2px solid #817FF8;border-radius: 50px; display: flex; flex-direction: row; padding:2px; text-decoration: none;">
-                                <div><img style="margin-right: 0.5rem;" src="<?=$DEFAULT_PATH?>assets/images/Apple.svg"
+                                <div><img style="margin-right: 0.5rem;margin-bottom:0" src="<?=$DEFAULT_PATH?>assets/images/Apple.svg"
                                         alt="apple"></div>
                                 <div style="display: flex; flex-direction: column;">
                                     <div>
@@ -890,7 +890,7 @@ body{
                             </a>
                             <a href="#"
                                 style="width: 176px;height: 64px;justify-content: space-around;justify-content: center;align-items: center;background: #FFFFFF;border: 2px solid #817FF8;border-radius: 50px; display: flex; flex-direction: row; padding:2px;text-decoration: none;">
-                                <div><img style="margin-right: 0.5rem;"
+                                <div><img style="margin-right: 0.5rem;margin-bottom:0"
                                         src="<?=$DEFAULT_PATH?>assets/images/Google Play.svg" alt="google"></div>
                                 <div style="display: flex; flex-direction: column;">
                                     <div>
