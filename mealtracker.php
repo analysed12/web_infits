@@ -1,6 +1,59 @@
 <?php
-include("navbar.php");
 
+include("navbar.php");
+require('constant/config.php');
+
+
+function fetchData($client_id)
+{
+  $sql = "SELECT monday, tuesday, wednesday, thursday, friday, saturday, sunday FROM diet_chart where client_id=$client_id;";
+  global $conn;
+  $result = $conn->query($sql);
+  return ($result);
+}
+
+function fetchInformation($result, $day)
+{
+    $total=mysqli_num_rows($result);
+  if ($total > 0) {
+    while ($row = $result->fetch_assoc()) {
+      // Decode the JSON data for each day
+      $daydata = json_decode($row[$day], true);
+      return $daydata;
+    }
+  }
+}
+function compute($info, $time, $subtime)
+{
+  global $conn;
+  foreach ($info[$time][$subtime] as $value) {
+    $sqld = "SELECT * FROM default_recipes WHERE drecipe_id = $value";
+    $resultd = mysqli_query($conn, $sqld);
+    $total=mysqli_num_rows($resultd);
+    if ($total > 0) {
+      while ($row = mysqli_fetch_assoc($resultd)) {
+        ?>
+<div class="d-flex justify-content-center flex-column justify-content-center text-center me-4">
+    <img src="images/Screenshot__136_-removebg-preview 6.png" alt="s">
+    <div class="fw-bold mt-3">
+        <?php echo ($row['drecipe_name']); ?>
+    </div>
+</div>
+<?php
+      }
+    }
+
+  }
+  ?>
+
+<?php
+}
+function update($client_id, $day)
+{
+  $result = fetchData($client_id);
+  $info = fetchInformation($result, $day);
+  return $info;
+}
 ?>
 
 <!DOCTYPE html>
@@ -110,6 +163,7 @@ include("navbar.php");
         font-size: 16px;
         line-height: 67%;
         align-items: center;
+        color: #C1C1C1;
     }
 
     .date2 {
@@ -353,29 +407,21 @@ include("navbar.php");
  <!--------------breakfast recipes---------->
     <?php
     $sql = "SELECT * FROM `default_recipes` where drecipe_category='breakfast'";
-    echo $sql;
+    
     $res = mysqli_query($conn, $sql);
+    $total=mysqli_num_rows($res);
+    if($total>0){
     ?>
     <div class="flex row">
         <?php $counter = 0;
         while ($d = mysqli_fetch_assoc($res)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
-            $drecipe_nutritional = $d['drecipe_nutritional information'];
+            $drecipe_nutritional = $d['drecipe_nutritional_information'];
 
             $drecipe_nutritional = trim($drecipe_nutritional, '{}');
             $pairs = explode(', ', $drecipe_nutritional);
-            $nutritional = array();
-            foreach ($pairs as $pair) {
-                list($key, $value) = explode(': ', $pair);
-                $key = trim($key, "'");
-                $value = trim($value, "'");
-                $nutritional[$key] = $value;
-            }
-            if ($counter == 5) {
-                break;
-            }
-            $counter++;
+            $nutritional = json_decode($d['drecipe_nutritional_information'],true);
         ?>
             <div class="card d-flex">
                 <div class="img-dis">
@@ -400,7 +446,18 @@ include("navbar.php");
                     <p>10:52 a.m.</p>
                 </div>
             </div>
-            <?php } ?>
+            <?php }
+            }
+                else{?>
+                    
+
+  
+                    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                        <img src="images/Thanksgiving Day.svg" class="image">
+                        <p style="font-size:40px;text-align:center; color: black;">No image shared by the client yet!</p> 
+                    </div>
+<!-----------------------------Calender--------------------------------><?php
+                 } ?>
         </div>
 </div>
 
@@ -410,29 +467,21 @@ include("navbar.php");
  <!--------------Lunch recipes---------->
     <?php
     $sql = "SELECT * FROM `default_recipes` where drecipe_category='lunch'";
-    echo $sql;
+    
     $res = mysqli_query($conn, $sql);
+    $total1=mysqli_num_rows($res);
+    if($total1>0){
     ?>
     <div class="flex row">
         <?php $counter = 0;
         while ($d = mysqli_fetch_assoc($res)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
-            $drecipe_nutritional = $d['drecipe_nutritional information'];
+            $drecipe_nutritional = $d['drecipe_nutritional_information'];
 
             $drecipe_nutritional = trim($drecipe_nutritional, '{}');
             $pairs = explode(', ', $drecipe_nutritional);
-            $nutritional = array();
-            foreach ($pairs as $pair) {
-                list($key, $value) = explode(': ', $pair);
-                $key = trim($key, "'");
-                $value = trim($value, "'");
-                $nutritional[$key] = $value;
-            }
-            if ($counter == 5) {
-                break;
-            }
-            $counter++;
+            $nutritional = json_decode($d['drecipe_nutritional_information'],true);
         ?>
             <div class="card d-flex">
                 <div class="img-dis">
@@ -457,7 +506,21 @@ include("navbar.php");
                     <p>10:52 a.m.</p>
                 </div>
             </div>
-            <?php } ?>
+            <?php } 
+            }
+            else{
+                ?>                    
+
+  
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                  <img src="images/Thanksgiving Day.svg" class="image">
+                  <p style="font-size:40px;text-align:center; color: black;">No image shared by the client yet!</p> 
+                  
+                </div>
+                       
+            <!-----------------------------Calender--------------------------------><?php
+                            
+                    }        ?>
         </div>
 </div>
 
@@ -465,29 +528,22 @@ include("navbar.php");
     <!--------------snacks recipes---------->
     <?php
     $sql = "SELECT * FROM `default_recipes` where drecipe_category='snacks'";
-    echo $sql;
+   
     $res = mysqli_query($conn, $sql);
+    
+    $total2=mysqli_num_rows($res);
+    if($total2>0){
     ?>
     <div class="flex row">
         <?php $counter = 0;
         while ($d = mysqli_fetch_assoc($res)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
-            $drecipe_nutritional = $d['drecipe_nutritional information'];
+            $drecipe_nutritional = $d['drecipe_nutritional_information'];
 
             $drecipe_nutritional = trim($drecipe_nutritional, '{}');
             $pairs = explode(', ', $drecipe_nutritional);
-            $nutritional = array();
-            foreach ($pairs as $pair) {
-                list($key, $value) = explode(': ', $pair);
-                $key = trim($key, "'");
-                $value = trim($value, "'");
-                $nutritional[$key] = $value;
-            }
-            if ($counter == 5) {
-                break;
-            }
-            $counter++;
+            $nutritional = json_decode($d['drecipe_nutritional_information'],true);
         ?>
             <div class="card d-flex">
                 <div class="img-dis">
@@ -512,7 +568,16 @@ include("navbar.php");
                     <p>10:52 a.m.</p>
                 </div>
             </div>
-            <?php } ?>
+            <?php } }
+            else {?>
+                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                  <img src="images/Thanksgiving Day.svg" class="image">
+                  <p style="font-size:40px;text-align:center; color: black;">No image shared by the client yet!</p> 
+                  
+                </div>
+                <?php
+            
+            } ?>
         </div>
 </div>
 
@@ -520,29 +585,21 @@ include("navbar.php");
  <!--------------dinner recipes---------->
     <?php
     $sql = "SELECT * FROM `default_recipes` where drecipe_category='dinner'";
-    echo $sql;
     $res = mysqli_query($conn, $sql);
+    
+    $total3=mysqli_num_rows($res);
+    if($total3>0){
     ?>
     <div class="flex row">
         <?php $counter = 0;
         while ($d = mysqli_fetch_assoc($res)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
-            $drecipe_nutritional = $d['drecipe_nutritional information'];
+            $drecipe_nutritional = $d['drecipe_nutritional_information'];
 
             $drecipe_nutritional = trim($drecipe_nutritional, '{}');
             $pairs = explode(', ', $drecipe_nutritional);
-            $nutritional = array();
-            foreach ($pairs as $pair) {
-                list($key, $value) = explode(': ', $pair);
-                $key = trim($key, "'");
-                $value = trim($value, "'");
-                $nutritional[$key] = $value;
-            }
-            if ($counter == 5) {
-                break;
-            }
-            $counter++;
+            $nutritional = json_decode($d['drecipe_nutritional_information'],true);
         ?>
             <div class="card d-flex">
                 <div class="img-dis">
@@ -567,10 +624,19 @@ include("navbar.php");
                     <p>10:52 a.m.</p>
                 </div>
             </div>
-            <?php } ?>
+            <?php }}
+            else{
+                ?>
+                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                  <img src="images/Thanksgiving Day.svg" class="image">
+                  <p style="font-size:40px;text-align:center; color: black;">No image shared by the client yet!</p> 
+                  
+                </div>
+                <?php
+            
+            } ?>
         </div>
 </div>
-<?php require('constant/scripts.php');?>
 <script>
   $(document).ready(function () {
     $("#btn1").click(function () {
