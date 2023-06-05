@@ -226,7 +226,7 @@ img.vector{
         margin-left: 30px;
     }
     .search-box1{
-        margin-top: 150px;
+        margin-top: 190px;
         margin-left: -200px;
         margin-right: 30px;
     }

@@ -415,12 +415,15 @@ padding-bottom:0.5rem;
     }
 
     .search-box1{
-        margin-top: 170px;
+        margin-top: 200px;
         margin-left: -300px;
         margin-right: 30px;
 }
     .create_btn{
         top:86%;
+   }
+   h1{
+    margin-top:2.8rem !important;
    }
 }
  
