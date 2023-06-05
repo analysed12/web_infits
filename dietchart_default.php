@@ -51,7 +51,7 @@ include("navbar.php");
 
     .sliding-cal {
         position: relative;
-        width: 80.5rem;
+        width: 81.4rem;
         height: 115px;
         overflow: scroll;
         background: #FFFFFF;
@@ -140,14 +140,18 @@ include("navbar.php");
             position: relative;
             width: auto;
             margin-left: -3.4rem;
+      
         }
-
+   
         .btns {
             right: 0px !important;
+            /* top:20px; */
             bottom: 10px !important;
             margin: auto !important;
             position: relative !important;
+            
         }
+       
     }
 
     @media screen and (min-width:500px) and (max-width:720px) {
@@ -164,7 +168,6 @@ include("navbar.php");
             overflow: none;
             margin-right: 20px;
         }
-
         .sliding-cal {
             width: auto;
             margin-top: 60px !important;
@@ -173,13 +176,18 @@ include("navbar.php");
             margin-left: -55px;
             margin-top: 60px;
         }
-
-        .para {
-            width: 292px !important;
+        .btns{
+            width:244px !important;
+            height:90px;
         }
-
+        .btns p{
+            font-size:33px !important;
+        }
+        .para {
+            width: 250px !important;
+        }
         .image {
-            width: 300px !important;
+            width: 270px !important;
         }
 
     }
@@ -250,13 +258,11 @@ include("navbar.php");
             <p style="font-size:33px;width:344px;text-align:center;" class="para">You haven't created any chart yet!</p>
 
         </div>
-        <a href="dietchart1.php" style="backgrounf:none">
-            <div style="display:flex !important;flex-direction:row !important;width:284px;height:97px;background: #FFFFFF;box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);border-radius: 50px !important;align-items:center;justify-content:center;position:absolute;bottom:30px;right:30px;margin:20px;"
-                class="btns">
-                <p style="color:#4B9AFB;font-size:35px;padding-top:10px;margin-right:15px;">Create Chart</p>
-                <img src="<?=$DEFAULT_PATH?>assets/images/Task_Plus.svg">
-            </div>
-        </a>
+        <div href="dietchart1.php" style="display:flex !important;flex-direction:row !important;width:284px;height:90px;background: #FFFFFF;box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);border-radius: 50px !important;align-items:center;justify-content:center;position:absolute;bottom:30px;right:30px;margin:20px;"
+        class="btns">
+            <p style="color:#4B9AFB;font-size:35px;padding-top:18px;margin-right:15px;">Create Chart</p>
+            <img src="<?=$DEFAULT_PATH?>assets/images/Task_Plus.svg">
+        </div>
     </div>
     <?php require('constant/scripts.php');?>
     <!-----------------------------Calender-------------------------------->

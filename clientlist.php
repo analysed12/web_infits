@@ -234,6 +234,16 @@ body{
     .container3{
         margin-top:0px !important;
     }
+    .clients_operations{
+        width:auto;
+    }
+    .delete_client{
+        margin-left:-15px;
+        margin-right: 10px;
+    }
+    .request{
+        margin-bottom:20px;
+    }
 }
 
 @media screen and (max-width: 720px) {

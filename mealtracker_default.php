@@ -31,7 +31,7 @@ include("navbar.php");
             font-size: 24px;
             font-weight: 400px;
             color: #5c5c5c;
-            margin-left: 15.5rem !important;
+            margin-left: 16.5rem !important;
         }
 
         .button-container {
@@ -176,11 +176,11 @@ include("navbar.php");
                 position: relative;
                 width: auto;
             }
-
             .button-container {
                 display: flex;
                 flex-direction: row;
                 overflow-x: auto;
+                overflow-y: hidden;
                 margin-right: 40px;
                 margin-left: -20px !important;
 
@@ -257,7 +257,7 @@ include("navbar.php");
 
             .left h1 {
                 font-size: 40px;
-                margin-left: -4rem;
+                margin-left: -4rem !important;
                 margin-top: 20px;
             }
 
@@ -269,6 +269,7 @@ include("navbar.php");
                 display: flex;
                 flex-direction: row;
                 overflow-x: auto;
+                overflow-y: hidden;
                 margin-right: 30px;
                 margin-left: -65px !important;
             }
@@ -281,7 +282,7 @@ include("navbar.php");
 
         @media screen and (min-width:0px) and (max-width:400px) {
             .image {
-                width: 300px;
+                width: 250px;
             }
         }
     </style>
