@@ -809,11 +809,12 @@ $dietition = $_SESSION['name']; ?>
 <body>
     <div class="content">
         <div class="row ts-top">
-            <div class="title">
-                <p style="margin:1rem 0rem;">Clients Stats</p>
-            </div>
+            
             <div class="col-lg-8 tst-left">
                 <div class="tst-left-t">
+                <div class="title">
+                        <p style="margin:1rem 0rem;">Clients Stats</p>
+                    </div>
                     <div class="card-container">
                         <div class="client-card" style="color:#FF6C6CCA ;border: 1px solid #FF6C6CCA;">
                             <a href="track_stats_steps.php?client_id=<?php echo ($clientId) ?>">
