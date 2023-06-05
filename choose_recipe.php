@@ -598,7 +598,7 @@ include('navbar.php');
         <div class="heading">
             <h1 style="margin-left:2.8rem;margin-top:1.8rem ;font-family: 'NATS';font-style: normal;font-weight: 400;font-size:40px;">Recipes</h1>
         </div>
-        <div class="search" style="margin-right:10.2rem;display:flex;gap:1.5rem">
+        <div class="search" style="justify-content:space-between;display:flex;gap:1.5rem">
             <div class="searchbox">
                 <button style="background-color:white;border:none;" id="seabtn" name="seabtn"><img src="<?=$DEFAULT_PATH?>assets/images/search1.svg" alt=""></button>
                 <input type="search" name="input" placeholder="Search" style="border:none;font-size:20px;margin-left:1rem;width:60%;height:45px;margin-top:-5px;font-weight:400;">
@@ -616,7 +616,6 @@ include('navbar.php');
                 <img src="<?=$DEFAULT_PATH?>assets/images/tree_branch-2.svg" class="imag im2 " style="left:20px;bottom:10px;height:84px;">
             </div>
     
-    <!-- <a href="recipe_lunch.php" style="color: inherit;" class="lunch" id="btn2"> -->
             <div class="top-card" style=" background-color:#F7C8C9!important;" id="btn2">
                 <span class="ci ci1" style="background-color: #E0B6B6;"></span><span class="ci ci2" style="background-color: #E0B6B6;"></span>
                 <img src="<?=$DEFAULT_PATH?>assets/images/lunchbox.svg" class="imag im1" style="left:130px;top:-20px;width:198px;height:234px;">
@@ -624,9 +623,7 @@ include('navbar.php');
                 <p style="margin-bottom:100px;margin-right:102px;color: #6A6A6A;font-size:19px;">Free menu planning<br/>to suit your needs</p>
                 <img src="<?=$DEFAULT_PATH?>assets/images/recipes_book.svg" class="imag im2" style="width:50%;height:47%;left:-35px;bottom:-7px;transform:rotate(1deg);">
             </div>
-    <!-- </a> -->
 
-    <!-- <a href="recipe_snacks.php" style="color: inherit;" class="snacks" id="btn3"> -->
             <div class="top-card" style=" background-color: #a6d5ee;"id="btn3">
                 <span class="ci ci1" style="background-color: #B8DDF1;z-index:1;"></span><span class="ci ci2" style="background-color: #B8DDF1;z-index:1;"></span>
                 <img src="<?=$DEFAULT_PATH?>assets/images/waffers.svg" class="imag im1" style="left:120px;top:-20px;width:205px;height:218px;">
@@ -634,9 +631,7 @@ include('navbar.php');
                 <p style="margin-bottom:100px;margin-right:102px;color: #6A6A6A;font-size:19px;">Free menu planning<br/>to suit your needs</p>
                 <img src="<?=$DEFAULT_PATH?>assets/images/recipe_snacks.svg" class="imag im2" style="width:45%;height:40%;left:-20px;bottom:1px;transform:rotate(1deg);">
             </div>
-    <!-- </a> -->
 
-    <!-- <a href="recipe_dinner.php" style="color: inherit;margin-right:10px;" class="dinner" id="btn4"> -->
             <div class="top-card" style=" background-color: #e39494;" id="btn4">
                 <span class="ci ci1" style="background-color: 
                 #EDB2B2"></span><span class="ci ci2" style="background-color: #EDB2B2"></span>
@@ -645,9 +640,8 @@ include('navbar.php');
                 <p style="margin-bottom:100px;margin-right:102px;color:#6A6A6A;font-size:19px;">Free menu planning<br/>to suit your needs</p>
                 <img src="<?=$DEFAULT_PATH?>assets/images/dinner_bowl.svg" class="imag im2" style="bottom:10px;left:20px;width:65px;height:50px;">
             </div>  
-    <!-- </a> -->
     </div>
-   
+
     <!-- all recipes -->
     <div class="middle_wrapper" style="display:flex;justify-content:space-between;margin-top:30px;margin-right:2.5rem">
         <h3 class="recipe" style="margin-left:50px; color:black;font-family:'NATS';">All Recipes</h3>
@@ -676,7 +670,7 @@ include('navbar.php');
 
     ?>
 
-    <div class="main" id="breakfast1" style="display:none">
+    <div class="main" id="breakfast1">
         <?php
         while ($d = mysqli_fetch_assoc($res_breakfast_custom)) {
             $recipe_recipe = explode(',', $d['recipe_recipe']);
@@ -795,7 +789,7 @@ include('navbar.php');
         ?>
             <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="false" data-recipe-id=<?=$d['recipe_id']?> >
                 <div class="card-upper d-flex justify-content-between">
-                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Breakfast </p>
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Lunch </p>
                 </div>
                 <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
                     <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
@@ -844,7 +838,7 @@ include('navbar.php');
         ?>
             <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="true" data-recipe-id=<?=$d['drecipe_id']?> >
                 <div class="card-upper d-flex justify-content-between">
-                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Breakfast </p>
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Lunch </p>
                 </div>
                 <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
                     <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
@@ -896,7 +890,7 @@ include('navbar.php');
         ?>
             <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="false" data-recipe-id=<?=$d['recipe_id']?> >
                 <div class="card-upper d-flex justify-content-between">
-                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Breakfast </p>
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Snacks </p>
                 </div>
                 <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
                     <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
@@ -945,7 +939,7 @@ include('navbar.php');
         ?>
             <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="true" data-recipe-id=<?=$d['drecipe_id']?> >
                 <div class="card-upper d-flex justify-content-between">
-                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Breakfast </p>
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Snacks </p>
                 </div>
                 <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
                     <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
@@ -997,7 +991,7 @@ include('navbar.php');
         ?>
             <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="false" data-recipe-id=<?=$d['recipe_id']?> >
                 <div class="card-upper d-flex justify-content-between">
-                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Breakfast </p>
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Dinner </p>
                 </div>
                 <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
                     <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
@@ -1046,7 +1040,7 @@ include('navbar.php');
         ?>
             <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="true" data-recipe-id=<?=$d['drecipe_id']?> >
                 <div class="card-upper d-flex justify-content-between">
-                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Breakfast </p>
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Dinner </p>
                 </div>
                 <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
                     <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
@@ -1079,7 +1073,7 @@ include('navbar.php');
             </div>
         <?php } ?>
     </div>
-    <a class="butt" href="_create_recipe.php" style="text-decoration:none;border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
+    <a class="butt" href="create_recipe.php" style="text-decoration:none;border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
 
     <?php require('constant/scripts.php');?>
 </body>
