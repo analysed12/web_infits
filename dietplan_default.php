@@ -44,7 +44,10 @@ img {
 @media screen and (min-width:720px) and (max-width:1500px) {
     .btns {
         bottom: -119px !important;
-        padding-bottom: 0px !important;
+        /* padding-bottom: 0px !important; */
+    }
+    .image {
+        height:250px;
     }
 }
 
@@ -60,35 +63,29 @@ img {
 
     .title {
         margin-left: 1rem !important;
-        margin-top: -2rem !important;
+        margin-top: -1rem !important;
     }
 
     .container {
         margin: 0px !important;
     }
-
+    
     .btns {
-        bottom: -147px !important;
+        bottom: -117px !important;
+        width:250px !important;
     }
-
 }
 
 @media screen and (min-width:0px) and (max-width:550px) {
     .image {
         width: 300px !important;
     }
-
     .topnav-icons {
         gap: 10px !important;
         padding-right: 0px !important;
     }
 }
 
-@media (max-width: 720px) {
-    .title {
-        margin-top: 1rem !important;
-    }
-}
 </style>
 
 <body>
@@ -100,13 +97,13 @@ img {
             <p
                 style="margin:auto;font-size:33px;display:flex;text-align:center;align-items:center;justify-content:center;">
                 You haven't created any plan yet!</p>
-        </div>
+        </div> 
 
+        <div href="create_plan.php" style="text-decoration:none;display:flex !important;flex-direction:row !important;position:absolute !important;bottom:-196px;right:30px;width:270px;height:90px;background: #FFFFFF;box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);border-radius: 50px !important;align-items:center;justify-content:center;"
+            class="btns">
+            <p style="color:#4B9AFB;font-size:35px;padding-top:20px">Create Plan</p>
+            <img src="<?=$DEFAULT_PATH?>assets/images/Task_Plus.svg">
+        </div>
     </div>
-    <a href="create_plan.php" style="text-decoration:none;display:flex !important;flex-direction:row !important;position:absolute !important;bottom:-196px;right:30px;width:284px;height:97px;background: #FFFFFF;box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);border-radius: 50px !important;align-items:center;justify-content:center;"
-        class="btns">
-        <p style="color:#4B9AFB;font-size:35px;padding-top:20px">Create Plan</p>
-        <img src="<?=$DEFAULT_PATH?>assets/images/Task_Plus.svg">
-</a>
 </body>
 </html>
