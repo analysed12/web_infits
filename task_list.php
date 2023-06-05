@@ -40,15 +40,17 @@ if (isset($_POST['delete_task'])) {
     exit();
 }
 include 'navbar.php';
+$today = new DateTime();
+$ress = $today->format('Y-m-d');
 if (isset($_SESSION['dietitian_id'])) {
     $dietitianuserid = $_SESSION['dietitianuserID'];
-    $q = "SELECT * FROM dietition_tasks WHERE dietitianuserID = '$dietitianuserid'";
+    $q = "SELECT * FROM dietition_tasks WHERE dietitianuserID = '$dietitianuserid' AND date > '{$ress}'";
     $result1 = $conn->query($q);
     if (mysqli_num_rows($result1) < 1) {
         header("Location:tasklist_default.php");
     }
 }
-$today = new DateTime();
+
 $dietition = $_SESSION['dietitianuserID'];
 if (isset($_POST['create-submit'])) {
     $dietition = $_SESSION['dietitianuserID'];
