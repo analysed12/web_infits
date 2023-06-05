@@ -404,7 +404,11 @@ ob_end_flush();
         font-weight: 400;
         font-size: 23px;
         line-height: 40px;
+<<<<<<< Updated upstream
         color: #DF7296;
+=======
+        color: #D1D1D1 !important;
+>>>>>>> Stashed changes
         margin-top: -10px;
     }
 
@@ -586,7 +590,28 @@ ob_end_flush();
         background-color: #E47E9B;
         margin: 0 20px;
     }
+<<<<<<< Updated upstream
 
+=======
+    .button-top {
+        border: none;
+        background: white;
+    }
+    .button-top:hover{
+        border-bottom:3.5px solid #7282FB;
+        color:#7282FB !important;
+        cursor:pointer;
+    }
+    .button-top:active{
+        border-bottom:3.5px solid #7282FB;
+        color:#7282FB !important;
+        cursor:pointer;
+    }
+    .button-top:focus{
+        border-bottom:3.5px solid #7282FB;
+        color:#7282FB;
+    }
+>>>>>>> Stashed changes
     .activity-data {
         display: flex;
         flex-direction: column;
@@ -780,6 +805,16 @@ ob_end_flush();
         .left {
             margin-right: 5%;
         }
+<<<<<<< Updated upstream
+=======
+        
+
+    }
+    @media screen and (min-width: 720px) and (max-width: 1500px){
+        .set-goal{
+            gap:5px !important;
+        }
+>>>>>>> Stashed changes
     }
 </style>
 
@@ -918,8 +953,12 @@ ob_end_flush();
             <div class="col-lg-4 tst-right">
                 <div class="set-goal">
                     <div class="heading">
-                        <p>Set Goals</p>
-                        <span>Daily Calorie Count</span>
+                        <p>Calorie Goal</p>
+                        <!-- <span></span> -->
+                        <div style="display:flex;justify-content:space-between;">
+                        <span class="button-top text-dark">Calorie Consumed</span>
+                        <span style="padding-right:10px;" class="button-top  text-dark">Calories Burnt</span>
+                        </div>
                         <span id="g-set-success"></span>
                     </div>
                     <img src="<?= $DEFAULT_PATH ?>assets/images/fruits.svg" alt="">
