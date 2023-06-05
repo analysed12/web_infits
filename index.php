@@ -1014,8 +1014,8 @@ function fetchInformation($client_id)
                                         style="width:1.8rem"></div>
                                 <div style="margin-top:0.2rem; font-weight:500"><span>Steps</span></div>
                             </div>
-                            <span class="symbols1"
-                                style="font-size:0.9rem;color:#454545 left:3rem;"><?php echo ($infom['steps']['progress'] . '/' . $infom['steps']['goal']) ?></span>
+                            <a style="text-decoration:none;color:black;display:flex;justify-content:center" href="track_stats_steps.php?client_id=<?php echo ($data[$i]['client_id']) ?>"><span class="symbols1"
+                                style="font-size:0.9rem;color:#454545 left:3rem;"><?php echo ($infom['steps']['progress'] . '/' . $infom['steps']['goal']) ?></span></a>
                         </div>
                         <div class="steps">
                             <div class="symbols">
@@ -1023,9 +1023,9 @@ function fetchInformation($client_id)
                                         style="width:1.8rem"></div>
                                 <div style="margin-top:0.2rem; font-weight:500"><span>Heart Rate</span></div>
                             </div>
-                            <span class="symbols2"
+                            <a style="text-decoration:none;color:black;display:flex;justify-content:center"  href="track_stats_heart.php?client_id=<?php echo ($data[$i]['client_id']) ?>"><span class="symbols2"
                                 style="font-size:0.9rem;color:#454545"><?php echo ($infom['heart']['progress']) ?>
-                                bpm</span>
+                                bpm</span></a>
                         </div>
                     </div>
 
@@ -1036,9 +1036,9 @@ function fetchInformation($client_id)
                                         style="width:1.8rem"></div>
                                 <div style="margin-top:0.2rem; font-weight:500"><span>Water</span></div>
                             </div>
-                            <span class="symbols3"
+                            <a style="text-decoration:none;color:black;display:flex;justify-content:center"  href="track_stats_water.php?client_id=<?php echo ($data[$i]['client_id']) ?>"><span class="symbols3"
                                 style="font-size:0.9rem;color:#454545"><?php echo ($infom['water']['progress'] . '/' . $infom['water']['goal']) ?>
-                                ltrs</span>
+                                ltrs</span></a>
                         </div>
                         <div class="steps">
                             <div class="symbols">
@@ -1046,7 +1046,9 @@ function fetchInformation($client_id)
                                         style="width:1.8rem"></div>
                                 <div style="margin-top:0.2rem; font-weight:500"><span>Sleep</span></div>
                             </div>
-                            <span class="symbols4" style="font-size:0.9rem;color:#454545">7/8 hrs.</span>
+                            <a style="text-decoration:none;color:black;display:flex;justify-content:center"  href="track_stats_sleep.php?client_id=<?php echo ($data[$i]['client_id']) ?>"><span class="symbols4"
+                                style="font-size:0.9rem;color:#454545"><?php echo ($infom['sleep']['progress'] . '/' . $infom['sleep']['goal']) ?>
+                                .hrs</span></a>
                         </div>
                     </div>
 
@@ -1057,9 +1059,9 @@ function fetchInformation($client_id)
                                         style="width:1.8rem"></div>
                                 <div style="margin-top:0.2rem; font-weight:500"><span>Weight</span></div>
                             </div>
-                            <span class="symbols5"
+                            <a style="text-decoration:none;color:black;display:flex;justify-content:center"  href="track_stats_weight.php?client_id=<?php echo ($data[$i]['client_id']) ?>"><span class="symbols5"
                                 style="font-size:0.9rem;color:#454545"><?php echo ($infom['weight']['progress'] . '/' . $infom['weight']['goal']) ?>
-                                kg</span>
+                                kg</span></a>
                         </div>
                         <div class="steps">
                             <div class="symbols">
@@ -1067,9 +1069,9 @@ function fetchInformation($client_id)
                                         style="width:1.8rem"></div>
                                 <div style="margin-top:0.2rem; font-weight:500"><span>Calories</span></div>
                             </div>
-                            <span class="symbols6"
+                            <a style="text-decoration:none;color:black;display:flex;justify-content:center"  href="track_stats_calorie.php?client_id=<?php echo ($data[$i]['client_id']) ?>"><span class="symbols6"
                                 style="font-size:0.9rem;color:#454545"><?php echo ($infom['calorie']['progress'] . '/' . $infom['calorie']['goal']) ?>
-                                kcal</span>
+                                kcal</span></a>
                         </div>
                     </div>
                 </div>

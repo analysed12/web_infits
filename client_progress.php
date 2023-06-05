@@ -284,6 +284,7 @@ body {
         display: flex;
         gap: 1rem !important;
         justify-content: space-between;
+        align-items: center;
     }
 
     .details {
