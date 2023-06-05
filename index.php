@@ -364,7 +364,7 @@ function fetchInformation($client_id)
     #details {
         color: #717171;
         border: none;
-        background-color: white;
+       background: none;
 
     }
 
@@ -467,7 +467,9 @@ function fetchInformation($client_id)
         margin-left: 0rem;
         padding: 1rem;
         display: flex;
-        justify-content: space-between;
+       
+        flex-direction: column;
+        gap:2rem;
     }
 
     #btn6 {
@@ -604,7 +606,7 @@ function fetchInformation($client_id)
         font-size: 1.5rem;
     }
 
-    @media screen and (max-width: 920px) {
+    @media screen and (max-width: 1050px) {
         .dashboard_container4 {
             display: none;
         }
@@ -618,8 +620,7 @@ function fetchInformation($client_id)
             padding: 1rem;
             width: 280px;
             height: auto;
-            margin-left: 3rem;
-            margin-right: 2rem;
+           
         }
 
         .dashboard_container3 {
@@ -639,7 +640,8 @@ function fetchInformation($client_id)
 
         .tasklist {
             display: flex;
-            gap: 8rem;
+            justify-content: space-between;
+            gap:0 !important;
         }
 
         #btn6 {
@@ -689,28 +691,28 @@ function fetchInformation($client_id)
         }
     }
 
+  
+
     @media screen and (max-width: 720px) {
+        .list_tasklist_container{
+            padding: 0;
+            margin: 0;
 
-        .dashboard {
-
+        }
+        .symbols1 {
+            margin-left: 1.5rem;
+        }
+        .down {
+            padding-left: 3rem;
+        }
+        .up {
             display: flex;
-            flex-direction: column;
             justify-content: center;
-            margin-left: 2rem;
+            align-items: center;
         }
-
-        .dashboard_container2 {
-            display: flex;
-            /* flex-direction: column; */
-            gap: 1rem;
-            margin-left: 3rem;
+        .details {
+            margin: 0 !important;
         }
-
-
-    }
-
-    @media screen and (max-width: 720px) {
-
         .me {
             overflow: scroll;
             display: flex;
@@ -720,48 +722,20 @@ function fetchInformation($client_id)
 
 
         }
-    }
+        .dashboard {
 
-    @media screen and (max-width: 720px) {
-
-        .details {
-            margin-left: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 2rem;
         }
 
-    }
-
-    @media screen and (max-width: 720px) {
-
-        .up {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .dashboard_container2 {
+        display: flex;
+        gap: 1rem;
+        margin-left: 3rem;
         }
-
-
-    }
-
-    @media screen and (max-width: 720px) {
-
-        .down {
-            padding-left: 3rem;
-        }
-
-        .down2 {
-            padding-left: 4rem;
-        }
-
-
-    }
-
-    @media screen and (max-width: 720px) {
-        .symbols1 {
-            margin-left: 1.5rem;
-        }
-
-        /* .symbols2{
-        margin-left: 1rem;
-    } */
+    
         .symbols3 {
             margin-left: 1.5rem;
 
@@ -1092,13 +1066,16 @@ function fetchInformation($client_id)
                     <p style="font-size:1.5rem ; font-weight: 400; margin-top: -5px;margin-left: 2.5px;">My Task List
                     </p>
                     <span class="down"><a href="task_list.php"
-                            style="background-color:white; color:#717171; border:none">View All</a></span>
+                            style="background:none; color:#717171; border:none">View All</a></span>
                 </div>
                 <div class="list_tasklist">
+                    <div style="    display: flex;justify-content: center;">
                     <button id="btn6" style="font-size: 20px;" class="task-btn"
                         onclick="openTask('btn6','today_tasks')">Today</button>
                     <button id="btn7" style="font-size: 20px;" class="btn6 task-btn"
                         onclick="openTask('btn7','upcoming_tasks')">Upcoming</button>
+                    </div>
+                    <div>
                     <div id="today_tasks">
                         <?php
                         $query = "SELECT * FROM `dietition_tasks` WHERE dietitianuserID = '{$dietitian_id}' AND date = '{$today->format('Y-m-d')}' ORDER BY date,start_time LIMIT 3";
@@ -1175,6 +1152,7 @@ function fetchInformation($client_id)
                             }
                         }
                         ?>
+                    </div>
                     </div>
                 </div>
 

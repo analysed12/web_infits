@@ -703,6 +703,7 @@ width:auto;
 }
 
 @media screen and (max-width: 1147px) {
+    
 .header{
 display:flex;
 overflow-x:scroll;

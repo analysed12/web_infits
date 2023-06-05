@@ -430,6 +430,12 @@ if (isset($_POST['edit-submit'])) {
         justify-content: space-between;
         margin: 17px 0;
     }
+    @media screen and (max-width: 720px){
+
+    .upcoming-tasks {
+        padding-left: 0;
+    }
+}
 </style>
 
 <body>
@@ -438,7 +444,7 @@ if (isset($_POST['edit-submit'])) {
         <div class="row">
             <div class="col">
                 <div class="heading">
-                    <h1>Task List</h1>
+                    <h1 style="font-size:40px;margin-top:1rem">Task List</h1>
                 </div>
             </div>
         </div>

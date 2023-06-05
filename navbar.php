@@ -511,22 +511,44 @@ a {
     </div>
 
     <!----------------------------------- MOBILE MENU ----------------------------------------->
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <div class="mobile-menu">
         <div id="mySidenav" class="sidenavv">
             <img src="<?=$DEFAULT_PATH?>assets/images/InfitsLogo.svg" id="logo">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="index.php" id="defaultOpen"><img src="<?=$DEFAULT_PATH?>assets/images/dashboard.svg">&nbsp&nbsp
-                Dashboard</a>
+            <a href="index.php"><img src="<?=$DEFAULT_PATH?>assets/images/dashboard.svg" >&nbsp&nbsp Dashboard</a>
             <a href="chat_home.php"><img src="<?=$DEFAULT_PATH?>assets/images/chat.svg">&nbsp&nbsp Messages</a>
             <a href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg">&nbsp&nbsp Live</a>
             <a href="appointments.php"><img src="<?=$DEFAULT_PATH?>assets/images/calendar.svg">&nbsp&nbsp Appoinments</a>
             <a href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg">&nbsp&nbsp Clients</a>
-            <a href="myplan.php"><img src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg">&nbsp&nbsp Diet Plans</a>
-            <a href="billingAndInvoices.php"><img src="<?=$DEFAULT_PATH?>assets/images/payment.svg">&nbsp&nbsp Payments</a>
-            <a href="all_recipes.php"><img src="<?=$DEFAULT_PATH?>assets/images/recipies.svg">&nbsp&nbsp Recipies</a>
-            <a href="forms_and_documents.php"><img src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg">&nbsp&nbsp Health Form</a>
+            <a style="color:gray"><img src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg">&nbsp&nbsp Diet Plans</a>
+                <div class="submenu">
+                    <a style="font-size: 17px; margin-left: 14%;" href="myplan.php">My Plans</a>
+                </div>
+            <a style="color:gray"><img src="<?=$DEFAULT_PATH?>assets/images/payment.svg">&nbsp&nbsp Payments</a>
+                <div class="submenu">
+                    <a style="font-size: 17px; margin-left: 14%;" href="billingAndInvoices.php">Your Bills</a>
+                    <a style="font-size: 17px; margin-left: 14%;" href="payments.php">Client Payment</a>
+                </div>
+            <a style="color:gray"><img src="<?=$DEFAULT_PATH?>assets/images/recipies.svg">&nbsp&nbsp Recipies</a>
+                <div class="submenu">
+                    <a style="font-size: 17px; margin-left: 14%;" href="all_recipes.php">My Recipes</a>
+                    <a style="font-size: 17px; margin-left: 14%;" href="create_recipe.php">Add Recipe</a>
+                </div>
+            <a style="color:gray"><img src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg">&nbsp&nbsp Health Form</a>
+                <div class="submenu">
+                    <a style="font-size: 17px; margin-left: 14%;" href="forms_and_documents.php">My forms</a>
+                </div>
+            <Script>
+                $(document).ready(function() {
+                    $('.submenu').hide(); // Hide all submenus initially
 
+                    $('.sidenavv a').click(function(e) {
+                        var submenu = $(this).next('.submenu');
+                        submenu.toggle(); // Toggle the clicked submenu
+                    });
+                    });
+            </Script>
             <a href="help.php"><img src="<?=$DEFAULT_PATH?>assets/images/getHelp.svg">&nbsp&nbsp Get Help</a>
             <a href="settings.php"><img src="<?=$DEFAULT_PATH?>assets/images/settings.svg">&nbsp&nbsp Settings</a>
             <a href="logout.php"><img src="<?=$DEFAULT_PATH?>assets/images/logOut.svg">&nbsp&nbsp Log Out</a>

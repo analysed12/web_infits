@@ -99,11 +99,11 @@ img {
                 You haven't created any plan yet!</p>
         </div> 
 
-        <div href="create_plan.php" style="text-decoration:none;display:flex !important;flex-direction:row !important;position:absolute !important;bottom:-196px;right:30px;width:270px;height:90px;background: #FFFFFF;box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);border-radius: 50px !important;align-items:center;justify-content:center;"
+        <a href="create_plan.php" style="text-decoration:none;display:flex !important;flex-direction:row !important;position:absolute !important;bottom:-196px;right:30px;width:270px;height:90px;background: #FFFFFF;box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);border-radius: 50px !important;align-items:center;justify-content:center;"
             class="btns">
             <p style="color:#4B9AFB;font-size:35px;padding-top:20px">Create Plan</p>
             <img src="<?=$DEFAULT_PATH?>assets/images/Task_Plus.svg">
-        </div>
+</a>
     </div>
 </body>
 </html>
