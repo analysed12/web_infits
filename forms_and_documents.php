@@ -409,7 +409,7 @@ padding-bottom:0.5rem;
         overflow: hidden;
      }
     .sub-content{
-        margin-top: 70px;
+        margin-top: 100px;
         margin-right: 80px;
     margin-left: 70px;
     }

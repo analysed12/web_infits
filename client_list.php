@@ -169,11 +169,6 @@ echo $output;
         gap: 1.5rem;
     }
 
-    img {
-        width: 87px;
-        height: 87px;
-        border-radius: 100%;
-    }
 
     #btn4 {
         background-color: white;
