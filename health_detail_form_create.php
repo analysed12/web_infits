@@ -1,4 +1,47 @@
-<?php require('constant/config.php');?>
+<?php require('constant/config.php');
+session_start();
+if(isset($_POST['saveForm'])){
+  global $conn;
+  $form  = $_POST['questions'];
+  echo $form;
+  $count =$_POST['queCount'];
+  $formName = $_POST['formName'];
+  if(isset($_GET['form_id'])){
+    $query = "UPDATE `dietitian_forms` SET `form_name`='$formName',`total_que`='$count',`dietitian_id`='{$_SESSION['dietitian_id']}',`dietitianuserID`='{$_SESSION['dietitianuserID']}',`form_data`='$form' WHERE form_id= {$_GET['form_id']}";
+    echo $query;
+    $conn->query($query);
+    $form_id = $_GET['form_id'];
+  }else{
+
+    $query = "INSERT INTO `dietitian_forms`(`form_name`, `total_que`, `dietitian_id`, `dietitianuserID`, `form_data`) VALUES ('$formName','$count','{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','$form')";
+    $conn->query($query);
+    $query = "SELECT * FROM dietitian_forms WHERE dietitian_id = '{$_SESSION['dietitian_id']}' ORDER BY form_id DESC LIMIT 1";
+    $result = $conn->query($query);
+    $form_id = $result->fetch_assoc()['form_id'];
+  }
+
+  header("Location:health_detail_form_create.php?form_id=$form_id");
+}
+if(isset($_POST['addClient'])){
+  global $conn;
+  $clientId  = $_POST['clientId'];
+  $userId  = $_POST['userId'];
+  if(isset($_GET['form_id'])){
+    $query = "INSERT INTO `client_forms_docs`(`client_id`, `clientuserID`, `dietitian_id`, `dietitianuserID`, `form_id`) VALUES ('$clientId','$userId','{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','{$_GET['form_id']}')";
+    $conn->query($query);
+  }
+}
+if(isset($_POST['removeClient'])){
+  global $conn;
+  $clientId  = $_POST['clientId'];
+  $userId  = $_POST['userId'];
+  if(isset($_GET['form_id'])){
+    $query = "DELETE FROM `client_forms_docs` WHERE client_id = '$clientId' AND form_id = '{$_GET['form_id']}'";
+    $conn->query($query);
+  }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -368,15 +411,24 @@
 
         <div class="flex-container">
             <div class="form-container">
-
+            <?php if(isset($_GET['form_id'])): 
+              $query = "SELECT * FROM dietitian_forms WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND form_id = '{$_GET['form_id']}'";
+              $result = $conn->query($query); $form = $result->fetch_assoc(); endif;?>
                 <div class="form-title">
                     <img src="<?=$DEFAULT_PATH?>assets/images/Form-Name.svg">
-                    <input type="text" name="formName" id="formName" placeholder="Enter form name">
+                    <input type="text" name="formName" id="formName" placeholder="Enter form name" value="<?php if(isset($form)){ echo $form['form_name'];}?>">
                 </div>
         
     
                 
-                <div id="questions-container"></div>
+                <div id="questions-container">
+                  <?php if(isset($_GET['form_id'])): 
+                     
+                     $form = json_decode($form['form_data'],true);
+                     foreach($form as $que): ?>
+                <div data-question="<?=$que['que']?>"><label><?=$que['que']?></label><input type="<?=$que['ansType']?>" placeholder="Answer"><span class="edit-icon">✎</span><span class="delete-icon">🗑</span></div>
+                  <?php endforeach; endif; ?>
+                </div>
                 <button type="button" id="add-question-button">Add Question</button>
 
               </form>
@@ -422,27 +474,18 @@
                 <div id="selectedUser-box">
 
                     <!-- Don't Add Elements here Elements are Added With JavaScript -->
+                    <?php if(isset($_GET['form_id'])){ 
+                      
+                      $query = "SELECT * FROM `client_forms_docs` WHERE form_id = {$_GET['form_id']}";
+                      $result = $conn->query($query);
+                      if($result->num_rows>0){
+                        while($client = $result->fetch_assoc()){?>
+                      <div class="selectedUser">
+                          <p class="userName"><?=$client['clientuserID']?></p>
+                          <img data-userId="<?=$client['clientuserID']?>" data-clientId="<?=$client['client_id']?>" class="removeClient" src="<?=$DEFAULT_PATH?>assets/images/CrossX.svg" alt="Remove" title="Remove">
+                      </div>
 
-
-                    <div class="selectedUser">
-                        <p class="userName">Client 1</p>
-                        <img src="<?=$DEFAULT_PATH?>assets/images/CrossX.svg" alt="Remove" title="Remove">
-                    </div>
-
-                    <div class="selectedUser">
-                        <p class="userName">Client 2</p>
-                        <img src="<?=$DEFAULT_PATH?>assets/images/CrossX.svg" alt="Remove" title="Remove">
-                    </div>
-
-                    <div class="selectedUser">
-                        <p class="userName">Client 3</p>
-                        <img src="<?=$DEFAULT_PATH?>assets/images/CrossX.svg" alt="Remove" title="Remove">
-                    </div>
-
-                    <div class="selectedUser">
-                        <p class="userName">Client 4</p>
-                        <img src="<?=$DEFAULT_PATH?>assets/images/CrossX.svg" alt="Remove" title="Remove">
-                    </div>
+                    <?php } } } ?>
 
                 </div>
 
@@ -450,29 +493,21 @@
 
                     <!-- Don't Add Elements here Elements are Added With JavaScript -->
 
-                    <li>
-                        <input type="checkbox" name="checkBox" id="checkBox">
-                        <label for="checkBox" class="userName">Client 1</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="checkBox" id="checkBox">
-                        <label for="checkBox" class="userName">Client 2</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="checkBox" id="checkBox">
-                        <label for="checkBox" class="userName">Client 3</label>
-                    </li> <li>
-                        <input type="checkbox" name="checkBox" id="checkBox">
-                        <label for="checkBox" class="userName">Client 4</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="checkBox" id="checkBox">
-                        <label for="checkBox" class="userName">Client 5</label>
-                    </li>
+                    <?php $query= "SELECT * FROM addclient WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+                    $result = $conn->query($query);
+                    if($result->num_rows>0){
+                      while($client = $result->fetch_assoc()){?>
+                        <li>
+                          <input class="addClient" data-userId="<?=$client['clientuserID']?>" data-clientId="<?=$client['client_id']?>"  type="checkbox" name="checkBox" id="checkBox">
+                          <label for="checkBox" class="userName"><?=$client['clientuserID']?></label>
+                         </li>
+                    <?php  } } ?>
+                    
                 </ul>
             </div>
         </div>
     </div>
+    <?php require('constant/scripts.php');?>
     <script>
       var editedQuestionIndex = -1;
       
@@ -498,7 +533,7 @@
       // Function to add a question to the form
       function addQuestion(question, answerType) {
         var questionElement = document.createElement('div');
-        
+        questionElement.setAttribute('data-question',question);
         var labelElement = document.createElement('label');
         labelElement.textContent = question;
         questionElement.appendChild(labelElement);
@@ -553,10 +588,15 @@
           var questionElement = document.getElementById('questions-container').children[editedQuestionIndex];
           var labelElement = questionElement.querySelector('label');
           labelElement.textContent = question;
+          labelElement.parentElement.setAttribute('data-question',question);
           questionElement.querySelector('input').type = answerType;
         } else {
           // Adding new question
-          addQuestion(question, answerType);
+          if(question !==""){
+            addQuestion(question, answerType);
+          }else{
+            return;
+          }
         }
         
         closePopup();
@@ -565,54 +605,73 @@
       // Event listener for popup "Cancel" button
       var popupCancelButton = document.getElementById('popup-cancel-button');
       popupCancelButton.addEventListener('click', closePopup);
-      // Event listener for "Save" button
-      var saveButton = document.getElementById('save-button');
-      saveButton.addEventListener('click', function() {
-        var form = document.getElementById('question-form');
-        var questions = form.querySelectorAll('div');
-        var savedQuestions = [];
-        
-        questions.forEach(function(question) {
-          var label = question.querySelector('label');
-          var input = question.querySelector('input');
-          
-          var savedQuestion = {
-            question: label.textContent,
-            answerType: input.type
-          };
-          
-          savedQuestions.push(savedQuestion);
-        });
-        
-        // Do something with the saved questions
-        console.log(savedQuestions);
-      });
   
-  
-  
-  
-  
-  
-    </script>
-    <?php
-    $uniqueFormID = uniqid();
-
-    echo $uniqueFormID;
-
-
-    if(isset($_POST['formName'])){
-        $formName = $_POST['formName'];
-
-        $sql = "INSERT INTO `health_form_details`(`formID`, `formName`, `uniqueFormID`, `dietitianID`, `createdAt`, `updatedAt`) VALUES (null,'$formName','$uniqueFormID','13',null,null)";
-
-        $result = $conn->query($sql);
-
-        if($result){
-            echo "fORM nAME cREATED";
+      const saveForm =document.getElementById('save');
+      const formName =document.getElementById('formName');
+      saveForm.addEventListener('click',()=>{
+        if(formName.value == ""){
+          formName.style.border= '1px solid red';
+        }else{
+          formName.style.border= 'none';
         }
-    }
-    ?> 
-    <?php require('constant/scripts.php');?>
+        const allQuestions =document.querySelectorAll('[data-question]');
+        console.log(allQuestions);
+        const formQuestions = [];
+        let i=1;
+        allQuestions.forEach(el => {
+          const input = el.querySelector('input');
+          const question = el.getAttribute('data-question');
+          const queArray = {
+            queId : i,
+            que:question,
+            ansType:input.type
+          };
+          formQuestions.push(queArray);
+          i++;
+        });
+
+        console.log(formQuestions);
+        const form = $('<form action="" method="post"></form>');
+        form.append(`<input type="hidden" name="saveForm" value="true">`);
+        form.append(`<input type="hidden" name="formName" value="${formName.value}">`);
+        form.append(`<input type="hidden" name="questions" value='${JSON.stringify(formQuestions)}'>`);
+        form.append(`<input type="hidden" name="queCount" value="${formQuestions.length}">`);
+        $('body').append(form);
+        form.submit();
+
+      });
+
+
+      const addClient =document.querySelectorAll('.addClient');
+      addClient.forEach(client => {
+        client.addEventListener('click',()=>{
+
+          const clientId =client.getAttribute('data-clientId');
+          const userId =client.getAttribute('data-userId');
+          const form = $('<form action="" method="post"></form>');
+          form.append(`<input type="hidden" name="addClient" value="true">`);
+          form.append(`<input type="hidden" name="clientId" value='${clientId}'>`);
+          form.append(`<input type="hidden" name="userId" value='${userId}'>`);
+          $('body').append(form);
+          form.submit();
+        });
+      });
+      const removeClient =document.querySelectorAll('.removeClient');
+      removeClient.forEach(client => {
+        client.addEventListener('click',()=>{
+
+          const clientId =client.getAttribute('data-clientId');
+          const userId =client.getAttribute('data-userId');
+          const form = $('<form action="" method="post"></form>');
+          form.append(`<input type="hidden" name="removeClient" value="true">`);
+          form.append(`<input type="hidden" name="clientId" value='${clientId}'>`);
+          form.append(`<input type="hidden" name="userId" value='${userId}'>`);
+          $('body').append(form);
+          form.submit();
+        });
+      });
+    </script>
+    
 </body>
 
 </html>
