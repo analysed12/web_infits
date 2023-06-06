@@ -172,7 +172,7 @@ $res2 = mysqli_query($conn, $sql2);
         }
 
         .but {
-            position: absolute !important;
+            position: fixed !important;
         }
         .card-food{
             font-size: 23px;
@@ -217,7 +217,7 @@ $res2 = mysqli_query($conn, $sql2);
         } */
 
         .but {
-            position: absolute !important;
+            position: fixed !important;
         }
 
         .title {
@@ -235,13 +235,6 @@ $res2 = mysqli_query($conn, $sql2);
             width:100%;
         }
 
-    }
-    @media screen and (max-width: 720px){
-    .dropdown-content {
-    position: absolute !important;
-    
-    right: 50px !important;
-}
     }
     </style>
 </head>
@@ -302,12 +295,7 @@ $res2 = mysqli_query($conn, $sql2);
         </div>
         <?php } ?>
         <?php while ($d = mysqli_fetch_assoc($res2)) {
-             if($d['isDeleted'] != ""){
-                $flag = false;
-                $isDeleted = json_decode($d['isDeleted']);
-                foreach($isDeleted as $deleted){if($deleted === $_SESSION['dietitian_id']){$flag =true;break;}}
-                if($flag == true){continue;}
-            }
+             
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
             $nutritional = json_decode($d['drecipe_nutritional_information'],true);
@@ -347,7 +335,7 @@ $res2 = mysqli_query($conn, $sql2);
         </div>
         <?php } ?>
         <a class="butt" href="create_recipe.php"
-            style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;;box-shadow:0px 0px 30px 0px #9C74F5;">+</a>
+            style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:fixed;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;;box-shadow:0px 0px 30px 0px #9C74F5;">+</a>
     </div>
 
     <?php require('constant/scripts.php'); ?>
