@@ -181,7 +181,7 @@ include "navbar.php";
 
             <div class="col " style="border: 1px solid #9C74F5;
         color: #9C74F5;text-align:center;">
-                <?php echo '<a style="color: #9C74F5;" href="dietchart2.php?client_id=' . $client_id . '">' ?>
+                <?php echo '<a style="color: #9C74F5;" href="dietchart.php?client_id=' . $client_id . '">' ?>
                 <div class="topbar"
                     style="display: flex;flex-direction: column;justify-content: space-between;margin-top: -37px;height: 100%;">
                     <div>
