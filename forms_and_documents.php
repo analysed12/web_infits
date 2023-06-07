@@ -465,7 +465,7 @@ padding-bottom:0.5rem;
                     </div>
                     <div class="option-popup">
                         <button class="formDelete">DELTE</button>
-                        <button class="formEdit"  data-form-id="<?=$form['form_id']?>"><a href="health_detail_form_edit.php?id=<?=$form['form_id']?>">EDIT</a></button>
+                        <button class="formEdit"  data-form-id="<?=$form['form_id']?>"><a href="health_detail_form_create.php?form_id=<?=$form['form_id']?>">EDIT</a></button>
                     </div>
                 </div>
             <?php

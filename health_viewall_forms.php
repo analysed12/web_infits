@@ -34,7 +34,7 @@ body{
 .content .heading-box h1 {
     font-size: 40px;
   font-weight: 400;
-  margin-top:1.8rem;
+  margin-top:2.3rem;
   margin-left: -10px;
 }
 
@@ -255,7 +255,7 @@ overflow-y: scroll;
         margin-right: -20px;
 }
     .search-box1{
-        margin-top: 120px;
+        margin-top: 140px;
         margin-left: -200px;
         margin-right: 30px;
     }
