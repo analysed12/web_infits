@@ -26,6 +26,44 @@ $res2 = mysqli_query($conn, $sql2);
         body{
             overflow-x: hidden !important;
         }
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        margin-top: 0px;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+    .dropdown-content a {
+        color: white;
+        padding: 12px 14px;
+        font-weight: 500;
+        text-decoration: none;
+        display: block;
+    }
+    .dropdown-content .edit-button {
+        background: #A85CF1;
+        text-align: center;
+        border-radius: 7px;
+        margin-bottom: 10px;
+    }
+    .dropdown-content .delete-button {
+        background: #FF3D3D;
+        border-radius: 7px;
+        text-align: center;
+    }
+    .show {
+        display: block !important;
+    }
+    .dropdown-card {
+        background: #FFFFFF;
+        border: 0.723941px solid #E4E4E4;
+        box-shadow: 0px 2.17182px 2.89576px rgba(0, 0, 0, 0.09);
+        border-radius: 13.0309px;
+        padding: 20px;
+    }
         .header {
             display: flex;
             flex-direction: row;
@@ -166,13 +204,6 @@ $res2 = mysqli_query($conn, $sql2);
             width:300px;
         }
     }
-    @media screen and (max-width: 720px){
-    .dropdown-content {
-    position: absolute !important;
-    
-    right: 50px !important;
-}
-    }
    
     </style>
 </head>
@@ -213,7 +244,7 @@ $res2 = mysqli_query($conn, $sql2);
                    <div class="header">
                        <div class="dropdown ">
                            <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
-                               <img class="" src="./icons/vertical-three-dots.svg" alt="" style="margin-top:-27px;">
+                               <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:-27px;">
                            </div>
            
                            <div id="myDropdownContent" class="dropdown-content dropdown-card " style="display:none;">
@@ -260,10 +291,10 @@ $res2 = mysqli_query($conn, $sql2);
                     <div class="header">
                         <div class="dropdown ">
                             <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
-                                <img class="" src="./icons/vertical-three-dots.svg" alt="" style="margin-top:-27px;">
+                                <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:-27px;">
                             </div>
 
-                            <div id="myDropdownContent" class="dropdown-content dropdown-card " style="display:none;">
+                            <div id="myDropdownContent" class="dropdown-content dropdown-card " >
                                 <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?=$d['drecipe_id']?>&action=editRecipe&isDefault=true">Edit</a>
                                 <a style="color: white;" class="delete-button" href="deleteRecipe.php?recipeId=<?=$d['drecipe_id']?>&isDefault=true">Delete</a>
                             </div>
@@ -283,8 +314,36 @@ $res2 = mysqli_query($conn, $sql2);
     </div>
 
     <a class="butt" href="create_recipe.php"
-            style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:40px;text-decoration:none;border:none;position:absolute;right:40px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
+            style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:40px;text-decoration:none;border:none;position:fixed;right:40px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
     <?php require('constant/scripts.php');?>
 </body>
-
+<script>
+        function myFunction() {
+            const element = document.getElementById("myDIV");
+            let x = element.scrollLeft;
+            let y = element.scrollTop;
+            document.getElementById("demo").innerHTML = "Horizontally: " + x.toFixed() + "<br>Vertically: " + y.toFixed();
+        }
+        function showDropdown(event) {
+            var dropdown = event.currentTarget.parentNode.querySelector(".dropdown-content");
+            dropdown.classList.toggle("show");
+            setTimeout(removeDropDown, 5000);
+       }
+        function removeDropDown() {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                dropdowns[i].classList.remove('show');
+            }
+        }
+        function removeDropdown(event) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains("show") && !openDropdown.contains(event.target)) {
+                    openDropdown.classList.remove("show");
+                }
+            }
+        }
+    </script>
 </html>
