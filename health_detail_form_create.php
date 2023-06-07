@@ -405,7 +405,7 @@ if(isset($_POST['removeClient'])){
 
     <div class="content">
         <div class="heading-box">
-            <h1>Health Details Form</h1>
+            <h1 style="font-size:40px">Health Details Form</h1>
             <button id="save">Save</button>
         </div>
 
