@@ -312,7 +312,7 @@
     <div class="dashboard_container2">
         <div style="font-size:24px;font-weight:400;color:#434343;">No Upcoming events currently!</div>
         <div class="schedule">
-            <a href="calendar_of_events.php"><button id="schedule">Check schedule</button></a>
+            <a href="appointments.php"><button id="schedule">Check schedule</button></a>
         </div>
     </div>
     <div class="dashboard_container3">
