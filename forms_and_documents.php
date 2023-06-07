@@ -21,7 +21,6 @@ session_start();
 
 body{
     overflow: hidden;
-    font-family: "NATS";
 }
 .content {
     display: flex;
@@ -29,7 +28,6 @@ body{
     flex-direction: column;
     padding: 20px 16px;
     font-family: "NATS";
-  
 }
 
 .content .heading-box {
@@ -466,8 +464,8 @@ padding-bottom:0.5rem;
                         <img src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="options" title="options">
                     </div>
                     <div class="option-popup">
-                        <button class="formDelete">DELETE</button>
-                        <button class="formEdit"  data-form-id="<?=$form['form_id']?>"><a href="health_detail_form_create.php?id=<?=$form['form_id']?>">EDIT</a></button>
+                        <button class="formDelete">DELTE</button>
+                        <button class="formEdit"  data-form-id="<?=$form['form_id']?>"><a href="health_detail_form_create.php?form_id=<?=$form['form_id']?>">EDIT</a></button>
                     </div>
                 </div>
             <?php
