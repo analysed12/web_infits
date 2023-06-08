@@ -2,7 +2,7 @@ body {
     font-family: "NATS", sans-serif !important;
     letter-spacing: 1px;
     font-weight: 400;   
-    background-color: #2b0e0e;
+    /* background-color: #2b0e0e; */
     color: black;
     position: relative;
 }
@@ -177,6 +177,7 @@ body {
     height: max-content;
     padding: 4px;
     overflow-x:auto;
+    gap:30px !important;
 }
 .container1::-webkit-scrollbar{
     display: none;
@@ -417,3 +418,10 @@ body {
         width:300px;
     }
 }
+@media screen and (max-width: 720px){
+    .dropdown-content {
+    position: absolute !important;
+    
+    right: 50px !important;
+}
+    }

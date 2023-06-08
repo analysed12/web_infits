@@ -34,8 +34,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: bottom -51px right -40px;
-    /* width: 100vw;
-                height: 100vh; */
+  
 }
 
 .nav {
@@ -197,8 +196,8 @@ a.sidenavlink:hover,
 
 .navactive::after {
     content: "";
-    width: 6px;
-    height: 50px;
+    width: 5px;
+    height: 35px;
     background: #7282FB;
     position: absolute;
     left: -25px;
@@ -383,6 +382,24 @@ a {
     display: flex;
     flex-direction: column;
 }
+.fixing{
+   margin-left: 17% !important;
+   align-items: flex-start !important;
+   text-decoration: none !important;
+}
+.dropdown-container a {
+   margin-left: 10% !important;
+   display: grid !important;
+   padding: 4px !important;
+   gap: 12px !important;
+   width: 75% !important;
+   text-decoration: none !important;
+}
+
+.sidenavlink2 {
+    color: #131635;
+    position: relative;
+}
 </style>
 
 
@@ -391,26 +408,62 @@ a {
     <div class="sidenav" id="sidenavbar">
         <img src="<?=$DEFAULT_PATH?>assets/images/InfitsLogo.svg" class="sidenavlink" id="logo">
         <a id="index"
-            class="sidenavlink nav-index nav-task_list nav-track_stats_steps nav-track_stats_water nav-track_stats_heart nav-track_stats_sleep nav-track_stats_weight nav-track_stats_calorie"
+            class="sidenavlink nav-index nav-task_list nav-track_stats_steps nav-track_stats_water nav-track_stats_heart nav-track_stats_sleep nav-track_stats_weight 
+            nav-track_stats_calorie"
             href="index.php"><img src="<?=$DEFAULT_PATH?>assets/images/dashboard.svg" class="nav-icon">Dashboard</a>
-        <a id="messages" class="sidenavlink nav-chat_home" href="chat_home.php"><img
+        <a id="messages" class="sidenavlink nav-chat_messages nav-chat_start nav-chat_home" href="chat_home.php"><img
                 src="<?=$DEFAULT_PATH?>assets/images/chat.svg" class="nav-icon">Messages</a>
         <a id="live" class="sidenavlink" href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg"
                 class="nav-icon">Live</a>
-        <a id="calendar_of_events" class="sidenavlink nav-calendar_of_events" href="appointments.php"><img
+        <a id="calendar_of_events" class="sidenavlink nav-appointments nav-calendar_of_events" href="appointments.php"><img
                 src="<?=$DEFAULT_PATH?>assets/images/calendar.svg" class="nav-icon">Appoinments</a>
         <a id="client_list"
-            class="sidenavlink nav-add_client nav-client_list nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
+            class="sidenavlink nav-client_matrics nav-add_client nav-client_profile nav-dietchart nav-dietchart1 nav-dietchart2 nav-dietchart3 nav-dietchart_default 
+            nav-client_list nav-client_detailed_progress nav-client_progress nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
             href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg" class="nav-icon">Clients</a>
-        <a id="myplan" class="sidenavlink nav-myplan nav-create_plan nav-update_plan" href="myplan.php"><img
+        <a id="myplan" class="sidenavlink nav-update_plan "><img
                 src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg" class="nav-icon">Diet Plans</a>
-        <a id="payments" class="sidenavlink nav-payments" href="billingAndInvoices.php"><img
+            <div class="dropdown-container fixing" style="display:none;">
+                <a class="nav-myplan nav-create_plan nav-delete_plan nav-dietplan_default sidenavlink2" href="myplan.php">&nbsp;&nbsp;&nbsp; My Plans</a>
+            </div>
+        <a id="payments" class="sidenavlink"><img  
                 src="<?=$DEFAULT_PATH?>assets/images/payment.svg" class="nav-icon">Payments</a>
-        <a id="create_recipe" class="sidenavlink nav-all_recipes nav-create_recipe nav-recipe_breakfast nav-recipe_all_breakfast nav-recipe_lunch nav-recipe_all_lunch nav-recipe_snacks nav-recipe_all_snacks nav-recipe_dinner nav-recipe_all_dinner" href="all_recipes.php"><img
+            <div class="dropdown-container fixing" style="display:none;">
+                <a class="nav-billingAndInvoices sidenavlink2" href="billingAndInvoices.php">&nbsp;&nbsp;&nbsp; Your Bills</a>
+                <a class="nav-payments sidenavlink2 nav-choose_recipe" href="payments.php">&nbsp;&nbsp;&nbsp; Client Payment</a>
+            </div>
+        <a id="create_recipe" class="nav-editRecipe_main nav-deleteRecipe sidenavlink nav-recipe_breakfast nav-recipe_all_breakfast nav-recipe_lunch nav-recipe_all_lunch 
+                nav-recipe_snacks nav-recipe_all_snacks nav-recipe_dinner nav-recipe_all_dinner"><img
                 src="<?=$DEFAULT_PATH?>assets/images/recipies.svg" class="nav-icon">Recipes</a>
-        <a id="healthform" class="sidenavlink nav-healthform" href="#"><img
+            <div class="dropdown-container fixing" style="display:none;">
+                <a class="nav-all_recipes sidenavlink2" href="all_recipes.php">&nbsp;&nbsp;&nbsp; My Recipes</a>
+                <a class="nav-create_recipe sidenavlink2" href="create_recipe.php">&nbsp;&nbsp;&nbsp; Add Recipe</a>
+            </div>
+        <a id="healthform" class="sidenavlink  nav-health_detail_form"><img
                 src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg" class="nav-icon">Health Form</a>
-
+            <div class="dropdown-container fixing" style="display:none;">
+                <a class="nav-forms_and_documents nav-health_detail_form_blank nav-health_detail_form_create nav-health_viewall_forms sidenavlink2 
+                nav-health_viewall_forms&documents " href="forms_and_documents.php">&nbsp;&nbsp;&nbsp; My Forms</a>
+            </div>
+            <script>
+                // Get all dropdown buttons
+                var dropdownBtns = document.getElementsByClassName('sidenavlink ');
+                // Loop through the dropdown buttons and add the onclick event
+                for (var i = 0; i < dropdownBtns.length; i++) {
+                dropdownBtns[i].addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    var dropdownContainer = this.nextElementSibling;
+                    if (dropdownContainer.style.display === 'block') {
+                    dropdownContainer.style.display = 'none';
+                    dropdownContainer.style.borderLeft = 'none';
+                    } 
+                    else {
+                    dropdownContainer.style.display = 'block';
+                    dropdownContainer.style.borderLeft = '5px #0177FB';
+                    }
+                });
+                }
+            </script>
         <div class="menu-bottom">
             <a class="sidenavlink nav-help" href="help.php"><img src="<?=$DEFAULT_PATH?>assets/images/getHelp.svg"
                     class="nav-icon">Get Help</a>
@@ -433,7 +486,9 @@ a {
                     echo($user['name']);
                    
                     ?>
-                    </strong></span></p>
+                    </strong>
+                </span>
+            </p>
             <p id="topnav-content-2">Your performance summary this week</p>
         </div>
         <div class="topnav-icons">
@@ -441,7 +496,7 @@ a {
 
             <div class="search-box">
                 <button onclick="" id="toggleSearch" style="border-style:none;background:white;"><img
-                        src="<?=$DEFAULT_PATH?>assets/images/search.svg" style="height: 20px; width: 20px;"
+                        src="<?=$DEFAULT_PATH?>assets/images/Search.svg" style="height: 20px; width: 20px;"
                         class="sea"></button>
             </div>
 
@@ -459,30 +514,50 @@ a {
     </div>
 
     <!----------------------------------- MOBILE MENU ----------------------------------------->
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <div class="mobile-menu">
         <div id="mySidenav" class="sidenavv">
             <img src="<?=$DEFAULT_PATH?>assets/images/InfitsLogo.svg" id="logo">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="index.php" id="defaultOpen"><img src="<?=$DEFAULT_PATH?>assets/images/dashboard.svg">&nbsp&nbsp
-                Dashboard</a>
+            <a href="index.php"><img src="<?=$DEFAULT_PATH?>assets/images/dashboard.svg" >&nbsp&nbsp Dashboard</a>
             <a href="chat_home.php"><img src="<?=$DEFAULT_PATH?>assets/images/chat.svg">&nbsp&nbsp Messages</a>
             <a href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg">&nbsp&nbsp Live</a>
             <a href="appointments.php"><img src="<?=$DEFAULT_PATH?>assets/images/calendar.svg">&nbsp&nbsp Appoinments</a>
             <a href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg">&nbsp&nbsp Clients</a>
-            <a href="myplan.php"><img src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg">&nbsp&nbsp Diet Plans</a>
-            <a href="billingAndInvoices.php"><img src="<?=$DEFAULT_PATH?>assets/images/payment.svg">&nbsp&nbsp Payments</a>
-            <a href="all_recipes.php"><img src="<?=$DEFAULT_PATH?>assets/images/recipies.svg">&nbsp&nbsp Recipies</a>
-            <a href="#"><img src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg">&nbsp&nbsp Health Form</a>
+            <a style="color:gray"><img src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg">&nbsp&nbsp Diet Plans</a>
+                <div class="submenu">
+                    <a style="font-size: 17px; margin-left: 14%;" href="myplan.php">My Plans</a>
+                </div>
+            <a style="color:gray"><img src="<?=$DEFAULT_PATH?>assets/images/payment.svg">&nbsp&nbsp Payments</a>
+                <div class="submenu">
+                    <a style="font-size: 17px; margin-left: 14%;" href="billingAndInvoices.php">Your Bills</a>
+                    <a style="font-size: 17px; margin-left: 14%;" href="payments.php">Client Payment</a>
+                </div>
+            <a style="color:gray"><img src="<?=$DEFAULT_PATH?>assets/images/recipies.svg">&nbsp&nbsp Recipies</a>
+                <div class="submenu">
+                    <a style="font-size: 17px; margin-left: 14%;" href="all_recipes.php">My Recipes</a>
+                    <a style="font-size: 17px; margin-left: 14%;" href="create_recipe.php">Add Recipe</a>
+                </div>
+            <a style="color:gray"><img src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg">&nbsp&nbsp Health Form</a>
+                <div class="submenu">
+                    <a style="font-size: 17px; margin-left: 14%;" href="forms_and_documents.php">My forms</a>
+                </div>
+            <Script>
+                $(document).ready(function() {
+                    $('.submenu').hide(); // Hide all submenus initially
 
+                    $('.sidenavv a').click(function(e) {
+                        var submenu = $(this).next('.submenu');
+                        submenu.toggle(); // Toggle the clicked submenu
+                    });
+                    });
+            </Script>
             <a href="help.php"><img src="<?=$DEFAULT_PATH?>assets/images/getHelp.svg">&nbsp&nbsp Get Help</a>
             <a href="settings.php"><img src="<?=$DEFAULT_PATH?>assets/images/settings.svg">&nbsp&nbsp Settings</a>
             <a href="logout.php"><img src="<?=$DEFAULT_PATH?>assets/images/logOut.svg">&nbsp&nbsp Log Out</a>
         </div>
         <span style="font-size:35px;cursor:pointer; margin: 5px;" onclick="openNav()" id="navbar-res">&#9776;</span>
     </div>
-
-
     <?php require('constant/scripts.php'); ?>
     <script>
     function openNav() {
@@ -527,6 +602,22 @@ a {
     }
     const side_links_hover = document.querySelectorAll('.sidenavlink');
     side_links_hover.forEach(el => {
+        el.addEventListener('mouseover', () => {
+            if (el.classList.contains('navactive')) {
+                return true;
+            }
+            iconChange(el);
+        });
+        el.addEventListener('mouseout', () => {
+            if (el.classList.contains('navactive')) {
+                return true;
+            }
+            iconChange(el, "");
+        })
+    });
+
+    const side_links_hover2 = document.querySelectorAll('.sidenavlink2');
+    side_links_hover2.forEach(el => {
         el.addEventListener('mouseover', () => {
             if (el.classList.contains('navactive')) {
                 return true;

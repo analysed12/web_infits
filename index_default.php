@@ -16,7 +16,6 @@
     body {
         font-family: 'NATS', sans-serif !important;
         margin:0 !important;
-
     }
 .dashboard{
     margin-top: 1rem;
@@ -78,7 +77,6 @@
 }
 .symbols-container{
     display: flex;
-    /* gap: 4rem; */
     font-weight: 400;
     justify-content: flex-end;
     width: 75%;
@@ -99,16 +97,16 @@
     padding-right: 1.5rem;
     margin:auto;
 }
-.btn-add {
+.btn-add  {
     width: 50px;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
 #btn1{
     border: none;
+    text-decoration: none !important;
     background-color: #7282FB;
     color: white;
     padding: 0.5rem;
@@ -147,8 +145,9 @@
 .view{
     border:none;
     font-size:20px;
-    margin-top:0.6rem;
+    margin-top:0.1rem;
     padding-top: 4px;
+    background-color: none !important;
 }
 .dashboard_container7{
     display:flex;
@@ -187,6 +186,7 @@
     width:100%;
     margin-right:4rem;
     height:300px;
+    margin-bottom: 20px;
 }
 .dashboard_container9{
     display:flex;
@@ -210,6 +210,11 @@
     margin-left: 4rem;
     margin-top: 2rem;
 }
+}
+@media screen and (max-width: 390px) {
+    .dashboard_container7{
+        flex-direction: column !important;
+    }
 }
 @media screen and (max-width: 720px) {
     .dashboard_comtainer1{
@@ -307,7 +312,7 @@
     <div class="dashboard_container2">
         <div style="font-size:24px;font-weight:400;color:#434343;">No Upcoming events currently!</div>
         <div class="schedule">
-            <a href="calendar_of_events.php"><button id="schedule">Check schedule</button></a>
+            <a href="appointments.php"><button id="schedule">Check schedule</button></a>
         </div>
     </div>
     <div class="dashboard_container3">
@@ -323,7 +328,7 @@
 
         <div class="container4_wrapper1">
             <div style="width: 35%;" class="plus">
-                <div><a href="add_client.php"><button id="btn1" class="btn-add">+</button></a></div>
+                <div ><a href="add_client.php" style="text-decoration:none !important;"><button id="btn1" class="btn-add">+</button></a></div>
             </div>
             <div class="symbols-container">
                 <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame.svg" style="width:1.8rem"><span>Steps</span></div>
@@ -353,11 +358,11 @@
         </div>
         <div class="dashboard_container8">
             <div class="dashboard_container7">
-                <a href="#"><button id="today">Today</button>
-                <a href="#"><button id="upcoming">Upcoming</button>
+                <a href="#"><button id="today">Today</button></a>
+                <a href="#"><button id="upcoming">Upcoming</button></a>
             </div>
             <div class="dashboard_container9">
-                <div style="font-size:24px;font-weight:400;color:#434343;text-decoration:none !important">No task created for today!</div>
+                <div class="text" style="font-size:24px;font-weight:500;color:#434343;margin-top:40px; text-decoration:none !important;">No task created for today!</div>
                 <a href="task_list.php"><button id="today" style="margin-top: 18px;">Create task</button></a>
             </div>
         </div>

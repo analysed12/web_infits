@@ -182,7 +182,7 @@ while ($row = mysqli_fetch_array($result)) {
                 padding: 0rem !important;
                 margin-bottom: 0rem !important;
                 width: 100% !important;
-                gap: 0rem !important;
+                gap: 3% !important;
             }
 
             .form {

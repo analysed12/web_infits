@@ -477,6 +477,13 @@ span.time {
     .code-box{
         width:300px;
     }
+    .title-bar{
+        display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+    flex-direction: column;
+}
+    
 }
 @media screen and (max-width: 1000px){
     .img111{
@@ -585,7 +592,7 @@ span.time {
             <div class="col">
                 <div class="title-bar">
                     <div class="heading">
-                        <h1>Add Client</h1>
+                        <h1 style="font-size:40px">Add Client</h1>
                     </div>
                     <div class="searchbar">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/vec_search.svg" style="margin-right:1rem">
@@ -726,10 +733,14 @@ span.time {
                     <div class="socials">
                         <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg" alt=""></a>
                         
-                        <img src="<?= $DEFAULT_PATH ?>assets/images/Twitter.svg">
-                        <img src="<?= $DEFAULT_PATH ?>assets/images/Facebook.svg">
-                        <img src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn_Circled.svg">
-                        <img src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg">
+                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet"><img
+                        src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank"> <img
+                        src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"></a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={url}"><img
+                        src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"></a>
+                <img src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg">
+                      
                     </div>
                 </div>
             </div>

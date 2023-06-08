@@ -4,8 +4,8 @@ if (isset($_SESSION['name'])) {
     header('location: login.php');
 }
 // Client Id
-if (isset($_GET['id']) and $_GET['id'] != "") {
-    $clientId = $_GET['id'];
+if (isset($_GET['client_id']) and $_GET['client_id'] != "") {
+    $clientId = $_GET['client_id'];
 } else {
     header("Location: index.php");
 }
@@ -422,7 +422,7 @@ if (isset($_POST['dates'])) {
             </div>
             <div class="col-sm-4 ph-right">
                 <!-- metric_button -->
-                <a href="track_stats_heart.php?id=<?php echo ($clientId) ?>">
+                <a href="track_stats_heart.php?client_id=<?php echo ($clientId) ?>">
                     <div class="client-card client-card-heart " style="color:#E3738D; border: 1px solid #E3738D;">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/heartrate_selected.svg" alt="">
                         <p>Heart<br>Rate</p>
@@ -741,7 +741,7 @@ if (isset($_POST['dates'])) {
         function Custom_Data(dates) {
             $.ajax({
                 type: "POST",
-                url: "past_activities_heart.php?id=<?php echo ($clientId) ?>",
+                url: "past_activities_heart.php?client_id=<?php echo ($clientId) ?>",
                 data: {
                     dates: dates
                 },

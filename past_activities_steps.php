@@ -5,8 +5,8 @@ if (isset($_SESSION['name'])) {
     header('location: login.php');
 }
 // Client Id
-if (isset($_GET['id']) and $_GET['id'] != "") {
-    $clientId = $_GET['id'];
+if (isset($_GET['client_id']) and $_GET['client_id'] != "") {
+    $clientId = $_GET['client_id'];
 } else {
     header("Location: index.php");
 }
@@ -429,7 +429,7 @@ a {
             </div>
             <div class="col-sm-4 ph-right">
                 <div class="client-card client-card-steps" style="color:#FF6C6CCA ;border: 1px solid #FF6C6CCA;">
-                    <a href="track_stats_steps.php?id=<?php echo ($clientId) ?>">
+                    <a href="track_stats_steps.php?client_id=<?php echo ($clientId) ?>">
                         <i class="fa-solid fa-shoe-prints" style="color:#FFFFFF; rotate: -90deg;"></i>
                         <p style="color: #FFFFFF;">Steps</p>
                     </a>
@@ -735,7 +735,7 @@ a {
     function Custom_Data(dates) {
         $.ajax({
             type: "POST",
-            url: "past_activities_steps.php?id=<?php echo ($clientId) ?>",
+            url: "past_activities_steps.php?client_id=<?php echo ($clientId) ?>",
             data: {
                 dates: dates
             },

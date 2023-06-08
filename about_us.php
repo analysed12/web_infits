@@ -36,12 +36,12 @@ body {
  </style>
 </head>
 <body>
-    <p class="help1" style="font-size:40px;font-weight:400">Help</p>
+    <p class="help1" style="font-size:40px;font-weight:400">About Us</p>
   
    <center>
    <div class="content1"style="display:flex;flex-direction:column;gap:3rem">
    <center> <img src="<?=$DEFAULT_PATH?>assets/images/aboutus.svg" style="width:35%"></center>
-    <span style="font-size: 30px;display: flex;align-items: center;text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tristique sem integer eros, velit vitae aliquam libero commodo. Id posuere elementum consectetur purus massa consequat. Morbi risus purus libero.</span>
+    <span style="font-size: 30px;display: flex;align-items: center;text-align: justify;margin: 0 5%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tristique sem integer eros, velit vitae aliquam libero commodo. Id posuere elementum consectetur purus massa consequat. Morbi risus purus libero.</span>
     
         
     </div>

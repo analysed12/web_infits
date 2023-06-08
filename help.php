@@ -37,6 +37,7 @@
     .help-content{
     display: flex;
     flex-direction: row;
+    align-items: center;
     }
     .help-text{
     display: flex;
@@ -91,6 +92,12 @@
           margin-left: 0;
           width: 80%;
         }
+        .help-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+}
       }
 
         

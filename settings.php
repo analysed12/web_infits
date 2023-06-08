@@ -236,6 +236,9 @@ $name = explode(" ", $row['dietitianuserID']);
         background: #F3F5F8;
         border-radius: 18px;
     }
+    a{
+        text-decoration: none !important;
+    }
 
     @media screen and (max-width: 988px) {
         ul {
@@ -353,7 +356,7 @@ $name = explode(" ", $row['dietitianuserID']);
                     <p style="margin-top:2px;font-size:28px;margin-left:15px;font-weight:500">My Profile</p>
                 </div> 
        </a>
-       <a href="abaout_us.php" style="color:black">
+       <a href="about_us.php" style="color:black">
        <div class="mob_wrapper1">
             <img src="<?=$DEFAULT_PATH?>assets/icons/info.svg" alt="">
             <p style="margin-top:2px;font-size:28px;margin-left:15px;font-weight:500">About Us</p>
