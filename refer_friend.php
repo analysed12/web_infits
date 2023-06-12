@@ -240,14 +240,14 @@
             <div class="friend-list-box">
                 <div class="heading-box">
                     <h3>Invite a friend</h3>
-                    <img src="<?=$DEFAULT_PATH?>assets/images/Search.svg" alt="Search" style="border-radius:100%;border:1px solid black;padding:8px;cursor:pointer; color:#051532;">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/search.svg" alt="Search" style="border-radius:100%;border:1px solid black;padding:8px;cursor:pointer; color:#051532;">
                 </div>
                 <ul>
 
                     <?php for ($i = 0; $i < 10 ; $i++) { ?>
                         <li style="cursor: pointer;">
                             <a href="#" class="user">
-                                <img src="<?=$DEFAULT_PATH?>assets/images/Refer_Profile.svg" alt="profile_photo">
+                                <img src="<?=$DEFAULT_PATH?>assets/images/refer_profile.svg" alt="profile_photo">
                                 <div class="para-box">
                                     <p class="name">Tongkun Lee</p>
                                     <p class="company">Facebook</p>

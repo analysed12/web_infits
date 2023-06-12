@@ -437,7 +437,7 @@ padding-bottom:0.5rem;
         <div class="heading-box">
             <h1>Forms and Documents</h1>
             <div class="search-box1">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Search.svg" alt="#">
+                <img src="<?=$DEFAULT_PATH?>assets/images/search.svg" alt="#">
                 <input type="search" name="form" id="form" placeholder="Search forms or clients">
             </div>
         </div>
@@ -491,7 +491,7 @@ padding-bottom:0.5rem;
                             <div class="client-cards">
                             <img class="vector" src="<?=$DEFAULT_PATH?>assets/images/client-card-vector.svg">
                             <div class="card-content">
-                                <img src="<?=$DEFAULT_PATH?>assets/images/Form_Profile.svg" alt="Profile" id="clientProfile">
+                                <img src="<?=$DEFAULT_PATH?>assets/images/form_profile.svg" alt="Profile" id="clientProfile">
                                 <p> <?=$row['clientuserID']?> </p>
                                 <div class="btn-box">
                                     <a href="health_detail_form.php?form=show&client_id=<?=$row['client_id']?>" id="clientForm">Form</a>

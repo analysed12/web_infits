@@ -295,7 +295,7 @@ overflow-y: scroll;
     <div class="heading-box">
             <h1>My Forms</h1>
             <div class="search-box1">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Search.svg" alt="#">
+                <img src="<?=$DEFAULT_PATH?>assets/images/search.svg" alt="#">
                 <input type="search" name="form" id="form" placeholder="Search clients">
             </div>
         </div> 

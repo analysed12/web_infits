@@ -375,7 +375,7 @@ border: 1.31578px solid #E3738D !important;
     padding-left: 2rem;
     padding-right: 2rem;
     display: none;
-    background: url('<?=$DEFAULT_PATH?>assets/images/Goals_Vector.svg');
+    background: url('<?=$DEFAULT_PATH?>assets/images/goals_vector.svg');
     background-repeat: no-repeat;
     background-attachment:scroll;
     background-position: bottom right ;
@@ -478,7 +478,7 @@ border: 1.31578px solid #E3738D !important;
     background: #FFFFFF;
     border-radius: 15px;
     margin-left: 2.8rem;
-    background: url('<?=$DEFAULT_PATH?>assets/images/Goals_Vector2.svg');
+    background: url('<?=$DEFAULT_PATH?>assets/images/goals_vector2.svg');
     background-repeat: no-repeat;
     background-attachment:scroll;
     background-position: bottom right ;
@@ -662,7 +662,7 @@ margin-top: 2.5rem;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   margin-left: 2rem;
   padding: 1rem;
-  background: url('<?=$DEFAULT_PATH?>assets/images/Goals_Vector1.svg');
+  background: url('<?=$DEFAULT_PATH?>assets/images/goals_vector1.svg');
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: bottom right;
@@ -760,7 +760,7 @@ margin-top: 2.5rem;
                 <div class="block1">
                     <div class="firstbutton">
                         <button class="setgoals_button" id="button1">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/Steps1.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.5rem;margin-left:0.1rem">
+                        <img src="<?=$DEFAULT_PATH?>assets/images/steps1.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.5rem;margin-left:0.1rem">
                         <span style=" margin-top:1.3rem;margin-left:0.3rem ;font-size:1.4rem">Steps</span>   
                         </button>
 
@@ -771,7 +771,7 @@ margin-top: 2.5rem;
                                 <span class="close" id="close">&times;</span>
                             </div>
                             <span style="color:#FF8B8B">Daily Steps</span> <br>
-                            <img src="<?=$DEFAULT_PATH?>assets/images/Stepgoal.svg" style="margin-left:4rem"><br>
+                            <img src="<?=$DEFAULT_PATH?>assets/images/stepgoal.svg" style="margin-left:4rem"><br>
                             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                                 <input name="create_goal_steps" id="label1" min="0" type="number" placeholder="0000 Steps">
                                 <input name="create_goal" hidden>
@@ -785,7 +785,7 @@ margin-top: 2.5rem;
 
                     <div class="firstbutton">
                         <button class="setgoals_button" id="button3">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/Heart1.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.5rem;margin-left:0.4rem">
+                        <img src="<?=$DEFAULT_PATH?>assets/images/heart1.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.5rem;margin-left:0.4rem">
                         <span style=" margin-top:1.3rem;margin-left:0.5rem ;font-size:1.4rem">Heart Rate</span>   
                         </button>
 
@@ -796,7 +796,7 @@ margin-top: 2.5rem;
                                 <span class="close2" id="close">&times;</span>
                             </div>
                             <span style="color:#FF8B8B">Daily Heart Rate</span> <br>
-                            <img src="<?=$DEFAULT_PATH?>assets/images/Heartgoal.svg" style="margin-left:3.8rem"><br>
+                            <img src="<?=$DEFAULT_PATH?>assets/images/heartgoal.svg" style="margin-left:3.8rem"><br>
                             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                                 <input name="create_goal_heart" id="label1" min="0" type="number" placeholder="0000 BPM">
                                 <input name="create_goal" hidden>
@@ -815,7 +815,7 @@ margin-top: 2.5rem;
                 <div class="block2">
                    <div class="firstbutton">
                         <button class="setgoals_button" id="button5">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/Sleep1.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.4rem;margin-left:0.4rem">
+                        <img src="<?=$DEFAULT_PATH?>assets/images/sleep1.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.4rem;margin-left:0.4rem">
                         <span style=" margin-top:2rem;margin-left:0.5rem ;font-size:1.4rem">Sleep</span>   
                         </button>
 
@@ -826,7 +826,7 @@ margin-top: 2.5rem;
                                 <span class="close3" id="close">&times;</span>
                             </div>
                             <span style="color: #633FDD;">Daily Sleep Hours</span> <br>
-                            <img src="<?=$DEFAULT_PATH?>assets/images/Sleepgoal.svg" style="margin-left:3.5rem"><br>
+                            <img src="<?=$DEFAULT_PATH?>assets/images/sleepgoal.svg" style="margin-left:3.5rem"><br>
                             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                                 <input name="create_goal_sleep" id="label1" min="0" type="number" placeholder="0000 Hours">
                                 <input name="create_goal" hidden>
@@ -840,7 +840,7 @@ margin-top: 2.5rem;
 
                     <div class="firstbutton">
                         <button class="setgoals_button" id="button7">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/Weight1.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.5rem;margin-left:0.3rem">
+                        <img src="<?=$DEFAULT_PATH?>assets/images/weight1.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.5rem;margin-left:0.3rem">
                         <span style=" margin-top:1rem;margin-left:0.5rem ;font-size:1.4rem">Weight</span>   
                         </button>
 
@@ -851,7 +851,7 @@ margin-top: 2.5rem;
                                 <span class="close4" id="close">&times;</span>
                             </div>
                             <span style="color: #788F97">Daily Weight Count</span> <br>
-                            <img src="<?=$DEFAULT_PATH?>assets/images/Weightgoal.svg" style="margin-left:3.5rem"><br>
+                            <img src="<?=$DEFAULT_PATH?>assets/images/weightgoal.svg" style="margin-left:3.5rem"><br>
                             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                             <input name="create_goal_weight" id="label1" min="0" type="number" placeholder="0000 KG">
                             <input name="create_goal" hidden>
@@ -870,7 +870,7 @@ margin-top: 2.5rem;
             <div class="container1_wrapper2">
                  <div class="firstbutton">
                         <button class="setgoals_button" id="button9">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/Water1.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.5rem;margin-left:0.9rem">
+                        <img src="<?=$DEFAULT_PATH?>assets/images/water1.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.5rem;margin-left:0.9rem">
                         <span style=" margin-top:1rem;margin-left:0.5rem ;font-size:1.4rem">Water</span>   
                         </button>
 
@@ -881,7 +881,7 @@ margin-top: 2.5rem;
                                 <span class="close5" id="close">&times;</span>
                             </div>
                             <span style="color: #5CA7F8">Daily Water Consumption</span> <br>
-                            <img src="<?=$DEFAULT_PATH?>assets/images/Watergoal.svg" style="margin-left:4rem"><br>
+                            <img src="<?=$DEFAULT_PATH?>assets/images/watergoal.svg" style="margin-left:4rem"><br>
                             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                             <input name="create_goal_water" id="label1" min="0" type="number" placeholder="0000 liters">
                             <input name="create_goal" hidden>
@@ -895,7 +895,7 @@ margin-top: 2.5rem;
 
                  <div class="firstbutton">
                         <button class="setgoals_button" id="button11">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/Calories.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.5rem;margin-left:0.3rem">
+                        <img src="<?=$DEFAULT_PATH?>assets/images/calories.svg" style="font-size:2.8rem;font-weight:500; margin-top:0.5rem;margin-left:0.3rem">
                         <span style=" margin-top:1rem;margin-left:0.5rem ;font-size:1.4rem">Calories</span>   
                         </button>
 
@@ -906,7 +906,7 @@ margin-top: 2.5rem;
                                 <span class="close6" id="close">&times;</span>
                             </div>
                             <span style="color:  #E48FA7">Daily Calorie Count</span> <br>
-                            <img src="<?=$DEFAULT_PATH?>assets/images/Caloriegoal.svg" style="margin-left:3rem"><br>
+                            <img src="<?=$DEFAULT_PATH?>assets/images/caloriegoal.svg" style="margin-left:3rem"><br>
                             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                             <input name="create_goal_calorie" id="label1" min="0" type="number" placeholder="0000 BPM">
                             <input name="create_goal" hidden>
@@ -958,8 +958,8 @@ if (mysqli_num_rows($result_steps) > 0) {
                         <span >No. of steps</span>
                         <input value="<?php echo($row['steps']) ?>" name="past_goal_steps<?php echo($i) ?>" id="label2" min="0" type="number" placeholder="0000 Steps">
                     </div>
-                    <button onclick="showWrapper('stepswrapper<?php echo($i) ?>')" class="userimage" style="background-color: #F3A181 ; position:static;margin-left:0.5rem" id="userimage1"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('steps','past_goal_steps<?php echo($i) ?>','steps_selected<?php echo($i) ?>')" class="userimage" style="background-color: #F3A181;position:static"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('stepswrapper<?php echo($i) ?>')" class="userimage" style="background-color: #F3A181 ; position:static;margin-left:0.5rem" id="userimage1"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('steps','past_goal_steps<?php echo($i) ?>','steps_selected<?php echo($i) ?>')" class="userimage" style="background-color: #F3A181;position:static"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
 <?php
@@ -992,8 +992,8 @@ if (mysqli_num_rows($result_heart) > 0) {
                         <span >Beats per minute</span>
                         <input value="<?php echo($row['heart']) ?>" name="past_goal_heart<?php echo($i) ?>" id="label2" min="0" type="number" placeholder="0000 BPM">
                     </div>
-                    <button onclick="showWrapper('heartwrapper<?php echo($i) ?>')" class="userimage" style="background-color: #DA83C3;margin-left:0.6rem" id="userimage2"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('heart','past_goal_heart<?php echo($i) ?>','heart_selected<?php echo($i) ?>')" class="userimage" style="background-color: #DA83C3;"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('heartwrapper<?php echo($i) ?>')" class="userimage" style="background-color: #DA83C3;margin-left:0.6rem" id="userimage2"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('heart','past_goal_heart<?php echo($i) ?>','heart_selected<?php echo($i) ?>')" class="userimage" style="background-color: #DA83C3;"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
 <?php
@@ -1027,8 +1027,8 @@ if (mysqli_num_rows($result_water) > 0) {
                         <span >Quantity</span>
                         <input value="<?php echo($row['water']) ?>" name="past_goal_water<?php echo($i) ?>" id="label2" min="0" type="number" placeholder="0000 Liters">
                     </div>
-                    <button onclick="showWrapper('waterwrapper<?php echo($i) ?>')" class="userimage" style="background-color: #68A9F7;margin-left:0.7rem" id="userimage3"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('water','past_goal_water<?php echo($i) ?>','water_selected<?php echo($i) ?>')" class="userimage" style="background-color: #68A9F7;"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('waterwrapper<?php echo($i) ?>')" class="userimage" style="background-color: #68A9F7;margin-left:0.7rem" id="userimage3"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('water','past_goal_water<?php echo($i) ?>','water_selected<?php echo($i) ?>')" class="userimage" style="background-color: #68A9F7;"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
 <?php
@@ -1062,8 +1062,8 @@ if (mysqli_num_rows($result_sleep) > 0) {
                         <span >Sleep time</span>
                         <input value="<?php echo($row['sleep']) ?>" name="past_goal_sleep<?php echo($i) ?>" id="label2" min="0" type="number" placeholder="0000 Hours">
                     </div>
-                    <button onclick="showWrapper('sleepwrapper<?php echo($i) ?>')" class="userimage" style="background-color: #805AE5;margin-left:0.7rem" id="userimage4"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('sleep','past_goal_sleep<?php echo($i) ?>','sleep_selected<?php echo($i) ?>')" class="userimage" style="background-color: #805AE5;"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('sleepwrapper<?php echo($i) ?>')" class="userimage" style="background-color: #805AE5;margin-left:0.7rem" id="userimage4"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('sleep','past_goal_sleep<?php echo($i) ?>','sleep_selected<?php echo($i) ?>')" class="userimage" style="background-color: #805AE5;"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
 <?php
@@ -1096,8 +1096,8 @@ if (mysqli_num_rows($result_weight) > 0) {
                         <span >Weight Count</span>
                         <input value="<?php echo($row['weight']) ?>" name="past_goal_weight<?php echo($i) ?>" id="label2" min="0" type="number" placeholder="0000 KG">
                     </div>
-                    <button onclick="showWrapper('weightwrapper<?php echo($i) ?>')" class="userimage" style="background-color: #7F9FA4;position:static;margin-left:0.8rem" id="userimage5"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('weight','past_goal_weight<?php echo($i) ?>','weight_selected<?php echo($i) ?>')" class="userimage" style="background-color: #7F9FA4;position:static"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('weightwrapper<?php echo($i) ?>')" class="userimage" style="background-color: #7F9FA4;position:static;margin-left:0.8rem" id="userimage5"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('weight','past_goal_weight<?php echo($i) ?>','weight_selected<?php echo($i) ?>')" class="userimage" style="background-color: #7F9FA4;position:static"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
 <?php
@@ -1131,8 +1131,8 @@ if (mysqli_num_rows($result_calorie) > 0) {
                         <span >Calorie Count</span>
                         <input value="<?php echo($row['calorie']) ?>" name="past_goal_calorie<?php echo($i) ?>" id="label2" min="0" type="number" placeholder="0000 Kcal">
                     </div>
-                    <button onclick="showWrapper('caloriewrapper<?php echo($i) ?>')" class="userimage" style="background-color: #E39F9A;margin-left:0.8rem" id="userimage6"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('calorie','past_goal_calorie<?php echo($i) ?>','calorie_selected<?php echo($i) ?>')" class="userimage" style="background-color: #E39F9A;"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('caloriewrapper<?php echo($i) ?>')" class="userimage" style="background-color: #E39F9A;margin-left:0.8rem" id="userimage6"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('calorie','past_goal_calorie<?php echo($i) ?>','calorie_selected<?php echo($i) ?>')" class="userimage" style="background-color: #E39F9A;"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
 
@@ -1180,8 +1180,8 @@ if (mysqli_num_rows($result_steps) > 0) {
                         <input  value="<?php echo($row['steps']) ?>" name="mob_past_goal_steps<?php echo($i) ?>" id="label3" min="0" type="number" placeholder="0000 Steps">
                     </div> 
                     <div style="display:flex;justify-content:center">
-                    <button onclick="showWrapper('mobstepswrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #F3A181 ; position:static" id="mob_userimage1"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('steps','mob_past_goal_steps<?php echo($i) ?>','mob_steps_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #F3A181;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('mobstepswrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #F3A181 ; position:static" id="mob_userimage1"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('steps','mob_past_goal_steps<?php echo($i) ?>','mob_steps_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #F3A181;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     </div>
                 </div>
 
@@ -1195,7 +1195,7 @@ if (mysqli_num_rows($result_steps) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #FFB38E"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #FFB38E"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div id="mob_steps_selected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1250,8 +1250,8 @@ if (mysqli_num_rows($result_heart) > 0) {
                         <input value="<?php echo($row['heart']) ?>" name="mob_past_goal_heart<?php echo($i) ?>" id="label3" min="0" type="number" placeholder="0000 BPM">
                     </div> 
                     <div style="display:flex;justify-content:center">
-                    <button onclick="showWrapper('mobheartwrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #E882B8 ; position:static;" id="mob_userimage2"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('heart','mob_past_goal_heart<?php echo($i) ?>','mob_heart_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #E882B8;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('mobheartwrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #E882B8 ; position:static;" id="mob_userimage2"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('heart','mob_past_goal_heart<?php echo($i) ?>','mob_heart_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #E882B8;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                    </div>
                 </div>
 
@@ -1265,7 +1265,7 @@ if (mysqli_num_rows($result_heart) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #E882B8"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #E882B8"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div id="mob_heart_unselected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1317,8 +1317,8 @@ if (mysqli_num_rows($result_water) > 0) {
                         <input value="<?php echo($row['water']) ?>" name="mob_past_goal_water<?php echo($i) ?>" id="label3" min="0" type="number" placeholder="0000 Liters">
                     </div> 
                     <div style="display:flex;justify-content:center">
-                    <button onclick="showWrapper('mobwaterwrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #68A9F7 ; position:static;" id="mob_userimage3"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('water','mob_past_goal_water<?php echo($i) ?>','mob_water_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #68A9F7;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('mobwaterwrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #68A9F7 ; position:static;" id="mob_userimage3"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('water','mob_past_goal_water<?php echo($i) ?>','mob_water_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #68A9F7;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     </div>
                 </div>
 
@@ -1333,7 +1333,7 @@ if (mysqli_num_rows($result_water) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #68A9F7"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #68A9F7"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div id="mob_water_unselected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1384,8 +1384,8 @@ if (mysqli_num_rows($result_sleep) > 0) {
                         <input value="<?php echo($row['sleep']) ?>" name="mob_past_goal_sleep<?php echo($i) ?>" id="label3" min="0" type="number" placeholder="0000 Hours">
                     </div> 
                     <div style="display:flex;justify-content:center">
-                    <button onclick="showWrapper('mobsleepwrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #805AE5 ; position:static;" id="mob_userimage4"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('sleep','mob_past_goal_sleep<?php echo($i) ?>','mob_sleep_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #805AE5;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('mobsleepwrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #805AE5 ; position:static;" id="mob_userimage4"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('sleep','mob_past_goal_sleep<?php echo($i) ?>','mob_sleep_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #805AE5;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     </div>
                 </div>
 
@@ -1399,7 +1399,7 @@ if (mysqli_num_rows($result_sleep) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #805AE5"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #805AE5"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div id="mob_sleep_selected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1445,8 +1445,8 @@ if (mysqli_num_rows($result_weight) > 0) {
                         <input value="<?php echo($row['weight']) ?>" name="mob_past_goal_weight<?php echo($i) ?>" id="label3" min="0" type="number" placeholder="0000 KG">
                     </div> 
                     <div style="display:flex;justify-content:center">
-                    <button onclick="showWrapper('mobweightwrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #7F9FA4 ; position:static" id="mob_userimage5"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('weight','mob_past_goal_weight<?php echo($i) ?>','mob_weight_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #7F9FA4;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('mobweightwrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #7F9FA4 ; position:static" id="mob_userimage5"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('weight','mob_past_goal_weight<?php echo($i) ?>','mob_weight_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #7F9FA4;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     </div>
                 </div>
 
@@ -1462,7 +1462,7 @@ if (mysqli_num_rows($result_weight) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #7F9FA4"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #7F9FA4"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div id="mob_weight_selected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1510,8 +1510,8 @@ if (mysqli_num_rows($result_calorie) > 0) {
                         <input value="<?php echo($row['calorie']) ?>" name="mob_past_goal_calorie<?php echo($i) ?>" id="label3" min="0" type="number" placeholder="0000 Kcal">
                     </div> 
                     <div style="display:flex;justify-content:center">
-                    <button onclick="showWrapper('mobcaloriewrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #E39F9A ; position:static" id="mob_userimage6"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                    <button onclick="update_goal('calorie','mob_past_goal_calorie<?php echo($i) ?>','mob_calorie_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #E39F9A;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="showWrapper('mobcaloriewrapper<?php echo($i) ?>')" class="userimage3" style="background-color: #E39F9A ; position:static" id="mob_userimage6"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" ></button>
+                    <button onclick="update_goal('calorie','mob_past_goal_calorie<?php echo($i) ?>','mob_calorie_selected<?php echo($i) ?>')" class="userimage3" style="background-color: #E39F9A;position:static ; margin-left:0.5rem"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     </div>
                 </div>
 
@@ -1525,7 +1525,7 @@ if (mysqli_num_rows($result_calorie) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #E39F9A"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #E39F9A"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div id="mob_calorie_selected<?php echo($i) ?>" style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1581,7 +1581,7 @@ if (mysqli_num_rows($result_steps) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #FFB38E"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #FFB38E"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1628,7 +1628,7 @@ if (mysqli_num_rows($result_heart) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #E882B8"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #E882B8"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1674,7 +1674,7 @@ if (mysqli_num_rows($result_sleep) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #805AE5"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #805AE5"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1719,7 +1719,7 @@ if (mysqli_num_rows($result_water) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #68A9F7"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #68A9F7"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1766,7 +1766,7 @@ if (mysqli_num_rows($result_weight) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #7F9FA4"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #7F9FA4"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1812,7 +1812,7 @@ if (mysqli_num_rows($result_calorie) > 0) {
                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                     <span style="color:#ACACAC"> Search Clients</span>
                     </div>
-                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #E39F9A"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
+                    <button onclick="hideWrapper()" class="userimage2" style="background-color: #E39F9A"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
                     
                 </div>
                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">

@@ -258,12 +258,20 @@ body {
     padding: 5px 25px;
     border: none;
 }
+@media only screen and (max-width: 400px){
+    .heading__div {
+        padding: 0px 10.3px;
+        display:flex;
+        flex-direction: column;
+        gap:1rem;
+    
+       
+    }
+}
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .heading__div {
-        padding: 0px 10.3px;
-    }
+  
 
     .New_Diet_Chart {
         font-size: 35px;

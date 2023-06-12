@@ -415,7 +415,7 @@ if(isset($_POST['removeClient'])){
               $query = "SELECT * FROM dietitian_forms WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND form_id = '{$_GET['form_id']}'";
               $result = $conn->query($query); $form = $result->fetch_assoc(); endif;?>
                 <div class="form-title">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/Form-Name.svg">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/form-name.svg">
                     <input type="text" name="formName" id="formName" placeholder="Enter form name" value="<?php if(isset($form)){ echo $form['form_name'];}?>">
                 </div>
         
@@ -467,7 +467,7 @@ if(isset($_POST['removeClient'])){
                 <h3>Assign form to the clients</h3>
 
                 <div class="search-box1">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/Search.svg">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/search.svg">
                     <input type="search" name="search" id="search" placeholder="Search clients">
                 </div>
 

@@ -624,7 +624,7 @@ body{
                         </button>
                     </div>
                     <button class="facebook" style="margin-left:1rem">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/Facebook.svg" alt="">
+                        <img src="<?=$DEFAULT_PATH?>assets/images/facebook.svg" alt="">
                         <span style="color: #4B99FB;font-size:27px">Facebook</span>
                     </button>
                 </div>

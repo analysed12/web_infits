@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 include('navbar.php');
 // Get ID
 if (isset($_SESSION['dietitianuserID'])) {
@@ -21,6 +21,7 @@ if (isset($_SESSION['dietitianuserID'])) {
     include 'assets/app/helpers/timeAgo.php';
     include 'assets/app/helpers/last_chat.php';
     include 'assets/app/helpers/timeHM.php';
+
 
     # Getting User data data
     $user = getUser($_SESSION['dietitianuserID'], $conn);

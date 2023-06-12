@@ -419,7 +419,7 @@ a {
                 src="<?=$DEFAULT_PATH?>assets/images/calendar.svg" class="nav-icon">Appoinments</a>
         <a id="client_list"
             class="sidenavlink nav-client_matrics nav-add_client nav-client_profile nav-dietchart nav-dietchart1 nav-dietchart2 nav-dietchart3 nav-dietchart_default 
-            nav-client_list nav-client_detailed_progress nav-client_progress nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
+            nav-clientlist nav-client_detailed_progress nav-client_progress nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
             href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg" class="nav-icon">Clients</a>
         <a id="myplan" class="sidenavlink nav-update_plan "><img
                 src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg" class="nav-icon">Diet Plans</a>
@@ -496,7 +496,7 @@ a {
 
             <div class="search-box">
                 <button onclick="" id="toggleSearch" style="border-style:none;background:white;"><img
-                        src="<?=$DEFAULT_PATH?>assets/images/Search.svg" style="height: 20px; width: 20px;"
+                        src="<?=$DEFAULT_PATH?>assets/images/search.svg" style="height: 20px; width: 20px;"
                         class="sea"></button>
             </div>
 
