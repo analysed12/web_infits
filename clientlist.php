@@ -251,8 +251,9 @@ body{
         margin-top:0px !important;
         margin-bottom:80px;
     }
+   
     .clients {
-        margin-left: 2rem !important;
+        margin:2rem !important;
     }
     .image1{
         display:none !important;
@@ -308,7 +309,7 @@ body{
     .clients_operations {
         display: flex;
         flex-wrap:wrap;
-        gap: 0.5rem;
+        gap: 0.5rem !important;
         max-width:fit-content;
         margin-left:0rem !important;
     }
@@ -320,9 +321,9 @@ body{
         flex-direction: column;
          width: 70%;
     }
-    .search_client{
-        width:80% !important;
-    }
+    .search_client {
+    width: 100% !important;
+}
 
 }
 
@@ -375,11 +376,11 @@ body{
 .bottomborder{
     border-bottom: 0.25rem solid #4B9AFB;
 }
-@media screen and (max-width: 1100px){
+@media screen and (min-width:720px) and (max-width: 1100px){
     .clients_container{
         display:flex !important;
         flex-direction:column !important;
-        gap:0.5rem;
+        gap:1rem;
     }
     .clients{
         margin-left:15rem;
@@ -399,7 +400,7 @@ body{
 <div class="clients">
         <p style="font-size:40px; font-weight:500;margin-top:2rem;">Client List</p>
         <div class="clients_container">
-            <div class="search_client" style="justify-content:center;align-items:center">
+            <div class="search_client" style="align-items:center">
                 <div><button id="btn3"><span class="material-symbols-outlined">search</span></button> </div>
                 <div style="margin-left:1rem;margin-right:4rem;margin-bottom:0.5rem;"> <input type="text" name="search_client" placeholder="Search Clients"
                         class="seach_clients_text" style="width:100%"></div>

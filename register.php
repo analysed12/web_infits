@@ -53,8 +53,8 @@ body{
     width: 117px;
     height: 50px;
     border: none;
-    margin-top: 0.7rem;
-    margin-right: 0.7rem;
+    margin-top: 2rem;
+    margin-right: 2rem;
     font-weight: 500;
     font-size: 25px;
     color: #8081F9;
@@ -62,8 +62,8 @@ body{
 }
 
 .mobile img {
-    width: 400px;
-    height: 400px;
+    width: 100%;
+    height: 100%;
 }
 
 .col-sm-6 {
@@ -264,17 +264,42 @@ body{
 
 .google {
 
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 0px 12px;
+    height: 50px;
+    width: 150px;
+    border-radius: 15px;
+    font-family: 'NATS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 23px;
     border: 1px solid #EAEAEA;
     border-radius: 15px;
     background: #FFFFFF;
+    margin-right: 10px;
+    color: #4B99FB;
 
 }
 
 .facebook {
+    padding: 0px 12px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    height: 50px;
+    width: 160px;
+    border-radius: 15px;
+    font-family: 'NATS';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 23px;
     border: 1px solid #EAEAEA;
     border-radius: 15px;
     background: #FFFFFF;
-
+    margin-left: 10px;
+    color: #4B99FB;
 
 }
 
@@ -283,7 +308,7 @@ body{
     justify-content: space-between;
     flex-direction: column;
     padding: 5px;
-    margin-left: 30px;
+    /* margin-left: 30px; */
 }
 
 #email {
@@ -308,6 +333,7 @@ body{
 }
 
 .left_column {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -316,6 +342,7 @@ body{
 }
 
 .refferal_code {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -460,7 +487,11 @@ body{
     background: #4B99FB;
     border-radius: 1em;
 }
-
+.vec-sub {
+    font-size: 25px;
+    font-weight: 500;
+    text-align: center;
+}
 /***************************modal*********************************/
 .close {
     display: flex;
@@ -571,20 +602,97 @@ body{
     margin-top: 3rem;
     gap: 2rem;
 }
-
-@media screen and (max-width: 768px) {
-    #home {
-        display:none;
-
+@media screen and (max-width:360px){
+    .mt-5 {
+    margin-right: 0rem !important;
+}
+    .header_sigin span {
+        font-size: 60px !important;
     }
-
-    #hr {
-        display: none;
+    .right_links{
+        scale: 0.7;
+    }
+    .bottom_patch{
+        scale: 0.8;
+    }
+    .bottom_logo img{
+        scale: 0.7;
+    }
+    .vec-sub {
+    font-size: 18px;
+   }
+   .social_links , .copy {
+    margin-left: 42px;
+   }
+   .gf_btns {
+    scale: 0.8;
+   }
+   form{
+    scale: 0.8;
+   }
+   .form_inputs{
+    width: 100%;
+   }
+   #email, #password{
+    width: 100%;
+   }
+   #btml{
+    padding-top: 0rem !important;
+}
+}
+@media screen and (max-width: 768px){
+    .mobile img{
+        margin-top: 2rem;
+    }
+    #parent{
+        display: block !important;
+    }
+    #home{
+        display:none;
     }
     #parent-lg {
         display: none !important;
     }
+    .top_bar img {
+    margin-top: -20px;
+    width: 150px;
+    height: auto;
+}
+.sign {
+    margin-right:1rem;
+}
+.form_inputs {
+    padding:0px !important;
+}
+.row{
+    width: 100%;
+}
+.right_links {
+    width: 100%;
+}
+.left_links{
+        margin-right: 0rem !important;
+    }
+/* .get-vec{
+    width: 0rem !important;
+} */
+.bottom_patch {
+    margin-left: -500px;
+    z-index: -1;
+} 
 
+}
+/****************************media query for mediun devices**************************************/
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+    .right_links{
+        scale: 0.7;
+    }
+    .left_links{
+        margin-right: 0rem !important;
+    }
+    #btml{
+        scale: 0.8;
+    }
 }
 </style>
 
@@ -592,7 +700,7 @@ body{
     <div class="top_bar">
         <div class="left">
             <div class="bg">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 1.svg" style="width:100%">
+                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 1.svg" style="width:70%">
             </div>
             <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg" style="margin-top:0.8rem;margin-left:0.8rem">
         </div>
@@ -604,7 +712,7 @@ body{
 
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12 col-md-6 col-lg-6">
 
             <div class="sform">
                 <div class="header_sigin">
@@ -747,11 +855,11 @@ body{
 
             </div>
         </div>
-        <div class="col-sm-6 ">
+        <div class="col-sm-12 col-md-6 col-lg-6 d-flex justify-content-center">
             <div class="left_column">
 
                 <div class="mobile d-none d-sm-block">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/mobile.svg" style="width:90%;height:90%">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/mobile.svg">
                 </div>
                 <span class="referral_text">Have a referral code? Verify here</span>
                 <div class="refferal_code">
@@ -855,10 +963,10 @@ body{
         </div>
     </div>
     <!--------------------------------------mobile-view---------------------------------------------------->
-    <div class="row  d-lg-none d-md-none d-xl-none" id="parent" >
-        <div class="col-sm-8" style="margin:1 0 !important;margin-bottom:6rem;">
+    <div class="row d-lg-none d-md-none d-xl-none d-sm-block" id="parent" >
+        <div class="col-sm-12" style="margin:1 0 !important;margin-bottom:6rem;">
             <div class="row" style="margin:0 !importnat">
-                <div class="col-sm-6" style="padding:0 !important;margin:0 important">
+                <div class="col-sm-12" style="padding:0 !important;margin:0 important;display: flex; justify-content: center;">
                     <div class="left_links">
                         <span class="link" style=" color: #4F1963;">Company</span>
                         <a class="link" style="color: #8E8E8E; text-decoration: none;">About</a>
@@ -867,9 +975,9 @@ body{
                         <a class="link" style="color: #8E8E8E;text-decoration: none;">Get in touch</a>
                     </div>
                 </div>
-                <div class="col-sm-6 mt-5" style="padding:0 !important;margin:0 important">
+                <div class="col-sm-12 mt-5" style="padding:0 !important;margin:0 important">
                     <div class="right_links">
-                        <img class="get-vec" src="assets/images/Vector 3.svg" style="width:30rem;height:8rem;">
+                        <img class="get-vec" src="assets/images/Vector 3.svg" style="width: 100%;height: 8rem;">
                         <span style="color: #4F1963;font-size:30px">Get the app</span>
                         <div style="display: flex; gap:1rem;">
                             <a href="#"
@@ -915,7 +1023,7 @@ body{
 
         </div>
         <!-- component-2 -->
-        <div class="col-sm-4" id="btml" style="padding-top: 9rem;">
+        <div class="col-sm-8" id="btml" style="padding-top: 9rem;">
             <div class="bottom_logo">
                 <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg" alt="">
                 <div class="vec-sub"><span>Fitter</span><span class="ms-2">. Healthier</span><span class="ms-2">.

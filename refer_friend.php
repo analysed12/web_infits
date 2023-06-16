@@ -171,10 +171,12 @@
             padding-top: 15px;
             padding-left: 10px;
         }
-
+        p{
+            margin-bottom: 0.5rem !important;
+        }
         #content .flex-container .friend-list-box ul li .user .para-box p {
             color: black;
-            line-height: 2px;
+            line-height: 20px;
             font-family: 'NATS';
             font-style: normal;
             font-weight: 400;
