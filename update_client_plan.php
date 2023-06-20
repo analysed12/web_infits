@@ -699,7 +699,7 @@ border-radius: 10px;
             <div class="event-image">
             <div class="ev-img" style="position:relative">
                     <div style="background: #7282FB;border-radius:100px;padding:0.5rem;margin-top:3rem;cursor:pointer;">
-                        <img src="<?=$DEFAULT_PATH?>assets/images/pencil.svg" alt="">
+                        <img src="<?=$DEFAULT_PATH?>assets/images/whitepencil.svg" alt="">
                     </div>
                     <img src="<?=$DEFAULT_PATH?>assets/images/create_edit_plan.svg" class="edit-plan-img" style="position:absolute;margin-top:2rem; z-index:-2; width: 140px;
                     height: 133px;">

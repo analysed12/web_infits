@@ -331,7 +331,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                                   align-items-center">
                                             <div class="d-flex
                                         align-items-center">
-                                                <img src="<?= $DEFAULT_PATH ?>assets/images/<?= $conversation['p_p'] ?>"
+                                                <img src="https://dietitian.infits.in/assets/images/client_profile.svg"
                                                     class="rounded-circle" style="width:40px">
                                                 <h3 class="fs-xs m-2 text-dark">
                                                     <?= $conversation['name'] ?><br>
@@ -428,7 +428,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                 <div class="  d-inline-block p-2 flex-fill justify-content-between chat">
                     <div class="d-flex flex-row justify-content-between  mx-4">
                         <div class="d-flex  align-items-center  ">
-                            <img src="<?= $DEFAULT_PATH ?>assets/images/<?= $chatWith['p_p'] ?>" class="rounded-circle"
+                            <img src="https://dietitian.infits.in/assets/images/client_profile.svg" class="rounded-circle"
                                 style="width:50px">
 
                             <h6 class="display-4 fs-sm m-2">

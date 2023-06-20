@@ -1,9 +1,9 @@
 <?php 
 
 $HOSTNAME = "localhost";
-$USERNAME = "root";
-$PASSWORD = "";
-$DBNAME = "infits_db";
+$USERNAME = "u991535966_root";
+$PASSWORD = "q!A7BqWlB9v";
+$DBNAME = "u991535966_infits";
 
 $conn1 = mysqli_connect($HOSTNAME, $USERNAME, $PASSWORD, $DBNAME);
 

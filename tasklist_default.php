@@ -10,11 +10,10 @@ if (isset($_POST['create-submit'])) {
     $date = $_POST['task-date'];
     $from_time = $_POST['task-from-time'];
     $to_time = $_POST['task-to-time'];
-    $sql = "INSERT INTO `dietition_tasks`(`dietitianuserID`, `title`, `description`, `date`, `start_time`, `end_time`) VALUES ('$dietition','$title','$description','$date','$from_time','$to_time')";
+    $sql = "INSERT INTO `dietitian_tasks`(`dietitianuserID`, `title`, `description`, `date`, `start_time`, `end_time`) VALUES ('$dietition','$title','$description','$date','$from_time','$to_time')";
 
     $result = mysqli_query($conn, $sql);
-    if ($result) {
-        ?>
+    if ($result) { ?>
         <script>
             location.replace("task_list.php");
         </script>

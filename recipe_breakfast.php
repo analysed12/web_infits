@@ -465,8 +465,19 @@ require('constant/config.php');
             min-width: 150px;
             left:-100px;
         }
+        .butt{
+            position:absolute !important;
+            right:0 !important;
+            bottom:0 !important;
+        }
+
     }
     @media screen and (min-width:300px) and (max-width:400px){
+        .butt{
+            position:absolute !important;
+            right:0 !important;
+            bottom:0 !important;
+        }
         input[type=search]{
             width:150px !important;
         }
@@ -476,13 +487,6 @@ require('constant/config.php');
         .middle_wrapper{
             margin-left:3rem !important;
         }
-    }
-    @media screen and (max-width: 720px){
-    .dropdown-content {
-    position: absolute !important;
-    
-    right: 50px !important;
-}
     }
 </style>
 <!-- link ref -->
@@ -563,7 +567,7 @@ require('constant/config.php');
     }
     $counter++;
 ?>
-    <div class="card d-flex" style="padding:15px; width:325px; height:204px;border-radius:16px; margin:25px 20px 25px 50px;">
+    <div class="card d-flex" style="padding:15px; width:325px; height:220px;border-radius:16px; margin:25px 20px 25px 50px;">
         <div class="card-upper d-flex justify-content-between">
             <p id="bu" class="card-upper-text"> Medium </p>
             <p id="bu" class="card-upper-text d-flex" style="margin-left:73px;"><img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:10px"></i></i> 20:00 </p>
@@ -605,7 +609,7 @@ require('constant/config.php');
             }
             $counter++;
         ?>
-            <div class="card d-flex" style="padding:15px; width:325px; height:204px;border-radius:16px; margin:25px 20px 25px 50px;">
+            <div class="card d-flex" style="padding:15px; width:325px; height:220px;border-radius:16px; margin:25px 20px 25px 50px;">
                 <div class="card-upper d-flex justify-content-between">
                     <p id="bu" class="card-upper-text"> Medium </p>
                     <p id="bu" class="card-upper-text d-flex" style="margin-left:73px;"><img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:10px"></i></i> 20:00 </p>

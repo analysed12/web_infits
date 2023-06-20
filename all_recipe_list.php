@@ -237,7 +237,7 @@ $res2 = mysqli_query($conn, $sql2);
                    <p id="bu" class="card-upper-text"><i class="fa-solid fa-clock"></i> 20:00 </p>
                </div>
                <div class="img-dis" style="width:100%; text-align:center;">
-                   <img src="<?=$DEFAULT_PATH?>assets/images/Alooparantha.svg" style="height:116px; width:200px; object-fit:cover;margin-top:-52px;margin-left:-13px;margin-bottom:12px" />
+                   <img src="<?=$DEFAULT_PATH?>assets/images/alooparantha.svg" style="height:116px; width:200px; object-fit:cover;margin-top:-52px;margin-left:-13px;margin-bottom:12px" />
                </div>
                <div class="d-flex justify-content-between">
                    <p class="card-food"><?php echo $d['recipe_name'] ?></p>
@@ -284,7 +284,7 @@ $res2 = mysqli_query($conn, $sql2);
                     <p id="bu" class="card-upper-text"><i class="fa-solid fa-clock"></i> 20:00 </p>
                 </div>
                 <div class="img-dis" style="width:100%; text-align:center;">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/Alooparantha.svg" style="height:116px; width:200px; object-fit:cover;margin-top:-52px;margin-left:-13px;margin-bottom:12px" />
+                    <img src="<?=$DEFAULT_PATH?>assets/images/alooparantha.svg" style="height:116px; width:200px; object-fit:cover;margin-top:-52px;margin-left:-13px;margin-bottom:12px" />
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="card-food"><?php echo $d['drecipe_name'] ?></p>

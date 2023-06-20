@@ -308,7 +308,7 @@ body{
     justify-content: space-between;
     flex-direction: column;
     padding: 5px;
-    /* margin-left: 30px; */
+
 }
 
 #email {
@@ -605,7 +605,7 @@ body{
 @media screen and (max-width:360px){
     .mt-5 {
     margin-right: 0rem !important;
-}
+    }
     .header_sigin span {
         font-size: 60px !important;
     }
@@ -700,7 +700,7 @@ body{
     <div class="top_bar">
         <div class="left">
             <div class="bg">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 1.svg" style="width:70%">
+                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 1.svg" style="width:100%">
             </div>
             <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg" style="margin-top:0.8rem;margin-left:0.8rem">
         </div>

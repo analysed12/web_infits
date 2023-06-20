@@ -416,10 +416,23 @@ echo $output;
         .clients_container3 {
             display: none;
         }
-
         #toast {
+            position:inherit;
             flex-direction: column;
-            width: 70%;
+            width: 100% !important;
+            margin-left:0 !important;
+        }
+        #goals{
+            position: inherit;
+            flex-direction: column;
+            width:100% !important;
+            margin-left:0 !important;
+        }
+        #del{
+            position:inherit;
+            flex-direction: column;
+            width:100% !important;
+            margin-left:0 !important;
         }
 
     }
@@ -466,6 +479,23 @@ echo $output;
 
 
     @media screen and (max-width: 1100px) {
+        #toast {
+            position:inherit;
+            flex-direction: column;
+           margin-left:13.5rem ;
+           /* width:70%; */
+        }
+        #goals{
+            position: inherit;
+            flex-direction: column;
+            margin-left:13.5rem ;
+            /* width:70%; */
+        }
+        #del{
+            position:inherit;
+            flex-direction: column;
+            margin-left:13.5rem ;
+        }
         .clients_container {
             display: flex !important;
             flex-direction: column !important;

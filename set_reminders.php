@@ -20,8 +20,6 @@ if (isset($_POST['sidebarselection'])) {
         $result = $conn->query($query) or die('Query Failed');
         if ($result->num_rows > 0) {
             $conn->close();
-            
-            ;
         }
         $query = "UPDATE `reminders` SET water_interval = '{$water_interval}' , water_amount = '{$water_amount}' WHERE client_id = {$c_id} AND dietitianuserID = '{$d_id}';";
         $result = $conn->query($query) or die("Query Failed");
@@ -94,7 +92,7 @@ if(isset($_POST['update_all'])){
                 continue;
             }
             $query = "SELECT reminder_id FROM `reminders` WHERE water_amount = '{$water_amount}' AND water_interval = '{$water_interval}' AND client_id = {$c_id} AND dietitianuserID= '{$dietitianuserID}';";
-            echo $query;
+            // echo $query;
             $result = $conn->query($query) or die('Query Failed');
             if ($result->num_rows > 0) {
                 continue;
@@ -192,8 +190,8 @@ if (isset($_POST['create_reminder'])) {
                 continue;
             }
             $query = "UPDATE `reminders` SET `breakfast_time`='{$bf}',`lunch_time`='{$lunch}',`snacks_time`='{$snacks}',`dinner_time`='{$dinner}' WHERE client_id = {$c_id} AND dietitianuserID = '{$dietitianuserID}';";
-            echo ($query);
-            echo ('<br>');
+            // echo ($query);
+            // echo ('<br>');
             $result = $conn->query($query) or die("Query Failed");
             if ($conn->affected_rows == 0) {
                 $query = "INSERT INTO `reminders`(`dietitianuserID`, `client_id`, `breakfast_time`, `lunch_time`, `snacks_time`, `dinner_time`) VALUES ('{$dietitianuserID}',{$c_id},'{$bf}','{$lunch}', '{$snacks}', '{$dinner}')";
@@ -520,7 +518,7 @@ background: #FFFFFF;
 box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
 border-radius: 15px;
 padding: 7px 34px 13px;
-background: url('<?=$DEFAULT_PATH?>assets/images/goals_vector2.svg');
+background: url('<?=$DEFAULT_PATH?>assets/images/Goals_Vector2.svg');
 background-repeat: no-repeat;
 background-attachment: scroll;
 background-position: bottom right;
@@ -703,7 +701,6 @@ width:auto;
 }
 
 @media screen and (max-width: 1147px) {
-    
 .header{
 display:flex;
 overflow-x:scroll;
@@ -867,7 +864,7 @@ width:auto;
                                     <button name="create_reminder_water" type="submit" class="set_button" >Set</button>
                                 </div>
                                 <div style="margin-top:3rem">
-                                    <img src="<?=$DEFAULT_PATH?>assets/images/watergoal.svg" alt="">
+                                    <img src="<?=$DEFAULT_PATH?>assets/images/Watergoal.svg" alt="">
                                 </div>
                                 </div>
                             </form>
@@ -976,7 +973,7 @@ width:auto;
                             </div>
 
                             <div style="margin-top:5rem;margin-right:0rem">
-                                <img src="<?=$DEFAULT_PATH?>assets/images/caloriegoal.svg"style="width:99%" >
+                                <img src="<?=$DEFAULT_PATH?>assets/images/Caloriegoal.svg"style="width:99%" >
                             </div>
                             </div>
 
@@ -1049,7 +1046,7 @@ width:auto;
                             </div>
 
                             <div style="margin-top:3rem">
-                                <img src="<?=$DEFAULT_PATH?>assets/images/sleepgoal.svg" alt="">
+                                <img src="<?=$DEFAULT_PATH?>assets/images/Sleepgoal.svg" alt="">
                             </div>
                             </div>
                             <input hidden name="create_reminder">
@@ -1060,7 +1057,7 @@ width:auto;
                         <!-- set pop 3 -->
                         <!-- card 3 -->
                         <div id="card2" class="card card2" onclick="showSetDialog('set-card-sleep','')">
-                            <img src="<?=$DEFAULT_PATH?>assets/images/sleep1.svg" alt="">
+                            <img src="<?=$DEFAULT_PATH?>assets/images/Sleep1.svg" alt="">
                             <span>Sleep Reminder</span>
                         </div>
                         <!-- card 3 -->
@@ -1157,12 +1154,12 @@ if (mysqli_num_rows($result_water) > 0) {
                                                     </select>
                                                 </div>
                                                 <div class="pc-right">
-                                                    <button class="pc-btn1" type="button"  onclick="showSelectClient('water_wrapper<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" alt=""></button> <br> <br>
-                                                    <button class="pc-btn1" type="button" id="savereminderwaterpc" onclick="submitForm_water('water_selected<?php echo ($i) ?>','water_interval<?php echo ($i) ?>','water_amount<?php echo ($i) ?>')" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" alt=""></button>
+                                                    <button class="pc-btn1" type="button"  onclick="showSelectClient('water_wrapper<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" alt=""></button> <br> <br>
+                                                    <button class="pc-btn1" type="button" id="savereminderwaterpc" onclick="submitForm_water('water_selected<?php echo ($i) ?>','water_interval<?php echo ($i) ?>','water_amount<?php echo ($i) ?>')" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" alt=""></button>
                                                 </div>
                                                 <div class="pc-bottom" id="pc_bottom">
-                                                    <button class="pc-btn1" type="button"  onclick="showSelectClient('water_wrapper1<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" alt=""></button> <br> <br>
-                                                    <button class="pc-btn1" type="button" id="savereminderwaterpc" onclick="submitForm_water('water_selected<?php echo ($i) ?>','water_interval<?php echo ($i) ?>','water_amount<?php echo ($i) ?>')" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" alt=""></button>
+                                                    <button class="pc-btn1" type="button"  onclick="showSelectClient('water_wrapper1<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" alt=""></button> <br> <br>
+                                                    <button class="pc-btn1" type="button" id="savereminderwaterpc" onclick="submitForm_water('water_selected<?php echo ($i) ?>','water_interval<?php echo ($i) ?>','water_amount<?php echo ($i) ?>')" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" alt=""></button>
                                                 </div>
                                             </div>
                                         </form>
@@ -1181,7 +1178,7 @@ if (mysqli_num_rows($result_water) > 0) {
                                                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                                                     <input type="text" placeholder="Search Clients">
                                                     </div>
-                                                    <button class="clientChange" onclick="hideSelectClient()" style="background-color: #68A9F7;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
+                                                    <button class="clientChange" onclick="hideSelectClient()" style="background-color: #68A9F7;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
                                     
                                                 </div>
                                                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1289,12 +1286,12 @@ if (mysqli_num_rows($result_calorie) > 0) {
                                                     </div>
                                                 </div>
                                                 <div class="pc-right">
-                                                    <button style="background: #E493A5;" class="pc-btn1" type="button"  onclick="showSelectClient('calorie_wrapper<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" alt=""></button> <br><br>
-                                                    <button style="background: #E493A5;" class="pc-btn1" type="button" id="savereminderwaterpc" onclick="submitForm_calorie('calorie_selected<?php echo ($i) ?>' , 'bf_time<?php echo ($i) ?>' ,'lunch_time<?php echo ($i) ?>', 'snacks_time<?php echo ($i) ?>', 'dinner_time<?php echo ($i) ?>')" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" alt=""></button>
+                                                    <button style="background: #E493A5;" class="pc-btn1" type="button"  onclick="showSelectClient('calorie_wrapper<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" alt=""></button> <br><br>
+                                                    <button style="background: #E493A5;" class="pc-btn1" type="button" id="savereminderwaterpc" onclick="submitForm_calorie('calorie_selected<?php echo ($i) ?>' , 'bf_time<?php echo ($i) ?>' ,'lunch_time<?php echo ($i) ?>', 'snacks_time<?php echo ($i) ?>', 'dinner_time<?php echo ($i) ?>')" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" alt=""></button>
                                                 </div>
                                                 <div class="pc-bottom">
-                                                    <button style="background: #E493A5;" class="pc-btn1" type="button"  onclick="showSelectClient('calorie_wrapper1<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" alt=""></button> <br><br>
-                                                    <button style="background: #E493A5;" class="pc-btn1" type="button" id="savereminderwaterpc" onclick="submitForm_calorie('calorie_selected<?php echo ($i) ?>' , 'bf_time<?php echo ($i) ?>' ,'lunch_time<?php echo ($i) ?>', 'snacks_time<?php echo ($i) ?>', 'dinner_time<?php echo ($i) ?>')" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" alt=""></button>
+                                                    <button style="background: #E493A5;" class="pc-btn1" type="button"  onclick="showSelectClient('calorie_wrapper1<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" alt=""></button> <br><br>
+                                                    <button style="background: #E493A5;" class="pc-btn1" type="button" id="savereminderwaterpc" onclick="submitForm_calorie('calorie_selected<?php echo ($i) ?>' , 'bf_time<?php echo ($i) ?>' ,'lunch_time<?php echo ($i) ?>', 'snacks_time<?php echo ($i) ?>', 'dinner_time<?php echo ($i) ?>')" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" alt=""></button>
                                                 </div>
                                 
                                             </div>
@@ -1314,7 +1311,7 @@ if (mysqli_num_rows($result_calorie) > 0) {
                                                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                                                     <input type="text" placeholder="Search Clients">
                                                     </div>
-                                                    <button class="clientChange" onclick="hideSelectClient()" style="background: #E493A5;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
+                                                    <button class="clientChange" onclick="hideSelectClient()" style="background: #E493A5;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
                                     
                                                 </div>
                                                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1392,12 +1389,12 @@ if (mysqli_num_rows($result_sleep) > 0) {
                                                     </select>
                                                 </div>
                                                 <div class="pc-right">
-                                                    <button style="background: #7A55E3;" class="pc-btn1" type="button"  onclick="showSelectClient('sleep_wrapper<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" alt=""></button> <br><br>
-                                                    <button style="background: #7A55E3;" class="pc-btn1" type="button" onclick="submitForm_sleep('sleep_selected<?php echo ($i) ?>','sleep_time<?php echo ($i) ?>','wake_time<?php echo ($i) ?>')" id="savereminderwaterpc" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" alt=""></button>
+                                                    <button style="background: #7A55E3;" class="pc-btn1" type="button"  onclick="showSelectClient('sleep_wrapper<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" alt=""></button> <br><br>
+                                                    <button style="background: #7A55E3;" class="pc-btn1" type="button" onclick="submitForm_sleep('sleep_selected<?php echo ($i) ?>','sleep_time<?php echo ($i) ?>','wake_time<?php echo ($i) ?>')" id="savereminderwaterpc" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" alt=""></button>
                                                 </div>
                                                 <div class="pc-bottom" id="pc_bottom">
-                                                    <button style="background: #7A55E3;" class="pc-btn1" type="button"  onclick="showSelectClient('sleep_wrapper1<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/user_white.svg" alt=""></button> <br><br>
-                                                    <button style="background: #7A55E3;" class="pc-btn1" type="button" onclick="submitForm_sleep('sleep_selected<?php echo ($i) ?>','sleep_time<?php echo ($i) ?>','wake_time<?php echo ($i) ?>')" id="savereminderwaterpc" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" alt=""></button>
+                                                    <button style="background: #7A55E3;" class="pc-btn1" type="button"  onclick="showSelectClient('sleep_wrapper1<?php echo ($i) ?>')"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" alt=""></button> <br><br>
+                                                    <button style="background: #7A55E3;" class="pc-btn1" type="button" onclick="submitForm_sleep('sleep_selected<?php echo ($i) ?>','sleep_time<?php echo ($i) ?>','wake_time<?php echo ($i) ?>')" id="savereminderwaterpc" class="pc-btn2"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" alt=""></button>
                                                 </div>
                                 
                                             </div>
@@ -1418,7 +1415,7 @@ if (mysqli_num_rows($result_sleep) > 0) {
                                                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                                                     <input type="text" placeholder="Search Clients">
                                                     </div>
-                                                    <button class="clientChange" onclick="hideSelectClient()" style="background: #7A55E3;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
+                                                    <button class="clientChange" onclick="hideSelectClient()" style="background: #7A55E3;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
                                     
                                                 </div>
                                                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1485,7 +1482,7 @@ if (mysqli_num_rows($result_water) > 0) {
                                                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                                                     <input type="text" placeholder="Search Clients">
                                                     </div>
-                                                    <button class="clientChange" onclick="hideSelectClient()" style="background-color: #68A9F7;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
+                                                    <button class="clientChange" onclick="hideSelectClient()" style="background-color: #68A9F7;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
                                     
                                                 </div>
                                                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1538,7 +1535,7 @@ if (mysqli_num_rows($result_calorie) > 0) {
                                                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                                                     <input type="text" placeholder="Search Clients">
                                                     </div>
-                                                    <button class="clientChange" onclick="hideSelectClient()" style="background: #E493A5;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
+                                                    <button class="clientChange" onclick="hideSelectClient()" style="background: #E493A5;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
                                     
                                                 </div>
                                                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1589,7 +1586,7 @@ if (mysqli_num_rows($result_sleep) > 0) {
                                                     <img src="<?=$DEFAULT_PATH?>assets/images/greyglass.svg">
                                                     <input type="text" placeholder="Search Clients">
                                                     </div>
-                                                    <button class="clientChange" onclick="hideSelectClient()" style="background: #7A55E3;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/right_white.svg" ></button>
+                                                    <button class="clientChange" onclick="hideSelectClient()" style="background: #7A55E3;border:none;border-radius:8.5px"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
                                     
                                                 </div>
                                                 <div style="display:flex; flex-direction:column;gap:0.5rem;margin-top:2rem;margin-left:1rem">
@@ -1654,6 +1651,7 @@ if (mysqli_num_rows($result_sleep) > 0) {
 <!-- main end -->
 </div>
 <!-- main end -->
+<?php require('constant/scripts.php');?>
 <!-- DOM FUNCTIONS -->
 <script>
     function getSelectedClients(id){
@@ -1874,7 +1872,7 @@ if (mysqli_num_rows($result_sleep) > 0) {
         });
     }
 </script>
-<?php require('constant/scripts.php');?>
+
 </body>
 
 </html>

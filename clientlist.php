@@ -323,7 +323,7 @@ body{
     }
     .search_client {
     width: 100% !important;
-}
+    }
 
 }
 

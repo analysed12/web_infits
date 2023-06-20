@@ -384,7 +384,7 @@ body {
         margin-top:-5px;    
     }
     .card{
-        margin:10px auto !important;
+        margin:25px auto !important;
     }
     .main{
         margin: 20px auto;
@@ -412,16 +412,15 @@ body {
         min-width: 150px;
         left:-120px;
     }
+    .butt{
+        position: absolute !important;
+        bottom:0 !important;
+        right:0 !important;
+
+    }
 }
 @media screen and (min-width:0px) and (max-width:400px){
     .searchbox{
         width:300px;
     }
 }
-@media screen and (max-width: 720px){
-    .dropdown-content {
-    position: absolute !important;
-    
-    right: 50px !important;
-}
-    }

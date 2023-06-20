@@ -8,7 +8,10 @@ if (isset($_SESSION['dietitianuserID'])) {
     $sql = "SELECT * FROM messages where dietitianID='$user'";
     $result = $conn->query($sql);
     if (mysqli_num_rows($result) < 1) {
-        header('Location:message.php');
+        // echo $_SERVER['HTTP_REFERER']; exit;
+        if($_SERVER['HTTP_REFERER'] != "https://dietitian.infits.in/message.php"){
+            header('Location:message.php');
+        }
     }
     # database connection file
     include 'assets/app/db.conn.php';
@@ -35,7 +38,7 @@ if (isset($_SESSION['dietitianuserID'])) {
         <title>Chat App - Home</title>
         <?php require('constant/head.php'); ?>
         <link rel="stylesheet" href="<?= $DEFAULT_PATH ?>assets/css/chat_style.css">
-        <link rel="icon" href="images/logo.png">
+        <link rel="icon" href="images/logo.svg">
         <style>
             .card-body {
                 padding: 0% !important;
@@ -206,7 +209,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                         $("#searchText").on("input", function () {
                             var searchText = $(this).val();
                             if (searchText == "") return;
-                            $.post('app/ajax/search.php', {
+                            $.post('assets/app/ajax/search.php', {
                                 key: searchText
                             },
                                 function (data, status) {
@@ -218,7 +221,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                         $("#serachBtn").on("click", function () {
                             var searchText = $("#searchText").val();
                             if (searchText == "") return;
-                            $.post('app/ajax/search.php', {
+                            $.post('assets/app/ajax/search.php', {
                                 key: searchText
                             },
                                 function (data, status) {
@@ -226,7 +229,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                                 });
                         });
                         let lastSeenUpdate = function () {
-                            $.get("app/ajax/update_last_seen.php");
+                            $.get("assets/app/ajax/update_last_seen.php");
                         }
                         lastSeenUpdate();
                         /** 
@@ -263,9 +266,9 @@ if (isset($_SESSION['dietitianuserID'])) {
                     message = $("#message").val();
                     if (message == "") return;
 
-                    $.post("app/ajax/insert.php", {
+                    $.post("assets/app/ajax/insert.php", {
                         message: message,
-                        to_id: <?= $chatWith['client_id'] ?>
+                        to_id: <?php if(isset($chatWith)){echo $chatWith['client_id'];}else{echo 0;} ?>
                     },
                         function (data, status) {
                             $("#message").val("");
@@ -279,7 +282,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                 for logged in user
                 **/
                 let lastSeenUpdate = function () {
-                    $.get("app/ajax/update_last_seen.php");
+                    $.get("assets/app/ajax/update_last_seen.php");
                 }
                 lastSeenUpdate();
                 /** 
@@ -289,8 +292,8 @@ if (isset($_SESSION['dietitianuserID'])) {
                 setInterval(lastSeenUpdate, 10000);
                 // auto refresh / reload
                 let fechData = function () {
-                    $.post("app/ajax/getMessage.php", {
-                        id_2: <?= $chatWith['client_id'] ?>
+                    $.post("assets/app/ajax/getMessage.php", {
+                        id_2: <?php if(isset($chatWith)){echo $chatWith['client_id'];}else{echo 0;} ?>
                     },
                         function (data, status) {
                             $("#chatBox").append(data);

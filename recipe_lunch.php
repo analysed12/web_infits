@@ -404,6 +404,11 @@ require('constant/config.php');
         }
     }
     @media screen and (min-width:0px) and (max-width:720px){
+        .butt{
+            position:absolute !important;
+            right:0 !important;
+            bottom:0 !important;
+        }
         .searchbox{
             margin-left:60px;
         } 
@@ -439,7 +444,7 @@ require('constant/config.php');
             margin:10px auto !important;
         }
         .card{
-            margin:10px auto !important;
+            margin:25px auto !important;
         }
         .card-food {
             font-size: 23px;
@@ -462,6 +467,11 @@ require('constant/config.php');
         }
     }
     @media screen and (min-width:300px) and (max-width:400px){
+        .butt{
+            position:absolute !important;
+            right:0 !important;
+            bottom:0 !important;
+        }
         input[type=search]{
             width:150px !important;
         }
@@ -471,13 +481,6 @@ require('constant/config.php');
         .middle_wrapper{
             margin-left:3rem !important;
         }
-    }
-    @media screen and (max-width: 720px){
-    .dropdown-content {
-    position: absolute !important;
-    
-    right: 50px !important;
-}
     }
 </style>
 <!-- link ref -->

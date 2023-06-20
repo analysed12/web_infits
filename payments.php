@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Payments</title>
     <?php require('constant/head.php');?>
 </head>
 <style>
@@ -52,7 +52,7 @@ include 'navbar.php';
     <h3 class="text-start" style="font-size:40px">Client Payments</h3>
 
 <div class="container">
-<img src="<?=$DEFAULT_PATH?>assets/images/Payments.svg" class="rounded mx-auto d-block" alt="...">
+<img src="<?=$DEFAULT_PATH?>assets/images/payments.svg" class="rounded mx-auto d-block" alt="...">
 <h4 class="text-center" style="font-size:30px;font-weight:400;">No client payments active/due currently!</h4>
 </div>
 

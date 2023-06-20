@@ -90,13 +90,16 @@ include 'navbar.php';
     
 </div>
 <div style="display:flex;justify-content:right">
-<div class="startchat">
+<div onclick="redirect();" class="startchat">
     <span style="font-size: 35px;color: #4B9AFB;">Start a chat</span>
     <img src="<?=$DEFAULT_PATH?>assets/images/message_plus.svg">
-
 </div>
 </div>
-
 <?php require('constant/scripts.php');?>
+<script>
+    function redirect(){
+        location.replace('chat_home.php')
+    }
+</script>
 </body>
 </html>

@@ -1,15 +1,16 @@
 <?php
 require('constant/config.php');
+session_start();
 if (isset($_SESSION['dietitianuserID'])) {
     $tasks_id = $_SESSION['dietitianuserID'];
-    $sql = "SELECT count(*) FROM dietition_tasks WHERE `dietitianuserID`='$tasks_id' ";
+    $sql = "SELECT * FROM dietitian_tasks WHERE `dietitianuserID`='$tasks_id' ";
     $result = $conn->query($sql);
-    if (empty($result->fetch_assoc())) {
-        header('Location:tasklist.php');
+    if ($result->num_rows < 1) {
+        header('Location:tasklist_default.php');
     }
 }
 if (isset($_POST['add_calender'])) {
-    $query = "UPDATE `dietition_tasks` SET `add_to_calander`= 1 WHERE task_id = {$_POST['task_id']}";
+    $query = "UPDATE `dietitian_tasks` SET `add_to_calander`= 1 WHERE task_id = {$_POST['task_id']}";
     $result = mysqli_query($conn, $query);
     if ($result) {
         ?>
@@ -22,7 +23,7 @@ if (isset($_POST['add_calender'])) {
     exit();
 }
 if (isset($_POST['edit_task'])) {
-    $query = "SELECT * FROM `dietition_tasks` WHERE task_id = {$_POST['t_id']}  AND dietitianuserID = '{$_POST['dietitianuserID']}'";
+    $query = "SELECT * FROM `dietitian_tasks` WHERE task_id = {$_POST['t_id']}  AND dietitianuserID = '{$_POST['dietitianuserID']}'";
     $result = mysqli_query($conn, $query);
     while ($row = mysqli_fetch_assoc($result)) {
         $response = $row;
@@ -33,7 +34,7 @@ if (isset($_POST['edit_task'])) {
     exit();
 }
 if (isset($_POST['delete_task'])) {
-    $query = "DELETE FROM `dietition_tasks` WHERE task_id = {$_POST['t_id']}  AND dietitianuserID = '{$_POST['dietitianuserID']}'";
+    $query = "DELETE FROM `dietitian_tasks` WHERE task_id = {$_POST['t_id']}  AND dietitianuserID = '{$_POST['dietitianuserID']}'";
     $result = mysqli_query($conn, $query);
     echo ($result);
     $conn->close();
@@ -42,9 +43,9 @@ if (isset($_POST['delete_task'])) {
 include 'navbar.php';
 $today = new DateTime();
 $ress = $today->format('Y-m-d');
-if (isset($_SESSION['dietitian_id'])) {
+if (isset($_SESSION['dietitianuserID'])) {
     $dietitianuserid = $_SESSION['dietitianuserID'];
-    $q = "SELECT * FROM dietition_tasks WHERE dietitianuserID = '$dietitianuserid' AND date > '{$ress}'";
+    $q = "SELECT * FROM dietitian_tasks WHERE dietitianuserID = '$dietitianuserid' AND date > '{$ress}'";
     $result1 = $conn->query($q);
     if (mysqli_num_rows($result1) < 1) {
         header("Location:tasklist_default.php");
@@ -59,7 +60,7 @@ if (isset($_POST['create-submit'])) {
     $date = $_POST['task-date'];
     $from_time = $_POST['task-from-time'];
     $to_time = $_POST['task-to-time'];
-    $sql = "INSERT INTO `dietition_tasks`(`dietitianuserID`, `title`, `description`, `date`, `start_time`, `end_time`) VALUES ('$dietition','$title','$description','$date','$from_time','$to_time')";
+    $sql = "INSERT INTO `dietitian_tasks`(`dietitianuserID`, `title`, `description`, `date`, `start_time`, `end_time`) VALUES ('$dietition','$title','$description','$date','$from_time','$to_time')";
 
     $result = mysqli_query($conn, $sql);
     if ($result) {
@@ -77,7 +78,7 @@ if (isset($_POST['edit-submit'])) {
     $date = $_POST['edit-task-date'];
     $from_time = $_POST['edit-task-from-time'];
     $to_time = $_POST['edit-task-to-time'];
-    $sql = "UPDATE `dietition_tasks` SET `title` = '{$title}' , `description` = '{$description}', `date` = '{$date}', `start_time` = '{$from_time}', `end_time` = '{$to_time}' WHERE `task_id` = '{$task_id}'";
+    $sql = "UPDATE `dietitian_tasks` SET `title` = '{$title}' , `description` = '{$description}', `date` = '{$date}', `start_time` = '{$from_time}', `end_time` = '{$to_time}' WHERE `task_id` = '{$task_id}'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
         ?>
@@ -449,7 +450,7 @@ if (isset($_POST['edit-submit'])) {
             </div>
         </div>
         <?php
-        $query = "SELECT * FROM `dietition_tasks` WHERE dietitianuserID = '{$dietition}' AND date = '{$today->format('Y-m-d')}' ORDER BY date,start_time";
+        $query = "SELECT * FROM `dietitian_tasks` WHERE dietitianuserID = '{$dietition}' AND date = '{$today->format('Y-m-d')}' ORDER BY date,start_time";
         $result = mysqli_query($conn, $query);
         if (mysqli_num_rows($result) > 0) {
             $count = mysqli_num_rows($result);
@@ -506,7 +507,7 @@ if (isset($_POST['edit-submit'])) {
             </div>
             <?php
         }
-        $query = "SELECT * FROM `dietition_tasks` WHERE dietitianuserID = '{$dietition}' AND time > '{$today->format('Y-m-d')}' ORDER BY  date, start_time";
+        $query = "SELECT * FROM `dietitian_tasks` WHERE dietitianuserID = '{$dietition}' AND time > '{$today->format('Y-m-d')}' ORDER BY  date, start_time";
         $result = mysqli_query($conn, $query);
         if (mysqli_num_rows($result) > 0) {
             $count = mysqli_num_rows($result);
