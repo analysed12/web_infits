@@ -501,11 +501,173 @@ a {
             </div>
 
             <img id="notifications-pop" src="<?=$DEFAULT_PATH?>assets/images/notification.svg"
-                style="height: 20px; width: 20px;">
-            <div class="noti-box">
+                style="height: 20px; width: 20px;" onclick="Notification()">
+
+                <script>
+        function showNotification(title, body) {
+        // Create a div element for the notification
+            var notification = document.createElement('div');
+            notification.classList.add('notification');
+
+            // Create a span element for the close button
+            var closeButton = document.createElement('span');
+            closeButton.classList.add('close-button');
+            closeButton.innerHTML = '&times;';          // Add the "x" symbol as the button content
+
+            closeButton.style.marginTop = '-18%';
+            closeButton.style.marginLeft = '0%';
+            closeButton.style.cursor = 'pointer';
+            // Create a paragraph element for the notification message
+            var messageText = document.createElement('p');
+            messageText.textContent = title + ": " + body;
+            var viewButton = document.createElement('button');
+            viewButton.classList.add('view-button');
+            viewButton.textContent = 'View';
+            viewButton.style.color = '#a80fff';
+            viewButton.style.border = '1px solid #EEE8FF';
+
+            viewButton.style.backgroundColor = '#EEE8FF';
+
+            // Append the close button and message to the notification div
+            notification.appendChild(closeButton);
+            notification.appendChild(messageText);
+            notification.appendChild(viewButton);
+
+            // Apply CSS styles to position the notification at the left side of the screen
+            notification.style.position = 'fixed';
+            notification.style.right = '10px';
+            notification.style.width = '250px';
+            notification.style.top = '10px';
+            notification.style.borderRadius = '10px';
+            notification.style.padding = '10px';
+            notification.style.backgroundColor = '#EEE8FF';
+            // Set the position and styles for the view button
+            viewButton.style.position = 'absolute';
+            viewButton.style.bottom = '10px';
+            viewButton.style.right = '10px';
+            // Add an event listener to the close button
+            closeButton.addEventListener('click', function() {
+                document.body.removeChild(notification);
+            });
+
+            viewButton.addEventListener('click', function() {
+                document.body.removeChild(notification);
+                // Create a centered box with dimensions 300px by 300px
+                var box = document.createElement('div');
+                box.classList.add('popup-box');
+                box.style.width = '300px';
+                box.style.height = '300px';
+                box.style.position = 'fixed';
+                box.style.top = '50%';
+                box.style.paddingTop = '1%';
+                box.style.paddingLeft = '10px';
+                box.style.paddingRight = '5%';
+                box.style.paddingBottom = '5%';
+                box.style.left = '50%';
+                box.style.borderRadius = '20px';
+                box.style.transform = 'translate(-50%, -50%)';
+                box.style.backgroundColor = '#EEE8FF';
+                var messageText = document.createElement('p');
+                messageText.textContent = title + ": " + body; 
+                // Create a close button for the popup box
+                var popupCloseButton = document.createElement('span');
+                popupCloseButton.classList.add('popup-close-button');
+                popupCloseButton.innerHTML = '&times;';
+                popupCloseButton.style.marginLeft = '-2%';
+                popupCloseButton.style.cursor = 'pointer';
+                // Append the close button to the popup box
+                box.appendChild(popupCloseButton);
+                box.appendChild(messageText);
+                
+
+                // Add an event listener to the popup close button
+                popupCloseButton.addEventListener('click', function() {
+                    showNotification(title, body);
+                    document.body.removeChild(box);
+            
+            });
+
+            // Append the popup box to the document body
+            document.body.appendChild(box);
+        });
+
+        // Append the notification to the document body
+        document.body.appendChild(notification);
+    }
+    function Notification(){
+        fetch('display_data.php')
+        .then(response => response.json())
+        .then(data => {
+        data.forEach(item => {
+            const title = item.ttl || ''; // Ensure title is a string, set to empty string if undefined or null
+            const body = item.body || ''; // Ensure body is a string, set to empty string if undefined or null
+            showNotification(title, body);
+        });
+        })
+    }
+
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-messaging-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            // firebaseConfig here
+            apiKey: "AIzaSyBGZtqrdfZzIlzL2_6v1Zd72ZVUabX-t8A",
+            authDomain: "democoding-60b0b.firebaseapp.com",
+            projectId: "democoding-60b0b",
+            storageBucket: "democoding-60b0b.appspot.com",
+            messagingSenderId: "747547245786",
+            appId: "1:747547245786:web:c47053fb20a13cf0f479e3",
+            measurementId: "G-B0LWWE0RHH"
+        };
+        const app = firebase.initializeApp(firebaseConfig)
+        const messaging = firebase.messaging();
+
+        messaging.getToken({ vapidKey: 'BKCJEiPSH_xhSR5kGFcKfzvLZ2AHoiHa5vnW4NeY8u94rIDTOxMWfU3GGd_hy26BC6e4w4IIhasX3FiZ776w6v4' }).then((currentToken) => {
+            
+        }); 
+
+        messaging.onMessage((payload) => {
+            // notification data receive here, use it however you want
+            // keep in mind if message receive here, it will not notify in background
+            console.log('Message received. ', payload);
+            const messagesElement = document.querySelector('.message');
+            const dataHeaderElement = document.createElement('h5');
+            const BodyElement = document.createElement('h6');
+            const dataElement = document.createElement('pre');
+            dataElement.style = 'overflow-x:hidden;';
+            dataElement.textContent = JSON.stringify(payload, null, 2);
+            const parsedData = JSON.parse(dataElement.textContent);
+            const title = parsedData.notification.title;
+            const body = parsedData.notification.body;
+            const from = parsedData.from;
+            const collapseKey = parsedData.collapseKey;
+            const messageId = parsedData.messageId;
+            
+            const insertQuery = `INSERT INTO notification (frmID, ttl, body, clpsky, mssgid)
+                    VALUES ( '${from}', '${title}', '${body}', '${collapseKey}', '${messageId}')`;
+            fetch('insert_data.php', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'query=' + encodeURIComponent(insertQuery)
+            }).then((response) => {
+                // Handle the response as needed
+                console.log('Data on way to be inserted into the database.');
+            }).catch((error) => {
+                // Handle errors
+                console.error('Error inserting data into the database:', error);
+            });
+
+            console.log('Title:', title);
+            console.log('BOdy:', body);
+        });
+    </script>
+            <!-- <div class="noti-box">
                 <div class="top"><span>Notifications</span><span id="noti-close"><i style="cursor: pointer;"
                             class="fa-solid fa-xmark"></i></span></div>
-            </div>
+             </div>       -->                                                                                     <!--  I was just getting where it is used and how to use it:~ Sumit      -->
             <img <?php if($user['socialLogin'] == 1){ echo "src='{$user['p_p']}'"; }else{ ?> src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" <?php } ?> style="height: 24px; width: 24px; border-radius:50%"
                 id="addusermale">
 
