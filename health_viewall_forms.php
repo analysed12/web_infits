@@ -295,7 +295,7 @@ overflow-y: scroll;
     <div class="heading-box">
             <h1>My Forms</h1>
             <div class="search-box1">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Search.svg" alt="#">
+                <img src="<?=$DEFAULT_PATH?>assets/images/search.svg" alt="#">
                 <input type="search" name="form" id="form" placeholder="Search clients">
             </div>
         </div> 
@@ -321,8 +321,9 @@ overflow-y: scroll;
                         <img src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="options" title="options">
                     </div>
                     <div class="option-popup">
-                        <button>Delete</button>
-                        <button>Edit</button>
+                    <button onclick="return confirm('Are you sure to delete this?')" class="formDelete"><a href="delete_form.php?form_id=<?=$form['form_id']?>" style="text-decoration:none">DELETE</a></button>
+                    <button class="formEdit"  data-form-id="<?=$form['form_id']?>"><a href="health_detail_form_create.php?form_id=<?=$form['form_id']?>" style="text-decoration:none">EDIT</a></button>
+                        
                     </div>
                 </div>
             <?php
