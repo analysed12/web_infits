@@ -3,7 +3,7 @@ include('smtp/PHPMailerAutoload.php');
 include "smtp/class.phpmailer.php";
 session_start();
 if (isset($_POST['login_user'])) {
-    $connect = mysqli_connect('localhost', 'root', '', 'infits__db') or die('no table found');
+    $connect = mysqli_connect('localhost', 'root', '', 'infits_db') or die('no table found');
     $query = "select email from dietitian  where email = '" . $_POST['dietitianuserID'] . "' ";
     $result = mysqli_query($connect, $query) or die('no records Found');
     if (mysqli_num_rows($result) == 1) {
@@ -31,8 +31,8 @@ if (isset($_POST['login_user'])) {
             $mail->Port = 587;
             $mail->IsHTML(true);
             $mail->CharSet = 'UTF-8';
-            $mail->Username = "zuhaibwani703@gmail.com";
-            $mail->Password = "zzqihjppcveackek";
+            $mail->Username = "enter email id";
+            $mail->Password = "two verification email password";
             $mail->SetFrom("zuhaibwani703@gmail.com");
             $mail->Subject = $subject;
             $mail->Body = $msg;
