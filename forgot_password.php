@@ -33,7 +33,7 @@ if (isset($_POST['login_user'])) {
             $mail->CharSet = 'UTF-8';
             $mail->Username = "enter email id";
             $mail->Password = "two verification email password";
-            $mail->SetFrom("zuhaibwani703@gmail.com");
+            $mail->SetFrom("enter email id");
             $mail->Subject = $subject;
             $mail->Body = $msg;
             $mail->AddAddress($to);
