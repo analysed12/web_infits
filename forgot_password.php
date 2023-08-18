@@ -1,5 +1,77 @@
 <?php
-include "server.php";
+include('smtp/PHPMailerAutoload.php');
+include "smtp/class.phpmailer.php";
+session_start();
+if (isset($_POST['login_user'])) {
+    $connect = mysqli_connect('localhost', 'root', '', 'infits__db') or die('no table found');
+    $query = "select email from dietitian  where email = '" . $_POST['dietitianuserID'] . "' ";
+    $result = mysqli_query($connect, $query) or die('no records Found');
+    if (mysqli_num_rows($result) == 1) {
+        echo "email found!" . "<br>";
+        $row = mysqli_fetch_assoc($result); 
+        $to = $row['email'];
+        $_SESSION["emailID"] = $row['email'];
+        //echo $_SESSION["email"];
+        $random = strval(rand(000000, 999999));
+        echo var_dump($random) . $random;
+        $query2 = " UPDATE `dietitian` set `OTP` ='{$random}' WHERE email ='{$to}'";
+        $result2 = mysqli_query($connect, $query2) or die("OTP Column not found!");
+        $msg = "Please Enter the OTP: " . $random;
+        $subject = "OTP verification";
+        function setMail($to, $subject, $msg)
+        {
+
+
+            $mail = new PHPMailer();
+            $mail->IsSMTP();
+            $mail->SMTPDebug = 0;
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'tls';
+            $mail->Host = "smtp.gmail.com";
+            $mail->Port = 587;
+            $mail->IsHTML(true);
+            $mail->CharSet = 'UTF-8';
+            $mail->Username = "zuhaibwani703@gmail.com";
+            $mail->Password = "zzqihjppcveackek";
+            $mail->SetFrom("zuhaibwani703@gmail.com");
+            $mail->Subject = $subject;
+            $mail->Body = $msg;
+            $mail->AddAddress($to);
+            //   $mail->Send();
+            if ($mail->send()) {
+
+                
+                header("location:otp.php");
+
+                return 1;
+            } else {
+
+                echo "something wrong occured!";
+                return 0;
+            }
+        }
+        setMail($to, $subject, $msg);
+
+    } else {
+
+        echo "<script>alert('please enter a valid Email') </script>";
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +81,7 @@ include "server.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ICONS -->
     <title>Forgot Password</title>
-    <?php require('constant/head.php');?>
+    <?php require('constant/head.php'); ?>
     
 </head>
 <style>
@@ -465,6 +537,7 @@ body {
     margin-left: 2rem;
 }
 
+
 @media screen and (max-width: 720px) {
     .sform {
         margin-left: 4rem;
@@ -499,6 +572,7 @@ body {
     #btml {
         margin-left: 4rem;
     }
+    
 
 }
 
@@ -530,25 +604,26 @@ body {
     <div class="top_bar">
         <div class="left">
             <div class="bg">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 1.svg" style="width:25rem">
+                <img src="<?= $DEFAULT_PATH ?>assets/images/Vector 1.svg" style="width:25rem">
             </div>
-            <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg" style="margin-top:0.8rem;margin-left:0.8rem">
+            <img src="<?= $DEFAULT_PATH ?>assets/images/INFITS.svg" style="margin-top:0.8rem;margin-left:0.8rem">
         </div>
         <div class="right d-none d-sm-block">
             <button id="home">Home</button>
             <button class="sign" onclick="window.location.href = 'register.php';">SignUp</button>
         </div>
     </div>
+    
 
 
     <div class="row">
         <div class="col-sm-6">
             <div class="sform">
                 <div class="header_sigin">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/Vector 5.svg">
+                    <img src="<?= $DEFAULT_PATH ?>assets/images/Vector 5.svg">
                     <span style="font-size: 75px;">Forgot Password</span>
                 </div>
-                <span class="mt-5 ms-0"><img src="<?=$DEFAULT_PATH?>assets/images/Line 70.svg"><span
+                <span class="mt-5 ms-0"><img src="<?= $DEFAULT_PATH ?>assets/images/Line 70.svg"><span
                         style="color: #4F1963;font-size: 25px;font-weight: 400;margin-left:0.8rem">Enter email to get
                         OTP</span></span>
 
@@ -557,15 +632,17 @@ body {
                         <?php include('errors.php'); ?>
                         <!-- Main Form -->
                         <div class="ip_box">
-                            <img style="height: 25px;width: 25px" src="<?=$DEFAULT_PATH?>assets/images/Email.svg">
+                            <img style="height: 25px;width: 25px" src="<?= $DEFAULT_PATH ?>assets/images/Email.svg">
                             <input class="input_bar" id="email" type="text" name="dietitianuserID" placeholder="Email">
                         </div>
 
                         <div class="sign_btn_section mt-3">
                             <div class="sign_btn" style="background: #4B99FB;border-radius:15px">
-                                <button type="submit" class="btn sign_up" name="login_user" style="font-size: 25px;">Get
+                                <button type="submit" class="btn sign_up" name="login_user" id="otp" style="font-size: 25px;">Get
                                     OTP</button>
                             </div>
+
+          
                             <p></p>
                             <a href="/login.php" class="sign_in_sec">
                                 <span style="font-size:20px; color:#4F1963;"><i
@@ -578,7 +655,7 @@ body {
         </div>
         <div class="col-sm-6">
             <div class="mobile">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Forgot_Password.svg" alt="">
+                <img src="<?= $DEFAULT_PATH ?>assets/images/Forgot_Password.svg" alt="">
             </div>
 
         </div>
@@ -587,20 +664,20 @@ body {
     <div class="row" id="parent-lg" style="margin-top:2rem">
         <div class="col-sm-4 " id="btml">
             <div class="bottom_logo">
-                <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg" alt="">
+                <img src="<?= $DEFAULT_PATH ?>assets/images/INFITS.svg" alt="">
                 <div class="vec-sub"><span>Fitter</span><span class="ms-2">. Healthier</span><span class="ms-2">.
                         Happier</span></div>
                 <div class="social_links">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/Facebook.svg" alt="">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/Twitter.svg" alt="">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/Linkedin.svg" alt="">
+                    <img src="<?= $DEFAULT_PATH ?>assets/images/Facebook.svg" alt="">
+                    <img src="<?= $DEFAULT_PATH ?>assets/images/Twitter.svg" alt="">
+                    <img src="<?= $DEFAULT_PATH ?>assets/images/Linkedin.svg" alt="">
 
                 </div>
                 <span class="copy">Copyright 2022 Infits. All rights reserved.</span>
             </div>
 
             <div class="bottom_patch">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 2.svg" style="margin-left:3rem">
+                <img src="<?= $DEFAULT_PATH ?>assets/images/Vector 2.svg" style="margin-left:3rem">
             </div>
 
         </div>
@@ -617,14 +694,14 @@ body {
                 </div>
                 <div class="col-sm-6">
                     <div class="right_links">
-                        <img class="get-vec" src="<?=$DEFAULT_PATH?>assets/images/Vector 3.svg"
+                        <img class="get-vec" src="<?= $DEFAULT_PATH ?>assets/images/Vector 3.svg"
                             style="width:30rem;height:8rem">
                         <span style="color: #4F1963;font-size:25px">Get the app</span>
 
                         <div style="display: flex; gap:1rem;">
                             <a href="#"
                                 style="width: 176px;height: 64px;justify-content: space-around;justify-content: center;align-items: center;background: #FFFFFF;border: 2px solid #817FF8;border-radius: 50px; display: flex; flex-direction: row; padding:2px; text-decoration: none;">
-                                <div><img style="margin-right: 0.5rem;" src="<?=$DEFAULT_PATH?>assets/images/Apple.svg"
+                                <div><img style="margin-right: 0.5rem;" src="<?= $DEFAULT_PATH ?>assets/images/Apple.svg"
                                         alt="apple"></div>
                                 <div style="display: flex; flex-direction: column;">
                                     <div>
@@ -641,7 +718,7 @@ body {
                             <a href="#"
                                 style="width: 176px;height: 64px;justify-content: space-around;justify-content: center;align-items: center;background: #FFFFFF;border: 2px solid #817FF8;border-radius: 50px; display: flex; flex-direction: row; padding:2px;text-decoration: none;">
                                 <div><img style="margin-right: 0.5rem;"
-                                        src="<?=$DEFAULT_PATH?>assets/images/Google Play.svg" alt="apple"></div>
+                                        src="<?= $DEFAULT_PATH ?>assets/images/Google Play.svg" alt="apple"></div>
                                 <div style="display: flex; flex-direction: column;">
                                     <div>
                                         <p
@@ -661,6 +738,8 @@ body {
 
         </div>
     </div>
+
+    
     <!--------------------------------------mobile-view---------------------------------------------------->
     <div class="row  d-lg-none d-md-none d-xl-none" id="parent" style="margin-top:2rem">
         <!-- component-1 -->
@@ -677,13 +756,13 @@ body {
                 </div>
                 <div class="col-sm-6 mt-5">
                     <div class="right_links">
-                        <img class="get-vec" src="<?=$DEFAULT_PATH?>assets/images/Vector 3.svg"
+                        <img class="get-vec" src="<?= $DEFAULT_PATH ?>assets/images/Vector 3.svg"
                             style="width:30rem;height:8rem;">
                         <span style="color: #4F1963;font-size:30px">Get the app</span>
                         <div style="display: flex; gap:1rem;">
                             <a href="#"
                                 style="width: 176px;height: 64px;justify-content: space-around;justify-content: center;align-items: center;background: #FFFFFF;border: 2px solid #817FF8;border-radius: 50px; display: flex; flex-direction: row; padding:2px; text-decoration: none;">
-                                <div><img style="margin-right: 0.5rem;" src="<?=$DEFAULT_PATH?>assets/images/Apple.svg"
+                                <div><img style="margin-right: 0.5rem;" src="<?= $DEFAULT_PATH ?>assets/images/Apple.svg"
                                         alt="apple"></div>
                                 <div style="display: flex; flex-direction: column;">
                                     <div>
@@ -700,7 +779,7 @@ body {
                             <a href="#"
                                 style="width: 176px;height: 64px;justify-content: space-around;justify-content: center;align-items: center;background: #FFFFFF;border: 2px solid #817FF8;border-radius: 50px; display: flex; flex-direction: row; padding:2px;text-decoration: none;">
                                 <div><img style="margin-right: 0.5rem;"
-                                        src="<?=$DEFAULT_PATH?>assets/images/Google Play.svg" alt="google"></div>
+                                        src="<?= $DEFAULT_PATH ?>assets/images/Google Play.svg" alt="google"></div>
                                 <div style="display: flex; flex-direction: column;">
                                     <div>
                                         <p
@@ -722,28 +801,33 @@ body {
         <!-- component-2 -->
         <div class="col-sm-4" id="btml">
             <div class="bottom_logo">
-                <img src="<?=$DEFAULT_PATH?>assets/images/INFITS.svg" alt="">
+                <img src="<?= $DEFAULT_PATH ?>assets/images/INFITS.svg" alt="">
                 <div class="vec-sub"><span>Fitter</span><span class="ms-2">. Healthier</span><span class="ms-2">.
                         Happier</span></div>
                 <div class="social_links">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/Facebook.svg" alt="">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/Twitter.svg" alt="">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/Linkedin.svg" alt="">
+                    <img src="<?= $DEFAULT_PATH ?>assets/images/Facebook.svg" alt="">
+                    <img src="<?= $DEFAULT_PATH ?>assets/images/Twitter.svg" alt="">
+                    <img src="<?= $DEFAULT_PATH ?>assets/images/Linkedin.svg" alt="">
 
                 </div>
                 <span class="copy">Copyright 2022 Infits. All rights reserved.</span>
             </div>
 
             <div class="bottom_patch">
-                <img src="<?=$DEFAULT_PATH?>assets/images/Vector 2.svg" style="margin-left:3rem">
+                <img src="<?= $DEFAULT_PATH ?>assets/images/Vector 2.svg" style="margin-left:3rem">
             </div>
 
         </div>
     </div>
     </div>
 </body>
-<?php require('constant/scripts.php');?>
+</html>
+<?php require('constant/scripts.php'); ?>
 <script type="text/javascript">
+    
+
+
+    
 // google signin
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
@@ -765,5 +849,5 @@ function onSignIn(googleUser) {
         });
     }
 }
+
 </script>
-</html>
