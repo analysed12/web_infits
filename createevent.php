@@ -1,4 +1,8 @@
 <?php  
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
+session_start();
 include("navbar.php");
 require('constant/config.php');
     $errors = array('date' => '') ;
@@ -7,15 +11,71 @@ require('constant/config.php');
     $dietitianuserID = $_SESSION['name'];
     $eventname = $_POST['subject'];
     $clientname = $_POST['clientname'];
-    $sql2 = "Select * from addclient WHERE name='$clientname'" ;
-    $result2 = mysqli_query($conn,$sql2);
+    //$sql2 = "Select * from addclient WHERE name='$clientname'" ;
+    //$result2 = mysqli_query($conn,$sql2);
+    //$row2 = mysqli_fetch_assoc($result2);
+
+    //$clientuserID = $row2['client_id'];
+
+
+$sql2 = "SELECT * FROM addclient WHERE name='$clientname'";
+$result2 = mysqli_query($conn, $sql2);
+
+if ($result2) {
     $row2 = mysqli_fetch_assoc($result2);
-    $clientuserid = $row2['client_id'];
+
+    if ($row2) {
+        $clientuserID = $row2['client_id'];
+    } else {
+        // Handle the case where no client data was found
+        echo "Client not found.";
+    }
+} else {
+    // Handle query error
+    echo "Error executing client query: " . mysqli_error($conn);
+}
+
+
 
     $meeting_type = $_POST['meetingtype'];
     $place_of_meeting = $_POST['placeofmeeting'];
     $description = $_POST['description'];
-    $attachment = "hello";
+   // $attachment = "hello";
+   $attachment_name = '';
+if(isset($_FILES['attachment'])) {
+    $errors= array();
+    $attachment_name = $_FILES['attachment']['name'];
+    $attachment_tmp_name = $_FILES['attachment']['tmp_name'];
+    $attachment_size = $_FILES['attachment']['size'];
+    $attachment_type = $_FILES['attachment']['type'];
+   // $attachment_ext = end(explode('.',$attachment_name ));
+    $attachment_ext_array = explode('.', $attachment_name);
+$attachment_ext = end($attachment_ext_array);
+
+    $extention =array("jpeg","jpg","png");
+
+    if(in_array($attachment_ext,$extention)=== false)
+    {
+        $errors [] ="please choose jpg or png";
+    }
+
+    if ($attachment_size > 2097152) {
+        $errors[] ="file size must be 2mb or less ";
+
+    }
+    if(empty($errors)==true){
+        move_uploaded_file($attachment_tmp_name, "upload/". $attachment_name);
+  
+    }
+    else {
+        print_r($errors);
+        die();
+    }
+    //echo "Attachment Name: " . $attachment_name;   
+}
+    
+
+
 
     $start_date = date('Y-m-d H:i:s', strtotime($_POST['startdate']));
     $end_date = date('Y-m-d H:i:s', strtotime($_POST['enddate']));
@@ -43,7 +103,9 @@ require('constant/config.php');
 
     if ($count== 0)
     {
-        $sql1 = "INSERT INTO create_event (dietitianuserID,eventname, clientuserid, meeting_type, start_date, end_date, place_of_meeting, description, attachment) VALUES ('$dietitianuserID','$eventname','$clientuserid','$meeting_type','$start_date','$end_date','$place_of_meeting','$description','$attachment')";
+        $sql1 = "INSERT INTO create_event (dietitianuserID,eventname, clientuserID, meeting_type, start_date, end_date, place_of_meeting,
+         description, attachment) VALUES ('$dietitianuserID','$eventname','$clientuserID','$meeting_type','$start_date',
+         '$end_date','$place_of_meeting','$description',' $attachment_name')";
         $result1=mysqli_query($conn,$sql1);
         printf("<script>location.href='calendar_of_events.php'</script>");
     }
@@ -142,7 +204,7 @@ body {
 
 }
 
-html {
+ {
     overflow-x: hidden;
 }
 
@@ -186,7 +248,7 @@ html {
     display: block;
     width: 100%;
 }
-
+/*
 .rem-item {
     background: #FFFFFF;
     border: 1px solid #4B9AFB;
@@ -200,7 +262,7 @@ html {
     color: #4B9AFB;
     margin-right: 15px;
 }
-
+*/
 .content-name {
     position: absolute;
     bottom: 5px;
@@ -335,6 +397,75 @@ input {
     }
 
 }
+
+.reminder {
+        font-family: Arial, sans-serif;
+    }
+
+    .event_title {
+        font-size: 28px;
+        font-weight: 400;
+    }
+
+    .rem {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .rem-item {
+        position: relative;
+        display: inline-block;
+        font-size: 18px;
+        background: #FFFFFF;
+        border: 1px solid #4B9AFB;
+        border-radius: 45px;
+        padding: 10px;
+        margin: 10px;
+        cursor: pointer;
+    }
+
+    .rem-item input[type="radio"] {
+        display: none;
+    }
+
+    .rem_icon {
+        color: #4B9AFB;
+        margin-right: 15px;
+        display: inline-block;
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #4B9AFB;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 18px;
+    }
+
+    .rem-item label {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .rem-item input[type="radio"]:checked + .rem_icon {
+        background-color: #4B9AFB;
+    }
+
+    .otherInput {
+        position: relative;
+        margin-top: 10px;
+    }
+
+    .otherInput input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #FFFFFF;
+        border: 1px solid #4B9AFB;
+        border-radius: 45px;
+        font-size: 18px;
+        text-align: center;
+        
+        
+    }
 </style>
 
 <body>
@@ -346,61 +477,73 @@ input {
                 <img class="event-image" src="<?=$DEFAULT_PATH?>assets/images/event_image.svg" alt="">
             </div>
 
-            <form action="#" method="post">
+            <form action="#" method="post" enctype="multipart/form-data">
                 <div class="eve_form" style="">
                     <!-- Event name field -->
+                    
                     <label for="subject" class="event_title" style="font-size:28px;font-weight:400">Event Name</label>
-                    <select class="subject" type="text" name="subject" placeholder="Category" style="padding:10px 20px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);border-radius: 10px; border: 1px solid #F1F1F1;" required>
-                        <option value="Consultation" style="">Consultation</option>
-                        <option value="Dietplan">Diet Plan</option>
-                        <option value="Followup">Follow Up</option>
-                    </select>
+                    <input class="subject" type="text" name="subject" placeholder="Category" style="padding:10px 20px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);border-radius: 10px; border: 1px solid #F1F1F1;" required>
+
                     <br>
-                    <!-- Reminder types display -->
-                    <!--***** Add an array to store these values -->
-                    <div class="reminder">
-                        <div class="event_title" style="font-size:28px;font-weight:400">Reminder Type</div>
+
+                   <!-- <div class="reminder">
+                        <div class="event_title" style="font-size:28px;font-weight:400"> Meeting Type</div>
                         <div class="rem">
-                            <div style="display: inline-block;font-size:19px" class="rem-item"><img
-                                    src="<?=$DEFAULT_PATH?>assets/images/Toolbox.svg"> Consultation</div>
-                            <div style="display: inline-block;font-size:19px" class="rem-item"><img
-                                    src="<?=$DEFAULT_PATH?>assets/images/Healthy Eating.svg"> Diet Plan</div>
-                            <div style="display: inline-block;font-size:19px" class="rem-item"><img
-                                    src="<?=$DEFAULT_PATH?>assets/images/Ringer Volume.svg">Call</div>
-                            <div style="display: inline-block;font-size:19px" class="rem-item"><img
-                                    src="<?=$DEFAULT_PATH?>assets/images/Plus Math.svg">Others </div>
-                        </div>
-                    </div>
-                    <br>
+                            <div style="display: inline-block;font-size:19px" class="rem-item">
+                            <img src="<?=$DEFAULT_PATH?>assets/images/Toolbox.svg"> Consultation</div>
+                            <div style="display: inline-block;font-size:19px" class="rem-item">
+                            <img src="<?=$DEFAULT_PATH?>assets/images/Healthy Eating.svg"> Diet Plan</div>
+                            <div style="display: inline-block;font-size:19px" class="rem-item">
+                            <img src="<?=$DEFAULT_PATH?>assets/images/Ringer Volume.svg">Call</div>
+                            <div style="display: inline-block;font-size:19px" class="rem-item">
+                            <img src="<?=$DEFAULT_PATH?>assets/images/Plus Math.svg">Others </div>
+                        </div>     
+                    </div> -->
+
+
+<div class="reminder">
+    <div class="event_title">Meeting Type</div>
+    <div class="rem">
+        <label class="rem-item">
+            <input type="radio" name="meeting_type" value="consultation" id="consultation">
+            <span class="rem_icon"></span>
+            <img src="<?=$DEFAULT_PATH?>assets/images/Toolbox.svg" alt=""> Consultation
+        </label>
+        <label class="rem-item">
+            <input type="radio" name="meeting_type" value="diet_plan" id="diet_plan">
+            <span class="rem_icon"></span>
+            <img src="<?=$DEFAULT_PATH?>assets/images/Healthy Eating.svg" alt=""> Diet Plan
+        </label>
+        <label class="rem-item">
+            <input type="radio" name="meeting_type" value="call" id="call">
+            <span class="rem_icon"></span>
+            <img src="<?=$DEFAULT_PATH?>assets/images/Ringer Volume.svg" alt=""> Call
+        </label>
+        <label class="rem-item">
+            <input type="radio" name="meeting_type" value="others" id="others" onclick="showTextField()">
+            <span class="rem_icon"></span>
+            <img src="<?=$DEFAULT_PATH?>assets/images/Plus Math.svg" alt=""> Others
+        </label>
+        <div class="otherInput" style="display: none;">
+            <input type="text" name="other_meeting_type" placeholder="Enter other type">
+        </div>
+    </div>
+</div>
 
                     <!-- Main event details form -->
                     <div class=" event_title" style="font-size:28px;font-weight:400"> Event Details</div>
 
                     <div style="max-width:100%;margin:auto">
-
-                        <!-- Add client fields -->
-                        <div class="input-icons" style="font-size:19px;display:flex;align-items:center">
-                            <img class="icon" style="position:absolute;min-width: 0px;"
-                                src="<?=$DEFAULT_PATH?>assets/images/Group 3.svg"
+                                <div class="input-icons" style="font-size:19px;display:flex;align-items:center">
+                                <img class="icon" style="position:absolute;min-width: 0px;" src="<?=$DEFAULT_PATH?>assets/images/Group 3.svg"
                                 style="display:flex;align-items:center">
-                            <select
-                                style="border-top:none;border-left:none;border-right:none;border-bottom: 1px solid #EFEFEF;"
-                                name="clientname" class="input-field" required>
-                                <option value="" disabled selected>Add Client</option>
-                                <?php
-                                $id = $_SESSION['name'] ;
-                                $query = "SELECT client_id,name FROM addclient WHERE dietitianuserID = '$id' ";
-                                $result1=mysqli_query($conn,$query); 
-                                while($row = mysqli_fetch_assoc($result1) ){ ?>
-                                <option value="<?php echo $row['name']?>"><?php echo $row['name']?></option>
-                                <?php
-                                } 
-                                ?>
-                            </select>
-                        </div>
-
+                                 <input type="text" placeholder="Add Client"
+                                 style="border-top:none;border-left:none;border-right:none;border-bottom: 1px solid #EFEFEF;"
+                                 name="clientname" class="input-field" required>
+                                </div>
+   
                         <!-- Meeting type fields -->
-                        <div class="input-icons" style="font-size:19px;display:flex;align-items:center">
+                    <div class="input-icons" style="font-size:19px;display:flex;align-items:center">
                             <img class="icon" style="position:absolute;min-width: 0px;"
                                 src="<?=$DEFAULT_PATH?>assets/images/Briefcase.svg">
 
@@ -437,20 +580,63 @@ input {
                                 </div>
 
                             </div>
-                        </div>
+                        </div> 
 
                         <!-- Place of meeting field -->
-                        <div class="input-icons">
+                       <!--<div class="input-icons">
                             <img class="icon" style="position:absolute;min-width: 0px;"
                                 src="<?=$DEFAULT_PATH?>assets/images/Briefcase.svg">
 
                             <input
                                 style="border-top:none;border-left:none;border-right:none;border-bottom: 1px solid #EFEFEF;"
                                 class="input-field" type="text" placeholder="Place of meeting" name="placeofmeeting">
-                        </div>
+                        </div> -->
+                        
+<!--<div class="input-icons">
+    <img class="icon" style="position: absolute; min-width: 0px;" src="<?=$DEFAULT_PATH?>assets/images/Briefcase.svg">
+
+    <a id="placeOfMeetingLink" href="#" style="border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #EFEFEF;"
+       class="input-field" target="_blank" rel="noopener noreferrer">
+        Place of meeting
+    </a>
+</div>-->
+
+<!-- Place of meeting field -->
+<div class="input-icons">
+    <img class="icon" style="position: absolute; min-width: 0px;" src="<?=$DEFAULT_PATH?>assets/images/Briefcase.svg">
+
+    <input id="placeOfMeeting" style="border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #EFEFEF;"
+           class="input-field" type="text" placeholder="Place of meeting" name="placeofmeeting">
+    <a id="placeOfMeetingLink" href="#" style="display: none;padding: 100px 0px 0px 50px" target="_blank" rel="noopener noreferrer" >
+        Click to join the meeting
+    </a>
+</div>
+
+<script>
+    const meetingTypeSelect = document.querySelector("select[name='meetingtype']");
+    const placeOfMeeting = document.getElementById("placeOfMeeting");
+    const placeOfMeetingLink = document.getElementById("placeOfMeetingLink");
+
+    meetingTypeSelect.addEventListener("change", function () {
+        const selectedValue = this.value;
+
+        if (selectedValue === "Videocall" || selectedValue === "Call") {
+            placeOfMeeting.style.display = "none";
+            placeOfMeetingLink.style.display = "inline";
+            placeOfMeetingLink.setAttribute("href", "http://localhost/infits/dietitian/live_streaming.php?room=jMgcQ4&displayName=InfitsWebTeam");
+        } else if (selectedValue === "In person") {
+            placeOfMeeting.style.display = "inline";
+            placeOfMeetingLink.style.display = "none";
+        } else {
+            placeOfMeeting.style.display = "inline";
+            placeOfMeetingLink.style.display = "none";
+        }
+    });
+</script>
 
                         <!-- Add Description Field -->
                         <div class="input-icons">
+
                             <img class="icon" style="position:absolute;min-width: 0px;"
                                 src="<?=$DEFAULT_PATH?>assets/images/align-left.svg">
 
@@ -461,15 +647,19 @@ input {
                         </div>
 
                         <!-- Add attachment field -->
-                        <div class="input-icons">
-                            <img class="icon" style="position:absolute;min-width: 0px;"
-                                src="<?=$DEFAULT_PATH?>assets/images/Attach.svg">
+                    <div class="input-icons" style="font-size:19px;display:flex;align-items:center">
+    <img class="icon" style="position: absolute; min-width: 0px;" src="<?=$DEFAULT_PATH?>assets/images/Attach.svg">
 
-                            <input style="border-top:none;border-left:none;border-right:none;border-bottom:none;"
-                                class="input-field" type="text" placeholder="Attachment" name="attachment" required>
-                        </div>
-                    </div>
+    <label for="attachment" style="border-top: none; border-left: none; border-right: none; border-bottom: none; 
+        padding: 0px 0px 0px 50px; cursor: pointer;">
+        Attachment
+    </label>
+    <input type="file" id="attachment" name="attachment" required >
+</div>
 
+
+
+                   <!--cancel and book appointment button -->
                     <div style="width:100%; margin-left:10%; margin-right:10%;font-size:19px">
                         <a href="createevent.php"><input style="display:inline-block; color:black; background:white;"
                                 class="form_btn form_btn1" id='mobile_btn' placeholder="Cancel"></input></a>
@@ -510,6 +700,19 @@ input {
         e.preventDefault();
         bg_container.style.display = "none";
     }
+    //other firld 
+    function showTextField() {
+        const otherInput = document.querySelector('.otherInput');
+        const radioOthers = document.querySelector('input[name="meeting_type"][value="others"]');
+        if (radioOthers.checked) {
+            otherInput.style.display = 'block';
+        } else {
+            otherInput.style.display = 'none';
+        }
+    }
+  
+    //   link based on the selected meeting type
+  
     </script>
     <?php require('constant/scripts.php');?>
 </body>
