@@ -704,11 +704,17 @@ td.today {
                     $s = $row['start_date'];
                     $dt = new DateTime($s);
                     $date = $dt->format('m/d/Y');
-                    $clientid = $row['clientuserid'];
-                $sql1 = "SELECT client_id,name FROM addclient WHERE client_id=$clientid";
+                    $clientid = $row['clientuserID'];
+                $sql1 = "SELECT client_id,name FROM addclient WHERE client_id='$clientid'";
                 $result1=mysqli_query($conn,$sql1); 
                 $row1 = mysqli_fetch_assoc($result1) ;
-                $name = $row1['name'] ;
+                //$name = $row1['dietitian_id'] ;
+                if (isset($row1['name'])) {
+                    $name = $row1['name'];
+                } else {
+                    $name = 'Default Name'; 
+                }
+                
 
                 $startdate = $row['start_date'];
                 $newstartdate = date('h:i A', strtotime($startdate));
@@ -1066,6 +1072,6 @@ function updateDOM() {
     if (endDate) {
         const endDateEl = document.querySelector(`[data-day="${endDate}"]`);
         endDateEl.dataset.selected = "end";
-    }
+    }
 }
 </script>
