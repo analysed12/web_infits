@@ -23,6 +23,7 @@ if (isset($_SESSION['dietitianuserID'])) {
     $sql = "SELECT * FROM dietitian WHERE dietitianuserID = '$userid'";
     global $conn;
     $result = $conn->query($sql);
+    
     $verification = $result->fetch_assoc()['verification_code'];
     
     
@@ -477,6 +478,13 @@ span.time {
     .code-box{
         width:300px;
     }
+    .title-bar{
+        display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+    flex-direction: column;
+}
+    
 }
 @media screen and (max-width: 1000px){
     .img111{
@@ -585,7 +593,7 @@ span.time {
             <div class="col">
                 <div class="title-bar">
                     <div class="heading">
-                        <h1>Add Client</h1>
+                        <h1 style="font-size:40px">Add Client</h1>
                     </div>
                     <div class="searchbar">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/vec_search.svg" style="margin-right:1rem">
@@ -651,7 +659,9 @@ span.time {
                 <div id='pclients' class='tab-content client-card-container'>
                     <?php
                     $sql = "SELECT * FROM client WHERE verification_code='$verification' and dietitianuserID!='$userid'";
+                       print_r($sql);  
                     $result = $conn->query($sql);
+
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) { ?>
                                 <div id='flexchange' class='client-card gap-1 gap-md-3 gap-lg-6'>
@@ -672,7 +682,8 @@ span.time {
                                             <img src='<?= $DEFAULT_PATH ?>assets/images/pending-client.svg' alt=''>
                                         </div>
                                     </div>
-                                </div>
+
+                                                                    </div>
                     <?php
                         }
                     }else{ ?>
@@ -724,16 +735,70 @@ span.time {
                     <h4 style="text-align: center;" class="title">Share Via</h4>
                     <a class="close" href="add_client.php" style="top:15%;right:7%">&times;</a>
                     <div class="socials">
-                        <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg" alt=""></a>
+                        <a href="whatsapp://send?text=<?php echo $verification; ?>" data-action="share/whatsapp/share"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg" alt=""></a>
                         
-                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet"><img
-                        src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"></a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank"> <img
-                        src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"></a>
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url={url}"><img
-                        src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"></a>
+                        <!-- Twitter Share Button -->
+<a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=<?php echo urlencode($verification); ?>">
+    <img src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg">
+</a>
+
+   <a href="#" onclick="shareOnFacebook()">
+                <img src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg" alt="Share on Facebook">
+            </a>
+
+
+
+
+   <a href="https://www.linkedin.com/messaging/compose/?body=<?php echo urlencode($verification); ?>" target="_blank">
+    <img src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg" alt="Send on LinkedIn">
+</a>
+
+
+
+                <a href="#" onclick="shareOnInstagram()">
                 <img src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg">
-                      
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyVerificationCodeToClipboard() {
+        var verificationCode = "<?php echo $verification; ?>";
+        var tempInput = document.createElement("input");
+        document.body.appendChild(tempInput);
+        tempInput.value = verificationCode;
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+    }
+
+    function shareOnFacebook() {
+        copyVerificationCodeToClipboard();
+        var message = "Verification code copied!";
+        alert(message); // Display an alert message
+        openFacebookWithMessage();
+    }
+
+    function openFacebookWithMessage() {
+        var facebookURL = "https://www.facebook.com/messages/t/Tanishq Negi";
+        window.open(facebookURL, "_blank");
+    }
+
+    function shareOnInstagram() {
+        copyVerificationCodeToClipboard();
+        var message = "Verification code copied!";
+        alert(message); // Display an alert message
+        openInstagramWithMessage();
+    }
+
+    function openInstagramWithMessage() {
+        var verificationCode = "<?php echo $verification; ?>";
+        var instagramURL = "https://www.instagram.com/direct/t/recipient_username?text=" + encodeURIComponent(verificationCode);
+        window.open(instagramURL, "_blank");
+    }
+</script>
+
                     </div>
                 </div>
             </div>
@@ -867,8 +932,12 @@ span.time {
                                         </div>
                                     </div>
                                     <button type="submit" name="verified"
-                                        style="border:none; background-color: #4B9AFB; paddding: 20px; width: 6rem; height: 2.5rem; border-radius: 5px;color: white;font-size: 20px;">Verify</button>
+                                    style="border:none; background-color: #4B9AFB; paddding: 20px; width: 6rem; height: 2.5rem; border-radius: 5px;color: white;font-size: 20px;">Verify</button>
+                                    <button type="submit" name="Decline" class="bg-warning"
+                                        style="border:none;  paddding: 20px; width: 6rem; height: 2.5rem; border-radius: 5px;color: white;font-size: 20px;">Decline</button>
                                 </div>
+                                </div>
+
                             </form>
                             `;
                             pendingPopDiv.setAttribute('id', resp.clientuserID);
