@@ -1,6 +1,8 @@
 <?php
 require('constant/config.php');
 $client_array = array();
+// echo $_POST['clientList'];
+
 if(isset($_POST['clientList'])){
      $client_array = json_decode($_POST['clientList']);
 
