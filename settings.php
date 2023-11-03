@@ -283,7 +283,10 @@ $name = explode(" ", $row['dietitianuserID']);
     <div class="webview">
         <div class="container">
             <div style="height:175px;" class="d-flex justify-content-center align-items-center gap-5">
-                <img <?php if($row['socialLogin'] == 1){ echo "src='{$row['p_p']}'";  }else { ?> src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" <?php  } ?> class="h-100 rounded" alt="...">
+            <?php  //echo $row['p_p'];   ?>
+ 
+
+                <img src=<?php  echo"assets/upload-images/$row[p_p]"  ?> class="h-100 rounded img-fluid" alt="..." style="width: 100px !important;width: 120px !important; border-radius:20px !important">
                 <h3><?=$_SESSION['name']?></h3>
             </div>
         </div>
@@ -293,6 +296,17 @@ $name = explode(" ", $row['dietitianuserID']);
                 <a href="profile_settings_show.php" style="text-decoration: none; padding: 0px;">
                     <li>
                         <div class="box img-1">
+                            <?php  
+                            
+                            include("constant/config.php");
+                            $id2 =  $_SESSION['dietitianuserID'];
+                           $query2 = "SELECT p_p from `dietitian` WHERE dietitianuserID = '{$id2}' ";
+                          $result1 =  mysqli_query($conn,$query2) or die("query unsuccessfull!");
+                               
+                                  if(mysqli_num_rows($result1)>0){
+                                    $row2 = mysqli_fetch_assoc($result1);
+                                  }
+                            ?>
                             <img src="<?=$DEFAULT_PATH?>assets/icons/profile.svg" alt="">
                             <p
                                 style="text-align:center !important;font-weight: 400;color:black;font-size: 25px;margin-top:3rem">
