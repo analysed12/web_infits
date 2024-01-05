@@ -28,7 +28,7 @@
                echo"<script> alert('OTP Successfully matched') </script>" ;
                  $_SESSION['otp'] = $_POST['get_otp'];
 
-               header("location:changepassword.php");
+               header("Location: changepassword.php");
 
 
              }

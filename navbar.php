@@ -205,6 +205,10 @@ a.sidenavlink:hover,
     border-bottom-right-radius: 10px;
 }
 
+.profile-image:hover{
+        cursor: pointer;
+ }
+
 a {
     padding: 1px 2px 1px 3px;
     text-decoration: none;
@@ -400,6 +404,83 @@ a {
     color: #131635;
     position: relative;
 }
+.search-container {
+    display: none;
+    position: absolute;
+    top: -10px;
+    right: 0;
+    width: 343px;
+    height: 45px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25);
+    align-items: center;
+    padding-left: 10px;
+}
+.search-results-container {
+    display: none;
+    position: absolute;
+    top: 50px;
+    /* Adjust the distance from the search container */
+    right: 0;
+    width: 343px;
+    background: #FFF;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    /* Add border to the search results container */
+    overflow: hidden;
+    /* Hide overflow to ensure the border is consistent */
+    z-index: 999;
+}
+.search-icon {
+        height: 20px;
+        width: 20px;
+        margin-right: 10px;
+    }
+    .search-input {
+        border: none;
+        outline: none;
+        flex-grow: 1;
+        max-width: 240px;
+    }
+    .search-box {
+        position: relative;
+        display: inline-block;
+    }
+    .search-result:hover {
+        background-color: #8d8d8d1f;
+
+    }
+    .search-result {
+        padding: 10px;
+    }
+
+    .search-result:last-child {
+        border-bottom: none;
+        /* Remove border for the last search result */
+    }
+    a {
+        padding: 1px 2px 1px 3px;
+        text-decoration: none;
+    }
+
+    a.table-link {
+        padding: 0;
+        text-decoration: none;
+        color: inherit;
+        font-weight: 500;
+        font-size: 18px;
+    }
+    .result-arrow {
+        height: 10px;
+        width: 10px;
+        margin-left: 10px;
+        vertical-align: middle;
+        float: right;
+        margin: 6px;
+    }
 </style>
 
 
@@ -407,7 +488,8 @@ a {
 <body>
     <div class="sidenav" id="sidenavbar">
         <img src="<?=$DEFAULT_PATH?>assets/images/InfitsLogo.svg" class="sidenavlink" id="logo">
-        <a id="index"
+        <!-- changed id of below a tag from index to dashboard for search process -->
+        <a id="dashboard"
             class="sidenavlink nav-index nav-task_list nav-track_stats_steps nav-track_stats_water nav-track_stats_heart nav-track_stats_sleep nav-track_stats_weight nav-track_stats_calorie"
             href="index.php"><img src="<?=$DEFAULT_PATH?>assets/images/dashboard.svg" class="nav-icon">Dashboard</a>
         <a id="messages" class="sidenavlink nav-chat_home" href="chat_home.php"><img
@@ -473,28 +555,44 @@ a {
 
     <div class="topnav">
         <div class="topnav-content" id="topnav-change">
-            <p id="topnav-content-1">Good Morning, <span id="topnav-content-1-name">
-                    <strong>
-                        <?php
-                    $id11 = $_SESSION['dietitianuserID'] ;
-                    $sql1 = "SELECT * FROM dietitian WHERE dietitianuserID ='$id11'";
-                    $res = mysqli_query($conn,$sql1);
-                    $user = mysqli_fetch_array($res, MYSQLI_ASSOC);
-                    echo($user['name']);
-                   
-                    ?>
-                    </strong>
-                </span>
-            </p>
-            <p id="topnav-content-2">Your performance summary this week</p>
+            <?php
+                $url = explode('/', str_replace(['?'], '/', $_SERVER['REQUEST_URI']));
+                // print_r($url);
+
+                $id11 = $_SESSION['dietitianuserID'] ;
+                $sql1 = "SELECT * FROM dietitian WHERE dietitianuserID ='$id11'";
+                $res = mysqli_query($conn,$sql1);
+                $user = mysqli_fetch_array($res, MYSQLI_ASSOC);
+                if ($url[2] !== 'health_detail_form_create.php') {?>
+                    <p id="topnav-content-1">Good Morning, <span id="topnav-content-1-name">
+                        <strong>
+                            <?php echo($user['name']); ?>
+                        </strong>
+                    </span>
+                    </p>
+                    <p id="topnav-content-2">Your performance summary this week</p><?php } else { ?>
+                        <p id="topnav-content-1"><span id="topnav-content-1-name">
+                            <strong>
+                                <?php echo($user['name']); ?>
+                            </strong>
+                        </span>
+                        </p>
+                        <p id="topnav-content-2">Health Details</p> <?php } ?>
         </div>
         <div class="topnav-icons">
 
 
             <div class="search-box">
-                <button onclick="" id="toggleSearch" style="border-style:none;background:white;"><img
+                <button onclick="toggleSearch()" id="toggleSearch" style="border-style:none;background:white;"><img
                         src="<?=$DEFAULT_PATH?>assets/images/search.svg" style="height: 20px; width: 20px;"
                         class="sea"></button>
+                        <div id="searchContainer" class="search-container">
+                            <img src="<?= $DEFAULT_PATH ?>assets/images/search1.svg" class="search-icon" onclick="performSearch(false)">
+                            <input type="search" class="search-input" name="search_text" id="searchText" placeholder="Enter your search here" onchange="performSearch(false)">
+                        </div>
+                        <!-- <div id="searchResultsContainer" class="search-results-container"> -->
+                            <!-- This is where search results will be displayed -->
+                        <!-- </div> -->
             </div>
 
             <img id="notifications-pop" src="<?=$DEFAULT_PATH?>assets/images/notification.svg"
@@ -503,12 +601,15 @@ a {
                 <div class="top"><span>Notifications</span><span id="noti-close"><i style="cursor: pointer;"
                             class="fa-solid fa-xmark"></i></span></div>
             </div>
-            <img <?php if($user['socialLogin'] == 1){ echo "src='{$user['p_p']}'"; }else{ ?> src="<?=$DEFAULT_PATH?>assets/images/dietitian_profile.svg" <?php } ?> style="height: 24px; width: 24px; border-radius:50%"
-                id="addusermale">
+            <img class="profile-image" src="<?php if ($user['p_p']==='' || $user['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}else{echo 'uploads/profile/images/'.$user['p_p'];}?>" style="height: 24px; width: 24px; border-radius:50%" id="addusermale">
 
         </div>
 
     </div>
+
+    <div id="searchResultsContainer" style="width: 100vw; padding-left:50px" class="search-results-container">
+                                <!-- This is where search results will be displayed -->
+                            </div>
 
     <!----------------------------------- MOBILE MENU ----------------------------------------->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -576,10 +677,12 @@ a {
     document.getElementById('notifications-pop').addEventListener('click', () => {
         document.getElementsByClassName('noti-box')[0].style.animation = 'slideDown 0.5s forwards';
         document.getElementsByClassName('noti-box')[0].style.display = 'block';
+        document.getElementsByClassName('noti-box')[0].style.zIndex = 5;
 
     });
     document.getElementById('noti-close').addEventListener('click', () => {
         document.getElementsByClassName('noti-box')[0].style.animation = 'slideUp 0.5s forwards';
+        document.getElementsByClassName('noti-box')[0].style.zIndex = 0;
       
     }); 
     const currentPath = window.location.pathname;
@@ -628,7 +731,42 @@ a {
             iconChange(el, "");
         })
     });
+    function toggleSearch() {
+        var searchContainer = document.getElementById("searchContainer");
+        searchContainer.style.display = (searchContainer.style.display === "flex") ? "none" : "flex";
+    }
+        function performSearch(showAll) {
+            var searchText = $("#searchText").val();
+
+            if (searchText === "") {
+                // Clear search results
+                $("#searchResultsContainer").css("display", "none");
+                $("#searchResultsContainer").html("");
+            } else {
+                // Send AJAX request using jQuery
+                $.ajax({
+                    type: "POST",
+                    url: "search_app.php",
+                    data: {
+                        search_text: searchText,
+                        show_all: showAll
+
+                    },
+                    success: function(response) {
+                        $("#searchResultsContainer").css("display", "block");
+                        $("#searchResultsContainer").html(response);
+                    }
+                });
+            }
+        }
     </script>
+
+<script>
+        let profile_image = document.getElementsByClassName("profile-image")[0];
+        profile_image.addEventListener("click",()=>{
+            window.location = 'profile_settings_show.php';
+        })
+</script>
 </body>
 
 </html>
