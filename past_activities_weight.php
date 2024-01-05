@@ -1,12 +1,12 @@
 <?php
 if (isset($_SESSION['name'])) {
-    header('location: login.php');
+    header('Location:  login.php');
 }
 // Client Id
 if (isset($_GET['client_id']) and $_GET['client_id'] != "") {
     $clientId = $_GET['client_id'];
 } else {
-    header("Location: index.php");
+    header("Location:  index.php");
 }
 // Configure Dates
 date_default_timezone_set("Asia/Calcutta");

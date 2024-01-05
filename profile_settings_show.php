@@ -240,7 +240,7 @@ include "navbar.php";
                 <span style="display:flex;flex-direction:column">
                     Password
                     <span style="display:flex;align-items:center;justify-content:space-between "
-                        class="input_field"><input readonly type="text" id="password" placeholder="Enter Value" value="<?php if($data['socialLogin']==1){echo "Not Available";}else{echo $data['password'];} ?>"  style="border:none;color: #AEAEAE;">
+                        class="input_field"><input readonly type="password" id="password" placeholder="Enter Value" value="<?=$data['password']?>"  style="border:none;color: #AEAEAE;">
         
                         <img style="cursor: pointer;width:25px;" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon"
                             alt="eye" ></span>
@@ -281,10 +281,9 @@ include "navbar.php";
             </div>
 
 
-            <div class="rightside"
-                style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2rem">
+            <div class="rightside" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2rem">
                 <div>
-                    <img src= <?php echo"assets/upload-images/$data[p_p]"  ?> class="img-fluid rounded-circle " style="border-radius:25px; width:130px !important; height:120px !important; overflow: none !important;" />
+                    <img src="<?php if ($user['p_p']!=='user-default.png'){echo 'uploads/profile/images/'.$user['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$user['p_p'];}?>" style="border-radius:25px;" />
                     <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding-top:1rem;">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/Star.svg" style="background:none">
                         <h3 style="font-size:25px;padding-top:0.5rem">4.8</h3>

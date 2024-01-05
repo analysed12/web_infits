@@ -1,23 +1,106 @@
 <?php
-include "navbar.php";
+    include "navbar.php";
+    require('constant/config.php');
+?>
+<?php 
+    $sql  = "SELECT * FROM dietitian WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+    global $conn;
+    $result = $conn->query($sql);
+    $data = $result->fetch_assoc();
 ?>
 <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST['editbutton'])){
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $mobile_no = $_POST['mobile'];
+            $qualification = $_POST['qualification'];
+            $username = $_POST['username'];
+            $location = $_POST['location'];
+            $gender = $_POST['gender'];
+            $age = $_POST['age'];
+            $experience = $_POST['experience'];
+            $achievements = $_POST['achievements'];
 
-include("constant/config.php");
-$id2 = $_SESSION['dietitianuserID'];
-$query2 = "SELECT p_p from `dietitian` WHERE dietitianuserID = '{$id2}' ";
-$result1 = mysqli_query($conn, $query2) or die("query unsuccessfull!");
+            $imageFileName = '';
+            $sql_ = "UPDATE `dietitian` SET `dietitianuserID`='$username',`name`='$name',`qualification`='$qualification',`email`='$email',`mobile`='$mobile_no'";
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            if (isset($_FILES["my_image"]) && $_FILES["my_image"]["error"] === 0) {
+                $image = $_FILES['my_image']['tmp_name'];
+                $imageFileName = $_FILES['my_image']['name'];
 
-if (mysqli_num_rows($result1) > 0) {
-    $row2 = mysqli_fetch_assoc($result1);
-}
-//   else{
+                if (preg_match('/^\d{4}_/', $imageFileName) === 1) {
+                    $imageFileName = preg_replace('/^\d{4}_/', '', $imageFileName);
+                }
 
-
-
-
-//   }
-
+                $targetDir = "uploads/profile/images/";
+                $randomNumber = mt_rand(1000, 9999);
+                $imageFileName = $randomNumber . '_' . $imageFileName;
+                $imgPath = $targetDir. $imageFileName;
+                move_uploaded_file($image, $imgPath); // for original images
+                $sql_=$sql_.", `p_p`='$imageFileName'";
+                
+            } 
+            $sql_2 = ",`location`='$location',`age`='$age',`gender`='$gender',`experience`='$experience',`achievements`='$achievements' WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+            $sql_ = $sql_.$sql_2;
+            $result = mysqli_query($conn, $sql_);
+            if ($result){
+                $temp_name = $_SESSION['dietitianuserID'];
+                $_SESSION['dietitianuserID'] = $username;
+                $sql  = "SELECT * FROM dietitian WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+                $result = $conn->query($sql);
+                $data1 = $result->fetch_assoc();
+                // making sure that the user doesn't logout
+                $_SESSION['name'] = $data1['name'];
+                $_SESSION['dietitian_id'] = $data1['dietitian_id'];
+                // # updating the Session
+                
+                if ($temp_name!==$username){
+                    $result1 = $conn->query("SHOW TABLES");
+                    $tables = $result1->fetch_all();
+                    $columnName = 'dietitianuserID';
+                    
+                    // Iterate through each table
+                    foreach ($tables as $table) {
+                        $tableName = $table[0];
+                        
+                        // Check if the column exists in the current table
+                        $checkColumnQuery = "SHOW COLUMNS FROM $tableName LIKE '".$columnName."'";
+                        $columnExistsResult = $conn->query($checkColumnQuery);
+                        
+                        if ($columnExistsResult->num_rows > 0) {
+                            // The column exists in the current table
+                            $updateStatement = "UPDATE $tableName SET dietitianuserID = '".$username."'WHERE dietitianuserID='".$temp_name."'";
+                            $conn->query($updateStatement);
+                        }
+                    }
+                }
+                
+                // header("Location: profile_settings_show.php");
+                // exit;
+                
+                echo "<script>window.location = 'profile_settings_show.php'</script>"; // use for redirecting to different page
+            }
+            else{
+                die(mysqli_error($conn));
+            }
+        }
+        if(isset($_POST['save_socials'])){
+            $socials = $_POST['socials'];
+            $link = $_POST['link'];
+            // echo "<script>console.log('This is socials:$socials');</script>";
+            $sql_3 = "UPDATE dietitian SET $socials = '$link' WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+            $result4 = $conn->query($sql_3);
+            if ($result4){
+                echo "<script>console.log('Done!');</script>";
+            }
+            else{
+                die(mysqli_error($conn));
+            }
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,10 +194,6 @@ if (mysqli_num_rows($result1) > 0) {
         color: #0177FD;
 
     }
-
-    /* #chooseBtn{
-        
-    } */
 
     .footer {
         display: flex;
@@ -244,7 +323,7 @@ if (mysqli_num_rows($result1) > 0) {
         margin-top: 8px;
         box-shadow: 0px 1.5px 1.5px 1.5px rgba(0, 0, 0, 0.15);
         background-color: #FFFFFF;
-        Font-size: 20.42px;
+        Font size: 20.42px;
     }
 
     .modal-img .upload .upload-btn .up {
@@ -324,7 +403,7 @@ if (mysqli_num_rows($result1) > 0) {
         border-radius: 8.81041px;
         color: #BBBBBB;
         width: 390px;
-        Font-size: 21.14px;
+        Font size: 21.14px;
         display: flex;
         align-items: center;
     }
@@ -378,6 +457,11 @@ if (mysqli_num_rows($result1) > 0) {
             width: 100px !important;
         }
     }
+    @media screen and (max-width: 450px){
+    .modal-img .upload {
+        margin-left: 0 !important;
+    }
+}
 
     @media screen and (max-width: 1200px) {
         .input_field {
@@ -422,6 +506,11 @@ if (mysqli_num_rows($result1) > 0) {
             margin-right: 10% !important;
             width: auto;
         }
+        .modal-content2 {
+            margin-left: 10% !important;
+            margin-right: 10% !important;
+            width: auto;
+        }
 
         .modal-content #socials {
             width: 100%;
@@ -445,140 +534,97 @@ if (mysqli_num_rows($result1) > 0) {
 </style>
 
 <body>
-
     <div class="maincontainer">
-        <h1 style="font-size:40px;font-weight:400;padding-bottom:1rem">Profile Settings</h1>
-        <form method="post">
-            <div class="maincontainer_wrapper">
-                <div class="leftside" style="display:flex;flex-direction:column;gap:1rem">
-                    <?php $sql = "SELECT * FROM dietitian WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
-                    global $conn;
-                    $result = $conn->query($sql);
-                    $data = $result->fetch_assoc();
-
-                    ?>
-                    <span style="display:flex;flex-direction:column">
-                        User ID <input readonly type="text" class="input_field" placeholder="<?= $data['dietitian_id'] ?>" value="<?= $data['dietitian_id'] ?>" required>
-                    </span>
-
-                    <span style="display:flex;flex-direction:column">
-                        Name <input type="text" class="input_field" name="name" placeholder="<?= $data['name'] ?>" value="<?= $data['name'] ?>" required>
-                    </span>
-                    <span style="display:flex;flex-direction:column">
-                        Email <input <?php if ($data['socialLogin'] == 1) {
-                                            echo "readonly";
-                                        } else {
-                                            echo "name='email'";
-                                        } ?> type="text" class="input_field" placeholder="<?= $data['email'] ?>" value="<?= $data['email'] ?>" required>
-                    </span>
-                    <span style="display:flex;flex-direction:column">
-                        Mobile No <input type="text" class="input_field" name="mobile" maxlength="10" placeholder="<?= $data['mobile'] ?>" value="<?= $data['mobile'] ?>" required>
-                    </span>
-                    <span style="display:flex;flex-direction:column">
-                        Qualification <input type="text" class="input_field" name="qualification" placeholder="<?= $data['qualification'] ?>" required>
-                    </span>
-                    <span style="display:flex;flex-direction:column">
-                        <span>
-                            Password
-                            <span style="display:flex;align-items:center;justify-content:space-between " class="input_field"><input type="<?php if ($data['socialLogin'] == 1) {
-                                                                                                                                                echo "text";
-                                                                                                                                            } else {
-                                                                                                                                                echo 'password';
-                                                                                                                                            } ?>" id="password" name="password" placeholder="XXXXX" value="<?php if ($data['socialLogin'] == 1) {
-                                                                                                                                                                                                                        echo "Not Available";
-                                                                                                                                                                                                                    } else {
-                                                                                                                                                                                                                        echo $data['password'];
-                                                                                                                                                                                                                    } ?>" style="border:none;" required>
-                                <?php if ($data['socialLogin'] == 0) { ?>
-                                    <img style="cursor: pointer;width:25px;" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon" alt="eye">
-                                <?php } ?>
+        <h1 style="font-size:40px;fontweight:400;padding-bottom:1rem">Profile Settings</h1>
+        <form class="maincontainer_wrapper" id="maincontainer_wrapper"  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
+        <div class="leftside" style="display:flex;flex-direction:column;gap:1rem">
+            
+                <span style="display:flex;flex-direction:column">
+                    User ID <input readonly type="text" class="input_field" placeholder="<?=$data['dietitian_id']?>" value="<?=$data['dietitian_id']?>" required>
+                </span>
+                <span style="display:flex;flex-direction:column">
+                    Name <input type="text" class="input_field" name="name" placeholder="<?=$data['name']?>" value="<?=$data['name']?>" required>
+                </span>
+                <span style="display:flex;flex-direction:column">
+                    Email <input type="text" class="input_field" placeholder="<?=$data['email']?>" value="<?=$data['email']?>" name="email" required><!-- <?php //if($data['socialLogin']==1){echo "readonly";}else{echo "name='email'";} ?> -->
+                </span>
+                <span style="display:flex;flex-direction:column">
+                    Mobile No <input type="text" class="input_field" name="mobile" maxlength="10" placeholder="<?=$data['mobile']?>" value="<?=$data['mobile']?>" required>
+                </span>
+                <span style="display:flex;flex-direction:column">
+                    Qualification <input type="text" class="input_field" name="qualification" placeholder="<?=$data['qualification']?>" value="<?=$data['qualification']?>" required>
+                </span>
+                <span style="display:flex;flex-direction:column">
+                    <span>
+                        Password
+                        <span style="display:flex;align-items:center;justify-content:space-between "
+                            class="input_field"><input disabled type="password" id="password" placeholder="XXXXX" value="<?=$data['password'];?>" style="border:none;" required>
+                            <img style="cursor: pointer;width:25px;" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon" alt="eye">
                             </span>
-
-                        </span>
-                        <span style="font-size:15px;display:flex;justify-content:space-between;text-decoration:none"><a href="forgot_password.php">Change Paswword</a> <a href="forgot_password.php">Forget
-                                Password</a></span>
+                            
                     </span>
-
-
-
-
-                </div>
-
-                <div class="middle" style="display:flex;flex-direction:column;gap:1rem">
-                    <span style="display:flex;flex-direction:column">
-                        Username <input type="text" class="input_field" <?php if ($data['socialLogin'] == 1) {
-                                                                            echo "readonly";
-                                                                        } else {
-                                                                            echo "name='dietitianuserID'";
-                                                                        } ?> placeholder="<?= $data['dietitianuserID'] ?>" value="<?= $data['dietitianuserID'] ?>" required>
-                    </span>
-
-                    <span style="display:flex;flex-direction:column">
-                        Location <input type="text" class="input_field" name="location" placeholder="<?= $data['location'] ?>" value="<?= $data['location'] ?>" required>
-                    </span>
-
-
-                    <span style="display:flex;gap:1.5rem">
-                        <span style="display:flex;flex-direction:column">
-                            Gender <input type="text" placeholder="M / F" name="gender" class="gender" value="<?= $data['gender'] ?>" required>
-                        </span>
-                        <span style="display:flex;flex-direction:column">
-                            Age <input type="text" placeholder='<?php echo "$data[age]" ?>' class="gender" name="age" <?= $data['age'] ?> required>
-                        </span>
-
-                    </span>
-
-                    <span style="display:flex;flex-direction:column">
-                        Experience <input type="text" class="input_field" placeholder='<?php echo "$data[experience]" ?>' name="experience" value="<?= $data['experience'] ?>" required>
-                    </span>
-                    <span style="display:flex;flex-direction:column">
-                        Refferal Code <input type="text" class="input_field" placeholder="XXXXX" name="referral_code" value="<?= $data['referral_code'] ?>" required>
-                    </span>
-                    <a href="#popup3" style="text-decoration:none;background:none;color:black">
-                        <span style="display:flex;flex-direction:column">
-                            Acheivements and Certificates <input type="text" class="input_field" placeholder="XXXXX" name="achievements" value="<?= $data['achievements'] ?>" required>
-                        </span>
-                    </a>
-
-
-
-                </div>
-
-
-
-                <div class="rightside" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2rem">
-                    <div class="profiles" style="display:flex;flex-direction:column;position:relative; width:fit-content;">
-                        <img src=<?php echo "assets/upload-images/$row2[p_p]" ?> style="height: 150px; width: 150px; border-radius: 25px;z-index:-1;" alt="">
-                        <a href="#popup2" class="edit" id="edit" style="border:3px solid white; background:#0177FD; border-radius:50%; width:38px;height:38px;position:absolute;right:15px;bottom:18px;text-decoration: none;display:flex;align-items:center;justify-content:center">
-                            <img src=<?php "assets/upload-images/$row2[p_p]" ?>></a>
-
-                    </div>
-                    <!-- <input class="chooseimage" id="chooseimage" type="file" name="my_image" style="width: 250px; display:none;" value="" required /> -->
-                    <div style="display:flex;flex-direction:column;gap:2rem">
-                        <div style="display:flex;align-items:center;gap:1rem"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg"><span>Whatsapp</span></div>
-                        <div style="display:flex;align-items:center;gap:1rem"><img src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"><span>Twitter</span></div>
-                        <div style="display:flex;align-items:center;gap:1rem"><img src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"><span>Facebook</span></div>
-                        <div style="display:flex;align-items:center;gap:1rem"><img src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"><span>Linkdin</span></div>
-                        <div style="display:flex;align-items:center;gap:1rem"><img src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg"><span>Instagram</span></div>
-                    </div>
-
-
-                    <button type="button" id="myBtn" style="border:none; background:none;"><img src="<?= $DEFAULT_PATH ?>assets/images/edit.svg"></button>
-                </div>
-
+                    <span style="font-size:15px;display:flex;justify-content:space-between;text-decoration:none"><a
+                            href="forgot_password.php">Change Paswword</a> <a href="forgot_password.php">Forget
+                            Password</a></span>
+                </span>
             </div>
 
-            <div class="footer">
+            <div class="middle" style="display:flex;flex-direction:column;gap:1rem">
+                <span style="display:flex;flex-direction:column">
+                    Username <input type="text" class="input_field" name = "username" placeholder="<?=$data['dietitianuserID']?>" value="<?=$data['dietitianuserID']?>" required> <!-- <?php //if($data['socialLogin']==1){echo "readonly";}else{echo "name='dietitianuserID'";} ?> -->
+                </span>
 
-                <button class="editbutton" type="submit" name="updateprofile">Confirm Changes</button>
-                <a id="sharebutton" class="sharebutton" style="text-decoration: none;" href="#popup1"> Share Profile</a>
+                <span style="display:flex;flex-direction:column">
+                    Location <input type="text" class="input_field" name="location" placeholder="<?=$data['location']?>" value="<?=$data['location']?>" required>
+                </span>
+
+
+                <span style="display:flex;gap:1.5rem">
+                    <span style="display:flex;flex-direction:column">
+                        Gender <input type="text" placeholder="M / F" name="gender" class="gender" value="<?=$data['gender']?>" required>
+                    </span>
+                    <span style="display:flex;flex-direction:column">
+                        Age <input type="text" placeholder="XXXXX" class="gender" name="age" value=<?=$data['age']?> required>
+                    </span>
+
+                </span>
+
+                <span style="display:flex;flex-direction:column">
+                    Experience <input type="text" class="input_field" placeholder="XXXXX" name="experience" value="<?=$data['experience']?>" required>
+                </span>
+                <span style="display:flex;flex-direction:column">
+                    Refferal Code <input type="text" class="input_field" placeholder="XXXXX" <?php if($data['referral_code']==""){echo 'name="referral_code"';}else{echo 'readonly';} ?>  value="<?=$data['referral_code']?>"  required>
+                </span>
+                <a href="#popup3" style="text-decoration:none;background:none;color:black">
+                    <span style="display:flex;flex-direction:column">
+                        Acheivements and Certificates <input type="text" class="input_field" placeholder="XXXXX" name="achievements"  value="<?=$data['achievements']?>"  required>
+                    </span>
+                </a>
+            </div>
+            <div class="rightside" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2rem">
+                <div class="profiles" style="display:flex;flex-direction:column;position:relative; width:fit-content;">
+                    <img class="profile_image" src="<?php if ($data['p_p']!=='user-default.png'){echo 'uploads/profile/images/'.$data['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$data['p_p'];}?>" style="height: 150px; width: 150px; border-radius: 25px;z-index:-1;" alt="">
+                    <a href="#popup2" class="edit" id="edit" style="border:3px solid white; background:#0177FD; border-radius:50%; width:38px;height:38px;position:absolute;right:15px;bottom:18px;text-decoration: none;display:flex;align-items:center;justify-content:center">
+                        <img src="<?= $DEFAULT_PATH ?>assets/images/Edit-Img.svg"></a>
+
+                </div>
+                <input class="chooseimage" id="chooseimage" onchange="showImagePreview(event)" type="file" name="my_image" style="width: 250px; display:none;" value="<?=$data['p_p'];?>" /><!--required-->
+                <div style="display:flex;flex-direction:column;gap:2rem">
+                    <div style="display:flex;align-items:center;gap:1rem"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg"><span>Whatsapp</span></div>
+                    <div style="display:flex;align-items:center;gap:1rem"><img src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"><span>Twitter</span></div>
+                    <div style="display:flex;align-items:center;gap:1rem"><img src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"><span>Facebook</span></div>
+                    <div style="display:flex;align-items:center;gap:1rem"><img src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"><span>Linkdin</span></div>
+                    <div style="display:flex;align-items:center;gap:1rem"><img src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg"><span>Instagram</span></div>
+                </div>
+                <button type="button" id="myBtn" style="border:none; background:none;"><img src="<?= $DEFAULT_PATH ?>assets/images/edit.svg"></button>
+            </div>
         </form>
-
+        <div class="footer">
+            <button type="submit" class="editbutton" name="editbutton" value="submit" form="maincontainer_wrapper">Confirm Changes</button><!---->
+            <a id="sharebutton" class="sharebutton" style="text-decoration: none;" href="#popup1">Share Profile</a>
+        </div>
     </div>
-
-
-    </div>
-
+            
 
     <!-------------------------------------POPUPS-------------------------------------------------->
     <div id="popup1" class="overlay">
@@ -589,10 +635,14 @@ if (mysqli_num_rows($result1) > 0) {
             </div>
 
             <div class="content" style="display:flex;gap:1rem;justify-content:center">
-                <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg"></a>
-                <a class="twitter-share-button" href="https://twitter.com/intent/tweet"><img src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"></a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank"> <img src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"></a>
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url={url}"><img src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"></a>
+                <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img
+                        src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg"></a>
+                <a class="twitter-share-button" href="https://twitter.com/intent/tweet"><img
+                        src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank"> <img
+                        src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"></a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={url}"><img
+                        src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"></a>
                 <img src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg">
             </div>
         </div>
@@ -602,31 +652,20 @@ if (mysqli_num_rows($result1) > 0) {
         <div class="modal-img">
             <a class="img-close" href="#">&times;</a>
             <div class="d-flex pop">
-                <img src=<?php echo "assets/upload-images/$row2[p_p]" ?> alt='profile' class='img-fluid' style='height: 200px; width: 100%; overflow:hidden' ;>
-
+                <img class="profile_image" src="<?php if ($data['p_p']!=='user-default.png'){echo 'uploads/profile/images/'.$data['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$data['p_p'];}?>">
                 <div class="d-flex flex-column upload">
-
-                    <!-- <button class="upload-btn" id="upload-btn" onclick="clickMe()" name="fileUpload">Upload New<img
-                            src="<?= $DEFAULT_PATH ?>assets/images/Edit-Profile.svg" class="up"> </button>
-                    <button class="upload-btn">Remove Picture<img src="<?= $DEFAULT_PATH ?>assets/images/del-Profile.svg"
-                            class="del"></button> -->
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <input type="file" style="display:none" ; outline: none !important; " value=" Choose File" class="upload-btn form-control " id="chooseBtn" name="image">
-                        <label for="chooseBtn" class="upload-btn py-2">Click me to choose image</label>
-                        <button type="submit" class="upload-btn" name="upload_file">Upload New<img src="<?= $DEFAULT_PATH ?>assets/images/Edit-Profile.svg" class="up"></button>
-                        <button type="submit" class="upload-btn " name="removeimage">Remove Picture<img src="<?= $DEFAULT_PATH ?>assets/images/del-Profile.svg" class="del"></button>
-
-                    </form>
-
+                    <button class="upload-btn" id="upload-btn" onclick="clickMe()">Upload New<img src="<?= $DEFAULT_PATH ?>assets/images/Edit-Profile.svg" class="up"> </button>
+                    <button class="upload-btn">Remove Picture<img src="<?= $DEFAULT_PATH ?>assets/images/del-Profile.svg" class="del"></button>
                 </div>
             </div>
         </div>
     </div>
     <div id="popup3" class="modal2">
         <div class="modal-content2">
-            <a class="img-close" style="display:flex;justify-content:right;color:black;text-decoration:none" href="#">&times;</a>
+            <a class="img-close" style="display:flex;justify-content:right;color:black;text-decoration:none"
+                href="#">&times;</a>
             <div style="display:flex;justify-content:space-evenly;margin-top:35px;">
-                <button type="submit" class="addBtn1" name="save_socials">Save Changes</button>
+                <button class="addBtn1" name="save_socials">Save Changes</button><!-- type="submit" -->
                 <button class="discard">Discard</button>
             </div>
         </div>
@@ -636,31 +675,30 @@ if (mysqli_num_rows($result1) > 0) {
         <!--Modal content-->
         <div class="modal-content">
             <span class="close"></span>
-            <form method="post" action="" enctype="multipart/form-data">
+            <form method="post" id="media_update" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
                 <div class="form-floating">
-                    <select select class="form-select" id="socials" aria-label="Floating label select example">
+                    <select select class="form-select" name="socials" id="socials" onchange="findstuf()" aria-label="Floating label select example">
                         <option selected>Platform</option>
-                        <option value="whatsapp"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg">WhatsApp
-                        </option>
+                        <option value="whatsapp"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg">WhatsApp</option>
                         <option value="twitter">Twitter</option>
                         <option value="facebook">Facebook</option>
                         <option value="linkedin">LinkedIn</option>
                         <option value="instagram">Instagram</option>
                     </select>
                     <br>
-                    <input type="text" placeholder="Copy link here..." name="link" style="width:100%;height:50px;background-color:white;box-shadow: 0px 1.76208px 5.28625px rgba(0, 0, 0, 0.25);border-radius: 8.81041px; color: #BBBBBB;border:none">
+                    <input type="text" placeholder="Copy link here..." name="link" id="linksocials" style="width:100%;height:50px;background-color:white;box-shadow: 0px 1.76208px 5.28625px rgba(0, 0, 0, 0.25);border-radius: 8.81041px; color: #BBBBBB;border:none">
                     <br>
                     <div style="display:flex;justify-content:space-evenly;margin-top:35px;">
-                        <button type="submit" class="addBtn1" name="save_socials">Save Changes</button>
+                        <button type="submit" class="addBtn1" name="save_socials">Save Changes</button><!--  -->
                         <button class="discard">Discard</button>
                     </div>
                 </div>
             </form>
-
+         </div>
         </div>
     </div>
-    </div>
-
+    
+    
     <script>
         let eyeicon = document.getElementById("eyeicon");
         let password = document.getElementById("password");
@@ -669,108 +707,84 @@ if (mysqli_num_rows($result1) > 0) {
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
         var span = document.getElementsByClassName("close")[0];
-        //  this condition is because in the socialLogin the "eyeicon == null" 
-        //  as it is null in the socialLogin it will not run the code below...
-        if (eyeicon !== null) {
 
-            eyeicon.addEventListener('click', () => {
-                if (password.type == 'password') {
+    //  this condition is because in the socialLogin the "eyeicon == null" 
+    //  as it is null in the socialLogin it will not run the code below...
+        if(eyeicon !== null){
+       
+            eyeicon.addEventListener('click',()=>{
+                if(password.type == 'password'){
                     password.type = "text";
                     eyeicon.src = "<?= $DEFAULT_PATH ?>assets/images/eye-open.png";
-
-                } else if (password.type == 'text') {
+                   
+                }
+                else if(password.type == 'text'){
                     password.type = "password";
                     eyeicon.src = "<?= $DEFAULT_PATH ?>assets/images/eye.svg";
-
+                    
                 }
             })
-        }
+        } 
         const clickMe = () => {
-
-            console.log(chooseimage);
-            // chooseimage.click();
+            chooseimage.click();
+        }
+        
+        function showImagePreview(event) {
+            var input = event.target;
+            let imagePreview = Array.from(document.getElementsByClassName('profile_image'));
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.forEach((img, index) => {
+                        img.setAttribute('src', e.target.result);
+                    });
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
         }
 
-        //      this block is for show and hide of the popUp named "myModel"
-        btn.addEventListener('click', (e) => {
+        const findstuf = ()=>{
+            <?php  $sql5  = "SELECT * FROM dietitian WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+                $result = $conn->query($sql5);
+                $data2 = $result->fetch_assoc();?>
+            let obj = {
+                "platform": 'Copy link here...',
+                "instagram": '<?=$data2['instagram']?>',
+                "whatsapp": '<?=$data2['whatsapp']?>',
+                "linkedin": '<?=$data2['linkedin']?>',
+                "twitter": '<?=$data2['twitter']?>',
+                "facebook": '<?=$data2['facebook']?>'
+            };
+            let social = document.getElementById('socials').value;
+            let input = document.getElementById("linksocials");
+            let lastdata = input.value;
+            input.value = "";
+            if (obj[social]==""){
+                input.Placeholder = "Empty!";
+            }
+            else{
+                input.placeholder = `${obj[social]}`;
+                input.value = `${obj[social]}`;
+            }
+        }
+        
+        // this block is for show and hide of the popUp named "myModel"
+        btn.addEventListener('click', (e)=> {
             e.preventDefault();
-            console.log("clicked myBtn")
             modal.style.display = "block";
         })
-        span.addEventListener('click', () => {
+        span.addEventListener('click', ()=> {
             modal.style.display = "none";
         })
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
+
+        
     </script>
     <?php require('constant/scripts.php'); ?>
 </body>
 
 </html>
-<?php
-
-include("constant/config.php");
-
-
-
-if (isset($_POST['updateprofile'])) {
-    echo "hello World";
-    $queryEditDetails = "UPDATE `dietitian` set name = '" . $_POST['name'] . "',email = '" . $_POST['email'] . "',
-                 mobile = '" . $_POST['mobile'] . "',qualification = '" . $_POST['qualification'] . "', password = '" . $_POST['password'] . "',
-                 dietitianuserID = '" . $_POST['dietitianuserID'] . "' , location ='" . $_POST['location'] . "',gender = '" . $_POST['gender'] . "',
-                 age = '" . $_POST['age'] . "',experience = '" . $_POST['experience'] . "',referral_code = '" . $_POST['referral_code'] . "',
-                 achievements = '" . $_POST['achievements'] . "' WHERE `dietitianuserID` = '{$id2}' ";
-    $r = mysqli_query($conn, $queryEditDetails) or die("Query Not Found At all");
-    if ($r) {
-        echo "<script>alert('Profile Updated SuccessFully!') </script>";
-    } else {
-        echo "<script>alert('Something Went Wrong!') </script>";
-    }
-    //  if(mysqli_num_rows($record)>0){                          
-    //   $newRecord = mysqli_fetch_assoc($record);
-    //    echo $newRecord['name']."<br>";   
-    //    echo $newRecord['gender']."<br>"; 
-    //    echo $newRecord['location'];   
-    //  }     
-
-} else {
-    echo "isset not set";
-}
-
-
-?>
-
-
-<?php
-include("constant/config.php");
-if (isset($_FILES['image'])) {
-    //  echo "<pre>";
-    // print_r($_FILES);
-    // echo "</pre>";
-    $name = $_FILES['image']['name'];
-    $type = $_FILES['image']['type'];
-    $size = $_FILES['image']['size'];
-    $tmpname = $_FILES['image']['tmp_name'];
-    $name = $_FILES['image']['name'];
-    // echo $name."<br>";
-    // echo  $type."<br>";
-    // echo $size;
-    if (move_uploaded_file($tmpname, "assets/upload-images/" . $name)) {
-
-        echo "<script>alert('file uploaded successfully')</script>";
-        $id = $_SESSION['dietitianuserID'];
-        $query = "UPDATE `dietitian` set P_P = '{$name}' WHERE dietitianuserID = '{$id}' ";
-
-        mysqli_query($conn, $query) or die("no record found!");
-    }
-    if (isset($_POST['removeimage'])) {
-
-        echo "<script> alert('you clicked on remove btn')</script>";
-
-        $RemoveQuery = "DELETE `p_p` from  `dietitian` WHERE dietitianuserID = '{$id}'";
-    }
-}
-?>
