@@ -1,5 +1,4 @@
-<?php include 'navbar.php';
-
+<?php require('constant/config.php');
 $client_id = $_GET['client_id'];
 if (isset($_POST['update'])) {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
@@ -21,8 +20,8 @@ $sql = "SELECT * from `addclient` where client_id='$client_id'";
 $result = mysqli_query($conn, $sql);
 while ($row = mysqli_fetch_array($result)) {
     $plan_id = $row["plan_id"];
-    $sql1 = "SELECT * FROM create_plan WHERE `plan_id`= $plan_id";
-    $sql2 = "SELECT * FROM addclient WHERE client_id = $client_id";
+    $sql1 = "SELECT * FROM create_plan WHERE `plan_id`= '$plan_id'";
+    $sql2 = "SELECT * FROM addclient WHERE client_id = '$client_id'";
     $result1 = mysqli_query($conn, $sql1);
     $result2 = mysqli_query($conn, $sql2);
     $row1 = mysqli_fetch_assoc($result1);
@@ -34,6 +33,7 @@ while ($row = mysqli_fetch_array($result)) {
     while (($date1 = strtotime('+1 MONTH', $date1)) <= $date2)
         $months++;
     ?>
+    <?php include 'navbar.php'; ?>
     <!DOCTYPE html>
     <html>
 

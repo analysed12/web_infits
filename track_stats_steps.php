@@ -4,7 +4,7 @@ require('constant/config.php');
 if (isset($_GET['client_id'])) {
     $clientId = $_GET['client_id'];
 } else {
-    header('location: index.php');
+    header('Location: index.php');
 }
 // Configure Dates
 date_default_timezone_set("Asia/Calcutta");
@@ -12,7 +12,7 @@ $today = new DateTime();
 // Goal Insertion
 if (isset($_POST['savegoal'])) {
     $client = $_POST['clientid'];
-    $dietition = $_POST['dietition'];
+    $dietition = $_POST['dietitian'];
     $goal = $_POST['setgoal'];
     $isSame = false;
     $query = "SELECT steps FROM `goals` WHERE `client_id` = '{$client}'";
@@ -29,14 +29,14 @@ if (isset($_POST['savegoal'])) {
         $query = "UPDATE `goals` SET `steps` = $goal WHERE `client_id` = '$client'";
         $result = $conn->query($query) or die("Query Failed");
         if ($conn->affected_rows == 0) {
-            $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `steps`) VALUES ('{$dietition}','{$client}','{$goal}')";
+            $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `steps`) VALUES ('{$dietition}','{$client}','{$goal}')";
             $result = $conn->query($query) or die("Query Failed");
         }
 
         if ($result) {
             unset($_POST["savegoal"]);
             unset($_POST["setgoal"]);
-            header(("Location:track_stats_steps.php?client_id={$client}"));
+            header(("Location: track_stats_steps.php?client_id={$client}"));
         }
     }
 }
@@ -1143,8 +1143,7 @@ tst-left-t {
                 <div class="tsd-left-b table-activity">
                     <div class="heading">
                         <p>Past Activity</p>
-                        <a href="past_activities_steps.php?client_id=<?php echo ($clientId) ?>"><span>View
-                                All</span></a>
+                        <a href="past_activities_steps.php?client_id=<?php echo ($clientId) ?>"><span>View All</span></a>
                     </div>
                     <div class="heading-border"></div>
                     <div class="activity-container">
@@ -1208,9 +1207,7 @@ tst-left-t {
                             <div id="progress-percent" class="progress-circle">
                                 <div class="progress-circle-fill">
                                     <div class="progress-circle-value"><span class="colorid "
-                                            id="progress-percent "><?php echo ($progressPercent) ?>%</span><span>Of
-                                            daily
-                                            step goal</span></div>
+                                            id="progress-percent "><?php echo ($progressPercent) ?>%</span><span>Of daily step goal</span></div>
                                 </div>
                             </div>
                         </div>
