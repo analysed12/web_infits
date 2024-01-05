@@ -18,7 +18,7 @@ if (isset($_POST['final_update_btn'])){
         $sql3 = "UPDATE `create_plan` SET plan_id=$id,name='$planname',tags='$tags',start_date='$start_date',end_date='$end_date',features='$features',description='$description',price='$price' WHERE plan_id=$id";
         $result1=mysqli_query($conn,$sql3);
         if($result1){
-            header("Location: select_client_plan.php?plan_id=$id&pev={$_GET['pev']}&client_id={$_GET['client_id']}");
+            header("Location:  select_client_plan.php?plan_id=$id&pev={$_GET['pev']}&client_id={$_GET['client_id']}");
         }
         else{
             echo "success";

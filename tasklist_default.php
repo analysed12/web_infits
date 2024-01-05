@@ -10,13 +10,13 @@ if (isset($_POST['create-submit'])) {
     $date = $_POST['task-date'];
     $from_time = $_POST['task-from-time'];
     $to_time = $_POST['task-to-time'];
-    $sql = "INSERT INTO `dietition_tasks`(`dietitianuserID`, `title`, `description`, `date`, `start_time`, `end_time`) VALUES ('$dietition','$title','$description','$date','$from_time','$to_time')";
+    $sql = "INSERT INTO `dietitian_tasks`(`dietitianuserID`, `title`, `description`, `date`, `start_time`, `end_time`) VALUES ('$dietition','$title','$description','$date','$from_time','$to_time')";
 
     $result = mysqli_query($conn, $sql);
     if ($result) {
         ?>
         <script>
-            location.replace("task_list.php");
+            window.location.replace("task_list.php");
         </script>
         <?php
     }
@@ -47,8 +47,8 @@ body {
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        padding-right: 3rem;
-        padding-bottom: 2rem;
+        /* padding-right: 3rem; */
+        /* padding-bottom: 2rem; */
         position: absolute;
         bottom: 0;
         top:125%;
@@ -72,7 +72,12 @@ body {
         line-height: 90.84%;
         color: #4B9AFB;
     }
-
+    .create-cancel{
+    width: 100px;
+   }
+   .create-submit{
+    width: 100px;
+   }
     #create-pop{
         position: fixed;
         top: 50%;
@@ -84,6 +89,7 @@ body {
         background: #FFFFFF;
         border-radius: 15px;
         display: none;
+        overflow-y: scroll;
     }
     .content{
         margin-top:20px !important;
@@ -134,7 +140,7 @@ body {
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
         border-radius: 15px;
         height: 45px;
-        padding: 10px 20px;
+        /* padding: 10px 20px; */
     }
 
     .input input::placeholder {
@@ -151,7 +157,7 @@ body {
         border: 1px solid #F2F2F2;
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
         border-radius: 15px;
-        padding: 15px 20px;
+        /* <!--padding: 15px 20px; */
     }
 
     .input textarea:focus {
@@ -171,9 +177,8 @@ body {
         border-radius: 15px;
         font-size: 25px;
         text-transform: capitalize;
-        width: 45%;
         color: #6883FB;
-    }
+        }
 
     .create-submit{
         outline: none;
@@ -185,7 +190,7 @@ body {
         line-height: 53px;
         text-transform: capitalize;
         color: #FFFFFF;
-        width: 45%;
+        margin-bottom: 20px;
     }
 .create p,
 img {
@@ -194,10 +199,16 @@ img {
     font-weight: 400;
     margin: auto 10px;
 }
+@media screen and (min-width:1500px) and (max-width:2000px) {
+    .create-task{
+       margin-top: 50px;
+        
+    }
+}
 
 @media screen and (min-width:720px) and (max-width:1500px) {
     .create-task{
-        top:107%;
+       margin-top: 200px;
         
     }
     .image{
@@ -219,6 +230,13 @@ img {
         top:110%;
         /* width:auto; */
     }
+    .create-task{
+       margin-top: 200px;
+        
+    }
+    .create{
+        margin-top: 200px;
+    }
     .title {
         margin-left: 1rem !important;
         margin-top: -2rem !important;
@@ -230,10 +248,56 @@ img {
     margin-top:-10px !important;
     height:280px;
 }
+#create-pop{
+    width: 600px;
 }
 
-@media screen and (min-width:0px) and (max-width:450px) {
+}
+@media screen and (min-width:300px) and (max-width:900px) {
+    .col-6{
+        width: 100%;
+    }
+    #create-pop{
+        width: 70vw;
+    }
+}
+@media screen and (min-width:300px) and (max-width:600px) {
    
+#pop-title{
+    font-size: 20px;
+    margin-top: 0px;
+}
+.input label{
+    font-size: 14px;
+}
+   
+    #task-title{
+        width: 50vw;
+    }
+    #task-date{
+        width:40vw;
+    }
+    .sub-input{
+        width: 20vw;
+        display: flex;
+        flex-direction: column;
+    }
+    .col-6{
+        margin-top: -30px;
+    }
+}
+@media screen and (min-width:0px) and (max-width:450px) {
+   .btns{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+   }
+   .create-cancel{
+    width: 100px;
+   }
+   .create-submit{
+    width: 100px;
+   }
     .topnav-icons {
         gap: 10px !important;
         padding-right: 0px !important;
@@ -263,11 +327,11 @@ img {
         </div>
         </div>
     <div id="background"></div>
-        <div id="create-pop">
+        <div id="create-pop" style="z-index:1;">
             <h2 id="pop-title">Create a task</h2>
             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-6"> <!--popup -->
                         <div class="input-group">
                             <div class="input">
                                 <label for="task-title">Title</labtiel>
@@ -276,7 +340,7 @@ img {
                             </div>
                             <div class="input">
                                 <label for="task-description">Description</label>
-                                <textarea name="task-description" id="task-description" cols="30" rows="5"
+                                <textarea name="task-description" id="task-description" cols="15" rows="5"
                                     placeholder="Type the description here..." required></textarea>
                             </div>
                         </div>
@@ -298,8 +362,9 @@ img {
                                 </div>
                             </div>
                             <div class="btns">
-                                <button id="create-cancel" type="button" class="create-cancel">Cancel</button>
                                 <button name="create-submit" class="create-submit" type="submit">Save</button>
+                                <button id="create-cancel" type="button" class="create-cancel">Cancel</button>
+
                             </div>
                         </div>
                     </div>

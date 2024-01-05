@@ -4,7 +4,7 @@ require('constant/config.php');
 if (isset($_GET['client_id'])) {
     $clientId = $_GET['client_id'];
 } else {
-    header('location: index.php');
+    header('Location:  index.php');
 }
 // Configure Dates
 date_default_timezone_set("Asia/Calcutta");
@@ -12,7 +12,7 @@ $today = new DateTime();
 // Goal Insertion
 if (isset($_POST['savegoal'])) {
     $client = $_POST['clientid'];
-    $dietition = $_POST['dietition'];
+    $dietition = $_POST['dietitian'];
     $goal = $_POST['setgoal'];
     $isSame = false;
     $query = "SELECT `sleep` FROM `goals` WHERE `client_id` = '{$client}'";
@@ -29,14 +29,14 @@ if (isset($_POST['savegoal'])) {
         $query = "UPDATE `goals` SET `sleep` = $goal WHERE `client_id` = $client";
         $result = $conn->query($query) or die("Query Failed");
         if ($conn->affected_rows == 0) {
-            $query = "INSERT INTO `goals`(`dietition_id`, `client_id`, `sleep`) VALUES ('{$dietition}','{$client}','{$goal}')";
+            $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `sleep`) VALUES ('{$dietition}','{$client}','{$goal}')";
             $result = $conn->query($query) or die("Query Failed");
         }
 
         if ($result) {
             unset($_POST["savegoal"]);
             unset($_POST["setgoal"]);
-            header(("Location:track_stats_sleep.php?client_id={$clientId}"));
+            header(("Location: track_stats_sleep.php?client_id={$clientId}"));
         }
     }
 }

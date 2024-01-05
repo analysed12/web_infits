@@ -4,7 +4,7 @@ require('constant/config.php');
 if(isset($_GET['client_id'])){
     $clientId = $_GET['client_id'];
 }else{
-    header('location: index.php');
+    header('Location:  index.php');
 }
 // Configure Dates
 date_default_timezone_set("Asia/Calcutta");
@@ -12,7 +12,7 @@ $today = new DateTime();
 // Goal Insertion
 if(isset($_POST['savegoal'])){
     $client = $_POST['clientid'];
-    $dietition = $_POST['dietition'];
+    $dietition = $_POST['dietitian'];
     $goal =$_POST['setgoal'];
     $isSame =false;
     $query = "SELECT `weight` FROM `goals` WHERE `client_id` = '{$client}'";
@@ -29,14 +29,14 @@ if(isset($_POST['savegoal'])){
         $query = "UPDATE `goals` SET `weight` = $goal WHERE `client_id` = $client";
         $result = $conn->query($query) or die("Query Failed");
         if($conn->affected_rows == 0){
-            $query="INSERT INTO `goals`(`dietition_id`, `client_id`, `weight`) VALUES ('{$dietition}','{$client}','{$goal}')";
+            $query="INSERT INTO `goals`(`dietitian_id`, `client_id`, `weight`) VALUES ('{$dietition}','{$client}','{$goal}')";
             $result = $conn->query($query) or die("Query Failed");
         }
         
         if($result){
             unset($_POST["savegoal"]);
             unset($_POST["setgoal"]);
-            header(("Location: track_stats_weight.php?client_id={$clientId}"));
+            header(("Location:  track_stats_weight.php?client_id={$clientId}"));
         }
     }
 }
@@ -950,7 +950,7 @@ tst-left-t {
                     <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                         <input hidden name="dietition" value="<?php echo($dietition) ?>">
                         <input name="setgoal" value="<?=$progressBarData[0]['weight']?>" required min="1" type="number"
-                            id="set-goal" placeholder="00000 BPM">
+                            id="set-goal" placeholder="00000 Kg">
                         <input name="clientid" type="hidden" value="<?php echo($clientId) ?>">
                         <button type="submit" name="savegoal" id="save-goal">Set</button>
                     </form>

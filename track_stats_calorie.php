@@ -73,7 +73,7 @@ $dietition = $_SESSION['name'];
 if (isset($_GET['client_id'])) {
     $clientId = $_GET['client_id'];
 } else {
-    header(("Location: index.php}"));
+    header(("Location:  index.php}"));
 }
 
 // Goal Insertion
@@ -102,7 +102,7 @@ if (isset($_POST['savegoal'])) {
         if ($result) {
             unset($_POST["savegoal"]);
             unset($_POST["setgoal"]);
-            header(("Location: track_stats_calorie.php?client_id={$clientId}"));
+            header(("Location:  track_stats_calorie.php?client_id={$clientId}"));
         }
     }
 }

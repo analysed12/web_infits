@@ -702,7 +702,7 @@ if (isset($_POST['final_update_btn'])){
         $sql1 = "UPDATE `create_plan` SET name='$planname',tags='$tags',start_date='$start_date',end_date='$end_date',features='$features',description='$description',price='$price' WHERE plan_id=$id AND dietitianuserID = '$dietitianuserID'";
         $result1=mysqli_query($conn,$sql1);
         if($result1){
-            header('Location: myplan.php');
+            header('Location:  myplan.php');
         }
         else{
             die(mysqli_error($conn));
@@ -730,14 +730,14 @@ else if (isset($_POST['final_save_btn'])){
     $result2=mysqli_query($conn,$sql2);
 
     if($result2){
-        header('Location: myplan.php');
+        header('Location:  myplan.php');
     }
     else{
         die(mysqli_error($conn));
     }
 }
 else if(isset($_POST['final_cancel_btn'])){
-    header('Location: myplan.php');
+    header('Location:  myplan.php');
     die('');
 }
 ?>
