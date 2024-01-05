@@ -10,23 +10,35 @@ $errors = array();
 include "constant/config.php";
 include "constant/constant.php";
 global $conn;
-function generateCode(){
-    $random =substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 10);
+function generateCode()
+{
+    $random = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 10);
     return $random;
 }
-function getVerificationCode(){
-    global $conn;
-    $code = generateCode();
-    $sql = "SELECT * FROM dietitian WHERE verification_code = '$code'";
-    $res=  $conn->query($sql);
-    if($res->num_rows>0){
-        return getVerificationCode();
-    }else{
-        return $code;
-    }
+function generateReferralCode($fullName)
+{
+    $letters = substr(strtoupper(preg_replace("/[^A-Za-z]/", '', $fullName)), 0, 3);
+    $randomNumber = str_pad(mt_rand(1, 9999999), 7, '0', STR_PAD_LEFT);
+    $referralCode = $letters . $randomNumber;
+    return $referralCode;
 }
+
+function getRandomCodes($fullName)
+{
+    global $conn;
+
+    do {
+        $code = generateCode();
+        $referralCode = generateReferralCode($fullName);
+        $sql = "SELECT * FROM dietitian WHERE verification_code = '$code' AND referral_code='$referralCode'";
+        $res = $conn->query($sql);
+    } while ($res->num_rows > 0);
+
+    return array('verification_code' => $code, 'referral_code' => $referralCode);
+}
+
 if (isset($_SESSION['login_id'])) {
-    header('Location: index.php');
+    header('Location:  index.php');
     exit;
 }
 require 'vendor/autoload.php';
@@ -37,16 +49,16 @@ $client->setClientId('3315662633-6joqrjkcqimq2ms96p4ls8ie96e5liq1.apps.googleuse
 // Enter your Client Secrect
 $client->setClientSecret('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');
 // Enter the Redirect URL
-if(basename($_SERVER['PHP_SELF']) == 'register'){
-    $client->setRedirectUri($DEFAULT_PATH.'register.php');
-}else{
-    $client->setRedirectUri($DEFAULT_PATH.'login.php');
+if (basename($_SERVER['PHP_SELF']) == 'register') {
+    $client->setRedirectUri($DEFAULT_PATH . 'register.php');
+} else {
+    $client->setRedirectUri($DEFAULT_PATH . 'login.php');
 }
 // Adding those scopes which we want to get (email & profile Information)
 $client->addScope("email");
 $client->addScope("profile");
 
-if (isset($_GET['code'])):
+if (isset($_GET['code'])) :
     $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
     if (!isset($token["error"])) {
         $client->setAccessToken($token['access_token']);
@@ -67,34 +79,36 @@ if (isset($_GET['code'])):
             $_SESSION['dietitianuserID'] = $row['dietitianuserID'];
             $_SESSION['name'] = $row['name'];
             $_SESSION['dietitian_id'] = $row['dietitian_id'];
-            header('Location: index.php');
+            header('Location:  index.php');
             exit;
         } else {
-            $verification_code = getVerificationCode();
+            $randomCodes = getRandomCodes($full_name);
+            $verification_code = $randomCodes['verification_code'];
+            $referral = $randomCodes['referral_code'];
             // if user not exists we will insert the user
-            $query = "INSERT INTO `dietitian`(`dietitianuserID`,`name`,`email`,`p_p`,`socialLogin`,`verification_code`) VALUES('$id','$full_name','$email','$profile_pic',1,'$verification_code')";
-            // echo $query; exit;
+            $query = "INSERT INTO `dietitian`(`dietitianuserID`,`name`,`email`,`p_p`,`socialLogin`,`verification_code`,`referral_code`) VALUES('$id','$full_name','$email','$profile_pic',1,'$verification_code','$referral')";
             $insert = mysqli_query($conn, $query);
             if ($insert) {
                 $fetch = mysqli_query($conn, "SELECT * FROM `dietitian` WHERE dietitianuserID = '$id'");
                 $dietitian_id = mysqli_fetch_assoc($fetch)['dietitian_id'];
+                $fetch1 = mysqli_query($conn, "INSERT INTO `notification_show_status`( `dietitian_id`, `dietitianuserID`, `show_all_notifications`, `show_client_updates`, `show_consultation_reminders`, `show_appointments`, `show_live_notifications`, `show_new_messages`, `show_payment_notifications`, `show_client_calls`) VALUES ('$dietitian_id','$id',1,1,1,1,1,1,1,1)");
                 $_SESSION['login_id'] = $id;
                 $_SESSION['dietitianuserID'] = $id;
                 $_SESSION['name'] = $full_name;
                 $_SESSION['dietitian_id'] = $dietitian_id;
-                header('Location: index.php');
+                header('Location:  index.php');
                 exit;
             } else {
                 echo "Sign up failed!(Something went wrong).";
             }
         }
     } else {
-        
-        header('Location: login.php');
+
+        header('Location:  login.php');
         exit;
     }
-else:
-    // Google Login Url = $client->createAuthUrl(); 
+else :
+// Google Login Url = $client->createAuthUrl(); 
 endif;
 
 /* -------------------------- Beginning of Facebook login code section --------------------------*/
@@ -115,7 +129,7 @@ endif;
 //   global $fb;
 //   $helper = $fb->getRedirectLoginHelper();
 //   $loginUrl = $helper->getLoginUrl('http://localhost/Infits_Web_App/', ['email', 'public_profile']);
-//   header('Location: ' . $loginUrl);
+//   header('Location:  ' . $loginUrl);
 // }
 
 // // define the callback function
@@ -141,9 +155,38 @@ endif;
 // 			// User does not exist, insert new record into database
 // 			$query = "INSERT INTO dietitian (dietitianuserID, name, email) VALUES ('$facebook_id', '$name', '$email')";
 // 			mysqli_query($conn, $query);
+// $insertedDietitianId = mysqli_insert_id($conn); // This gets the auto-generated dietitian_id
+// $insertedDietitianUserId = $facebook_id;
+
+// // Insert the values into the notification_show_status table
+// $insertNotificationStatusQuery = "INSERT INTO notification_show_status (
+//     dietitian_id,
+//     dietitianuserID,
+//     show_all_notifications,
+//     show_client_updates,
+//     show_consultation_reminders,
+//     show_appointments,
+//     show_live_notifications,
+//     show_new_messages,
+//     show_payment_notifications,
+//     show_client_calls
+// ) VALUES (
+//     '$insertedDietitianId',
+//     '$insertedDietitianUserId',
+//     1,  // You can set default values for notification preferences here
+//     1,
+//     1,
+//     1,
+//     1,
+//     1,
+//     1,
+//     1
+// )";
+
+// mysqli_query($conn, $insertNotificationStatusQuery);
 // 		}
 // 		// Redirect User to Dashboard
-// 		header('Location: index.php');
+// 		header('Location:  index.php');
 // 		exit();
 //   } catch(Facebook\Exceptions\FacebookResponseException $e) {
 //     echo 'Graph returned an error: ' . $e->getMessage();
@@ -157,7 +200,7 @@ endif;
 // check if the user is already logged in
 // if (isset($_SESSION['user_id'])) {
 //   // redirect the user to the home page
-//   header('Location: index.php');
+//   header('Location:  index.php');
 //   exit;
 // }
 
@@ -185,6 +228,9 @@ if (isset($_POST['reg_user'])) {
     $mobile = mysqli_real_escape_string($conn, $_POST['mobile']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $password_2 = mysqli_real_escape_string($conn, $_POST['password_2']);
+    $password_3 = mysqli_real_escape_string($conn, $_POST['password_3']);
+    $referral = mysqli_real_escape_string($conn, $_POST['referral_code']);
+    $hash = password_hash($password, PASSWORD_DEFAULT);
 
     // form validation: ensure that the form is correctly filled ...
     // by adding (array_push()) corresponding error unto $errors array
@@ -203,13 +249,21 @@ if (isset($_POST['reg_user'])) {
     if (empty($password)) {
         array_push($errors, "Password is required");
     }
-    if ($password != $password_2) {
+    if (!empty($password_2)) {
+        if ($password != $password_2) {
         array_push($errors, "The two passwords do not match");
     }
+    } else if (!empty($password_3)) {
+        if ($password != $password_3) {
+        array_push($errors, "The two passwords do not match");
+    }
+    }
+    
+    
 
     // first check the database to make sure 
     // a user does not already exist with the same username and/or email
-    $user_check_query = "SELECT * FROM dietitian WHERE dietitianuserID='$dietitianuserID' OR email='$email' LIMIT 1";
+    $user_check_query = "SELECT * FROM dietitian WHERE dietitianuserID='$dietitianuserID' OR email='$email' OR mobile='$mobile' LIMIT 1";
     $result = mysqli_query($conn, $user_check_query);
     $user = mysqli_fetch_assoc($result);
 
@@ -221,17 +275,57 @@ if (isset($_POST['reg_user'])) {
         if ($user['email'] === $email) {
             array_push($errors, "email already exists");
         }
+        if ($user['mobile'] === $mobile) {
+            array_push($errors, "Phone number already exists");
+        }
     }
 
     // Finally, register user if there are no errors in the form
     if (count($errors) == 0) {
-        //	$password = md5($);//encrypt the password before saving in the database
-        $verification_code = getVerificationCode();
-        $query = "INSERT INTO dietitian (dietitianuserID, name, email, mobile, password,`verification_code`) 
-  			  VALUES('$dietitianuserID','$name', '$email', '$mobile', '$password','$verification_code')";
-        mysqli_query($conn, $query);
 
-        header('location: login.php');
+        // $sql_2 = "SELECT dietitian_id, dietitianuserID, referral_users FROM dietitian where referral_code = '$referral'"
+        // $temp = mysqli_query($conn, $sql_2);
+        // $temp_user = mysqli_fetch_assoc($temp);
+        // $prepare = json_encode(array("{$temp_user['dietitian_id']}"=>"{$temp_user['dietitianuserID']}"));
+        //	$password = md5($);//encrypt the password before saving in the database
+        $randomCodes = getRandomCodes($name);
+        $verification_code = $randomCodes['verification_code'];
+        $referral = $randomCodes['referral_code'];
+        $query = "INSERT INTO dietitian (`dietitianuserID`, `name`, `email`, `mobile`, `password`,`verification_code`,`referral_code`) 
+  			  VALUES('$dietitianuserID','$name', '$email', '$mobile', '$hash','$verification_code','$referral')";
+        mysqli_query($conn, $query);
+        $fetchNewDietitian = mysqli_query($conn, "SELECT `dietitian_id`, `dietitianuserID` FROM `dietitian` WHERE `dietitianuserID` = '$dietitianuserID'");
+        $newDietitianData = mysqli_fetch_assoc($fetchNewDietitian);
+        $newDietitianID = $newDietitianData['dietitian_id'];
+        $newDietitianUserID = $newDietitianData['dietitianuserID'];
+        $insertNotificationStatusQuery = "INSERT INTO `notification_show_status` (
+            `dietitian_id`, 
+            `dietitianuserID`, 
+            `show_all_notifications`, 
+            `show_client_updates`, 
+            `show_consultation_reminders`, 
+            `show_appointments`, 
+            `show_live_notifications`, 
+            `show_new_messages`, 
+            `show_payment_notifications`, 
+            `show_client_calls`
+        ) VALUES (
+            '$newDietitianID', 
+            '$newDietitianUserID', 
+            1,  
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1
+        )";
+
+        mysqli_query($conn, $insertNotificationStatusQuery);
+
+
+        header('Location:  login.php');
     }
 }
 
@@ -240,7 +334,7 @@ if (isset($_POST['reg_user'])) {
 // LOGIN USER
 if (isset($_POST['login_user'])) {
     $dietitianuserID = mysqli_real_escape_string($conn, $_POST['dietitianuserID']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $password = $_POST['password'];
 
     if (empty($dietitianuserID)) {
         array_push($errors, "dietitianuserID is required");
@@ -256,59 +350,66 @@ if (isset($_POST['login_user'])) {
 
 
             // emailid entered
-            $query = "SELECT * FROM dietitian WHERE `email`='$dietitianuserID' AND `password`='$password'";
+            //$query = "SELECT * FROM dietitian WHERE `email`='$dietitianuserID' AND `password`='$password'";
+            $query = "SELECT * FROM dietitian WHERE `email`='$dietitianuserID'";
             $results = mysqli_query($conn, $query);
+            $row = mysqli_fetch_assoc($results);
             if (mysqli_num_rows($results) == 1) {
                 // changing dietitianuseriid now from email to username
-                $sql = "SELECT * FROM dietitian WHERE `email`='$dietitianuserID'";
+                /*$sql = "SELECT * FROM dietitian WHERE `email`='$dietitianuserID'";
                 $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
+                $row = mysqli_fetch_assoc($result);*/
 
-                # creating the Session
-                $_SESSION['dietitianuserID'] = $row['dietitianuserID'];
-                $_SESSION['name'] = $row['name'];
-                $_SESSION['dietitian_id'] = $row['dietitian_id'];
-                // $_SESSION['name'] = $row['dietitianuserID'];
-                // echo $row['dietitianuserID'] ;
-                $_SESSION['success'] = "You are now logged in";
-                header('location: index.php');
+                if (password_verify($password, $row['password'])) {
+                    # creating the Session
+                    $_SESSION['dietitianuserID'] = $row['dietitianuserID'];
+                    $_SESSION['name'] = $row['name'];
+                    $_SESSION['dietitian_id'] = $row['dietitian_id'];
+                    // $_SESSION['name'] = $row['dietitianuserID'];
+                    // echo $row['dietitianuserID'] ;
+                    $_SESSION['success'] = "You are now logged in";
+                    header('Location:  index.php');
+                } else {
+                    array_push($errors, "Wrong password");
+                }
             } else {
-                array_push($errors, "Wrong Email/password combination");
-                // header('location: sign_in_new.php');
+                array_push($errors, "Wrong Email");
+                // header('Location:  sign_in_new.php');
             }
         } else {
 
             // Username entered
-            $query = "SELECT * FROM dietitian WHERE `dietitianuserID`='$dietitianuserID' AND `password`='$password'";
+            //$query = "SELECT * FROM dietitian WHERE `dietitianuserID`='$dietitianuserID' AND `password`='$password'";
+            $query = "SELECT * FROM dietitian WHERE `dietitianuserID`='$dietitianuserID'";
             $results = mysqli_query($conn, $query);
+            $row = mysqli_fetch_assoc($results);
             if (mysqli_num_rows($results) == 1) {
 
+                    if (password_verify($password, $row['password'])) {
+                        # creating the Session
+                       $_SESSION['dietitianuserID'] = $row['dietitianuserID'];
+                       $_SESSION['name'] = $row['name'];
+                       $_SESSION['dietitian_id'] = $row['dietitian_id'];
+
+                       $_SESSION['name'] = $dietitianuserID;
+                       $_SESSION['success'] = "You are now logged in";
+                       header('Location:  index.php');
+                       exit();
+                    } else {
+                        array_push($errors, "Wrong Password");
+                    }
+                    
 
 
-                $sql = "SELECT * FROM dietitian WHERE `dietitianuserID`='$dietitianuserID'";
+               /* $sql = "SELECT * FROM dietitian WHERE `dietitianuserID`='$dietitianuserID'";
                 $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
+                $row = mysqli_fetch_assoc($result);*/
 
-                # creating the Session
-                $_SESSION['dietitianuserID'] = $row['dietitianuserID'];
-                $_SESSION['name'] = $row['name'];
-                $_SESSION['dietitian_id'] = $row['dietitian_id'];
-                // var_dump($_SESSION);
-                // print_r($result);
-                // echo '123';
-                // die();
-                $_SESSION['name'] = $dietitianuserID;
-                $_SESSION['success'] = "You are now logged in";
-                header('location: index.php');
-
+               
             } else {
-                array_push($errors, "Wrong Username/password combination");
-                // header('location: sign_in_new.php');
+                array_push($errors, "Wrong Username");
+                // header('Location:  sign_in_new.php');
             }
         }
-
     }
 }
-
-
-?>

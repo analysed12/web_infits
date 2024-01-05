@@ -1,5 +1,6 @@
 <?php
 include('navbar.php');
+error_reporting(0);
 ?>
 
 <!DOCTYPE html>
@@ -178,6 +179,12 @@ include('navbar.php');
         letter-spacing:1.5px;
         
     } 
+    .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            row-gap: 1vh;
+            column-gap: 0.5vw;        
+        }
     @media (min-width: 336px) and{
         .container, .container-sm {
             max-width: 100%;
@@ -292,8 +299,10 @@ if(isset($_POST['search-btn']))
                         $date2 = strtotime($row1["end_date"]);
                         $months = 0;
                         
-                        while (($date1 = strtotime('+1 MONTH', $date1)) <= $date2)
+                        while (($date1 = strtotime('+1 MONTH', $date1)) <= $date2){
                             $months++;
+                        }
+                        
               ?>
 
                     <div class="card" container>
@@ -333,12 +342,15 @@ if(isset($_POST['search-btn']))
                                 <div class="row" >FEATURES</div>
                                 <div class="row">
                                     <?php
-                                            $mark=explode(',', $row1['features']);//what will do here
+                                        echo '<div class="features-grid">';
+                                            $mark=explode(',', $row['features']);
                                             foreach($mark as $out) {
-                                              
-                                                echo '<div style="display:inline-block;width:auto; margin-right:0.2px;"><i style="color:black;" class="fa-regular fa-circle-check"></i></div>';
-                                                echo '<div style="display:inline-block;width:auto;">'.$out.'</div>';
+                                                echo '<div>';  
+                                                echo '<div style="display:inline-block;width:auto;margin-right:5px; "><i style="color:black;" class="fa-regular fa-circle-check"></i></div>';
+                                                echo '<div style="display:inline-block;width:auto; margin-right:20px;">'.$out.'</div>';
+                                                echo '</div>';
                                             }
+                                        echo '</div>';  
                                             ?>
                                 </div>
                             </div>
@@ -361,12 +373,12 @@ else{
  if($result = mysqli_query($conn, $sql)){
      if(mysqli_num_rows($result) > 0){
              while($row = mysqli_fetch_array($result)){
-                $date1 = strtotime($row["start_date"]);
-                        $date2 = strtotime($row["end_date"]);
-                        $months = 0;
-                        
-                        while (($date1 = strtotime('+1 MONTH', $date1)) <= $date2)
-                            $months++;
+            $startDate = new DateTime($row["start_date"]);
+            $endDate = new DateTime($row["end_date"]);
+
+            $interval = $startDate->diff($endDate);
+            $months = ($interval->y * 12) + $interval->m;
+             
                ?>
 
                     <div class="card" container>
@@ -400,17 +412,20 @@ else{
                                 </div>
 
                             </div>
-                            <div class="card-middle row"><?php echo $row['description']?></div>
+                            <div class="card-middle row" style=" margin-top:10px; line-height:1em; min-height:2em; max-height:2em; display:-webkit-box; overflow:hidden; -webkit-line-clamp:2; -webkit-box-orient: vertical;  max-height: 2em; white-space: normal; text-overflow: ellipsis;"><?php echo $row['description']?></div>
                             <div class="card-below row">
                                 <div class="col">
                                     <div class="row">FEATURES</div>
                                     <?php
-                                            $mark=explode(',', $row['features']);//what will do here
+                                        echo '<div class="features-grid" style="max-height:3em; min-height:3em; overflow:hidden;">';
+                                            $mark=explode(',', $row['features']);
                                             foreach($mark as $out) {
+                                                echo '<div>';  
                                                 echo '<div style="display:inline-block;width:auto;margin-right:5px; "><i style="color:black;" class="fa-regular fa-circle-check"></i></div>';
-                                                echo '<div style="display:inline-block;width:auto; margin-right:20px;font-style:normal; font-size:20px;font-weight:400!important;letter-spacing:0.9px;">'.$out.'</div>';
-                                            
+                                                echo '<div style="display:inline-block;width:auto; margin-right:20px;">'.$out.'</div>';
+                                                echo '</div>';
                                             }
+                                        echo '</div>';  
                                             ?>
                                 </div>
                             </div>

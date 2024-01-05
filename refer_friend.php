@@ -1,4 +1,11 @@
-<?php require('constant/config.php'); ?>
+<?php require('constant/config.php');
+session_start();
+if (isset($_SESSION['dietitian_id'])) {
+    $id = $_SESSION['dietitian_id'];
+    $sql = "SELECT * FROM dietitian WHERE `dietitian_id`='$id' ";
+    $res =  $conn->query($sql);
+    $result = mysqli_fetch_assoc($res);
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -125,9 +132,9 @@
             /* border: 1px solid red; */
             display: flex;
             align-items: center;
-            justify-content: center;
+            /* justify-content: center; */
             flex-direction: column;
-            justify-content: space-between;
+            /* justify-content: space-between; */
             list-style: none;
             padding: 20px;
             position: relative;
@@ -165,6 +172,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        #content .flex-container .friend-list-box ul li .user .ppf{
+            width: 3rem;
+            height: 3rem;
         }
 
         #content .flex-container .friend-list-box ul li .user .para-box {
@@ -204,14 +215,54 @@
             color: #45e945;
         }
         body::-webkit-scrollbar {
-  display: none;
-}
+            display: none;
+        }
 
         @media only screen and (max-width:768px) {
             #content h1{
                 margin-left:1.5rem;
             }
             
+        }
+
+        .popup1{
+            display: none;
+            top: 0;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            transition: opacity 500ms;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup{
+            display: flex;
+            flex-direction: column;
+            width: 467px;
+            padding: 20px;
+            left: 500px;
+            top: 20px;
+            background: #FFFFFF;
+            border: 1px solid #DDD9D9;
+            border-radius: 17px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+            justify-content: center;
+            align-items: center;
+        }
+        .popup .close:hover {
+            cursor: pointer;
+            color: #06D85F;
+        }
+        .popup .content{
+            max-height: 30%;
+        }
+        @media screen and (max-width: 1200px) {
+            .popup {
+                margin-left: 10% !important;
+                margin-right: 10% !important;
+                width: auto
+            }
         }
     </style>
 
@@ -230,7 +281,7 @@
                 <img src="<?=$DEFAULT_PATH?>assets/images/Istockphoto.svg" alt="SVG">
                 <div class="refer-code-box">
                     <div class="input-group mb-3">
-                        <input type="text" id="copy-input"  class="form-control border-primary text-primary border-end-0" placeholder="Copy code" aria-label="Referral code" aria-describedby="button-addon2">
+                        <input type="text" id="copy-input"  class="form-control border-primary text-primary border-end-0" placeholder="Copy code" aria-label="Referral code" aria-describedby="button-addon2" value="<?php echo $result['referral_code'];?>">
                         <button id="copy-button" class="btn btn-outline-primary border-start-0" type="button" id="button-addon2">copy</button>
                       </div>
                    
@@ -239,39 +290,87 @@
             </div>
             <div class="friend-list-box">
                 <div class="heading-box">
-                    <h3>Invite a friend</h3>
+                    <h3>Referral Users</h3>
                     <img src="<?=$DEFAULT_PATH?>assets/images/search.svg" alt="Search" style="border-radius:100%;border:1px solid black;padding:8px;cursor:pointer; color:#051532;">
                 </div>
                 <ul>
-
-                    <?php for ($i = 0; $i < 10 ; $i++) { ?>
-                        <li style="cursor: pointer;">
-                            <a href="#" class="user">
-                                <img src="<?=$DEFAULT_PATH?>assets/images/Refer_Profile.svg" alt="profile_photo">
-                                <div class="para-box">
-                                    <p class="name">Tongkun Lee</p>
-                                    <p class="company">Facebook</p>
+                <?php 
+                    foreach (json_decode($result['referral_users']) as $key){ 
+                        $sql__ = "SELECT * FROM dietitian WHERE dietitianuserID='$key'";
+                        $result = $conn->query($sql__);
+                        $row = $result->fetch_assoc();
+                        echo "<li style='cursor: pointer;'>
+                            <div href='#' class='user'>
+                                <img src=";
+                        if ($row['p_p']==='' || $row['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}
+                        else{echo 'uploads/profile/images/'.$row['p_p'];}
+                        echo " alt='profile_photo' class='ppf'>
+                                <div class='para-box'>
+                                    <p class='name'>$key</p>
                                 </div>
-                            </a>
-                            <a href="#" class="status">
-                                <span>Invite</span>
-                            </a>
-                        </li>
-                    <?php } ?>
+                            </div>
+                                <span class='status'>".date('Y-m-d', strtotime($row['joined_date']))."</span>
+                        </li>";
+                    }
+                ?>
+                
                 </ul>
             </div>
         </div>
     </div>
+    <div class="popup1">
+        <div class="popup">
+            <div style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+                <h5>Share Via <img src="<?= $DEFAULT_PATH ?>assets/images/Share.svg"></h5>
+                <div class="close" style="align-self:flex-start;font-size:1.5rem;">&times;</div>
+            </div>
+            <div class="content" style="display:flex;gap:1rem;margin-left:1rem">
+                <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img
+                        src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg"></a>
+                <a class="twitter-share-button" href="https://twitter.com/intent/tweet"><img
+                        src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank"> <img
+                        src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"></a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={url}"><img
+                        src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"></a>
+                <img src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg">
+            </div>
+        </div>
+    </div>
 <script>
-const copyInput = document.getElementById("copy-input");
-const copyButton = document.getElementById("copy-button");
+        const copyButton = document.getElementById("copy-button");
+        const copyInput = document.getElementById("copy-input");
 
-copyButton.addEventListener("click", () => {
-  copyInput.select();
-  document.execCommand("copy");
-  alert("Copied to clipboard");
-});
- </script>
+        const close = document.getElementsByClassName("close")[0];
+        const share = document.getElementById("share");
+        const status = document.getElementsByClassName("status");
+
+        copyButton.addEventListener("click", () => {
+            copyInput.select();
+            document.execCommand("copy");
+            copyButton.textContent = "Copied!";
+            setTimeout(() => {
+                copyButton.textContent = "Copy";
+            }, 2000);
+        });
+
+        close.addEventListener("click",()=>{
+            document.getElementsByClassName("popup1")[0].style.display = "none";
+            copyButton.disabled = false
+        });
+        
+        share.addEventListener("click",()=>{
+            document.getElementsByClassName("popup1")[0].style.display = "flex";
+            copyButton.disabled = true
+        });
+        
+        Array.from(status).forEach(element => {
+            element.addEventListener("click",()=>{
+                document.getElementsByClassName("popup1")[0].style.display = "flex";
+                copyButton.disabled = true
+            });
+        });
+</script>
 
  <?php require('constant/scripts.php'); ?>
     

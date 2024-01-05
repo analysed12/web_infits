@@ -117,17 +117,27 @@ $res2 = mysqli_query($conn, $sql2);
             font-size: 15px;
             line-height: 18px;
         }
-
+        .ellipsis{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    max-height: 1em;
+    white-space: normal;
+    text-overflow: ellipsis;
+    font-size: 25px;
+    cursor: pointer;
+}
         .card-food {
             font-size: 23px;
             font-weight: 580;
-            line-height: 18px;
+            line-height: 20px;
             letter-spacing: -0.11428570002317429px;
             text-align: left;
             margin-top: -20px;
             width: 200px;
             margin-bottom: 5px;
-            margin-top: -10px;
+            margin-top: 8px;
         }
 
         .card-calorie {
@@ -143,12 +153,15 @@ $res2 = mysqli_query($conn, $sql2);
         }
 
         .card-num-circle {
-            background: #9C74F5;
-            border-radius: 50px;
-            color: white;
-            padding: 5px
-        }
-
+    background: #9C74F5;
+    border-radius: 50%;
+    color: white;
+    padding-left: 8px;
+    padding-top: 5px;
+    height: 25px;
+    width:25px;
+    margin-top: -7px;
+}
         .card-num {
             font-style: normal;
             font-weight: 500;
@@ -255,6 +268,19 @@ $res2 = mysqli_query($conn, $sql2);
             }
 
         }
+        .popupholder{
+    display: none;
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.569);
+    transition: opacity 500ms;
+    justify-content: center;
+    align-items: center;
+    z-index:10;
+}
+   
     </style>
 </head>
 
@@ -272,6 +298,9 @@ $res2 = mysqli_query($conn, $sql2);
             </div>
         </div>
     </div>
+    <div class="popupholder">
+        <?php include("namehover.php"); ?>
+    </div>
 
     <div class="flex row">
         <?php while ($d = mysqli_fetch_assoc($res)) {
@@ -279,9 +308,10 @@ $res2 = mysqli_query($conn, $sql2);
             $recipe_recipe = explode('},{', $recipeDirections);
             $steps = !empty($recipeDirections) && $recipeDirections !== '{}' ? count($recipe_recipe) : 0;
             $nutritional = json_decode($d['recipe_nutritional_information'], true);
+            $temp_data=array("recipe_name"=>$d['recipe_name'],"recipe_nutritional_information"=>$d['recipe_nutritional_information'],"recipe_img"=>$d['recipe_img']);
 
         ?>
-            <div class="card d-flex" style="padding:15px; width:325px; border-radius:16px;height:204px;margin:25px 40px;">
+            <div class="card d-flex" style="padding:15px; width:310px; border-radius:16px;height:238px;margin:35px 35px;">
                 <div class="card-upper d-flex justify-content-between">
                     <p id="bu" class="card-upper-text"> Added Recipe </p>
                     <p id="bu" class="card-upper-text"><img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:10px"> <?php echo $d['recipe_time']; ?> </p>
@@ -292,14 +322,14 @@ $res2 = mysqli_query($conn, $sql2);
                     } else {
                         $imgSrc = $DEFAULT_PATH . "assets/images/Pancake.svg";
                     } ?>
-                    <img src="<?= $imgSrc ?>" style="margin-top:-63px;height:126px; width:201px;margin-left:4px; object-fit:cover;" />
+                    <img src="<?= $imgSrc ?>" style="margin-top:-20px;height:116px; width:160px;margin-left:4px; object-fit:cover;" />
                 </div>
-                <div class="d-flex justify-content-between">
-                    <p class="card-food"><?php echo $d['recipe_name'] ?></p>
+                <div class="d-flex justify-content-between"  onmouseover='toggleShowHide(stuff=<?= json_encode($temp_data)?>)' onmouseout='toggleShowHide(stuff=<?= json_encode($temp_data)?>)'>
+                    <p class="card-food ellipsis"><?php echo $d['recipe_name'] ?></p>
                     <div class="header">
                         <div class="dropdown ">
                             <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
-                                <img class="" src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:-30px;">
+                                <img class="" src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:-10px;">
                             </div>
 
                             <div id="myDropdownContent" class="dropdown-content dropdown-card">
@@ -324,23 +354,24 @@ $res2 = mysqli_query($conn, $sql2);
             $drecipe_recipe = explode('}, {', $drecipeDirections);
             $steps = count($drecipe_recipe);
             $nutritional = json_decode($d['drecipe_nutritional_information'], true);
+            $temp_data=array("drecipe_name"=>$d['drecipe_name'],"recipe_nutritional_information"=>$d['drecipe_nutritional_information']);
 
         ?>
 
-            <div class="card d-flex" style="padding:15px; width:325px; border-radius:16px;height:204px;margin:25px 40px;">
+            <div class="card d-flex" style="padding:15px; width:310px; border-radius:16px;height:238px;margin:35px 35px;">
                 <div class="card-upper d-flex justify-content-between">
                     <p id="bu" class="card-upper-text"> Default Recipe </p>
                     <p id="bu" class="card-upper-text"><img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:10px"> <?php echo $d['drecipe_time']; ?> </p>
                 </div>
                 <div class="img-dis" style="width:100%; text-align:center;">
-                    <img src="<?= $DEFAULT_PATH ?>assets/images/Pancake.svg" style="margin-top:-63px;height:126px; width:201px;margin-left:4px; object-fit:cover;" />
+                    <img src="<?= $DEFAULT_PATH ?>assets/images/Pancake.svg" style="margin-top:-20px;height:116px; width:160px;margin-left:4px; object-fit:cover;" />
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p class="card-food"><?php echo $d['drecipe_name'] ?></p>
+                    <p class="card-food ellipsis"  onmouseover='toggleShowHide(stuff="",dstuff=<?=json_encode($d)?>)' onmouseout='toggleShowHide(stuff="",dstuff=<?=json_encode($d)?>)'><?php echo $d['drecipe_name'] ?></p>
                     <div class="header">
                         <div class="dropdown ">
                             <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
-                                <img class="" src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:-30px;">
+                                <img class="" src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:-10px;">
                             </div>
 
                             <div id="myDropdownContent" class="dropdown-content dropdown-card">
@@ -388,6 +419,54 @@ $res2 = mysqli_query($conn, $sql2);
                 }
             }
         }
+        const toggleShowHide=(stuff="",dstuff="")=>{
+        let hover_img = document.getElementsByClassName('hover-img')[0];
+        let aloo_paratha = document.getElementsByClassName("aloo-paratha")[0];
+        let maindiv = document.getElementsByClassName("main-div2")[0];
+        const popholder = document.getElementsByClassName("popupholder")[0];
+        if (popholder.style.display!="block"){
+            popholder.style.display = "block";
+            if (typeof stuff === 'object' && typeof dstuff==='string'){
+                const arr = Array("Calories","Protein (g)","Carbohydrates (g)","Fibre (g)")
+                let i = 0;
+                const details = JSON.parse(stuff["recipe_nutritional_information"]);
+                Array.from(maindiv.children).forEach(element => {
+                    if (details[arr[i]]==""){
+                        element.firstElementChild.innerHTML= 0;
+                    }else{
+                        element.firstElementChild.innerHTML=details[arr[i]];
+                    }
+                    i++;
+                });
+                aloo_paratha.innerHTML=stuff["recipe_name"];
+                if (stuff['recipe_img']!=="" && stuff['recipe_img']!==null){
+                    hover_img.src = "<?=$DEFAULT_PATH?>uploads/recipe/"+stuff['recipe_img'];
+                }else{
+                    hover_img.src = "<?=$DEFAULT_PATH?>assets/images/Pancake.svg"
+                }
+                
+            }
+            if (typeof dstuff==='object' && typeof stuff==='string'){
+                const arr = Array("Calories","Protein (g)","Carbohydrates (g)","Fibre (g)")
+                let i = 0;
+                const details = JSON.parse(dstuff["drecipe_nutritional_information"]);
+                Array.from(maindiv.children).forEach(element => {
+                    if (details[arr[i]]==""){
+                        element.firstElementChild.innerHTML= 0;
+                    }else{
+                        element.firstElementChild.innerHTML=details[arr[i]];
+                    }
+                    i++;
+                });
+                aloo_paratha.innerHTML=dstuff["drecipe_name"];
+                hover_img.src = "<?=$DEFAULT_PATH?>assets/images/Pancake.svg"
+            }
+            // document.body.style = " background: rgba(0, 0, 0, 0.03579);transition: opacity 500ms;";
+        }else{
+            popholder.style.display = "none";
+            // document.body.style = " background: none;transition: none";
+        }
+    }
     </script>
 
 </body>

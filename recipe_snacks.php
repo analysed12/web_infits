@@ -104,10 +104,8 @@ require('constant/config.php');
         .card-food {
             font-size: 23px;
             font-weight: 580;
-            line-height: 18px;
             letter-spacing: -0.11428570002317429px;
             text-align: left;
-            margin-top: -20px;
             width: 200px;
             margin-bottom: 5px;
         }
@@ -122,6 +120,17 @@ require('constant/config.php');
             margin-top: 5px;
             display: flex;
             color: #A3A1A1;
+        }
+        .ellipsis{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    max-height: 1em;
+    white-space: normal;
+    text-overflow: ellipsis;
+    font-size: 25px;
+    cursor: pointer;
         }
 
         .card-num-circle {
@@ -145,7 +154,7 @@ require('constant/config.php');
 
         .dropdown {
             position: absolute;
-            margin-top: -27px;
+            margin-top: -10px;
             display: inline-block;
             right: 0.4em;
         }
@@ -406,17 +415,19 @@ require('constant/config.php');
             }
 
         }
+        @media screen and (min-width: 879px) and (max-width:1500px) {
+            .row{
+                margin-left: 200px !important;
+            }
+        }
 
         @media screen and (min-width: 720px) and (max-width:1500px) {
             .heading {
                 justify-content: flex-start !important;
             }
-
-
             .header h4 {
                 margin-top: 39px;
             }
-
             .searchbox {
                 margin-left: 50px !important;
                 margin-top: 10px;
@@ -436,11 +447,7 @@ require('constant/config.php');
             }
 
             .row {
-                margin: 0px auto !important;
-            }
-
-            .card {
-                margin: 10px auto !important;
+                margin: 20px  !important;
             }
 
             .card-food {
@@ -476,21 +483,15 @@ require('constant/config.php');
         }
 
         @media screen and (min-width:0px) and (max-width:720px) {
-            .butt {
-                position: absolute !important;
-                right: 0 !important;
-                bottom: 0 !important;
-            }
-
             .searchbox {
-                margin-left: 60px !important;
+                margin-left: 60px;
             }
 
             .category {
                 display: flex;
                 flex-direction: row;
                 overflow-x: auto;
-                margin-left: 50px;
+                margin: 10px auto !important;
             }
 
             .heading {
@@ -507,7 +508,6 @@ require('constant/config.php');
                 left: -1px;
                 margin-right: 420px;
                 gap: 50px;
-                margin-left: -10px !important;
             }
 
             .recipe {
@@ -522,12 +522,12 @@ require('constant/config.php');
                 margin: 20px auto !important;
             }
 
-            .row {
-                margin: 10px auto !important;
+            .card {
+                margin: 20px 20px!important;
             }
 
-            .card {
-                margin: 25px auto !important;
+            .row {
+                margin: auto !important;
             }
 
             .card-food {
@@ -548,13 +548,56 @@ require('constant/config.php');
                 margin-top: 0px;
                 background-color: #f9f9f9;
                 min-width: 150px;
-                left: -120px;
+                left: -100px;
+            }
+
+            .butt {
+                position: absolute !important;
+                right: 0 !important;
+                bottom: 0 !important;
+            }
+
+        }
+        @media screen and (min-width:721px) and (max-width:999px) { 
+            .row{
+                justify-content: center;
+            }
+        }
+        @media screen and (min-width:1100px) and (max-width:1375px) { 
+            .row{
+                padding-left: 10vw;
             }
         }
 
+        @media screen and (min-width:300px) and (max-width:699px) { 
+            .row{
+                justify-content: center;
+            }
+        }
+        @media screen and (min-width:300px) and (max-width:340px){
+    .card{
+        width: 300px !important;
+        margin-left:10px !important;
+        margin-right:10px !important;
+    }
+    .card-upper-text{
+        width:110px !important;
+         margin-left:-0px ;
+      }
+    }@media screen and (min-width:0px) and (max-width:400px){
+    .searchbox{
+        width:270px;
+    }
+    }
         @media screen and (min-width:300px) and (max-width:400px) {
+            .butt {
+                position: absolute !important;
+                right: 0 !important;
+                bottom: 0 !important;
+            }
+
             input[type=search] {
-                width: 150px !important;
+                width: 50% !important;
             }
 
             h3.recipe {
@@ -565,6 +608,20 @@ require('constant/config.php');
                 margin-left: 3rem !important;
             }
         }
+       
+        .popupholder{
+    display: none;
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.569);
+    transition: opacity 500ms;
+    justify-content: center;
+    align-items: center;
+    z-index:10;
+}
+        
     </style>
     <!-- link ref -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -651,6 +708,10 @@ require('constant/config.php');
     $res = mysqli_query($conn, $sql);
     $res2 = mysqli_query($conn, $sql2);
     ?>
+    <div class="popupholder">
+        <?php include("namehover.php"); ?>
+    </div>
+
 
     <div class="flex row">
         <?php $counter = 0;
@@ -662,12 +723,14 @@ require('constant/config.php');
             if ($counter == 5) {
                 break;
             }
+            $temp_data=array("recipe_name"=>$d['recipe_name'],"recipe_nutritional_information"=>$d['recipe_nutritional_information'],"recipe_img"=>$d['recipe_img']);
+
             $counter++;
         ?>
-            <div class="card d-flex" style="padding:15px; width:330px; height:220px;border-radius:16px; margin:25px 20px 25px 50px ;">
-                <div class="card-upper d-flex justify-content-between">
+            <div class="card d-flex" style="padding:15px; width:310px; height:238px;border-radius:16px; margin:35px 35px;">
+                <div class="card-upper d-flex justify-content-between" style="white-space:nowrap;">
                     <p id="bu" class="card-upper-text"> Added Recipe </p>
-                    <p id="bu" class="card-upper-text d-flex" style="margin-left:77px;"><img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:10px"></i> <?php echo $d['recipe_time']; ?> </p>
+                    <p id="bu" class="card-upper-text d-flex" ><img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:10px"></i> <?php echo $d['recipe_time']; ?> </p>
                 </div>
                 <div class="img-dis" style="width:100%; text-align:center;">
                     <?php if ($d['recipe_img'] != "") {
@@ -675,10 +738,10 @@ require('constant/config.php');
                     } else {
                         $imgSrc = $DEFAULT_PATH . "assets/images/snacks.svg";
                     } ?>
-                    <img src="<?= $imgSrc ?>" style="margin-top:-65px;height:144px; width:144px; margin-left:15px; object-fit:cover;" />
+                    <img src="<?= $imgSrc ?>" style="margin-top:-5px;height:115px; width:160px; margin-left:15px; object-fit:cover;" />
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p class="card-food"><?php echo $d['recipe_name'] ?></p>
+                    <p class="card-food ellipsis" onmouseover='toggleShowHide(stuff=<?= json_encode($temp_data)?>)' onmouseout='toggleShowHide(stuff=<?= json_encode($temp_data)?>)'><?php echo $d['recipe_name'] ?></p>
                     <div class="header">
                         <div class="dropdown ">
                             <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
@@ -692,7 +755,7 @@ require('constant/config.php');
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between" style="align-items:center;">
+                <div class="d-flex justify-content-between" style="align-items:center; margin-top:-10px;">
                     <p class="card-calorie"> <img src="<?= $DEFAULT_PATH ?>assets/images/calorie.svg" alt=""> <?php echo $nutritional['Calories'] ?> kcal</p>
                     <div class="d-flex align-items-center card-num">
                         <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
@@ -709,18 +772,20 @@ require('constant/config.php');
             if ($counter == 5) {
                 break;
             }
+            $temp_data=array("drecipe_name"=>$d['drecipe_name'],"recipe_nutritional_information"=>$d['drecipe_nutritional_information']);
+
             $counter++;
         ?>
-            <div class="card d-flex" style="padding:15px; width:330px; height:220px;border-radius:16px; margin:25px 20px 25px 50px ;">
-                <div class="card-upper d-flex justify-content-between">
+            <div class="card d-flex" style="padding:15px; width:310px; height:238px;border-radius:16px; margin:35px 35px ;">
+                <div class="card-upper d-flex justify-content-between"  style="white-space:nowrap ;">
                     <p id="bu" class="card-upper-text"> Default Recipe </p>
-                    <p id="bu" class="card-upper-text d-flex" style="margin-left:77px;"><img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:10px"></i> <?php echo $d['drecipe_time']; ?> </p>
+                    <p id="bu" class="card-upper-text d-flex" ><img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:10px"></i> <?php echo $d['drecipe_time']; ?> </p>
                 </div>
                 <div class="img-dis" style="width:100%; text-align:center;">
-                    <img src="<?= $DEFAULT_PATH ?>assets/images/snacks.svg" style="margin-top:-65px;height:144px; width:144px; margin-left:15px; object-fit:cover;" />
+                    <img src="<?= $DEFAULT_PATH ?>assets/images/snacks.svg" style="margin-top:-5px;height:115px; width:160px; margin-left:15px; object-fit:cover;" />
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p class="card-food"><?php echo $d['drecipe_name'] ?></p>
+                    <p class="card-food ellipsis" onmouseover='toggleShowHide(stuff="",dstuff=<?=json_encode($d)?>)' onmouseout='toggleShowHide(stuff="",dstuff=<?=json_encode($d)?>)'><?php echo $d['drecipe_name'] ?></p>
                     <div class="header">
                         <div class="dropdown ">
                             <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
@@ -734,7 +799,7 @@ require('constant/config.php');
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between" style="align-items:center;">
+                <div class="d-flex justify-content-between" style="align-items:center; margin-top: -10px;">
                     <p class="card-calorie"> <img src="<?= $DEFAULT_PATH ?>assets/images/calorie.svg" alt=""> <?php echo $nutritional['Calories'] ?> kcal</p>
                     <div class="d-flex align-items-center card-num">
                         <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
@@ -778,6 +843,54 @@ require('constant/config.php');
                 }
             }
         }
+        const toggleShowHide=(stuff="",dstuff="")=>{
+        let hover_img = document.getElementsByClassName('hover-img')[0];
+        let aloo_paratha = document.getElementsByClassName("aloo-paratha")[0];
+        let maindiv = document.getElementsByClassName("main-div2")[0];
+        const popholder = document.getElementsByClassName("popupholder")[0];
+        if (popholder.style.display!="block"){
+            popholder.style.display = "block";
+            if (typeof stuff === 'object' && typeof dstuff==='string'){
+                const arr = Array("Calories","Protein (g)","Carbohydrates (g)","Fibre (g)")
+                let i = 0;
+                const details = JSON.parse(stuff["recipe_nutritional_information"]);
+                Array.from(maindiv.children).forEach(element => {
+                    if (details[arr[i]]==""){
+                        element.firstElementChild.innerHTML= 0;
+                    }else{
+                        element.firstElementChild.innerHTML=details[arr[i]];
+                    }
+                    i++;
+                });
+                aloo_paratha.innerHTML=stuff["recipe_name"];
+                if (stuff['recipe_img']!=="" && stuff['recipe_img']!==null){
+                    hover_img.src = "<?=$DEFAULT_PATH?>uploads/recipe/"+stuff['recipe_img'];
+                }else{
+                    hover_img.src = "<?=$DEFAULT_PATH?>assets/images/snacks.svg"
+                }
+                
+            }
+            if (typeof dstuff==='object' && typeof stuff==='string'){
+                const arr = Array("Calories","Protein (g)","Carbohydrates (g)","Fibre (g)")
+                let i = 0;
+                const details = JSON.parse(dstuff["drecipe_nutritional_information"]);
+                Array.from(maindiv.children).forEach(element => {
+                    if (details[arr[i]]==""){
+                        element.firstElementChild.innerHTML= 0;
+                    }else{
+                        element.firstElementChild.innerHTML=details[arr[i]];
+                    }
+                    i++;
+                });
+                aloo_paratha.innerHTML=dstuff["drecipe_name"];
+                hover_img.src = "<?=$DEFAULT_PATH?>assets/images/snacks.svg"
+            }
+            // document.body.style = " background: rgba(0, 0, 0, 0.03579);transition: opacity 500ms;";
+        }else{
+            popholder.style.display = "none";
+            // document.body.style = " background: none;transition: none";
+        }
+    }
     </script>
 </body>
 
