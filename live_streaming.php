@@ -1,6 +1,7 @@
 <?php
 include('navbar.php');
-include('save_invite_code.php')
+include('save_invite_code.php');
+// session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -626,7 +627,7 @@ include('save_invite_code.php')
     }
 
     .cross {
-        position: relative;
+        position: absolute;
         width: 41px;
         height: 41px;
         background: linear-gradient(90deg, #2667FF 10.19%, #D553E7 100%);
@@ -787,11 +788,16 @@ include('save_invite_code.php')
             max-width: none;
         }
     }
+    #camera-btn{
+        display: block !important;
+    }
     </style>
 
 </head>
 
 <body>
+    <?php /*include('navbar.php');
+    include('save_invite_code.php');*/ ?>
     <div class="live_call">
         <div class="container" style="padding-top: 10px;">
             <div class="box">
@@ -807,27 +813,35 @@ include('save_invite_code.php')
                     <span class="live">LIVE</span>
                     <span class="eye"><img src="<?=$DEFAULT_PATH?>live/icons/eye-icon.svg"
                             style="margin-right:0.3rem;width:40%;height:50%;margin-top:0.5rem">2k</span>
-                    <span class="cross"></span>
+                            <a href="live.php">
+                     <span class="cross"></span></a>
                 </div>
             </div>
         </div>
 
         <div class="container">
-
+ 
         <?php
 // Check if the 'room' parameter exists in the URL
-if (isset($_GET['room']) && isset($_GET['displayName'])) {
-    $roomID = $_GET['room'];
+//if (isset($_GET['room']) && isset($_GET['displayName']) && isset($_GET['meetingLink'])) {
+//$roomID = $_GET['room'];
+
+if (isset($_GET['displayName']) && isset($_GET['meetingLink'])) {
     $displayName = $_GET['displayName'];
+    $meetingLink = $_GET['meetingLink'];
 
     // Display the room ID and copy button with enhanced styling
     echo '<div style="font-weight: bold; display: flex; align-items: center; ">';
-    echo '  <label style="color: #8C68F8; padding-left: 20px;" for="roomid">Room ID : </label><span id="roomID" style="font-weight: bold; font-size: 18px; background-color: #f2f2f2; padding: 0px 12px; border-radius: 5px; margin-right: 10px;">' . $roomID . '</span>';
-    echo '  <button onclick="copyRoomID()" style="font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; padding: 0px 12px; cursor: pointer;">Copy</button>';
+    /*echo '  <label style="color: #8C68F8; padding-left: 20px;" for="roomid">Room ID : </label><span id="roomID" style="font-weight: bold; font-size: 18px; background-color: #f2f2f2; padding: 0px 12px; border-radius: 5px; margin-right: 10px;">' . $roomID . '</span>';
+    echo '  <button onclick="copyRoomID()" style="font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; padding: 0px 12px; cursor: pointer;">Copy</button>';*/
+
+    echo '  <label style="color: #8C68F8; padding-left: 20px;" for="meetingLink">Meeting Link : </label><span id="meetingLink" style="font-weight: bold; font-size: 18px; background-color: #f2f2f2; padding: 0px 12px; border-radius: 5px; margin-right: 10px;">' . '<a href="'.$DEFAULT_PATH.'/live_streaming.php/?displayName='.$displayName.'&meetingLink='.$meetingLink.'">'.$meetingLink.'</a>' . '</span>';
+    echo '  <button onclick="copyMeetingLink()" style="font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; padding: 0px 12px; cursor: pointer;">Copy</button>';
+    /*echo '<a href="'.$DEFAULT_PATH.'/live_streaming.php/?room='.$roomID.'&displayName='.$displayName.'&meetingLink='.$meetingLink.'">'.$meetingLink.'</a>';*/
     echo '</div>';
 
     // JavaScript function to copy the room ID and displayName to the clipboard
-    echo '
+    /*echo '
     <script>
     function copyRoomID() {
         var roomIDSpan = document.getElementById("roomID");
@@ -844,7 +858,25 @@ if (isset($_GET['room']) && isset($_GET['displayName'])) {
 
         alert("Room ID copied to clipboard: " + roomID + ", displayName: " + displayName);
     }
-    </script>';
+    </script>';*/
+    echo '
+        <script>
+        function copyMeetingLink() {
+            var meetingLinkSpan = document.getElementById("meetingLink");
+            var meetingLink = meetingLinkSpan.textContent || meetingLinkSpan.innerText;
+
+            var displayName = "' . $displayName . '";
+
+            var tempInput = document.createElement("input");
+            tempInput.value = "'. $DEFAULT_PATH .'live_streaming.php?displayName=" + encodeURIComponent(displayName) + "&meetingLink=" + meetingLink;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            alert("Room ID copied to clipboard: displayName: " + displayName + ", meetingLink:" + meetingLink);
+        }
+        </script>';
 } else {
     // Room ID or displayName parameter is missing
     header("Location: live.php");
@@ -895,7 +927,7 @@ if (isset($_GET['room']) && isset($_GET['displayName'])) {
                                 <button id="join-btn">join</button>
                             </div>
 
-                            <button id="camera-btn" class="active">
+                            <button id="camera-btn" class="active" >
                                 <img src="<?=$DEFAULT_PATH?>live/icons/video-icon.svg" alt="">
                             </button>
 
@@ -947,7 +979,7 @@ if (isset($_GET['room']) && isset($_GET['displayName'])) {
         // Close the popup, and redirect to live.php when the end button is clicked
         btnEnd.addEventListener('click', function() {
             overlay.style.display = 'none';
-            window.location.href = 'live.php';
+            window.location = 'live.php';
         });
     });
     </script>

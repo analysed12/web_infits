@@ -1,5 +1,27 @@
 <?php
-include('navbar.php');
+    include('navbar.php');
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "infits";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+     // Get the current date in the format 'Y-m-d'
+     $currentDate = date('Y-m-d');
+
+     // Modify the SQL query to include a WHERE clause for the current date
+     $sql = "SELECT * FROM create_meeting WHERE date = '$currentDate'";
+ 
+     $result = $conn->query($sql);
+
+    //$sql = "SELECT * FROM create_meeting";
+
+    //$result = $conn->query($sql);
 
 ?>
 <!DOCTYPE html>
@@ -12,6 +34,7 @@ include('navbar.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
     
     <style>
         @font-face {
@@ -52,7 +75,8 @@ include('navbar.php');
         }
 
         .streaming_live {
-            width: 652px;
+            width:40vw;
+            min-width: 502px;
             height: 203px;
             background: #FBFBFB;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
@@ -138,6 +162,7 @@ include('navbar.php');
         }
 
         .right_wrapper1 {
+            margin-bottom: 15px;
             width: 324px;
             height: 90px;
             background: #FFFFFF;
@@ -169,7 +194,6 @@ include('navbar.php');
         }
 
         .calendar {
-
             background: #FFFFFF;
             border: 1px solid #CCCCCC;
             border-radius: 15px;
@@ -735,7 +759,7 @@ include('navbar.php');
         <!------------------------------LEFTSIDE------------------------------------->
         <div class="live_leftside">
             <h1>Live</h1>
-            <div class="streaming_live">
+            <div class="streaming_live" style="">
                 <div style="display:flex;justify-content:space-between"><span style="font-size:26px">Now Streaming Live</span> 
                 <a style="background-color:none">
 
@@ -752,7 +776,7 @@ include('navbar.php');
                         </form>
                 </a>
             </div>
-                <div style="margin-top:1rem;display:flex;gap:1rem">
+                <div style="margin-top:1rem;display:flex;gap:1rem;">
                     <img src="<?=$DEFAULT_PATH?>assets/images/live-user-default.svg" style="border-radius:50%;width: 75.67px;height:75.67px;margin-top:0.5rem">
                     <div>
                         <p style="font-size:24px"><?php echo $_SESSION["name"]; ?></p>
@@ -764,18 +788,37 @@ include('navbar.php');
             </div>
             <h4 style="margin-top:1.5rem">Upcoming live calls</h4>
 
-            <div class="leftside_footer">
-                <div class="left_wrapper1">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/live-user-default.svg" style="border-radius:50%;width: 54.67px;height:54.67px">
-                    <p style="font-size: 24px;line-height: 25px;"><?php echo $_SESSION["name"]; ?></p>
-                    <div>
-                        <div style="display:flex;justify-content:center;gap:0.3rem"><img src="<?=$DEFAULT_PATH?>assets/images/Calendar.svg" style="width:17%"> <span>09/05/2022</span></div>
-                        <div style="display:flex;gap:0.3rem;margin-top:0.3rem;padding: 0px 19px;"> <img src="<?=$DEFAULT_PATH?>assets/images/Clock_live.svg" style="width:27%;"> <span>2:00 p.m.</span></div>
-                    </div>
-                    <a href="live_joincall.php" style="background-color:none"> <button class="btn_joincall">Join Call</button></a>
-                    <button class="btn_setreminder">Set Reminder</button>
+            
 
-                </div>
+            <div class="leftside_footer">
+
+                <?php
+                    if ($result->num_rows > 0) {
+                        // output data of each row
+                        while($row = $result->fetch_assoc()) {
+                        echo 
+
+
+                        "<div class='left_wrapper1'>
+                        <img src='".$DEFAULT_PATH."assets/images/live-user-default.svg' style='border-radius:50%;width: 54.67px;height:54.67px'>
+                        <p style='font-size: 24px;line-height: 25px;'> ".$row['title']."</p>
+                        <div>
+                            <div style='display:flex;justify-content:center;gap:0.3rem'><img src='".$DEFAULT_PATH."assets/images/Calendar.svg' style='width:17%'> <span>". $row['date']."</span></div>
+                            <div style='display:flex;gap:0.3rem;margin-top:0.3rem;padding: 0px 19px;'> <img src='".$DEFAULT_PATH."assets/images/Clock_live.svg' style='width:27%;'> <span>". $row['time'] ."</span></div>
+                        </div>
+                        <a href='live_joincall.php' style='background-color:none'> <button class='btn_joincall'>Join Call</button></a>
+                        <button class='btn_setreminder'>Set Reminder</button>
+    
+                    </div> ";
+                    
+                    
+                    }
+                    } else {
+                        echo "0 results";
+                    }
+                ?>
+
+                
                 <div class="left_wrapper1">
                     <img src="<?=$DEFAULT_PATH?>assets/images/live-user-default.svg" style="border-radius: 50%; width: 54.67px; height: 54.67px; filter: invert(0);">
                     <p style="font-size: 24px;line-height: 25px;">john</p>
@@ -815,15 +858,24 @@ include('navbar.php');
                         </div>
                     </div>
                 </div>
-                <div id="calendar"></div>
+
+                <div id="calendar">
+                    <!-- <input id="daterange" type="date-range"> -->
+                </div>
             </div>
           </div> 
         
 
+
             <!-------CALENDER------------------------------------------------------------------------------------------->
 
             <div class="rightside_middle">
-                <div class="right_wrapper1">
+                <!-- <h1 id="meeting-title"></h1>
+                <p id="meeting-description"></p>
+                <p id="meeting-time"></p>
+                <p id="meeting-date"></p> -->
+
+                <!-- <div class="right_wrapper1">
                     <div style="padding:13px;display:flex;gap:1.5rem">
                         <img src="<?=$DEFAULT_PATH?>assets/images/live-user-default.svg" style="border-radius:50%;width: 60.67px;height:60.67px">
                         <div>
@@ -834,16 +886,76 @@ include('navbar.php');
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
+            <div class="d-flex justify-content-center">
+                <!-- <div class="light"> -->
+                    <!-- Add a form to select a date -->
+                    <!-- <form method="POST" action="live.php">
+                        <label for="selectedDate">Select a Date:</label>
+                        <input type="date" id="selectedDate" name="selectedDate">
+                        <input type="submit" value="Show Meetings">
+                    </form> -->
+                    <?php
+                        $servername = "localhost:3306";
+                        $username = "root";
+                        $password = "";
+                        $dbname = "infits";
+
+                        //$title = $_POST['title'];
+                        //$desc = $_POST['desc'];
+                        //$date = $_POST['mydate'];
+                        //$time = $_POST['mytime'];
+
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+
+                        
+
+                        function displayMeetings($conn, $selectedDate) {
+                            $sql = "SELECT * FROM create_meeting WHERE date = ?";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("s", $selectedDate);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            if ($result->num_rows > 0) {
+                                echo "<h3>Meetings scheduled for $selectedDate:</h3>";
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<p>Title: " . htmlspecialchars($row['title']) . "<br>";
+                                    echo "Description: " . htmlspecialchars($row['description']) . "<br>";
+                                    echo "Time: " . htmlspecialchars($row['time']) . "</p>";
+                                    echo "<hr>";
+                                }
+                            } else {
+                                echo "<p>No meetings scheduled for $selectedDate.</p>";
+                            }
+
+                            $stmt->close();
+                        }
+
+                        // Check if a date is selected and call the displayMeetings function
+                        if (isset($_POST['selectedDate'])) {
+                            $selectedDate = $_POST['selectedDate'];
+                            displayMeetings($conn, $selectedDate);
+                        }
+
+                        $conn->close();
+                    ?>
             <div class="create-meet-btn d-flex justify-content-end">
                 <div class="live_footer" style="margin-top:1rem">
-                    <p class="btn-title pt-2">Create Meeting</p><button class="livebutton" id="livebutton"><img
-                            src="<?=$DEFAULT_PATH?>assets/images/create-meeting.svg"
-                            style="width:99.5%; display: flex; align-items: center;"></button>
+                    <p class="btn-title pt-2">Create Meeting</p>
+                    <a href="create_meeting.php">
+                        <button class="livebutton" id="livebutton">
+                            <img src="<?=$DEFAULT_PATH?>assets/images/create-meeting.svg" style="width:99.5%; display: flex; align-items: center;">
+                        </button>
+                    </a>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
         <!------------------------------RIGHTSIDE------------------------------------->
 
     </div>
@@ -877,7 +989,7 @@ include('navbar.php');
 
             <div style="padding:20px;">
                 <p style="font-size: 25px;">Title</p>
-                <input type="text" class="title">
+                <input type="text" class="title" >
             </div>
             <div style=" padding-left:20px;padding-right:20px">
                 <p style="font-size: 25px;">Description (Optional)</p>
@@ -951,7 +1063,6 @@ include('navbar.php');
             const currentDate = new Date();
             const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
 
-
             var i = 0;
             while (i < daysInMonth) {
                 value = obtain_Date(startdate, i);
@@ -1015,306 +1126,692 @@ include('navbar.php');
     </script>
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
     <script>
-        // Define the months and years to be displayed in the dropdown
-        const months = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-        ];
-        const currentYear = new Date().getFullYear();
-        const years = [currentYear - 1, currentYear, currentYear + 1];
 
-        // Set the initial selected month and year to the current month and year
-        const currentDate = new Date();
-        let selectedMonth = months[currentDate.getMonth()];
-        let selectedYear = currentDate.getFullYear();
 
-        $("#selected-month-year").text(selectedMonth + " " + selectedYear);
+                // Define the months and years to be displayed in the dropdown
+                const months = [
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "August",
+                    "September",
+                    "October",
+                    "November",
+                    "December"
+                ];
+                const currentYear = new Date().getFullYear();
+                // const years = [currentYear - 1, currentYear, currentYear + 1];
 
-        // Generate the calendar table
-        let firstDay = new Date(selectedYear, months.indexOf(selectedMonth), 1);
-        let lastDay = new Date(selectedYear, months.indexOf(selectedMonth) + 1, 0);
-        let table = $("<table>");
-        let tbody = $("<tbody>");
-        let row = $("<tr>");
-        let dayNames = ["S", "M", "T", "W", "T", "F", "S"];
-        for (let i = 0; i < dayNames.length; i++) {
-            let th = $("<th>").text(dayNames[i]);
-            row.append(th);
-        }
-        tbody.append(row);
-        let date = 1;
-        let todays = new Date();
-        
-        for (let i = 0; i < 6; i++) {
-            row = $("<tr>");
-            for (let j = 0; j < 7; j++) {
-                if ((i === 0 && j < firstDay.getDay()) || date > lastDay.getDate()) {
-                    let td = $(`<td>`);
-                    row.append(td);
-                } 
-                else {
-                    let td = $(`<td class="d" id="${date}" data-day="${date}">`).text(date);
-                    //  console.log(text.data);
-                    if (selectedMonth === months[todays.getMonth()] && selectedYear === todays.getFullYear() && date === todays.getDate()) {
-                        td.addClass("todays");
-                    }
-                    row.append(td);
-                    date++;
-                }
-            }
-            tbody.append(row);
-        }
-        table.append(tbody);
-        $("#calendar").html(table);
+                // Set the initial selected month and year to the current month and year
+                const currentDate = new Date();
+                let selectedMonth = months[currentDate.getMonth()];
+                let selectedYear = currentDate.getFullYear();
 
-        function updateSelectedMonthYear(month, year) {
-            
-            selectedMonth = month;
-            selectedYear = year;
-            $("#selected-month-year").text(selectedMonth + " " + selectedYear);
+                $("#selected-month-year").text(selectedMonth + " " + selectedYear);
 
-            // Generate the calendar table
-            let firstDay = new Date(selectedYear, months.indexOf(selectedMonth), 1);
-            let lastDay = new Date(selectedYear, months.indexOf(selectedMonth) + 1, 0);
-            let table = $("<table>");
-            let tbody = $("<tbody>");
-            let row = $("<tr>");
-            let dayNames = ["S", "M", "T", "W", "T", "F", "S"];
-            for (let i = 0; i < dayNames.length; i++) {
-                let th = $("<th>").text(dayNames[i]);
-                row.append(th);
-            }
-            tbody.append(row);
-            let date = 1;
-            let today = new Date();
-            // let currentdate = new Date().getDate(); 
-            for (let i = 0; i < 6; i++) {
-                row = $("<tr>");
-                for (let j = 0; j < 7; j++) {
-                    if ((i === 0 && j < firstDay.getDay()) || date > lastDay.getDate()) {
-                        let td = $(`<td>`);
-                        row.append(td);
-                    } else {
-                        let td = $(`<td class="d" id="${date}" data-day="${date}">`).text(date);
-                        if (selectedMonth === months[today.getMonth()] && selectedYear === today.getFullYear() && date === today.getDate()) {
-                            td.addClass("today");
-                        }
-                        row.append(td);
-                        date++;
-                    }
-                    
+                // Generate the calendar table
+                let firstDay = new Date(selectedYear, months.indexOf(selectedMonth), 1);
+                let lastDay = new Date(selectedYear, months.indexOf(selectedMonth) + 1, 0);
+                let table = $("<table id='calendarTable'>");
+                let tbody = $("<tbody>");
+                let row = $("<tr>");
+                let dayNames = ["S", "M", "T", "W", "T", "F", "S"];
+                for (let i = 0; i < dayNames.length; i++) {
+                    let th = $("<th>").text(dayNames[i]);
+                    row.append(th);
                 }
                 tbody.append(row);
-        
+                let date = 1;
+                // let month1 = 1;
+                let todays = new Date();
+                
+                for (let i = 0; i < 6; i++) {
+                    row = $("<tr>");
+                    for (let j = 0; j < 7; j++) {
+                        if ((i === 0 && j < firstDay.getDay()) || date > lastDay.getDate()) {
+                            let td = $(`<td>`);
+                            row.append(td);
+                        } 
+                        else {
+                            // console.log(month1);
+                            let td = $(`<td class="d" id="${date}" data-day="${date}">`).text(date);
+                            //  console.log(text.data);
+                            if (selectedMonth === months[todays.getMonth()] && selectedYear === todays.getFullYear() && date === todays.getDate()) {
+                                td.addClass("todays");
+                            }
+                            row.append(td);
+                            /*if (date == lastDay.getDate()) {
+                                month1++;
+                            }*/
+                            date++;
+                        }
+                    }
+                    tbody.append(row);
+                }
+                table.append(tbody);
+                $("#calendar").html(table);
+
+                function updateSelectedMonthYear(month, year) {
+                    
+                    selectedMonth = month;
+                    selectedYear = year;
+                    $("#selected-month-year").text(selectedMonth + " " + selectedYear);
+
+                    // Generate the calendar table
+                    let firstDay = new Date(selectedYear, months.indexOf(selectedMonth), 1);
+                    let lastDay = new Date(selectedYear, months.indexOf(selectedMonth) + 1, 0);
+                    let table = $("<table>");
+                    let tbody = $("<tbody>");
+                    let row = $("<tr>");
+                    let dayNames = ["S", "M", "T", "W", "T", "F", "S"];
+                    for (let i = 0; i < dayNames.length; i++) {
+                        let th = $("<th>").text(dayNames[i]);
+                        row.append(th);
+                    }
+                    tbody.append(row);
+                    let date = 1;
+                    let today = new Date();
+                    // let currentdate = new Date().getDate(); 
+                    for (let i = 0; i < 6; i++) {
+                        row = $("<tr>");
+                        for (let j = 0; j < 7; j++) {
+                            if ((i === 0 && j < firstDay.getDay()) || date > lastDay.getDate()) {
+                                let td = $(`<td>`);
+                                row.append(td);
+                            } else {
+                                let td = $(`<td class="d" id="${date}" data-day="${date}">`).text(date);
+                                if (selectedMonth === months[today.getMonth()] && selectedYear === today.getFullYear() && date === today.getDate()) {
+                                    td.addClass("today");
+                                }
+                                row.append(td);
+                                date++;
+                            }
+                            
+                        }
+                        tbody.append(row);
+                
+                    }
+                    table.append(tbody);
+                    $("#calendar").html(table);
+                    // newfun();
+                }
+
+                // Update the displayed year and months in the dropdown
+                function updateDropdownYear(year) {
+
+
+                    $(".dropdown-menu .year").text(year);
+                    $(".dropdown-menu .row:not(:first-child)").remove();
+                    for (let i = 0; i < months.length; i += 3) {
+                        let month1 = months[i];
+                        let month2 = months[i + 1] || "";
+                        let month3 = months[i + 2] || "";
+                        let row = $("<div>").addClass("row");
+                        let monthEl1 = $("<div>").addClass("month").text(month1);
+                        let monthEl2 = $("<div>").addClass("month").text(month2);
+                        let monthEl3 = $("<div>").addClass("month").text(month3);
+                        if (selectedMonth === month1 && selectedYear === year) {
+                            monthEl1.addClass("active");
+                        }
+                        if (selectedMonth === month2 && selectedYear === year) {
+                            monthEl2.addClass("active");
+                        }
+                        if (selectedMonth === month3 && selectedYear === year) {
+                            monthEl3.addClass("active");
+                        }
+                        monthEl1.click(function () {
+                            updateSelectedMonthYear(month1, year);
+                        });
+                        monthEl2.click(function () {
+                            updateSelectedMonthYear(month2, year);
+                        });
+                        monthEl3.click(function () {
+                            updateSelectedMonthYear(month3, year);
+                        });
+                        row.append(monthEl1);
+                        row.append(monthEl2);
+                        row.append(monthEl3);
+                        $(".dropdown-menu").append(row);
+                    }
+
+                }
+
+                // Initialize the dropdown with the current year and months
+                updateDropdownYear(currentYear);
+                // Add event listeners for the previous and next year buttons
+                $(".dropdown-menu .prev-year").click(function () {
+                    let currentYear = parseInt($(".dropdown-menu .year").text());
+                    updateDropdownYear(currentYear - 1);
+                    $("#month-year-dropdown").toggleClass("show");
+                });
+                $(".dropdown-menu .next-year").click(function () {
+                    let currentYear = parseInt($(".dropdown-menu .year").text());
+                    updateDropdownYear(currentYear + 1);
+                    $("#month-year-dropdown").toggleClass("show");
+                });
+
+                // Show or hide the dropdown menu when the dropdown is clicked
+                $("#month-year-dropdown").click(function (event) {
+                    event.stopPropagation();
+                    $("#month-year-dropdown").toggleClass("show");
+                });
+
+                // Hide the dropdown menu when the user clicks outside of the dropdown area
+                $(document).click(function (event) {
+                    if (!$(event.target).closest("#month-year-dropdown").length) {
+                        $("#month-year-dropdown").removeClass("show");
+                    }
+                });
+                
+
+
+        // idle
+        // -> onPointerDown
+        // dragging
+        // -> onPointerMove / onPointerOver
+        // <- onPointerUp
+
+         // NOTE: We retooled the data to be based on first selection and second selection. We'll calculate which is the start & end date later in the `updateDOM` function. 
+        let allDayEls;
+        const data = {
+          firDate: null,
+          secondDate: null
+        };
+        let prev=0;
+        function erase(d){
+            for (let i = 1; i <=d; i++) {
+                document.getElementById(i).classList.remove('leftside');
+                document.getElementById(i).classList.remove('color1');
+                document.getElementById(i).classList.remove('rightside');
             }
-            table.append(tbody);
-            $("#calendar").html(table);
-            newfun();
+            // console.log(d);
+        }
+        const machine = {
+          initial: 'idle',
+          states: {
+            idle: {
+              on: {
+                pointerdown: (data, event) => {
+                  data.firDate = +event.currentTarget.dataset.day;
+                  data.secondDate = null;
+                //   console.log("machine");
+                  return 'dragging';
+                }
+              }
+            },
+            dragging: {
+              on: {
+                pointerover: (data, event) => {
+                  data.secondDate = +event.currentTarget.dataset.day;
+                  
+                  if(data.firDate<data.secondDate){
+        console.log( data.firDate+" "+data.secondDate);
+        erase(prev);
+        prev=data.secondDate;
+        document.getElementById(data.firDate).classList.add('leftside');
+        for (let i=data.firDate+1;i<data.secondDate; i++) {
+            const element =document.getElementById(`${i}`);
+            // console.log(element);
+            element.classList.add('color1'); 
+             }
+             document.getElementById(data.secondDate).classList.add('rightside');
+            }
+
+
+                  return 'dragging';
+                },
+                pointerup: 'idle',
+                pointercancel: 'idle'
+              }
+            }
+          }
+        };
+
+        // idle
+        let currentState = machine.initial;
+
+        function send(event) {
+            // console.log(event);
+            // console.log(event.type);
+          const transition = machine
+            .states[currentState]
+            .on[event.type];
+
+          if (typeof transition === 'function') {
+            currentState = transition(data, event);
+            // updateDOM();
+          } else if (transition) {
+            currentState = transition;
+            updateDOM();
+          }
         }
 
-        // Update the displayed year and months in the dropdown
-        function updateDropdownYear(year) {
 
+         // ---------------------------------- 
+        /*function newfun(){
+        //   machine.states='idle';
+        currentState=machine.initial;
+            allDayEls=document.querySelectorAll('[data-day]');
 
-            $(".dropdown-menu .year").text(year);
-            $(".dropdown-menu .row:not(:first-child)").remove();
-            for (let i = 0; i < months.length; i += 3) {
-                let month1 = months[i];
-                let month2 = months[i + 1] || "";
-                let month3 = months[i + 2] || "";
-                let row = $("<div>").addClass("row");
-                let monthEl1 = $("<div>").addClass("month").text(month1);
-                let monthEl2 = $("<div>").addClass("month").text(month2);
-                let monthEl3 = $("<div>").addClass("month").text(month3);
-                if (selectedMonth === month1 && selectedYear === year) {
-                    monthEl1.addClass("active");
-                }
-                if (selectedMonth === month2 && selectedYear === year) {
-                    monthEl2.addClass("active");
-                }
-                if (selectedMonth === month3 && selectedYear === year) {
-                    monthEl3.addClass("active");
-                }
-                monthEl1.click(function () {
-                    updateSelectedMonthYear(month1, year);
-                });
-                monthEl2.click(function () {
-                    updateSelectedMonthYear(month2, year);
-                });
-                monthEl3.click(function () {
-                    updateSelectedMonthYear(month3, year);
-                });
-                row.append(monthEl1);
-                row.append(monthEl2);
-                row.append(monthEl3);
-                $(".dropdown-menu").append(row);
-            }
-
-        }
-
-        // Initialize the dropdown with the current year and months
-        updateDropdownYear(currentYear);
-        // Add event listeners for the previous and next year buttons
-        $(".dropdown-menu .prev-year").click(function () {
-            let currentYear = parseInt($(".dropdown-menu .year").text());
-            updateDropdownYear(currentYear - 1);
-            $("#month-year-dropdown").toggleClass("show");
+        allDayEls.forEach(dayEl => {
+          dayEl.addEventListener('pointerdown', send);
+          dayEl.addEventListener('pointerover', send);
         });
-        $(".dropdown-menu .next-year").click(function () {
-            let currentYear = parseInt($(".dropdown-menu .year").text());
-            updateDropdownYear(currentYear + 1);
-            $("#month-year-dropdown").toggleClass("show");
+        }*/
+        allDayEls = document.querySelectorAll('[data-day]');
+        // console.log(machine.states);
+        allDayEls.forEach(dayEl => {
+          dayEl.addEventListener('pointerdown', send);
+          dayEl.addEventListener('pointerover', send);
         });
 
-        // Show or hide the dropdown menu when the dropdown is clicked
-        $("#month-year-dropdown").click(function (event) {
-            event.stopPropagation();
-            $("#month-year-dropdown").toggleClass("show");
-        });
+        document.body.addEventListener('pointerup', send);
 
-        // Hide the dropdown menu when the user clicks outside of the dropdown area
-        $(document).click(function (event) {
-            if (!$(event.target).closest("#month-year-dropdown").length) {
-                $("#month-year-dropdown").removeClass("show");
-            }
-        });
-        
+         // ---------------------------------- 
 
-
-// idle
-// -> onPointerDown
-// dragging
-// -> onPointerMove / onPointerOver
-// <- onPointerUp
-
-/* NOTE: We retooled the data to be based on first selection and second selection. We'll calculate which is the start & end date later in the `updateDOM` function. */
-let allDayEls;
-const data = {
-  firDate: null,
-  secondDate: null
-};
-let prev=0;
-function erase(d){
-    for (let i = 1; i <=d; i++) {
-        document.getElementById(i).classList.remove('leftside');
-        document.getElementById(i).classList.remove('color1');
-        document.getElementById(i).classList.remove('rightside');
-    }
-    // console.log(d);
-}
-const machine = {
-  initial: 'idle',
-  states: {
-    idle: {
-      on: {
-        pointerdown: (data, event) => {
-          data.firDate = +event.currentTarget.dataset.day;
-          data.secondDate = null;
-        //   console.log("machine");
-          return 'dragging';
-        }
-      }
-    },
-    dragging: {
-      on: {
-        pointerover: (data, event) => {
-          data.secondDate = +event.currentTarget.dataset.day;
+        //function updateDOM(){
+          /*document.querySelectorAll('[data-selected]')
+            .forEach(el => {
+              delete el.dataset.selected
+            });
           
-          if(data.firDate<data.secondDate){
-console.log( data.firDate+" "+data.secondDate);
-erase(prev);
-prev=data.secondDate;
-document.getElementById(data.firDate).classList.add('leftside');
-for (let i=data.firDate+1;i<data.secondDate; i++) {
-    const element =document.getElementById(`${i}`);
-    // console.log(element);
-    element.classList.add('color1'); 
-     }
-     document.getElementById(data.secondDate).classList.add('rightside');
-    }
+          const startDate = Math.min(data.firDate, data.secondDate);
+          const endDate = Math.max(data.firDate, data.secondDate);
+          
+          if ( startDate ) {
+            const startDateEl = document.querySelector(`[data-day="${startDate}"]`);
+            startDateEl.dataset.selected = "start";
+          }
+          
+          if ( endDate ) {
+            const endDateEl = document.querySelector(`[data-day="${endDate}"]`);
+            endDateEl.dataset.selected = "end";
+          }
 
 
-          return 'dragging';
-        },
-        pointerup: 'idle',
-        pointercancel: 'idle'
-      }
-    }
-  }
-};
 
-// idle
-let currentState = machine.initial;
+          
+          const startDate = Math.min(data.firDate, data.secondDate);
+          const endDate = Math.max(data.firDate, data.secondDate);
 
-function send(event) {
-    // console.log(event);
-    // console.log(event.type);
-  const transition = machine
-    .states[currentState]
-    .on[event.type];
+            if (startDate && endDate) {
+                // Use AJAX to fetch meeting information from the server
+                $.ajax({
+                    url: 'display_meet.php',  // Update with the correct PHP script path
+                    method: 'POST',
+                    dataType: 'json',
+                    data: { selectedDate: startDate }, // Pass the start date to the PHP script
+                    success: function (meetingInfoArray) {
+                        if (meetingInfoArray.length > 0) {
+                            const meetingInfo = meetingInfoArray[0]; // Assuming only one meeting for simplicity
 
-  if (typeof transition === 'function') {
-    currentState = transition(data, event);
-    updateDOM();
-  } else if (transition) {
-    currentState = transition;
-    updateDOM();
-  }
-}
+                            // Update HTML elements with meeting information
+                            document.getElementById('meeting-title').textContent = meetingInfo.title;
+                            document.getElementById('meeting-description').textContent = meetingInfo.description;
+                            document.getElementById('meeting-time').textContent = meetingInfo.time;
+                            // Update other elements as needed
+                        } else {
+                            // Handle case when no meetings are found
+                            console.log('No meetings found for the selected date range.');
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error fetching meeting information:', error);
+                    }
+                });
+            }
+
+        }*/
 
 
-/* ---------------------------------- */
-function newfun(){
-//   machine.states='idle';
-currentState=machine.initial;
-    allDayEls=document.querySelectorAll('[data-day]');
+// Function to fetch meeting information
+function fetchMeetingInfo(startDate, endDate) {
+    const url = 'display_meet.php';  // Update with the correct PHP script path
 
-allDayEls.forEach(dayEl => {
-  dayEl.addEventListener('pointerdown', send);
-  dayEl.addEventListener('pointerover', send);
-});
-}
-allDayEls = document.querySelectorAll('[data-day]');
-// console.log(machine.states);
-allDayEls.forEach(dayEl => {
-  dayEl.addEventListener('pointerdown', send);
-  dayEl.addEventListener('pointerover', send);
-});
+    const formData = new FormData();
+    formData.append('selectedDate', startDate);
+    formData.append('endDate', endDate);
 
-document.body.addEventListener('pointerup', send);
-
-/* ---------------------------------- */
-
-function updateDOM(){
-  document.querySelectorAll('[data-selected]')
-    .forEach(el => {
-      delete el.dataset.selected
+    return fetch(url, {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        // const format = response.json();
+        // console.log(JSON.stringify(response));
+        return response.json();
+    })
+    .then(meetingInfoArray => {
+        // return meetingInfoArray.length > 0 ? meetingInfoArray : null;
+        return meetingInfoArray;
+    })
+    .catch(error => {
+        console.error('Error fetching meeting information:', error);
+        return null;
     });
-  
-  const startDate = Math.min(data.firDate, data.secondDate);
-  const endDate = Math.max(data.firDate, data.secondDate);
-  
-  if ( startDate ) {
-    const startDateEl = document.querySelector(`[data-day="${startDate}"]`);
-    startDateEl.dataset.selected = "start";
-  }
-  
-  if ( endDate ) {
-    const endDateEl = document.querySelector(`[data-day="${endDate}"]`);
-    endDateEl.dataset.selected = "end";
-  }
 }
+
+
+// UpdateDOM function (modify as needed)
+/*function updateDOM() {
+    // ... (existing code)
+
+    // Add the following to update meeting information
+   // const startDate = Math.min(data.firDate, data.secondDate);
+    //const endDate = Math.max(data.firDate, data.secondDate);
+    let startDate, endDate;
+
+    if (data.firDate !== null && data.secondDate !== null) {
+        startDate = Math.min(data.firDate, data.secondDate);
+        endDate = Math.max(data.firDate, data.secondDate);
+    } else {
+        // Handle the case when dates are not selected
+        console.log('No dates selected.');
+        return;
+    }
+    const formattedStartDate = formatDate(startDate);
+
+    console.log('Selected start date:', formattedStartDate);
+
+    if (startDate && endDate) {
+        fetchMeetingInfo(startDate, endDate)
+            .then(meetingInfo => {
+                if (meetingInfo) {
+                    // Update HTML elements with meeting information
+                    document.getElementById('meeting-title').textContent = meetingInfo.title;
+                    document.getElementById('meeting-description').textContent = meetingInfo.description;
+                    document.getElementById('meeting-time').textContent = meetingInfo.time;
+                    // Update other elements as needed
+                } else {
+                    // Handle case when no meetings are found
+                    console.log('No meetings found for the selected date range.');
+                }
+            });
+    }
+}*/
+// UpdateDOM function (modify as needed)
+function updateDOM() {
+    const rightside_middle = document.getElementsByClassName('rightside_middle')[0];
+    // console.log(rightside_middle);
+    // ... (existing code)
+    // Log the values of data.firDate and data.secondDate
+    console.log('data.firDate:', data.firDate);
+    console.log('data.secondDate:', data.secondDate);
+    // Add the following to check and set the start date
+    let startDate, endDate;
+
+    if (data.firDate !== null && data.secondDate !== null) {
+        startDate = Math.min(data.firDate, data.secondDate);
+        endDate = Math.max(data.firDate, data.secondDate);
+    } else {
+        // Handle the case when dates are not selected
+        console.log('No dates selected.');
+        return;
+    }
+    // startDate = new Date(startDate);
+    const formattedStartDate = formatDate(startDate);
+    console.log('dom formattedStartDate',formattedStartDate);
+    const formattedEndDate = formatDate(endDate);
+    console.log('dom formattedEndDate', formattedEndDate);
+
+    console.log('Selected start date:', formattedStartDate);  // Log the formatted start date
+
+    if (formattedStartDate && endDate) {
+        fetchMeetingInfo(formattedStartDate, formattedEndDate)
+           .then(meetingInfo => {
+            console.log(meetingInfo);
+            if (meetingInfo.length > 0) {
+                meetingInfo.forEach(function(meeting){
+
+                    // Create main wrapper div
+                    const rightWrapper = document.createElement('div');
+                    rightWrapper.classList.add('right_wrapper1');
+
+                    // Create inner div for user information
+                    const userInfoDiv = document.createElement('div');
+                    userInfoDiv.style.padding = '13px';
+                    userInfoDiv.style.display = 'flex';
+                    userInfoDiv.style.gap = '1.5rem';
+
+                    // Create user profile image
+                    const profileImage = document.createElement('img');
+                    profileImage.src = '<?=$DEFAULT_PATH?>assets/images/live-user-default.svg';
+                    profileImage.style.borderRadius = '50%';
+                    profileImage.style.width = '60.67px';
+                    profileImage.style.height = '60.67px';
+
+                    // Create div for user details
+                    const userDetailsDiv = document.createElement('div');
+
+                    // Create paragraph for user name
+                    const userNameParagraph = document.createElement('p');
+                    userNameParagraph.style.fontSize = '20px';
+                    userNameParagraph.style.marginBottom = '5px';
+                    userNameParagraph.textContent = meeting.title;
+
+                    // Create div for date and time
+                    const dateTimeDiv = document.createElement('div');
+                    dateTimeDiv.style.display = 'flex';
+                    dateTimeDiv.style.gap = '1.2rem';
+
+                    // Create div for date
+                    const dateDiv = document.createElement('div');
+                    dateDiv.style.display = 'flex';
+                    dateDiv.style.justifyContent = 'center';
+                    dateDiv.style.gap = '0.4rem';
+
+                    // Create image for calendar
+                    const calendarImage = document.createElement('img');
+                    calendarImage.src = '<?=$DEFAULT_PATH?>assets/images/Calendar.svg';
+                    calendarImage.style.width = '27%';
+
+                    // Create span for date value
+                    const dateSpan = document.createElement('span');
+                    dateSpan.textContent = meeting.date;
+
+                    // Append date image and span to date div
+                    dateDiv.appendChild(calendarImage);
+                    dateDiv.appendChild(dateSpan);
+
+                    // Create div for time
+                    const timeDiv = document.createElement('div');
+                    timeDiv.style.display = 'flex';
+                    timeDiv.style.justifyContent = 'center';
+                    timeDiv.style.gap = '0.4rem';
+
+                    // Create image for clock
+                    const clockImage = document.createElement('img');
+                    clockImage.src = '<?=$DEFAULT_PATH?>assets/images/Clock_live.svg';
+                    clockImage.style.width = '22%';
+
+                    // Create span for time value
+                    const timeSpan = document.createElement('span');
+                    timeSpan.textContent = meeting.time;
+
+                    // Append clock image and span to time div
+                    timeDiv.appendChild(clockImage);
+                    timeDiv.appendChild(timeSpan);
+
+                    // Append date and time divs to main date-time div
+                    dateTimeDiv.appendChild(dateDiv);
+                    dateTimeDiv.appendChild(timeDiv);
+
+                    // Append user name paragraph and date-time div to user details div
+                    userDetailsDiv.appendChild(userNameParagraph);
+                    userDetailsDiv.appendChild(dateTimeDiv);
+
+                    // Append profile image and user details div to inner user info div
+                    userInfoDiv.appendChild(profileImage);
+                    userInfoDiv.appendChild(userDetailsDiv);
+
+                    // Append inner user info div to main wrapper div
+                    rightWrapper.appendChild(userInfoDiv);
+
+                    // Finally, append the main wrapper div to the document body or any desired container
+                    // document.body.appendChild(rightWrapper);
+
+                    /*const titleElement = document.createElement('h1');
+                    titleElement.id = 'meeting-title';*/
+
+                    /*const descriptionElement = document.createElement('p');
+                    descriptionElement.id = 'meeting-description';*/
+
+                    /*const timeElement = document.createElement('p');
+                    timeElement.id = 'meeting-time';
+
+                    const dateElement = document.createElement('p');
+                    dateElement.id = 'meeting-date';
+                            
+                    const container = document.createElement('div');*/
+
+                    // if (titleElement && timeElement && dateElement) {
+                        /*if (meetingInfo.length == 0) {
+                            // Update HTML elements with meeting information
+                            titleElement.textContent = meeting.title;
+                            // descriptionElement.textContent = meeting.description;
+                            timeElement.textContent = meeting.time;
+                            dateElement.textContent = meeting.date; // Update the date element
+                            // Update other elements as needed
+                            
+
+                            container.appendChild(titleElement);
+                            // container.appendChild(descriptionElement);
+                            container.appendChild(timeElement);
+                            container.appendChild(dateElement);*/
+
+                            // console.log(container);
+                        // } else {
+                            // Handle case when no meetings are found
+                            /*console.log('No meetings found for the selected date range.');
+                        }*/
+                    // } else {
+                        // console.error('One or more HTML elements not found.');
+                    // }
+                    
+                    rightside_middle.appendChild(rightWrapper);    
+                });
+            } else {
+
+                const userNameParagraph = document.createElement('h1');
+                userNameParagraph.style.fontSize = '28px';
+                userNameParagraph.style.marginBottom = '5px';
+                userNameParagraph.textContent = 'No Meetings Found.';
+
+                rightside_middle.appendChild(userNameParagraph);
+
+                console.log('No Meetings Found.');
+            }
+            // console.log(meetingInfo);
+                
+                /*const titleElement = document.getElementById('meeting-title');
+                const descriptionElement = document.getElementById('meeting-description');
+                const timeElement = document.getElementById('meeting-time');
+                const dateElement = document.getElementById('meeting-date'); // Add this line for the date element*/
+
+                /*if (titleElement && descriptionElement && timeElement && dateElement) {
+                    if (meetingInfo) {
+                        // Update HTML elements with meeting information
+                        titleElement.textContent = meetingInfo.title;
+                        descriptionElement.textContent = meetingInfo.description;
+                        timeElement.textContent = meetingInfo.time;
+                        dateElement.textContent = formattedStartDate; // Update the date element
+                        // Update other elements as needed
+                    } else {
+                        // Handle case when no meetings are found
+                        console.log('No meetings found for the selected date range.');
+                    }
+                } else {
+                    console.error('One or more HTML elements not found.');
+                }*/
+            })
+            .catch(error => {
+                console.error('Error fetching meeting information:', error);
+                // Handle the error, if necessary
+            });
+    }
+}
+
+// Function to format date to YYYY-MM-DD
+// Function to format date to YYYY-MM-DD with dynamic year
+
+function formatDate(date) {
+    // console.log(date);
+    const currentYear = new Date().getFullYear();
+    const month = String(new Date().getMonth() + 1).padStart(2, '0');
+    //month = month;// Assuming January based on previous discussions
+    // let day = date;
+    //console.log(day);
+    const day = String(date).padStart(2, '0');
+    const formattedDate = `${currentYear}-${month}-${day}`;
+    console.log('Formatted date function:', formattedDate);
+    return formattedDate;
+}
+/*document.addEventListener('DOMContentLoaded', function(){
+    document.getElementById('daterange').style.visibility = 'hidden';
+    flatpickr("input[type = date-range]", {
+        minDate:null,
+        maxDate: null,
+        dateFormat: "Y-m-d",
+        mode: "range",
+        locale: {
+                weekdays: {
+                    shorthand: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+                    longhand: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+                },
+                months: {
+                    shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    longhand: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+                }
+            },
+        onDayCreate: function(dObj, dStr, fp, dayElem) {
+            // const dayOfWeek = fp.formatDate(dObj, 'D');
+            // console.log(dayOfWeek);
+            // console.log(dObj);
+                dayElem.classList.add("d");
+                // dayElem.id = dObj.getDay();
+                // dayElem.dataset.day = dObj.getDay();
+                // You can add more conditions and classes based on your requirements
+            },
+        onChange: function(selectedDates, dateStr, instance) {
+            updateDOM(selectedDates[0], selectedDates[1]);
+                // Custom_Data(selectedDates);
+            }
+    }).toggle();
+});*/
+
+
+//code from chat gpt
+/*const cells = document.querySelectorAll('#calendarTable td');
+
+// Add click event listener to each cell
+cells.forEach(cell => {
+  cell.addEventListener('click', function() {
+    // Toggle a 'selected' class on click
+    this.classList.toggle('selected');
+
+    // Check if the cell is selected
+    const isSelected = this.classList.contains('selected');
+    
+    // Use isSelected boolean value as needed
+    if (isSelected) {
+      console.log(cell.dataset.day,'Cell is selected');
+      // Do something when the cell is selected
+    } else {
+      console.log(cell.dataset.day,'Cell is not selected');
+      // Do something when the cell is not selected
+    }
+  });
+});*/
+
 
     </script>
 
