@@ -1,148 +1,81 @@
 <?php
-//error_reporting(0);
-session_start();
-require_once "constant/constant.php";
+error_reporting(0);
 require('constant/config.php');
-/* if (isset($_POST['saverecipe'])) {
-    global $conn;
-    $data = json_encode($_POST);
-    $data = json_decode($data, true);
-    // echo "<pre>";
-    // print_r($data); 
-    // exit;
-    $client_id = $_POST['client_id'];
-    $day = $_POST['day'];
-    $course = $_POST['course'];
-    $subcourse = $_POST['subcourse'];
-    $selectedRecipeIds = $data['selectedRecipeIds'];
-    $sql = "SELECT $day FROM diet_chart WHERE client_id = $client_id";
-    // echo $sql;
-    $result = mysqli_query($conn, $sql);
-    if($result->num_rows > 0){
-        $row = mysqli_fetch_assoc($result);
-        print_r($row);
-        $json = $row[$day];
-        print_r($json);
-        if($json != ""){
-            $data = json_decode($json, true);
-            if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
-              die("Error decoding JSON: " . json_last_error_msg());
-            }
-            print_r($data);
-        }else{
-            $data = array();
-            $data[$course][$subcourse] = array();
-            print_r($data);
-        }
-        if(!isset($data[$course][$subcourse])){
-            $data[$course][$subcourse] = array();
-        }
-        foreach($selectedRecipeIds as $id){
-            print_r($id);
-            array_push($data[$course][$subcourse],$id);
-        }
-        $result = json_encode($data);
-      
-        $sql = "UPDATE diet_chart SET $day = '$result' WHERE client_id = $client_id";
-        echo $sql;
-        if ($conn->query($sql)) {
-          echo "Record updated successfully";
-        }   
-    }else{
 
-        $data = array();
-        $data[$course][$subcourse] = array();
-        foreach($selectedRecipeIds as $id){
-            array_push($data[$course][$subcourse],$id);
-        }
-        print_r($data);
-        $result = json_encode($data);
-        $sql = "INSERT INTO diet_chart ($day,client_id,dietitian_id) VALUES('$result',$client_id,'{$_SESSION['dietitian_id']}') ";
-        echo $sql;
-        if ($conn->query($sql)) {
-          echo "Record inserted successfully";
-        }   
-    }
-  
-    exit;
-  }
-  
-  if (isset($_POST['id'])  and $_POST['id'] != "") {
+if (isset($_POST['id'])) {
     $clientId = $_POST['id'];
     $course = $_POST['course'];
     $subcourse = $_POST['subcourse'];
     $day = $_POST['day'];
-  }
-include('navbar.php');*/
+    $dietchart_id = $_POST['dietchart_id'];
+}
+include('navbar.php');
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php require('constant/head.php'); ?>
+    <?php require('constant/head.php');?>
     <title>Infits | All Recipes</title>
     <style>
         body {
             font-family: "NATS", sans-serif !important;
             letter-spacing: 1px;
-            font-weight: 400;
+            font-weight: 400;   
             background-color: #2b0e0e;
             color: black;
-            background-color: white;
+            background-color: white ;
             position: relative;
         }
-
         .tabcontent {
             padding: 6px 30px;
             border: none;
             border-top: none;
         }
 
-        .tick-button {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.3);
-            border: none;
-            cursor: pointer;
-        }
+    .tick-button {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: none;
+    cursor: pointer;
+    }
 
-        :root {
-            --borderWidth: 7px;
-            --height: 24px;
-            --width: 12px;
-            --borderColor: blue;
-        }
+    :root {
+    --borderWidth: 7px;
+    --height: 24px;
+    --width: 12px;
+    --borderColor: blue;
+  }
 
-        .check {
-            display: inline-block;
-            transform: rotate(45deg);
-            height: var(--height);
-            width: var(--width);
-            border-bottom: var(--borderWidth) solid var(--borderColor);
-            border-right: var(--borderWidth) solid var(--borderColor);
-        }
+    .check {
+    display: inline-block;
+    transform: rotate(45deg);
+    height: var(--height);
+    width: var(--width);
+    border-bottom: var(--borderWidth) solid var(--borderColor);
+    border-right: var(--borderWidth) solid var(--borderColor);
+  }
 
-        .checkmark {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 30px;
-            color: green;
-            visibility: hidden;
-        }
+  .checkmark {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    color: green;
+    visibility: hidden;
+  }
 
-        .checkmark.visible {
-            visibility: visible;
-        }
-
+  .checkmark.visible {
+    visibility: visible;
+  }
         .searchbox {
             width: auto;
             width: 360px;
@@ -153,19 +86,17 @@ include('navbar.php');*/
             padding: 10px;
             margin-top: 22px;
         }
-
-        .save {
+        .save{
             background-color: #7282FB;
             border: none;
             border-radius: 10px;
-            margin-left: 1%;
-            margin-top: 4.6%;
+            margin-left:1%;
+            margin-top:4.6%;
             width: 121px;
             height: 50px;
-            color: white;
+            color:white;
             font-size: 20px;
         }
-
         .header {
             display: flex;
             flex-direction: row;
@@ -174,15 +105,12 @@ include('navbar.php');*/
             justify-content: space-between;
             letter-spacing: 0em;
         }
-
         #myDIV {
             margin-right: 0px;
         }
-
         #myDIV1 {
             margin: 0px;
         }
-
         #topnav-content-1 {
             font-size: 20px;
             font-weight: bold;
@@ -190,28 +118,25 @@ include('navbar.php');*/
             letter-spacing: 0.05em;
             margin-bottom: 5px;
         }
-
         #topnav-content-2 {
             letter-spacing: 1px;
             font-weight: 500;
             font-size: 15px;
             margin-top: 12px;
-            margin-bottom: 6px;
+            margin-bottom:6px;
         }
-
         .card {
             background: #FFFFFF;
             border-radius: 17.8334px;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-            bottom: 20px;
-            padding: 15px;
-            width: 350px;
-            height: 250px;
-            border-radius: 16px;
-            margin-left: 10px;
-            margin-right: -5px;
+            bottom:20px;
+            padding:15px;
+            width:350px; 
+            height:250px;
+            border-radius:16px; 
+            margin-left:10px;
+            margin-right:-5px;
         }
-
         .card-upper-text {
             font-size: 18px;
             padding: 7px 10px;
@@ -221,18 +146,16 @@ include('navbar.php');*/
             color: black;
             line-height: 18px;
         }
-
         .card-food {
             font-size: 23px;
             font-weight: 400;
             line-height: 18px;
             letter-spacing: -0.11428570002317429px;
             text-align: left;
-            width: 400px;
+            width:400px;
             margin-bottom: 5px;
-            font-family: "NATS";
+            font-family:"NATS";
         }
-
         .card-calorie {
             font-size: 18px;
             font-weight: normal;
@@ -241,60 +164,51 @@ include('navbar.php');*/
             color: #A3A1A1;
             margin-top: 13px;
         }
-
-        .card-calorie img {
-            margin-top: -5px;
-            margin-right: 3px;
+        .card-calorie img{
+            margin-top:-5px;
+            margin-right:3px;
         }
-
         .card-num-circle {
             background: #9C74F5;
             border-radius: 50%;
             color: white;
             padding: 5px;
             height: 25px;
-            width: 25px;
+            width:25px;
             margin-top: -7px;
         }
-
         .card-num {
             font-style: normal;
             font-weight: 500;
             font-size: 18px;
             line-height: 18px;
             color: #9C74F5;
-            text-align: center;
+            text-align:center;
         }
-
-        .card-time {
+        .card-time{
             font-size: 20px;
             font-weight: normal;
             line-height: 12px;
             letter-spacing: 0em;
-            margin: 4px;
+            margin:4px;
             align-items: center;
             display: flex;
             color: #A3A1A1;
         }
-
-        .medium {
-            background-color: #9C74F5;
-            ;
+        .medium{
+            background-color:#9C74F5;;
             color: white;
-            padding: 7px 10px;
-            border-radius: 10px;
-            margin-left: 38px;
-            margin-top: 5px;
-            white-space: nowrap;
+            padding:7px 10px;
+            border-radius:10px;
+            margin-left:83px;
+            margin-top:5px;
         }
-
         .dropdown {
             position: absolute;
             margin-top: -12px;
             display: inline-block;
             right: 1em;
         }
-
         .dropdown-content {
             display: none;
             position: absolute;
@@ -305,7 +219,6 @@ include('navbar.php');*/
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 1;
         }
-
         .dropdown-content a {
             color: white;
             padding: 12px 14px;
@@ -313,24 +226,20 @@ include('navbar.php');*/
             text-decoration: none;
             display: block;
         }
-
         .dropdown-content .edit-button {
             background: #A85CF1;
             text-align: center;
             border-radius: 7px;
             margin-bottom: 10px;
         }
-
         .dropdown-content .delete-button {
             background: #FF3D3D;
             border-radius: 7px;
             text-align: center;
         }
-
         .show {
             display: block !important;
         }
-
         .dropdown-card {
             background: #FFFFFF;
             border: 0.723941px solid #E4E4E4;
@@ -338,27 +247,22 @@ include('navbar.php');*/
             border-radius: 13.0309px;
             padding: 20px;
         }
-
         .filter-outline {
             box-sizing: border-box;
             border: 1.5px solid #B85AEC;
             border-radius: 15px;
         }
-
         .filter-line {
             border: none;
             border-left: 1.5px solid #B85AEC;
         }
-
         .white {
             color: #FFFFFF;
         }
-
         .lwhite {
             color: rgba(255, 255, 255, 0.9);
         }
-
-        .container1 {
+        .container1{
             display: grid;
             grid-template-columns: auto auto auto auto;
             margin-top: 32px;
@@ -366,14 +270,12 @@ include('navbar.php');*/
             width: auto;
             height: max-content;
             padding: 4px;
-            overflow-x: auto;
+            overflow-x:auto;
         }
-
-        .container1::-webkit-scrollbar {
+        .container1::-webkit-scrollbar{
             display: none;
         }
-
-        .container1 .top-card {
+        .container1 .top-card{
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -385,20 +287,17 @@ include('navbar.php');*/
             margin-left: 35px;
             border-radius: 16px;
         }
-
-        .container1 .top-card .imag {
+        .container1 .top-card .imag{
             position: absolute;
         }
-
-        .container1 .top-card .im1 {
+        .container1 .top-card .im1{
             width: 150px;
             height: 200px;
             top: -8px;
             right: 0px;
-            z-index: 1;
+            z-index:1;
         }
-
-        .container1 .top-card .im2 {
+        .container1 .top-card .im2{
             width: 170.01px;
             height: 52px;
             transform: rotate(45deg);
@@ -406,8 +305,7 @@ include('navbar.php');*/
             left: -30px;
             transform: scale(1.4);
         }
-
-        .top-card h3::before {
+        .top-card h3::before{
             content: '';
             width: 260px;
             height: 220px;
@@ -417,8 +315,7 @@ include('navbar.php');*/
             top: -60px;
             left: -60px;
         }
-
-        #myDIV1 h3::before {
+        #myDIV1 h3::before{
             content: '';
             width: 260px;
             height: 220px;
@@ -428,97 +325,74 @@ include('navbar.php');*/
             top: -60px;
             left: -60px;
         }
-
-        .breakfast .top-card h3::before {
+        .breakfast .top-card h3::before{
             border: 3px solid #A6EFC0;
         }
-
-        .snacks .top-card h3::before {
+        .snacks .top-card h3::before{
             border: 3px solid rgb(255, 255, 255);
         }
-
-        .lunch .top-card h3::before {
+        .lunch .top-card h3::before{
             border: 3px solid #dbaaab;
         }
-
-        .dinner .top-card h3::before {
+        .dinner .top-card h3::before{
             border: 1px solid #dc898a;
         }
-
-        #myDIV1 .breakfast .top-card h3::before {
-            border: 1px solid #92ceb6;
-            ;
+        #myDIV1 .breakfast .top-card h3::before{
+            border: 1px solid #92ceb6;;
         }
-
-        #myDIV1 .snacks .top-card h3::before {
-            border: 1px solid #5191af;
-            ;
+        #myDIV1 .snacks .top-card h3::before{
+            border: 1px solid  #5191af;;
         }
-
-        #myDIV1 .lunch .top-card h3::before {
+        #myDIV1 .lunch .top-card h3::before{
             border: 1px solid #dbaaab;
         }
-
-        #myDIV1 .lunches .top-card h3::before {
-            border: 1px solid #917dda;
-            ;
+        #myDIV1 .lunches .top-card h3::before{
+            border: 1px solid #917dda;;
         }
-
         #myDIV a,
-        #myDIV1 a {
+            #myDIV1 a{
             cursor: pointer;
             text-decoration: none;
         }
-
         #myDIV1 a:hover,
-        #myDIV a:hover {
+        #myDIV a:hover{
             text-decoration: none;
         }
-
-        .container1 .top-card .im2-2 {
+        .container1 .top-card .im2-2{
             transform: scale(1.6) scaleX(-1) rotate(-10deg);
         }
-
-        .container1 .top-card .ci {
+        .container1 .top-card .ci{
             width: 110px;
             position: absolute;
             height: 100px;
             border-radius: 50%;
         }
-
-        .container1 .top-card .ci1 {
+        .container1 .top-card .ci1{
             top: -60px;
             right: 110px;
         }
-
-        .container1 .top-card .ci2 {
+        .container1 .top-card .ci2{
             bottom: -70px;
             right: 2px;
         }
-
-        .container-1 .top-card h5,
-        p,
-        br {
+        .container-1 .top-card h5,p,br{
             margin-right: 70px;
             margin-bottom: 35px;
             font-weight: 400;
             line-height: 88%;
         }
-
         .recipe-add-btn {
-            position: inherit;
-            justify-content: flex-end;
-            display: flex;
-            margin: 0px 21px 0px -60px;
+                position: inherit;
+                justify-content: flex-end;
+                display: flex;
+                margin: 0px 21px 0px -60px;
         }
-
-        .btn {
+        .btn{
             margin-top: 10px;
             position: relative;
             margin-left: 1500px;
         }
-
-        .btn .butt {
+        .btn .butt{
             background: #9C74F5;
             border: 0px;
             color: white;
@@ -530,162 +404,134 @@ include('navbar.php');*/
             height: 85px;
             font-size: 40px;
         }
-
-        .main {
-            margin-left: 240px;
+        .main{
+            margin-left:240px;
             display: flex;
             flex-wrap: wrap;
             margin-top: 30px;
         }
-
         @media screen and (min-width: 720px) and (max-width:835px) {
-            .searchbox {
+            .searchbox{
                 margin-top: 80px;
-                margin-left: -120px;
+                margin-left:-120px;
                 width: 300px;
             }
         }
-
         @media screen and (min-width: 720px) and (max-width:1500px) {
-            .header {
+            .header{
                 margin-left: 5%;
                 margin-top: 9px;
             }
-
-            .searchbox {
+            .searchbox{
                 margin-top: 80px;
                 width: 300px;
             }
-
-            .save {
+            .save{
                 margin-top: 80px;
             }
-
             .card {
-                margin: 10px auto !important;
+                margin:10px auto !important;
             }
-
             .card-food {
-                font-size: 23px;
+                font-size: 23px; 
                 font-weight: 400;
                 line-height: 20px;
                 min-width: 180px;
                 margin-bottom: -3px;
-                margin-top: 3px;
+                margin-top:3px;
             }
-
             .card-calorie {
                 margin-top: 5px;
             }
-
             .dropdown-content {
-                left: -125px;
-                bottom: -70px;
+                left:-125px;
+                bottom:-70px;
             }
-
-            .main {
-                margin-left: 30px;
+            .main{
+                margin-left:30px;
             }
-
-            .recipe-add-btn {
-                bottom: 0px !important;
-                right: 0px !important;
+            .recipe-add-btn{
+                bottom:0px !important;
+                right:0px !important;
             }
         }
-
-        @media screen and (min-width:0px) and (max-width:720px) {
-            .recipe-add-btn {
-                bottom: 0px !important;
-                right: 0px !important;
+        @media screen and (min-width:0px) and (max-width:720px){
+            .recipe-add-btn{
+                bottom:0px !important;
+                right:0px !important;
             }
-
-            .header {
+            .header{
                 margin-left: 5%;
                 margin-top: 8px;
                 flex-direction: column;
-                align-items: flex-start;
+                align-items:flex-start;
             }
-
-            .searchbox {
+            .searchbox{
                 width: auto;
-                min-width: 200px;
+                min-width:200px;
             }
-
-            .save {
-                width: auto;
-                margin-top: 23px;
-                min-width: 70px;
+            .save{
+                width:auto;
+                margin-top:23px;
+                min-width:70px;
             }
-
-            input {
+            input{
                 width: 100%;
             }
-
-            .header h1 {
+            .header h1{
                 font-size: 50px;
-                margin-left: 0rem !important;
+                margin-left:0rem !important;
             }
-
-            .container1 {
+            .container1{
                 grid-template-columns: auto auto auto auto;
                 left: -1px;
                 margin-right: 420px;
                 gap: 0.5rem;
             }
-
-            .recipe {
+            .recipe{
                 margin-left: -200px;
             }
-
             .middle_wrapper a {
                 margin-right: -22px;
-                margin-top: -5px;
+                margin-top:-5px;    
             }
-
-            .card {
-                margin: 10px auto !important;
+            .card{
+                margin:10px auto !important;
             }
-
-            .main {
+            .main{
                 margin: 20px auto;
             }
-
             .card-food {
                 font-size: 21.5px;
                 font-weight: 500;
                 line-height: 20px;
                 min-width: 180px;
             }
-
             .recipe-add-btn {
                 position: inherit;
                 justify-content: flex-end;
                 display: flex;
                 margin: 0px 21px 0px -60px;
             }
-
             .card-calorie {
                 margin-top: 5px;
             }
-
             .dropdown-content {
                 display: none;
                 position: absolute;
                 margin-top: 0px;
                 background-color: #f9f9f9;
                 min-width: 150px;
-                left: -120px;
+                left:-120px;
             }
         }
-
-        @media screen and (min-width:0px) and (max-width:400px) {
-            .searchbox {
-                width: 200px;
+        @media screen and (min-width:0px) and (max-width:400px){
+            .searchbox{
+                width:200px;
             }
         }
     </style>
 </head>
-
 <body>
     <div class="header" style="">
         <div class="heading">
@@ -693,65 +539,63 @@ include('navbar.php');*/
         </div>
         <div class="search" style="justify-content:space-between;display:flex;gap:1.5rem">
             <div class="searchbox">
-                <button style="background-color:white;border:none;" id="seabtn" name="seabtn"><img src="<?= $DEFAULT_PATH ?>assets/images/search1.svg" alt=""></button>
+                <button style="background-color:white;border:none;" id="seabtn" name="seabtn"><img src="<?=$DEFAULT_PATH?>assets/images/search1.svg" alt=""></button>
                 <input type="search" name="input" placeholder="Search" style="border:none;font-size:20px;margin-left:1rem;width:60%;height:45px;margin-top:-5px;font-weight:400;">
             </div>
             <button class="save" id="save">Save</button>
         </div>
     </div>
-    <!--  <div class="container1"  id="myDIV" onscroll="myFunction()" >
+    <div class="container1"  id="myDIV" onscroll="myFunction()" >
             <div class="top-card" id="btn1" style=" background-color: #61de99;">
                 <span class="ci ci1" style="background-color:#CCF5CD;"></span><span class="ci ci2" style="background-color: #CCF5CD"></span>
-                <img src="<?= $DEFAULT_PATH ?>assets/images/breakfast-waffles.svg" class="imag im1" style="width:200px;height:179px;left:130px;top:-20px;">
+                <img src="<?=$DEFAULT_PATH?>assets/images/breakfast-waffles.svg" class="imag im1" style="width:200px;height:179px;left:130px;top:-20px;">
                 <h3 style="margin-bottom:10px;margin-right:135px;color: #000000;font-weight: 400;font-size:35px;margin-top:35px;">Breakfast</h3>
                 <p style="margin-bottom:100px;margin-right:102px;color: #6A6A6A;font-size:19px;">Free menu planning<br/>to suit your needs</p>
-                <img src="<?= $DEFAULT_PATH ?>assets/images/tree_branch-1.svg" class="imag im2 im2-2" style="rotate:35deg;left:-110px;bottom:70px;height:75px;">
-                <img src="<?= $DEFAULT_PATH ?>assets/images/tree_branch-2.svg" class="imag im2 " style="left:20px;bottom:10px;height:84px;">
+                <img src="<?=$DEFAULT_PATH?>assets/images/tree_branch-1.svg" class="imag im2 im2-2" style="rotate:35deg;left:-110px;bottom:70px;height:75px;">
+                <img src="<?=$DEFAULT_PATH?>assets/images/tree_branch-2.svg" class="imag im2 " style="left:20px;bottom:10px;height:84px;">
             </div>
     
             <div class="top-card" style=" background-color:#F7C8C9!important;" id="btn2">
                 <span class="ci ci1" style="background-color: #E0B6B6;"></span><span class="ci ci2" style="background-color: #E0B6B6;"></span>
-                <img src="<?= $DEFAULT_PATH ?>assets/images/lunchbox.svg" class="imag im1" style="left:130px;top:-20px;width:198px;height:234px;">
+                <img src="<?=$DEFAULT_PATH?>assets/images/lunchbox.svg" class="imag im1" style="left:130px;top:-20px;width:198px;height:234px;">
                 <h3 style="margin-bottom:10px;margin-right:180px;color: #000000;font-weight:400;font-size:35px; margin-top:35px;">Lunch</h3>
                 <p style="margin-bottom:100px;margin-right:102px;color: #6A6A6A;font-size:19px;">Free menu planning<br/>to suit your needs</p>
-                <img src="<?= $DEFAULT_PATH ?>assets/images/recipes_book.svg" class="imag im2" style="width:50%;height:47%;left:-35px;bottom:-7px;transform:rotate(1deg);">
+                <img src="<?=$DEFAULT_PATH?>assets/images/recipes_book.svg" class="imag im2" style="width:50%;height:47%;left:-35px;bottom:-7px;transform:rotate(1deg);">
             </div>
 
             <div class="top-card" style=" background-color: #a6d5ee;"id="btn3">
                 <span class="ci ci1" style="background-color: #B8DDF1;z-index:1;"></span><span class="ci ci2" style="background-color: #B8DDF1;z-index:1;"></span>
-                <img src="<?= $DEFAULT_PATH ?>assets/images/waffers.svg" class="imag im1" style="left:120px;top:-20px;width:205px;height:218px;">
+                <img src="<?=$DEFAULT_PATH?>assets/images/waffers.svg" class="imag im1" style="left:120px;top:-20px;width:205px;height:218px;">
                 <h3 style="margin-bottom:10px;margin-right:168px;color: #000000;font-weight: 400;font-size:35px;margin-top:35px;">Snacks</h3>
                 <p style="margin-bottom:100px;margin-right:102px;color: #6A6A6A;font-size:19px;">Free menu planning<br/>to suit your needs</p>
-                <img src="<?= $DEFAULT_PATH ?>assets/images/recipe_snacks.svg" class="imag im2" style="width:45%;height:40%;left:-20px;bottom:1px;transform:rotate(1deg);">
+                <img src="<?=$DEFAULT_PATH?>assets/images/recipe_snacks.svg" class="imag im2" style="width:45%;height:40%;left:-20px;bottom:1px;transform:rotate(1deg);">
             </div>
 
             <div class="top-card" style=" background-color: #e39494;" id="btn4">
                 <span class="ci ci1" style="background-color: 
                 #EDB2B2"></span><span class="ci ci2" style="background-color: #EDB2B2"></span>
-                <img src="<?= $DEFAULT_PATH ?>assets/images/dinner_noodles.svg" class="imag im1" style="left:145px;top:-25px;width:174px;height:182px;">
+                <img src="<?=$DEFAULT_PATH?>assets/images/dinner_noodles.svg" class="imag im1" style="left:145px;top:-25px;width:174px;height:182px;">
                 <h3 style="margin-bottom:10px;margin-right:170px;color: #000000;font-weight: 400;font-size:35px;margin-top:35px;">Dinner</h3>
                 <p style="margin-bottom:100px;margin-right:102px;color:#6A6A6A;font-size:19px;">Free menu planning<br/>to suit your needs</p>
-                <img src="<?= $DEFAULT_PATH ?>assets/images/dinner_bowl.svg" class="imag im2" style="bottom:10px;left:20px;width:65px;height:50px;">
+                <img src="<?=$DEFAULT_PATH?>assets/images/dinner_bowl.svg" class="imag im2" style="bottom:10px;left:20px;width:65px;height:50px;">
             </div>  
     </div>
- -->
+
     <!-- all recipes -->
     <div class="middle_wrapper" style="display:flex;justify-content:space-between;margin-top:30px;margin-right:2.5rem">
         <h3 class="recipe" style="margin-left:50px; color:black;font-family:'NATS';">All Recipes</h3>
-        <a href="all_recipe_list.php" style="background-color:none;border:nome;color: #818181; text-decoration: none;">
-            <h6 style="font-family:'NATS'; font-size:17px;margin-top:10px; margin-right:40px;">View all</h6>
-        </a>
+        <a href="all_recipe_list.php" style="background-color:none;border:nome;color: #818181; text-decoration: none;"><h6 style="font-family:'NATS'; font-size:17px;margin-top:10px; margin-right:40px;">View all</h6></a>
     </div>
     <?php
-    /* $sql_breakfast_custom = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_courses= 'breakfast'";
-    $sql_lunch_custom = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_courses= 'lunch'";
-    $sql_snacks_custom = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_courses= 'snacks'";
-    $sql_dinner_custom = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_courses= 'dinner'";
+    $sql_breakfast_custom = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_category = 'breakfast'";
+    $sql_lunch_custom = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_category = 'lunch'";
+    $sql_snacks_custom = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_category = 'snacks'";
+    $sql_dinner_custom = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_category = 'dinner'";
 
-    $sql_breakfast_default = "SELECT * FROM `default_recipes` WHERE drecipe_course= 'breakfast'";
-    $sql_lunch_default = "SELECT * FROM `default_recipes` WHERE drecipe_course= 'lunch'";
-    $sql_snacks_default = "SELECT * FROM `default_recipes` WHERE drecipe_course= 'snacks'";
-    $sql_dinner_default = "SELECT * FROM `default_recipes` WHERE drecipe_course= 'dinner'";
+    $sql_breakfast_default = "SELECT * FROM `default_recipes` WHERE drecipe_course = 'breakfast'";
+    $sql_lunch_default = "SELECT * FROM `default_recipes` WHERE drecipe_course = 'lunch'";
+    $sql_snacks_default = "SELECT * FROM `default_recipes` WHERE drecipe_course = 'snacks'";
+    $sql_dinner_default = "SELECT * FROM `default_recipes` WHERE drecipe_course = 'dinner'";
 
     $res_breakfast_custom = mysqli_query($conn,$sql_breakfast_custom);
     $res_lunch_custom = mysqli_query($conn,$sql_lunch_custom);
@@ -761,149 +605,13 @@ include('navbar.php');*/
     $res_breakfast_default = mysqli_query($conn,$sql_breakfast_default);
     $res_lunch_default = mysqli_query($conn,$sql_lunch_default);
     $res_snacks_default = mysqli_query($conn,$sql_snacks_default);
-    $res_dinner_default = mysqli_query($conn,$sql_dinner_default); */
-    if (isset($_POST['course'])) {
-        $course = mysqli_real_escape_string($conn, $_POST['course']);
-        $dietitian_id = $_SESSION['dietitian_id'];
+    $res_dinner_default = mysqli_query($conn,$sql_dinner_default);
 
-        // Define a variable to hold the SQL query
-        $sql = "";
-        $category = "";
+    ?>
 
-        // Use a switch case to set the appropriate SQL query based on the course
-        switch ($course) {
-            case 'breakfast':
-                $sql = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '$dietitian_id' AND recipe_courses = 'breakfast'";
-                $sqlDefault = "SELECT dr.* FROM `default_recipes` dr LEFT JOIN `updated_by_users` ubu ON dr.`drecipe_id` = ubu.`updated_drecipe_id` AND ubu.`dietitian_id`='{$_SESSION['dietitian_id']}' WHERE ubu.`updated_drecipe_id` IS NULL AND ubu.`dietitian_id` IS NULL AND drecipe_course= 'breakfast'";
-                $category = "breakfast";
-                break;
-            case 'lunch':
-                $sql = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '$dietitian_id' AND recipe_courses = 'lunch'";
-                $sqlDefault = "SELECT dr.* FROM `default_recipes` dr LEFT JOIN `updated_by_users` ubu ON dr.`drecipe_id` = ubu.`updated_drecipe_id` AND ubu.`dietitian_id`='{$_SESSION['dietitian_id']}' WHERE ubu.`updated_drecipe_id` IS NULL AND ubu.`dietitian_id` IS NULL AND drecipe_course= 'lunch'";
-                $category = "lunch";
-                break;
-            case 'snacks':
-                $sql = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '$dietitian_id' AND recipe_courses = 'snacks'";
-                $sqlDefault = "SELECT dr.* FROM `default_recipes` dr LEFT JOIN `updated_by_users` ubu ON dr.`drecipe_id` = ubu.`updated_drecipe_id` AND ubu.`dietitian_id`='{$_SESSION['dietitian_id']}' WHERE ubu.`updated_drecipe_id` IS NULL AND ubu.`dietitian_id` IS NULL AND drecipe_course= 'snacks'";
-                $category = "snacks";
-                break;
-            case 'dinner':
-                $sql = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '$dietitian_id' AND recipe_courses = 'dinner'";
-                $sqlDefault = "SELECT dr.* FROM `default_recipes` dr LEFT JOIN `updated_by_users` ubu ON dr.`drecipe_id` = ubu.`updated_drecipe_id` AND ubu.`dietitian_id`='{$_SESSION['dietitian_id']}' WHERE ubu.`updated_drecipe_id` IS NULL AND ubu.`dietitian_id` IS NULL AND drecipe_course= 'dinner'";
-                $category = "dinner";
-                break;
-            default:
-                // Handle the case where an invalid course value is provided
-                echo "Invalid course value in the POST data";
-                exit; // Terminate the script to avoid executing further code
-        }
-
-        // Execute the query
-        $result = mysqli_query($conn, $sql);
-        $result1 = mysqli_query($conn, $sqlDefault);
-    ?><div class="main">
-            <?php
-            // Handle the result as needed
-            if ($result) {
-                // Process the result set
-                while ($row = mysqli_fetch_assoc($result)) {
-                    // Process each row
-                    $recipeDirections = trim($row['recipe_recipe'], '{}');
-                    $recipe_recipe = explode('},{', $recipeDirections);
-                    $steps = !empty($recipeDirections) && $recipeDirections !== '{}' ? count($recipe_recipe) : 0;
-                    $nutritional = json_decode($row['recipe_nutritional_information'], true);
-            ?>
-                    <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-recipe-name="<?php echo $row['recipe_name']; ?>" data-isDefault="false" data-recipe-id=<?= $row['recipe_id'] ?>>
-                        <div class="card-upper d-flex justify-content-between">
-                            <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;"><?= $category ?></p>
-                        </div>
-                        <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
-                            <img src="<?= $DEFAULT_PATH ?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="card-food" style="margin:15px 4px;"><?php echo $row['recipe_name'] ?></p>
-                            <div class="header">
-                                <div class="dropdown ">
-                                    <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
-                                        <img class="" src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
-                                    </div>
-                                    <div id="myDropdownContent" class="dropdown-content dropdown-card ">
-                                        <a style="color: white;" class="edit-button" href="#">Edit</a>
-                                        <a onclick="return confirm('Are you sure to delete this?')" style="color: white;" class="delete-button" href="">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between" style="align-items:center;margin-top:5px;">
-                            <div class="d-flex align-items-center card-num">
-                                <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
-                                <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
-                            </div>
-                            <p class="card-time"> <img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:3px;" alt=""><?php echo $row['recipe_time']; ?></p>
-                        </div>
-                        <div class="d-flex justify-content-between" style="align-items:center; margin-top: 5px;">
-                            <p class="card-calorie"> <img src="<?= $DEFAULT_PATH ?>assets/images/calorie.svg" alt="">kcal</p>
-                            <p class="medium">Added Recipe</p>
-                        </div>
-                    </div>
-                <?php }
-            } else {
-                // Handle query execution error
-                echo "Error executing query: " . mysqli_error($conn);
-            }
-            if ($result1) {
-                while ($rowDefault = mysqli_fetch_assoc($result1)) {
-                    $drecipeDirections = trim($rowDefault['drecipe_recipe'], '{}');
-                    $drecipe_recipe = explode('}, {', $drecipeDirections);
-                    $steps = count($drecipe_recipe);
-                    $nutritional = json_decode($rowDefault['drecipe_nutritional_information'], true);
-                ?>
-                    <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-recipe-name="<?php echo $rowDefault['drecipe_name']; ?>" data-isDefault="true" data-recipe-id=<?= $rowDefault['drecipe_id'] ?>>
-                        <div class="card-upper d-flex justify-content-between">
-                            <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;"><?= $category ?></p>
-                        </div>
-                        <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
-                            <img src="<?= $DEFAULT_PATH ?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="card-food" style="margin:15px 4px;"><?php echo $rowDefault['drecipe_name'] ?></p>
-                            <div class="header">
-                                <div class="dropdown ">
-                                    <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
-                                        <img class="" src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
-                                    </div>
-                                    <div id="myDropdownContent" class="dropdown-content dropdown-card ">
-                                        <a style="color: white;" class="edit-button" href="#">Edit</a>
-                                        <a onclick="return confirm('Are you sure to delete this?')" style="color: white;" class="delete-button" href="delete-recipe.php?recid=<?php echo $rowDefault['drecipe_id']; ?>">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between" style="align-items:center;margin-top:5px;">
-                            <div class="d-flex align-items-center card-num">
-                                <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
-                                <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
-                            </div>
-                            <p class="card-time"> <img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:3px;" alt=""><?php echo $rowDefault['drecipe_time']; ?></p>
-                        </div>
-                        <div class="d-flex justify-content-between" style="align-items:center; margin-top: 5px;">
-                            <p class="card-calorie"> <img src="<?= $DEFAULT_PATH ?>assets/images/calorie.svg" alt="">kcal</p>
-                            <p class="medium">Deafult Recipe</p>
-                        </div>
-                    </div> <?php }
-                    } else {
-                        // Handle query execution error
-                        echo "Error executing query: " . mysqli_error($conn);
-                    }
-                } else {
-                    // Course parameter not set in POST data
-                    echo "Course parameter not set in POST data";
-                }
-                            ?>
-        </div>
-        <div class="main" id="breakfast1" style="display:none;">
-            <?php
-            /*  while ($d = mysqli_fetch_assoc($res_breakfast_custom)) {
+    <div class="main" id="breakfast1">
+        <?php
+        while ($d = mysqli_fetch_assoc($res_breakfast_custom)) {
             $recipe_recipe = explode(',', $d['recipe_recipe']);
             $steps = count($recipe_recipe);
             $recipe_nutritional = $d['recipe_nutritional_information'];
@@ -915,21 +623,21 @@ include('navbar.php');*/
                 $key = trim($key, "'");
                 $value = trim($value, "'");
                 $nutritional[$key] = $value;
-            } */
-            ?>
-            <!--  <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="false" data-recipe-id=<?= $d['recipe_id'] ?> >
+            }
+        ?>
+            <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="false" data-recipe-id=<?=$d['recipe_id']?> >
                 <div class="card-upper d-flex justify-content-between">
                     <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Breakfast </p>
                 </div>
                 <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
-                    <img src="<?= $DEFAULT_PATH ?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
+                    <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="card-food" style="margin:15px 4px;"><?php echo $d['recipe_name'] ?></p>
                     <div class="header">
                         <div class="dropdown ">
                             <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
-                                <img class="" src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
+                                <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
                             </div>
                             <div id="myDropdownContent" class="dropdown-content dropdown-card ">
                                 <a style="color: white;" class="edit-button" href="#">Edit</a>
@@ -943,16 +651,16 @@ include('navbar.php');*/
                         <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
                         <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
                     </div>
-                    <p class="card-time"> <img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:3px;" alt=""> 20:00</p>
+                    <p class="card-time"> <img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:3px;" alt=""> 20:00</p>
                 </div>
                 <div class="d-flex justify-content-between" style="align-items:center; margin-top: 5px;">
-                    <p class="card-calorie"> <img src="<?= $DEFAULT_PATH ?>assets/images/calorie.svg" alt="">kcal</p>
+                    <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt="">kcal</p>
                     <p class="medium"> Medium</p>
                 </div>
-            </div> -->
-            <?php  ?>
-            <?php
-            /* while ($d = mysqli_fetch_assoc($res_breakfast_default)) {
+            </div>
+        <?php } ?>
+        <?php
+        while ($d = mysqli_fetch_assoc($res_breakfast_default)) {
             $drecipe_recipe = explode(',', $d['drecipe_recipe']);
             $steps = count($drecipe_recipe);
             $drecipe_nutritional = $d['drecipe_nutritional_information'];
@@ -964,21 +672,21 @@ include('navbar.php');*/
                 $key = trim($key, "'");
                 $value = trim($value, "'");
                 $nutritional[$key] = $value;
-            } */
-            ?>
-            <!-- <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="true" data-recipe-id=<?= $d['drecipe_id'] ?> >
+            }
+        ?>
+            <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="true" data-recipe-id=<?=$d['drecipe_id']?> >
                 <div class="card-upper d-flex justify-content-between">
                     <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Breakfast </p>
                 </div>
                 <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
-                    <img src="<?= $DEFAULT_PATH ?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
+                    <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="card-food" style="margin:15px 4px;"><?php echo $d['drecipe_name'] ?></p>
                     <div class="header">
                         <div class="dropdown ">
                             <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
-                                <img class="" src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
+                                <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
                             </div>
                             <div id="myDropdownContent" class="dropdown-content dropdown-card ">
                                 <a style="color: white;" class="edit-button" href="#">Edit</a>
@@ -992,43 +700,390 @@ include('navbar.php');*/
                         <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
                         <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
                     </div>
-                    <p class="card-time"> <img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:3px;" alt=""> 20:00</p>
+                    <p class="card-time"> <img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:3px;" alt=""> 20:00</p>
                 </div>
                 <div class="d-flex justify-content-between" style="align-items:center; margin-top: 5px;">
-                    <p class="card-calorie"> <img src="<?= $DEFAULT_PATH ?>assets/images/calorie.svg" alt="">kcal</p>
+                    <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt="">kcal</p>
                     <p class="medium"> Medium</p>
                 </div>
             </div>
-        <?php ?> -->
-        </div>
+        <?php } ?>
+    </div>
 
-        <a class="butt" href="create_recipe.php" style="text-decoration:none;border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
+    <div class="main" id="lunch1" style="display:none">
+    <?php
+        while ($d = mysqli_fetch_assoc($res_lunch_custom)) {
+            $recipe_recipe = explode(',', $d['recipe_recipe']);
+            $steps = count($recipe_recipe);
+            $recipe_nutritional = $d['recipe_nutritional_information'];
+            $recipe_nutritional = trim($recipe_nutritional, '{}');
+            $pairs = explode(', ', $recipe_nutritional);
+            $nutritional = array();
+            foreach ($pairs as $pair) {
+                list($key, $value) = explode(': ', $pair);
+                $key = trim($key, "'");
+                $value = trim($value, "'");
+                $nutritional[$key] = $value;
+            }
+        ?>
+            <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="false" data-recipe-id=<?=$d['recipe_id']?> >
+                <div class="card-upper d-flex justify-content-between">
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Lunch </p>
+                </div>
+                <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p class="card-food" style="margin:15px 4px;"><?php echo $d['recipe_name'] ?></p>
+                    <div class="header">
+                        <div class="dropdown ">
+                            <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
+                                <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
+                            </div>
+                            <div id="myDropdownContent" class="dropdown-content dropdown-card ">
+                                <a style="color: white;" class="edit-button" href="#">Edit</a>
+                                <a onclick="return confirm('Are you sure to delete this?')" style="color: white;" class="delete-button" href="">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center;margin-top:5px;">
+                    <div class="d-flex align-items-center card-num">
+                        <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
+                        <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
+                    </div>
+                    <p class="card-time"> <img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:3px;" alt=""> 20:00</p>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center; margin-top: 5px;">
+                    <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt="">kcal</p>
+                    <p class="medium"> Medium</p>
+                </div>
+            </div>
+        <?php } ?>
+        <?php
+        while ($d = mysqli_fetch_assoc($res_lunch_default)) {
+            $drecipe_recipe = explode(',', $d['drecipe_recipe']);
+            $steps = count($drecipe_recipe);
+            $drecipe_nutritional = $d['drecipe_nutritional_information'];
+            $drecipe_nutritional = trim($drecipe_nutritional, '{}');
+            $pairs = explode(', ', $drecipe_nutritional);
+            $nutritional = array();
+            foreach ($pairs as $pair) {
+                list($key, $value) = explode(': ', $pair);
+                $key = trim($key, "'");
+                $value = trim($value, "'");
+                $nutritional[$key] = $value;
+            }
+        ?>
+            <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="true" data-recipe-id=<?=$d['drecipe_id']?> >
+                <div class="card-upper d-flex justify-content-between">
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Lunch </p>
+                </div>
+                <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p class="card-food" style="margin:15px 4px;"><?php echo $d['drecipe_name'] ?></p>
+                    <div class="header">
+                        <div class="dropdown ">
+                            <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
+                                <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
+                            </div>
+                            <div id="myDropdownContent" class="dropdown-content dropdown-card ">
+                                <a style="color: white;" class="edit-button" href="#">Edit</a>
+                                <a onclick="return confirm('Are you sure to delete this?')" style="color: white;" class="delete-button" href="delete-recipe.php?recid=<?php echo $d['drecipe_id']; ?>">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center;margin-top:5px;">
+                    <div class="d-flex align-items-center card-num">
+                        <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
+                        <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
+                    </div>
+                    <p class="card-time"> <img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:3px;" alt=""> 20:00</p>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center; margin-top: 5px;">
+                    <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt="">kcal</p>
+                    <p class="medium"> Medium</p>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
 
-        <?php require('constant/scripts.php'); ?>
+    <div class="main" id="snack1" style="display:none">
+    <?php
+        while ($d = mysqli_fetch_assoc($res_snacks_custom)) {
+            $recipe_recipe = explode(',', $d['recipe_recipe']);
+            $steps = count($recipe_recipe);
+            $recipe_nutritional = $d['recipe_nutritional_information'];
+            $recipe_nutritional = trim($recipe_nutritional, '{}');
+            $pairs = explode(', ', $recipe_nutritional);
+            $nutritional = array();
+            foreach ($pairs as $pair) {
+                list($key, $value) = explode(': ', $pair);
+                $key = trim($key, "'");
+                $value = trim($value, "'");
+                $nutritional[$key] = $value;
+            }
+        ?>
+            <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="false" data-recipe-id=<?=$d['recipe_id']?> >
+                <div class="card-upper d-flex justify-content-between">
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Snacks </p>
+                </div>
+                <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p class="card-food" style="margin:15px 4px;"><?php echo $d['recipe_name'] ?></p>
+                    <div class="header">
+                        <div class="dropdown ">
+                            <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
+                                <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
+                            </div>
+                            <div id="myDropdownContent" class="dropdown-content dropdown-card ">
+                                <a style="color: white;" class="edit-button" href="#">Edit</a>
+                                <a onclick="return confirm('Are you sure to delete this?')" style="color: white;" class="delete-button" href="">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center;margin-top:5px;">
+                    <div class="d-flex align-items-center card-num">
+                        <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
+                        <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
+                    </div>
+                    <p class="card-time"> <img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:3px;" alt=""> 20:00</p>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center; margin-top: 5px;">
+                    <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt="">kcal</p>
+                    <p class="medium"> Medium</p>
+                </div>
+            </div>
+        <?php } ?>
+        <?php
+        while ($d = mysqli_fetch_assoc($res_snacks_default)) {
+            $drecipe_recipe = explode(',', $d['drecipe_recipe']);
+            $steps = count($drecipe_recipe);
+            $drecipe_nutritional = $d['drecipe_nutritional_information'];
+            $drecipe_nutritional = trim($drecipe_nutritional, '{}');
+            $pairs = explode(', ', $drecipe_nutritional);
+            $nutritional = array();
+            foreach ($pairs as $pair) {
+                list($key, $value) = explode(': ', $pair);
+                $key = trim($key, "'");
+                $value = trim($value, "'");
+                $nutritional[$key] = $value;
+            }
+        ?>
+            <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="true" data-recipe-id=<?=$d['drecipe_id']?> >
+                <div class="card-upper d-flex justify-content-between">
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Snacks </p>
+                </div>
+                <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p class="card-food" style="margin:15px 4px;"><?php echo $d['drecipe_name'] ?></p>
+                    <div class="header">
+                        <div class="dropdown ">
+                            <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
+                                <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
+                            </div>
+                            <div id="myDropdownContent" class="dropdown-content dropdown-card ">
+                                <a style="color: white;" class="edit-button" href="#">Edit</a>
+                                <a onclick="return confirm('Are you sure to delete this?')" style="color: white;" class="delete-button" href="delete-recipe.php?recid=<?php echo $d['drecipe_id']; ?>">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center;margin-top:5px;">
+                    <div class="d-flex align-items-center card-num">
+                        <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
+                        <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
+                    </div>
+                    <p class="card-time"> <img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:3px;" alt=""> 20:00</p>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center; margin-top: 5px;">
+                    <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt="">kcal</p>
+                    <p class="medium"> Medium</p>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+
+    <div class="main" id="dinner1" style="display:none">
+    <?php
+        while ($d = mysqli_fetch_assoc($res_dinner_custom)) {
+            $recipe_recipe = explode(',', $d['recipe_recipe']);
+            $steps = count($recipe_recipe);
+            $recipe_nutritional = $d['recipe_nutritional_information'];
+            $recipe_nutritional = trim($recipe_nutritional, '{}');
+            $pairs = explode(', ', $recipe_nutritional);
+            $nutritional = array();
+            foreach ($pairs as $pair) {
+                list($key, $value) = explode(': ', $pair);
+                $key = trim($key, "'");
+                $value = trim($value, "'");
+                $nutritional[$key] = $value;
+            }
+        ?>
+            <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="false" data-recipe-id=<?=$d['recipe_id']?> >
+                <div class="card-upper d-flex justify-content-between">
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Dinner </p>
+                </div>
+                <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p class="card-food" style="margin:15px 4px;"><?php echo $d['recipe_name'] ?></p>
+                    <div class="header">
+                        <div class="dropdown ">
+                            <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
+                                <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
+                            </div>
+                            <div id="myDropdownContent" class="dropdown-content dropdown-card ">
+                                <a style="color: white;" class="edit-button" href="#">Edit</a>
+                                <a onclick="return confirm('Are you sure to delete this?')" style="color: white;" class="delete-button" href="">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center;margin-top:5px;">
+                    <div class="d-flex align-items-center card-num">
+                        <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
+                        <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
+                    </div>
+                    <p class="card-time"> <img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:3px;" alt=""> 20:00</p>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center; margin-top: 5px;">
+                    <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt="">kcal</p>
+                    <p class="medium"> Medium</p>
+                </div>
+            </div>
+        <?php } ?>
+        <?php
+        while ($d = mysqli_fetch_assoc($res_dinner_default)) {
+            $drecipe_recipe = explode(',', $d['drecipe_recipe']);
+            $steps = count($drecipe_recipe);
+            $drecipe_nutritional = $d['drecipe_nutritional_information'];
+            $drecipe_nutritional = trim($drecipe_nutritional, '{}');
+            $pairs = explode(', ', $drecipe_nutritional);
+            $nutritional = array();
+            foreach ($pairs as $pair) {
+                list($key, $value) = explode(': ', $pair);
+                $key = trim($key, "'");
+                $value = trim($value, "'");
+                $nutritional[$key] = $value;
+            }
+        ?>
+            <div class="card d-flex" style="padding:15px; width:310px; height:300px;border-radius:16px;margin:35px 35px; " data-isDefault="true" data-recipe-id=<?=$d['drecipe_id']?> >
+                <div class="card-upper d-flex justify-content-between">
+                    <p id="bu" class="card-upper-text" style="margin-left:64%; z-index:2;">Dinner </p>
+                </div>
+                <div class="img-dis" style="width:100%;margin-top:-50px;text-align:center;">
+                    <img src="<?=$DEFAULT_PATH?>assets/images/choose_recipe.svg" style="height:150px; width:100%; margin-left:-1px;margin-top:-30px;" />
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p class="card-food" style="margin:15px 4px;"><?php echo $d['drecipe_name'] ?></p>
+                    <div class="header">
+                        <div class="dropdown ">
+                            <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
+                                <img class="" src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="" style="margin-top:20px;">
+                            </div>
+                            <div id="myDropdownContent" class="dropdown-content dropdown-card ">
+                                <a style="color: white;" class="edit-button" href="#">Edit</a>
+                                <a onclick="return confirm('Are you sure to delete this?')" style="color: white;" class="delete-button" href="delete-recipe.php?recid=<?php echo $d['drecipe_id']; ?>">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center;margin-top:5px;">
+                    <div class="d-flex align-items-center card-num">
+                        <div class="card-num-circle"><?= $steps ?> </div> &nbsp;
+                        <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
+                    </div>
+                    <p class="card-time"> <img src="<?=$DEFAULT_PATH?>assets/images/Clock.svg" style="margin-right:3px;" alt=""> 20:00</p>
+                </div>
+                <div class="d-flex justify-content-between" style="align-items:center; margin-top: 5px;">
+                    <p class="card-calorie"> <img src="<?=$DEFAULT_PATH?>assets/images/calorie.svg" alt="">kcal</p>
+                    <p class="medium"> Medium</p>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+    <a class="butt" href="create_recipe.php" style="text-decoration:none;border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
+
+    <?php require('constant/scripts.php');?>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
+  $(document).ready(function () {
+    $("#btn2").click(function () {
+      $("#lunch1").show();
+      $("#breakfast1").hide();
+      $("#snack1").hide();
+      $("#dinner1").hide();
+      $("#search").hide();
+    });
+  });
+</script>
 
+<script>
+  $(document).ready(function () {
+    $("#btn3").click(function () {
+      $("#snack1").show();
+      $("#breakfast1").hide();
+      $("#lunch1").hide();
+      $("#dinner1").hide();
+      $("#search").hide();
+
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    $("#btn4").click(function () {
+      $("#dinner1").show();
+      $("#snack1").hide();
+      $("#breakfast1").hide();
+      $("#lunch1").hide();
+      $("#search").hide();
+
+    });
+  });
+</script>
+    <script>
+  $(document).ready(function () {
+    $("#btn1").click(function () {
+      $("#breakfast1").show();
+      $("#snack1").hide();
+
+      $("#lunch1").hide();
+      $("#dinner1").hide();
+      $("#search").hide();
+
+    });
+  });
+  $("#breakfast1").show();
         function myFunction() {
             const element = document.getElementById("myDIV");
             let x = element.scrollLeft;
             let y = element.scrollTop;
             document.getElementById("demo").innerHTML = "Horizontally: " + x.toFixed() + "<br>Vertically: " + y.toFixed();
         }
-
         function showDropdown(event) {
             var dropdown = event.currentTarget.parentNode.querySelector(".dropdown-content");
             dropdown.classList.toggle("show");
             setTimeout(removeDropDown, 5000);
-        }
-
+       }
         function removeDropDown() {
             var dropdowns = document.getElementsByClassName("dropdown-content");
             for (var i = 0; i < dropdowns.length; i++) {
                 dropdowns[i].classList.remove('show');
             }
         }
-
         function removeDropdown(event) {
             var dropdowns = document.getElementsByClassName("dropdown-content");
             var i;
@@ -1040,96 +1095,85 @@ include('navbar.php');*/
             }
         }
 
-        const recipeCardElements = document.querySelectorAll('.card');
-        let selectedRecipeIds;
-        recipeCardElements.forEach(recipeCard => {
-            const recipeId = recipeCard.getAttribute('data-recipe-id');
-            recipeCard.addEventListener('click', () => {
-                let tickButton = recipeCard.querySelector('.tick-button');
-                if (tickButton) {
-                    recipeCard.removeChild(tickButton);
-                    recipeCard.classList.remove('selected');
-                } else {
-                    tickButton = document.createElement('button');
-                    tickButton.className = 'tick-button';
-                    tickButton.setAttribute('aria-label', `Select recipe ${recipeId}`);
-                    tickButton.innerHTML = '<span class="tick-icon check"></span>';
-                    recipeCard.appendChild(tickButton);
-                    recipeCard.classList.add('selected');
-                }
-                selectedRecipeIds = Array.from(document.querySelectorAll('.card.selected')).map(recipeCard => {
-                    const recipeId = recipeCard.getAttribute('data-recipe-id');
-                    const isDefault = recipeCard.getAttribute('data-isDefault');
-                    const recipeName = recipeCard.getAttribute('data-recipe-name');
-
-                    return {
-                        recipeId,
-                        isDefault,
-                        recipeName
-                    };
-                });
-                // console.log(`Selected recipe IDs: ${selectedRecipeIds.join(', ')}`);
-                console.log(selectedRecipeIds);
-            });
-
+    const recipeCardElements = document.querySelectorAll('.card');
+    let selectedRecipeIds;
+    recipeCardElements.forEach(recipeCard => {
+      const recipeId = recipeCard.getAttribute('data-recipe-id');
+      recipeCard.addEventListener('click', () => {
+        let tickButton = recipeCard.querySelector('.tick-button');
+        if (tickButton) {
+          recipeCard.removeChild(tickButton);
+          recipeCard.classList.remove('selected');
+        } else {
+          tickButton = document.createElement('button');
+          tickButton.className = 'tick-button';
+          tickButton.setAttribute('aria-label', `Select recipe ${recipeId}`);
+          tickButton.innerHTML = '<span class="tick-icon check"></span>';
+          recipeCard.appendChild(tickButton);
+          recipeCard.classList.add('selected');
+        }
+        selectedRecipeIds = Array.from(document.querySelectorAll('.card.selected')).map(recipeCard => {
+        const recipeId = recipeCard.getAttribute('data-recipe-id');
+        const isDefault = recipeCard.getAttribute('data-isDefault');
+        return { recipeId, isDefault };
         });
+        // console.log(`Selected recipe IDs: ${selectedRecipeIds.join(', ')}`);
+        console.log(selectedRecipeIds);
+      });
 
-        /* const savebutton = document.getElementById('save');
-        savebutton.addEventListener('click', () => {
-            //const client_id = <?php //echo $clientId 
-                                ?>;
-            //const day = '<?php //echo $day 
-                            ?>';
-            //const course = '<?php //echo $course 
-                                ?>';
-            //const subcourse = '<?php //echo $subcourse 
-                                    ?>';
-            const saverecipe = true;
+    });
 
-            $.ajax({
-                url: "dietchart3.php",
-                type: "POST",
-                data: {
-                    //client_id: client_id,
-                    //day: day,
-                    //course: course,
-                    //subcourse: subcourse,
-                    saverecipe: saverecipe,
-                    selectedRecipeIds: selectedRecipeIds
-                },
-                success: function(response) {
-                    // Manipulate visibility of default and fetched content
-                console.log(selectedRecipeIds);
-                    compute(selectedRecipeIds,);
-                    $(".fetched-content").hide().empty(); // Empty the fetched content
-                    $(".default-content").show();
-                },
-                error: function(xhr, status, error) {
-                    console.log("Error: " + error);
-                }
+    const savebutton = document.getElementById('save');
+    savebutton.addEventListener('click', () => {
+        const client_id = <?php echo $clientId ?>;
+        const day = '<?php echo $day ?>';
+        const course = '<?php echo $course ?>';
+        const subcourse = '<?php echo $subcourse ?>';
+        const dietitian_id = '<?php echo $_SESSION['dietitian_id'] ?>';
+        const dietchart_id = '<?php echo $dietchart_id ?>';
+        const saverecipe = true;
+
+        // Find all selected recipes
+        let selectedRecipes = document.querySelectorAll('.card.selected');
+
+        // Check if any recipes are selected
+        if (selectedRecipes.length > 0) {
+            // Extract the names of all selected recipes
+            var recipeNames = Array.from(selectedRecipes).map(function(recipe) {
+                return recipe.querySelector('.card-food').textContent;
             });
+            console.log("name : ", recipeNames);
 
-        }) */
-        const savebutton = document.getElementById('save');
-        savebutton.addEventListener('click', () => {
-            if (selectedRecipeIds !== "") {
-                selectedRecipeIds.forEach(recipe => {
-                    const recipeDiv = $('<div>').addClass('d-flex justify-content-center flex-column justify-content-center text-center me-4').attr('data-recipe-id', recipe.recipeId)
-                        .attr('data-is-default', recipe.isDefault);
-                    const imgElement = $('<img>').attr('src', 'assets/images/Alooparantha1.svg');
-                    const nameDiv = $('<div>').addClass('fw-bold mt-3').text(recipe.recipeName); // Replace with your PHP variable
-                    const day = '<?php echo $_POST['day']; ?>';
-                    const course = '<?php echo $_POST['course']; ?>';
-                    recipeDiv.append(imgElement, nameDiv);
-                    $(`.tab-content[data-day="${day}"] .container .foodCards__wrapper[data-meal="${course}"]`).prepend(recipeDiv);
-
-                });
-                $('.fetched-content').html('').hide();
-                $(".default-content").show();
-
+            // Send the recipe names to another page (replace 'other-page.php' with the actual URL)
+            // window.location.href = 'other-page.php?recipes=' + encodeURIComponent(recipeNames.join(','));
+        } else {
+            // Handle the case where no recipes are selected
+            // alert('Please select at least one recipe before saving.');
+        }
+        $.ajax({
+            url: "choose_recipe_selection.php",
+            type: "POST",
+            data: {
+            client_id: client_id,
+            dietchart_id: dietchart_id,
+            dietitian_id: dietitian_id,
+            day: day,
+            course: course,
+            subcourse: subcourse,
+            saverecipe: saverecipe,
+            selectedRecipeIds: JSON.stringify(selectedRecipeIds),
+            recipes: recipeNames.join(',')
+            },
+            success: function (response) {
+            console.log("This is response : ",response);
+              const updatedUrl = `create_dietchart.php?client_id=${client_id}&dietchart_id=${response}&day=${day}&course=${course}`;
+              console.log("this is the updated url : ",updatedUrl);
+              window.location.href = updatedUrl;
+            },
+            error: function (xhr, status, error) {
+            console.log("Error: " + error);
             }
         });
     });
-</script>
-
+    </script>
 </html>

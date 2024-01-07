@@ -16,6 +16,18 @@ if (isset($_POST['clientUserId'])) {
     }
     exit;
 }
+if(isset($_POST['searchbar'])){
+    $vercode = $_POST['vercode'];
+    $search = $_POST['searchbar'];
+    $sql_ = "SELECT * FROM pendingclient LEFT JOIN client ON pendingclient.client_id = client.client_id WHERE name like '{$search}%' and vercode = '$vercode' ";
+    $result = mysqli_query($conn,$sql_);
+    $json = array();
+    while($row = mysqli_fetch_assoc($result)){
+        $json[]=$row;
+    }
+    echo json_encode($json);
+    exit;
+}
 include 'navbar.php';
 if (isset($_SESSION['dietitianuserID'])) {
     $id = $_SESSION['dietitian_id'];
@@ -23,7 +35,6 @@ if (isset($_SESSION['dietitianuserID'])) {
     $sql = "SELECT * FROM dietitian WHERE dietitianuserID = '$userid'";
     global $conn;
     $result = $conn->query($sql);
-    
     $verification = $result->fetch_assoc()['verification_code'];
     
     
@@ -478,13 +489,6 @@ span.time {
     .code-box{
         width:300px;
     }
-    .title-bar{
-        display: flex;
-    justify-content: space-between;
-    padding: 0 5%;
-    flex-direction: column;
-}
-    
 }
 @media screen and (max-width: 1000px){
     .img111{
@@ -519,6 +523,9 @@ span.time {
         width: auto;
         height: 35px;
 
+    }
+    .searchbar input{
+        border: none !important;
     }
 
     .tabsss {
@@ -593,11 +600,11 @@ span.time {
             <div class="col">
                 <div class="title-bar">
                     <div class="heading">
-                        <h1 style="font-size:40px">Add Client</h1>
+                        <h1>Add Client</h1>
                     </div>
                     <div class="searchbar">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/vec_search.svg" style="margin-right:1rem">
-                        <input type="text" style="border:none;width:70%" placeholder="Search Clients">
+                        <input type="text" style="border:none !important;width:70%" id='searchbar' placeholder="Search Clients" >
                     </div>
                 </div>
             </div>
@@ -657,41 +664,7 @@ span.time {
 
                 <!--------------pending verification---------------->
                 <div id='pclients' class='tab-content client-card-container'>
-                    <?php
-                    $sql = "SELECT * FROM client WHERE verification_code='$verification' and dietitianuserID!='$userid'";
-                       print_r($sql);  
-                    $result = $conn->query($sql);
-
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) { ?>
-                                <div id='flexchange' class='client-card gap-1 gap-md-3 gap-lg-6'>
-                                    <div class='ccard-left gap-md-2 gap-lg-5'>
-                                        <img class='profile' src='<?= $DEFAULT_PATH ?>assets/images/client1.svg' alt=''>
-                                        <span class='client-name'>
-                                            <?php echo $row['name'] ?>
-                                        </span>
-                                        <button data-client-username="<?= $row['clientuserID'] ?>" type='button'
-                                            class='btn btn_pending'>Profile</button>
-                                    </div>
-                                    <div class='ccard-right gap-md-2 gap-lg-5'>
-                                        <span class='date'>
-                                            <?php echo $row['last_seen'] ?>
-                                        </span>
-                                        <div class='pending-client'>
-                                            <span>pending!</span>
-                                            <img src='<?= $DEFAULT_PATH ?>assets/images/pending-client.svg' alt=''>
-                                        </div>
-                                    </div>
-
-                                                                    </div>
-                    <?php
-                        }
-                    }else{ ?>
-                        <div id="flexchange" class="client-card gap-1 gap-md-3 gap-lg-6 ">
-                            <h2>No Pending Client Found</h2>
-                        </div>
-                     <?php }
-                    ?>
+                  
                 </div>
 
 
@@ -735,70 +708,16 @@ span.time {
                     <h4 style="text-align: center;" class="title">Share Via</h4>
                     <a class="close" href="add_client.php" style="top:15%;right:7%">&times;</a>
                     <div class="socials">
-                        <a href="whatsapp://send?text=<?php echo $verification; ?>" data-action="share/whatsapp/share"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg" alt=""></a>
+                        <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg" alt=""></a>
                         
-                        <!-- Twitter Share Button -->
-<a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=<?php echo urlencode($verification); ?>">
-    <img src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg">
-</a>
-
-   <a href="#" onclick="shareOnFacebook()">
-                <img src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg" alt="Share on Facebook">
-            </a>
-
-
-
-
-   <a href="https://www.linkedin.com/messaging/compose/?body=<?php echo urlencode($verification); ?>" target="_blank">
-    <img src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg" alt="Send on LinkedIn">
-</a>
-
-
-
-                <a href="#" onclick="shareOnInstagram()">
+                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet"><img
+                        src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank"> <img
+                        src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"></a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={url}"><img
+                        src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"></a>
                 <img src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg">
-            </a>
-        </div>
-    </div>
-</div>
-
-<script>
-    function copyVerificationCodeToClipboard() {
-        var verificationCode = "<?php echo $verification; ?>";
-        var tempInput = document.createElement("input");
-        document.body.appendChild(tempInput);
-        tempInput.value = verificationCode;
-        tempInput.select();
-        document.execCommand("copy");
-        document.body.removeChild(tempInput);
-    }
-
-    function shareOnFacebook() {
-        copyVerificationCodeToClipboard();
-        var message = "Verification code copied!";
-        alert(message); // Display an alert message
-        openFacebookWithMessage();
-    }
-
-    function openFacebookWithMessage() {
-        var facebookURL = "https://www.facebook.com/messages/t/Tanishq Negi";
-        window.open(facebookURL, "_blank");
-    }
-
-    function shareOnInstagram() {
-        copyVerificationCodeToClipboard();
-        var message = "Verification code copied!";
-        alert(message); // Display an alert message
-        openInstagramWithMessage();
-    }
-
-    function openInstagramWithMessage() {
-        var verificationCode = "<?php echo $verification; ?>";
-        var instagramURL = "https://www.instagram.com/direct/t/recipient_username?text=" + encodeURIComponent(verificationCode);
-        window.open(instagramURL, "_blank");
-    }
-</script>
-
+                      
                     </div>
                 </div>
             </div>
@@ -932,12 +851,8 @@ span.time {
                                         </div>
                                     </div>
                                     <button type="submit" name="verified"
-                                    style="border:none; background-color: #4B9AFB; paddding: 20px; width: 6rem; height: 2.5rem; border-radius: 5px;color: white;font-size: 20px;">Verify</button>
-                                    <button type="submit" name="Decline" class="bg-warning"
-                                        style="border:none;  paddding: 20px; width: 6rem; height: 2.5rem; border-radius: 5px;color: white;font-size: 20px;">Decline</button>
+                                        style="border:none; background-color: #4B9AFB; paddding: 20px; width: 6rem; height: 2.5rem; border-radius: 5px;color: white;font-size: 20px;">Verify</button>
                                 </div>
-                                </div>
-
                             </form>
                             `;
                             pendingPopDiv.setAttribute('id', resp.clientuserID);
@@ -1050,6 +965,111 @@ span.time {
                 document.getElementById(popId).style.display = 'none';
             }
             
+            </script>
+            <script>
+                let vercode = '<?=$verification?>';
+                let container = document.getElementById("pclients");
+                const show_result=()=>{
+                    let value = searchbar.value;
+                    $.ajax({
+                        type:'POST',
+                        url:'test_11.php',
+                        data:{
+                            searchbar: value,
+                            vercode: vercode
+                        },
+                        success: function(respone){
+                            if (respone!==""){
+                                let itemlist = JSON.parse(respone);
+                                container.innerHTML = "";
+                                let found = 0;
+                                itemlist.forEach((element) => {
+                                    if (element !== ''){
+                                        let div = document.createElement('div');
+                                        div.id = 'flexchange';
+                                        div.classList = 'client-card gap-1 gap-md-3 gap-lg-6';
+                                        let div1 = document.createElement('div');
+                                        div1.classList = "ccard-left gap-md-2 gap-lg-5";
+
+                                        let image = document.createElement('img');
+                                        image.classList='profile';
+                                        image.src = '<?= $DEFAULT_PATH ?>assets/images/'+element['p_p'];
+
+                                        let span1 = document.createElement('span');
+                                        span1.classList="client-name";
+                                        span1.textContent = element['name'];
+
+                                        let button = document.createElement('button');
+                                        button.classList='btn btn_pending';
+                                        button.textContent = "Profile";
+                                        button.setAttribute('data-client-username',element['clientuserID']);
+
+                                        div1.appendChild(image);
+                                        div1.appendChild(span1);
+                                        div1.appendChild(button);
+
+
+                                        // add buttons in div2 for accept and decline
+                                        let div2 = document.createElement("div");
+                                        div2.classList = "ccard-right gap-md-2 gap-lg-5";
+
+                                        let span2 = document.createElement('span');
+                                        span2.classList="date";
+                                        span2.textContent = element['last-seen'];
+
+                                        let div3 = document.createElement('div');
+                                        div3.classList = "pending-client";
+                                        
+                                        let span3 = document.createElement('span');
+                                        span3.textContent = "Pending!";
+
+                                        let image1 = document.createElement('img');
+                                        image1.src = '<?= $DEFAULT_PATH ?>assets/images/pending-client.svg';
+
+
+                                        div3.appendChild(span3);
+                                        div3.appendChild(image1);
+
+                                        div2.appendChild(span2);
+                                        div2.appendChild(div3);
+
+                                        div.appendChild(div1);
+                                        div.appendChild(div2);
+
+                                        container.appendChild(div);
+                                    }else{
+                                        found += 1;   
+                                    }
+                                });
+                                if (itemlist.length===1 && found===1){
+                                    let div = document.createElement('div');
+                                    div.id = "flexchange";
+                                    div.classList = "client-card gap-1 gap-md-3 gap-lg-6";
+    
+                                    let h2 = document.createElement('h2');
+                                    h2.textContent = "Not Found!";
+    
+                                    div.appendChild(h2);
+                                    container.appendChild(div);
+                                }
+                            }
+                            if(respone==="[]"){
+                                let div = document.createElement('div');
+                                div.id = "flexchange";
+                                div.classList = "client-card gap-1 gap-md-3 gap-lg-6";
+
+                                let h2 = document.createElement('h2');
+                                h2.textContent = "Not Found!";
+
+                                div.appendChild(h2);
+                                container.appendChild(div);
+                            }
+                        }
+                    });
+                }
+                let searchbar = document.getElementById('searchbar');
+                searchbar.addEventListener("keyup",show_result);
+                show_result();
             </script>
 </body>
 

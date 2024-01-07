@@ -8,6 +8,9 @@ if (isset($_SESSION['dietitianuserID'])) {
     $sql = "SELECT * FROM messages where dietitianID='$user'";
     $result = $conn->query($sql);
     if (mysqli_num_rows($result) < 1) {
+        
+    }
+    else{
         header('Location:message.php');
     }
     # database connection file
@@ -206,7 +209,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                         $("#searchText").on("input", function () {
                             var searchText = $(this).val();
                             if (searchText == "") return;
-                            $.post('app/ajax/search.php', {
+                            $.post('assets/app/ajax/search.php', {
                                 key: searchText
                             },
                                 function (data, status) {
@@ -218,7 +221,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                         $("#serachBtn").on("click", function () {
                             var searchText = $("#searchText").val();
                             if (searchText == "") return;
-                            $.post('app/ajax/search.php', {
+                            $.post('assets/app/ajax/search.php', {
                                 key: searchText
                             },
                                 function (data, status) {

@@ -172,8 +172,8 @@ $result = mysqli_query($conn,$sql);
                     <!-----------------------------EDIT BUTTON---------------------------------->
 
 
-                        <a class="editBtn" name="edit_client" 
-                            href="update_client_profile.php?client_id=<?php echo $client_id?>"><p class="mb-0 edit-profile" style="font-size: 27px;" > Edit Profile</p></a>
+                        <!-- <a class="editBtn" name="edit_client" 
+                            href="update_client_profile.php?client_id=<?php echo $client_id?>"><p class="mb-0 edit-profile" style="font-size: 27px;" > Edit Profile</p></a> -->
                    
                 </div>    
                     <div class="container">
@@ -256,12 +256,17 @@ $result = mysqli_query($conn,$sql);
                                 </div>
                             </div>
                         </div>
+                        <div class="form-row  d-flex flex-row w-100 justify-content-center align-items-center gap-5 mt-4">
+                            <a class="editBtn" name="edit_client" href="update_client_profile.php?client_id=<?php echo $client_id?>"><p class="mb-0 edit-profile" style="font-size: 27px;" > Edit Profile</p></a>
+                        </div>
                     </div>
                     </div>
                     <?php
       }?>
                 </form>
             </div>
+        </div>
+    </div>
             <?php require('constant/scripts.php'); ?>
 </body>
 
