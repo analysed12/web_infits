@@ -21,7 +21,7 @@
          <form action="" method="post">
 
           <input type="password" class="form-control shadow p-3 mb-5 bg-body rounded" placeholder="Enter new password" id="pass" name="password">
-          <input type="password" class="form-control shadow p-3 mb-5 bg-body rounded" placeholder="confirm password" id="confirmpass" name="confirmpassword">
+          <input type="password" class="form-control shadow p-3 mb-5 bg-body rounded" placeholder="Confirm password" id="confirmpass" name="confirmpassword">
           <input type="submit" class="form-control btn btn-lg btn-primary" value="submit" name="submit_password" id="submit">
            
 
@@ -81,7 +81,7 @@ if (isset($_POST['submit_password'])) {
 
      $query = " UPDATE `dietitian` set password = '{$confirmPassword}' WHERE OTP = '{$newOTP}'";             
      $result =  mysqli_query($conn,$query) OR die("Query not Executed");
-     header("location:login.php");
+     header("Location: login.php");
      
 
     }

@@ -8,13 +8,11 @@ if (isset($_SESSION['dietitianuserID'])) {
     $sql = "SELECT * FROM addclient WHERE dietitianuserID='$id'";
     $result = $conn->query($sql);
     if (mysqli_num_rows($result) < 1) {
-        header('Location:clientlist.php');
+        header('Location:  clientlist.php');
     }
 }
 
 if (isset($_POST['clientList'])) {
-    echo "$_POST[clientList]"."hello faizan!";
-   
     $clients = json_decode($_POST['clientList'], true);
     if (is_array($clients)) {
         foreach ($clients as $clientID) {
@@ -24,11 +22,6 @@ if (isset($_POST['clientList'])) {
             }
         }
     }
-}
-else{
-
-   echo "sorry no result found";
-
 }
 $output = ob_get_contents();
 ob_end_clean();
@@ -68,6 +61,7 @@ echo $output;
     .clients_operations {
         display: flex;
         gap: 3rem;
+        margin-right: 5% !important;
     }
 
     #btn1 {
@@ -305,10 +299,12 @@ echo $output;
     }
 
     .myCheckboxs {
+        height:12%;
+        width:12%;
         position: absolute;
         top: 10%;
         right: 6%;
-        display: display;
+        display: none;
         border: 1px solid #7282FB;
     }
 
@@ -471,6 +467,15 @@ echo $output;
 
     }
 
+    @media only screen and (min-width: 720px) and (max-width: 930px) {
+        .clients_operations {
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-left: 60px;
+            /* width: 540px; */
+        }
+        
+    }
 
     @media screen and (max-width: 1100px) {
         .clients_container {
@@ -485,11 +490,34 @@ echo $output;
             flex-wrap: wrap;
             justify-content: center;
             margin-left:-10rem;
+            width: 550px;
         }
         .search_client{
             width:auto;
         }
     }
+   
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+
 </style>
 
 <body>
@@ -505,19 +533,18 @@ echo $output;
 
 
             <div class="clients_operations">
-                <div class="add_set_client" id="add_set_client">
-                    <div><a href="add_client.php"><button id="btn1"><span
-                                    class="material-symbols-outlined">add</span></button></a></div>
-                    <div class="add_set">
-                        <span">Add Clients</span>
+                <div class="add_set_client" id="add_set_client" style="cursor:pointer;">
+                    <div><a href="add_client.php"><button id="btn1"><span class="material-symbols-outlined">add</span></button></a></div>
+                    <div class="add_set" style="color:#9C74F5;">
+                    <a href="add_client.php"><span style="color:#9C74F5;">Add Clients</span></a>
                     </div>
                 </div>
-                <div onclick="goals('Set Goals');" class="add_set_client">
-                    <div><button id="btn1"><a href="setgoals.php"><span class="material-symbols-outlined">settings</span></a></button> </div>
+                <div onclick="goals('Set Goals');" class="add_set_client" style="cursor:pointer;">
+                    <div><button id="btn1"><span class="material-symbols-outlined">settings</span></button> </div>
                     <div class="add_set"> <span>Set Goals</span></div>
                 </div>
 
-                <div onclick="toast('Set Reminders');" class="add_set_client">
+                <div onclick="toast('Set Reminders');" class="add_set_client" style="cursor:pointer;">
                     <div><button id="btn1"><span class="material-symbols-outlined">notification_add</span></button>
                     </div>
                     <div class="add_set"> <span>Set Reminders</span></div>
@@ -545,19 +572,18 @@ echo $output;
         <div class="client-container">
             <?php
             if (isset($_GET['pending-btn'])) {
-                $sqll = "SELECT * FROM addclient WHERE dietitianuserID='$id' AND status=0";
-                //   print_r($sqll);   
-
-                $resultt = mysqli_query($conn, $sqll) or die("Query not Found!");
-                if (mysqli_num_rows($resultt) > 0) {
-                    while ($roww = mysqli_fetch_assoc($resultt)) {
-                        $client_id1 = $roww["client_id"];
-                        $plan_id1 = $roww["plan_id"];
-                            //echo $roww["plan_id"]; 
+                $sql = "SELECT * FROM addclient WHERE dietitianuserID='$id' AND status=0";
 
 
-                        $sql1 = "SELECT * FROM create_plan WHERE `plan_id`=$plan_id1";
-                        //  print_r($sql1);
+                $result = mysqli_query($conn, $sql);
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $client_id = $row["client_id"];
+                        $plan_id = $row["plan_id"];
+
+
+                        $sql1 = "SELECT * FROM create_plan WHERE `plan_id`= $plan_id";
+
                         $result1 = mysqli_query($conn, $sql1);
                         $row1 = mysqli_fetch_assoc($result1);
                         $date1 = strtotime($row1["start_date"]);
@@ -574,7 +600,7 @@ echo $output;
                             echo "<div class='profile1' style='float:left; margin-right:10px;'><img src='{$DEFAULT_PATH}assets/images/client_profile.svg'></div>";
                             echo "<div class='profile2'>";
                             echo "<input style='cursor:pointer;border:1px solid #7282FB;' id='chk' class='myCheckboxs' type='checkbox' name='checkbox_name[]' value='" . $row["client_id"] . "'>";
-                            echo "<p style='font-weight:400;text-transform:capitalize;font-size:22px;line-height:88%;'>" . $roww['name'] . "</p>";
+                            echo "<p style='font-weight:400;text-transform:capitalize;font-size:22px;line-height:88%;'>" . $row["name"] . "</p>";
                             echo "<a href='client_profile.php?client_id=" . $row['client_id'] . "' style='font-size:18px;font-weight:400;line-height:88%;padding:0px !important;margin-top:-1rem;'>Profile</a>";
                             echo "<div>";
                             echo "<div class='box1' style='display:inline-block;background: #FFFFFF;
@@ -592,11 +618,9 @@ echo $output;
                         }
                     }
                 }
-            } 
-            
-            else {
+            } else {
 
-                $sql = "SELECT * FROM addclient WHERE dietitianuserID='$id' AND status = 1";
+                $sql = "SELECT * FROM addclient WHERE dietitianuserID='$id' AND status=1";
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -609,7 +633,7 @@ echo $output;
                             $plan_duration = "No Plan";
 
                         } else {
-                            $sql = "SELECT * FROM create_plan WHERE `plan_id`= $plan_id";
+                            $sql1 = "SELECT * FROM create_plan WHERE `plan_id`= $plan_id";
                             $result1 = mysqli_query($conn, $sql1);
                             $row1 = mysqli_fetch_assoc($result1);
                             $date1 = strtotime($row1["start_date"]);
@@ -657,6 +681,7 @@ echo $output;
         <div id="toast__btns">
             <form action="" method="POST" id='form'>
                 <input style='cursor:pointer' id='form__input' type='text' hidden name='clientList' value=''>
+                <div style="margin-top:-4px;">
                 <button type="submit" class="btn goalbtn">
                     <span>
                         <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -667,6 +692,7 @@ echo $output;
                     </span><span class='btn__span'></span>
                 </button>
                 <button onclick='close()' class="btn btn2">Cancel</button>
+                </div>
             </form>
         </div>
     </div>
@@ -677,6 +703,7 @@ echo $output;
         <div id="toast__btns">
             <form action="" method="POST" id='form1'>
                 <input style='cursor:pointer' id='form__input1' type='text' hidden name='clientList' value=''>
+                <div style="margin-top:-4px;">
                 <button type="submit" class="btn reminderbtn">
                     <span>
                         <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -688,6 +715,7 @@ echo $output;
                     </span><span class='btn__span1'></span>
                 </button>
                 <button onclick='close()' class="btn btn2">Cancel</button>
+                </div>
 
             </form>
         </div>
@@ -727,6 +755,12 @@ echo $output;
             </div>
         </div>
     </div>
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+        </div>
+    </div>
+
 
 
     <script>
@@ -886,6 +920,96 @@ echo $output;
                 items.style.display = "none";
             });
         });
+        function showModal(message) {
+        const modal = document.getElementById("customModal");
+        const modalMessage = document.getElementById("modalMessage");
+        modalMessage.innerHTML = message;
+        modal.style.display = "block";
+
+        // Allow selecting checkboxes even with the modal displayed
+        myCheckBox.forEach((items) => {
+            items.disabled = false;
+        });
+
+        // Close the modal if the user clicks anywhere outside of it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+            modal.style.display = "none";
+            }
+        };
+        }
+
+        goalbtn.addEventListener("click", () => {
+        let atLeastOneCheckboxSelected = false;
+
+        myCheckBox.forEach((items) => {
+            if (items.checked) {
+                atLeastOneCheckboxSelected = true;
+            }
+        });
+
+        if (atLeastOneCheckboxSelected) {
+            myCheckBox.forEach((items) => {
+                if (items.checked) {
+                    selectedClients.push(items.value);
+                }
+                form__input.value = JSON.stringify(selectedClients);
+                form.action = "setgoals.php";
+                console.log("setgoals", selectedClients);
+            });
+
+            window.location.reload();
+        } else {
+            showModal("Please select at least one client to set goals. You will stay on this page.");
+        }
+    });
+
+    reminderbtn.addEventListener("click", () => {
+        let atLeastOneCheckboxSelected = false;
+
+        myCheckBox.forEach((items) => {
+            if (items.checked) {
+                atLeastOneCheckboxSelected = true;
+            }
+        });
+
+        if (atLeastOneCheckboxSelected) {
+            myCheckBox.forEach((items) => {
+                if (items.checked) {
+                    selectedClients.push(items.value);
+                }
+                form__input1.value = JSON.stringify(selectedClients);
+                form1.action = 'set_reminders.php';
+                console.log("Set Reminders", selectedClients);
+            });
+
+            window.location.reload();
+        } else {
+            showModal("Please select at least one client to set reminders. You will stay on this page.");
+        }
+    });
+
+    // Disable the buttons by default
+    goalbtn.disabled = true;
+    reminderbtn.disabled = true;
+
+    // Enable/disable buttons based on checkbox selection
+    myCheckBox.forEach((items) => {
+        items.addEventListener('change', () => {
+            let atLeastOneCheckboxSelected = false;
+
+            myCheckBox.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    atLeastOneCheckboxSelected = true;
+                }
+            });
+
+            // Enable/disable buttons based on checkbox selection
+            goalbtn.disabled = !atLeastOneCheckboxSelected;
+            reminderbtn.disabled = !atLeastOneCheckboxSelected;
+        });
+    });
+        
     </script>
 </body>
 

@@ -7,7 +7,7 @@ include('navbar.php');
 if(isset($_SESSION['dietitianuserID'])){
     $dietitian_id = $_SESSION['dietitianuserID'];
 }else{
-    header('location: login.php');
+    header('Location:  login.php');
 }
 // Configure Dates
 date_default_timezone_set("Asia/Calcutta");
@@ -271,12 +271,23 @@ body {
 .symbols-container,
 .values-container {
     display: flex;
-    /* gap: 4rem; */
     font-weight: 400;
     justify-content: flex-end;
-    width: 75%;
+    width: 77%;
     align-items: center;
     font-size: 20px;
+    padding-right: 0px;
+}
+.values-container {
+    width: 75%;
+}
+
+.mobile-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-right: 3rem;
 }
 
 @media screen and (max-width: 1100px) {
@@ -311,7 +322,7 @@ body {
 
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 1100px) {
     .dashboard_container4 {
         display: none;
     }
@@ -339,6 +350,8 @@ body {
     .mobileview_clientprogress {
         display: flex;
         flex-direction: column;
+        width: 290px;
+        margin-top: 10px;
 
 
 
@@ -398,18 +411,12 @@ $data = fetchData($query);
             <div class="container4_wrapper1">
                 <div style="width: 25%;"></div>
                 <div class="symbols-container col-12">
-                    <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame.svg"
-                            style="width:1.8rem"><span>Steps</span></div>
-                    <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame-1.svg"
-                            style="width:1.8rem"><span>Heart Rate</span></div>
-                    <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame-2.svg"
-                            style="width:1.8rem"><span>Water</span></div>
-                    <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame-3.svg"
-                            style="width:1.8rem"><span>Sleep</span></div>
-                    <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame-4.svg"
-                            style="width:1.8rem"><span>Weight</span></div>
-                    <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame-5.svg"
-                            style="width:1.8rem"><span>Calories</span></div>
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame.svg" style="width:1.8rem"><span>Steps</span></div>
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-1.svg" style="width:2rem; margin-left:-18px;"><span>Heart Rate</span></div>
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-2.svg" style="width:1.8rem; margin-left:18px;"><span>Water</span></div>
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-3.svg" style="width:1.8rem; margin-left:18px;"><span>Sleep</span></div>
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-4.svg" style="width:1.8rem"><span>Weight</span></div>
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-5.svg" style="width:1.8rem"><span>Calories</span></div>
                 </div>
             </div>
             <?php
@@ -431,25 +438,25 @@ if(!empty($data)){
                 </div>
                 <div class="values-container col-12">
                     <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_steps.php?id=<?php echo($data[$i]['client_id']) ?>"
+                            href="track_stats_steps.php?client_id=<?php echo($data[$i]['client_id']) ?>"
                             class="values"><?php echo($infom['steps']['progress'] . '/' . $infom['steps']['goal']) ?></a></span>
                     <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_heart.php?id=<?php echo($data[$i]['client_id']) ?>"
+                            href="track_stats_heart.php?client_id=<?php echo($data[$i]['client_id']) ?>"
                             class="values"><?php echo($infom['heart']['progress']) ?> Bpm</a></span>
                     <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_water.php?id=<?php echo($data[$i]['client_id']) ?>"
+                            href="track_stats_water.php?client_id=<?php echo($data[$i]['client_id']) ?>"
                             class="values"><?php echo($infom['water']['progress'] . '/' . $infom['water']['goal']) ?>
                             ltrs</a></span>
                     <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_sleep.php?id=<?php echo($data[$i]['client_id']) ?>"
+                            href="track_stats_sleep.php?client_id=<?php echo($data[$i]['client_id']) ?>"
                             class="values"><?php echo(round($infom['sleep']['progress'],2) . '/' . $infom['sleep']['goal']) ?>
                             hrs.</a></span>
                     <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_weight.php?id=<?php echo($data[$i]['client_id']) ?>"
+                            href="track_stats_weight.php?client_id=<?php echo($data[$i]['client_id']) ?>"
                             class="values"><?php echo($infom['weight']['progress'] . '/' . $infom['weight']['goal']) ?>
                             kg</a></span>
                     <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_calorie.php?id=<?php echo($data[$i]['client_id']) ?>"
+                            href="track_stats_calorie.php?client_id=<?php echo($data[$i]['client_id']) ?>"
                             class="values"><?php echo($infom['calorie']['progress'] . '/' . $infom['calorie']['goal']) ?>
                             kcal</a></span>
                 </div>
@@ -471,6 +478,7 @@ if(!empty($data)){
     for($i = 0; $i<$count; $i++){
         $infom = fetchInformation($data[$i]['client_id']);
 ?>
+<div class="mobile-card-container">
     <div class="mobileview_clientprogress">
 
         <div class="mob_wrapper1">
@@ -546,7 +554,7 @@ if(!empty($data)){
             </div>
         </div>
     </div>
-
+</div>
     <?php
     }
 }

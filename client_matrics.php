@@ -8,7 +8,7 @@ $today = $today->format('Y-m-d');
 if (isset($_GET['client_id'])) {
   $client_id = $_GET['client_id'];
 } else {
-  header('Location:client_list.php');
+  header('Location: client_list.php');
 }
 $sql1 = "SELECT * FROM goals where client_id = '$client_id' AND dietitian_id = '{$_SESSION['dietitian_id']}'";
 $result1 = $conn->query($sql1);
@@ -21,7 +21,7 @@ if ($result1->num_rows > 0) {
   $sleep = $row1['sleep'];
   $calorie = $row1['calorie'];
 } else {
-  header('Location:client_list.php');
+  header('Location: client_list.php');
 }
 
 $sql2 = "SELECT SUM(steps) FROM `steptracker` WHERE client_id = $client_id AND `dateandtime` >= '{$today} 00:00:00' AND `dateandtime` <= '{$today} 23:59:59'; ";

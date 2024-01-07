@@ -1,3 +1,6 @@
+<?php
+    include "navbar.php"
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -393,9 +396,7 @@ body{
 
 </style>
 <body>
-    <?php
-    include "navbar.php"
-    ?>
+  
 <div class="clients">
         <p style="font-size:40px; font-weight:500;margin-top:2rem;">Client List</p>
         <div class="clients_container">

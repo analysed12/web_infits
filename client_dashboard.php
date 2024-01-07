@@ -145,7 +145,7 @@ include "navbar.php";
         if (isset($_GET['client_id'])) {
             $client_id = $_GET['client_id'];
         } else {
-            header('Location:client_list.php');
+            header('Location: client_list.php');
         }
         $sql = "SELECT name FROM addclient where client_id = '$client_id' AND dietitianuserID = '{$_SESSION['dietitianuserID']}'";
         global $conn;
@@ -154,7 +154,7 @@ include "navbar.php";
             $row = mysqli_fetch_assoc($result);
             $name = $row['name'];
         } else {
-            header('Location:client_list.php');
+            header('Location: client_list.php');
         }
         ?>
         <h4 class="client_heading">Client Dashboard</h4>
@@ -235,11 +235,9 @@ include "navbar.php";
                 </a>
             </div>
 
-            <div class="col " style="border: 1px solid #1FB688;
-        color: #1FB688;text-align:center;">
-                <?php echo '<a style="color: #1FB688;" href="nameofpage.php?client_id=' . $client_id . '">' ?>
-                <div class="topbar"
-                    style="display: flex;flex-direction: column;justify-content: space-between;margin-top: -37px;height: 100%;">
+            <div class="col " style="border: 1px solid #1FB688; color: #1FB688;text-align:center;">
+                <?php echo '<a style="color: #1FB688;" href="health_detail_form.php?document=show&client_id=' . $client_id . '">' ?>
+                <div class="topbar" style="display: flex;flex-direction: column;justify-content: space-between;margin-top: -37px;height: 100%;">
                     <div>
                         Health Details
                     </div>
@@ -247,7 +245,7 @@ include "navbar.php";
                         <img src="<?= $DEFAULT_PATH ?>assets/images/Health Report.svg" style="width:60%;" alt="">
                     </div>
                     <div>
-                        Form,Document
+                        Forms and Documents
                     </div>
                 </div>
 
