@@ -27,6 +27,6 @@ if(isset($_GET['recipeId'])){
         $query = "DELETE FROM dietitian_recipes WHERE recipe_id = '$recipeId'";
         $conn->query($query);
     }
-    header("Location: {$_SERVER['HTTP_REFERER']}");
+    header("Location:  {$_SERVER['HTTP_REFERER']}");
 }
 ?>

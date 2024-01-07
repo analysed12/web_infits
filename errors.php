@@ -1,5 +1,5 @@
 <?php  if (count($errors) > 0) : ?>
-  <div class="error">
+  <div class="error"  style="color:rgb(255, 153, 153);text-align: center;">
   	<?php foreach ($errors as $error) : ?>
   	  <p><?php echo $error ?></p>
   	<?php endforeach ?>

@@ -144,6 +144,7 @@ body{
 
 .content .created-form-container .form-card-container .form-cards {
     position: relative;
+    margin: 10px 10px 0px;
     height: 100px;
     max-width: 500px;
     width: 45%;
@@ -319,7 +320,8 @@ body{
     -o-border-radius: 5px;
 }
 .create_btn{
-    position: absolute;
+position: fixed;
+z-index:3;
 width: 70px;
 height: 70px;
 left: 90%;
@@ -438,7 +440,9 @@ padding-bottom:0.5rem;
             <h1>Forms and Documents</h1>
             <div class="search-box1">
                 <img src="<?=$DEFAULT_PATH?>assets/images/search.svg" alt="#">
-                <input type="search" name="form" id="form" placeholder="Search forms or clients">
+
+                <input type="search" name="search_query_independent" id="form-search" placeholder="Search forms or clients">
+                <div id="suggestion-list"></div>
             </div>
         </div>
 
@@ -448,7 +452,7 @@ padding-bottom:0.5rem;
                 <h2>My Forms</h2>
                 <button><a href="health_viewall_forms.php">View all</a></button>
             </div>
-            <div class="form-card-container">
+            <div class="form-card-container" style="max-height: 66vh; min-height: 18vh; overflow: hidden; padding:10px;">
             <?php
             $sql = "SELECT * from dietitian_forms where dietitianuserID = '{$_SESSION['dietitianuserID']}'";
             $result = $conn->query($sql);
@@ -479,7 +483,7 @@ padding-bottom:0.5rem;
                 <h2>Client forms and documents</h2>
                 <button><a href="health_viewall_forms&documents.php">View all</a></button>
             </div>
-            <div class="client-card-container">
+            <div class="client-card-container" style="height: 80vh; overflow:hidden;">
                 
                 <?php
                     $sql = "SELECT * FROM client_forms_docs WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
@@ -530,6 +534,28 @@ padding-bottom:0.5rem;
         });
 
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById('form-search');
+        const formCards = document.querySelectorAll('.form-cards');
+
+        searchInput.addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase().trim();
+
+            formCards.forEach(card => {
+                const formName = card.querySelector('.form-content h4').textContent.toLowerCase();
+
+                if (formName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
      <?php require('constant/scripts.php'); ?>
 </body>
 

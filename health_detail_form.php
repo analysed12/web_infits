@@ -4,7 +4,7 @@ require('constant/config.php');
 if(isset($_GET['client_id'])){
     $client_id = $_GET['client_id'];
 }else{
-    header("Location:forms_and_documents.php");
+    header("Location:  forms_and_documents.php");
 }
 ?>
 <!DOCTYPE html>
@@ -532,7 +532,7 @@ if(isset($_GET['client_id'])){
                 $data = $result->fetch_assoc()['form_data'];
                 $data = json_decode($data,true);
 
-                foreach($data as $que) { ?>
+                while($data > 0) { ?>
                 <div class="details">
                     <p id="question"><?php echo $que["que"]; ?></p>
                     <p id="answer"><?php echo $que["ans"]; ?></p>
@@ -550,7 +550,7 @@ if(isset($_GET['client_id'])){
                     $data = $result->fetch_assoc()['docs'];
                     $data = json_decode($data,true);
     
-                    foreach($data as $doc) { ?>
+                    while($data > 0) { ?>
                     <div class="details">
                         <div class="title">
                             <img src="<?=$DEFAULT_PATH?>assets/images/Pdf.svg" alt="PDF">

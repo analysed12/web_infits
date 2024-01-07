@@ -4,7 +4,7 @@ if (isset($_SESSION['dietitian_id'])) {
   $dietitian_id = $_SESSION['dietitian_id'];
   $dietitianuserid = $_SESSION['dietitianuserID'];
   $clientId = $_GET['client_id'];
-  $q = "SELECT * FROM addclient WHERE dietitianuserID = '$dietitianuserid' AND client_id = $clientId;";
+  $q = "SELECT * FROM addclient WHERE dietitianuserID = '$dietitianuserid' AND client_id = '$clientId';";
   $result1 = $conn->query($q);
   if (mysqli_num_rows($result1) > 0) {
     while ($row = mysqli_fetch_assoc($result1)) {
@@ -14,7 +14,7 @@ if (isset($_SESSION['dietitian_id'])) {
   $sql = "SELECT * FROM diet_chart WHERE dietitian_id='$dietitian_id' AND client_id = '$clientId'";
   $result = $conn->query($sql);
   // if (mysqli_num_rows($result) < 1) {
-  // header("Location:dietchart_default.php?client_id=$clientId");
+  // header("Location: dietchart_default.php?client_id=$clientId");
   // }
 }
 ?>
@@ -324,6 +324,55 @@ body {
         margin-left: 1px;
     }
 }
+/* .option-popup{
+     margin-left: 55px; 
+} */
+.option-popup button{
+    width: 100px;
+}
+.option-popup {
+    display: none;
+}
+
+.show {
+    background-color: transparent;
+    width: 250px;
+    height: 70px;
+    position: relative;
+    top: 50%;
+    /* left: 50%; */
+    transform: translate(-40%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    -webkit-transform: translate(-40%, -50%);
+    -moz-transform: translate(-40%, -50%);
+    -ms-transform: translate(-40%, -50%);
+    -o-transform: translate(-40%, -50%);
+    border-radius: 10.0347px;
+}
+
+.option-popup button {
+    background-color: #FF2929;
+    color: #FFFFFF;
+    padding: 5px 30px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.option-popup button:last-child {
+    background-color: #9C74F5;
+    text-decoration: none !important;
+}
+
+@media screen and (max-width: 1200px){
+    .option-popup{
+        width: 30px;
+        margin-top:40px;
+    }
+}
 </style>
 
 <body>
@@ -340,18 +389,26 @@ body {
             <div class="sliding-cal col-sm-12">
                 <div id="slider-content"> </div>
             </div>
+            <?php
+                $clientId = $_GET['client_id'];
+                $dietitian_id = $_SESSION['dietitian_id'];
+                $sql = "SELECT * FROM diet_chart WHERE dietitian_id='$dietitian_id' AND client_id = '$clientId'";
+                $result = $conn->query($sql);
+                if($result1->num_rows > 0){ 
+                    while($row = mysqli_fetch_assoc($result)){
+            ?>
             <div class="maindiv">
                 <div class="items">
                     <div class="item item1">
-                        <div class="left">Diet Chart 1</div>
+                        <div class="left" style="width:70%"><?=$row['dietchart_name']?></div>
                         <div>
                             <img src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg"
-                                style="height:20px; width:20px;" />
+                                style="height:20px; width:20px;" onclick="showPopup(this)"  />
                         </div>
                     </div>
                     <div class="item">
                         <div class="to">Assigned to: </div>
-                        <div class="name"> Ronald Richards</div>
+                        <div class="name"> <?=$name?></div>
                     </div>
                     <div class="item text">Breakfast, Lunch, Snacks, Dinner</div>
                     <div class="item">
@@ -362,11 +419,16 @@ body {
                         <div class="dayes"> Monday - Sunday</div>
                     </div>
                 </div>
-                <a class="butt" href="create_dietchart.php?client_id=<?php echo $clientId ?>"
-                    style="text-decoration:none;border-radius:50%;background-color:#9C74F5;
-                  width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;
-                  border:none;position:absolute;right:60px;bottom:10px;display:flex;justify-content:center;align-items:center;">+</a>
+                <div class="option-popup">
+                    <button onclick="return confirm('Are you sure to delete this?')" class="formDelete"><a style="text-decoration:none;color:white;" href="delete_dietchart.php?client_id=<?=$clientId?>&dietchart=<?=$row['dietchart_id']?>">DELETE</a></button>
+                    <button class="formEdit"><a style="text-decoration:none;color:white;" href="create_dietchart.php?client_id=<?=$clientId?>&dietchart_id=<?=$row['dietchart_id']?>">EDIT</a></button>
+                </div>
             </div>
+                <?php
+                    }
+                }
+                ?>
+                <a class="butt" href="create_dietchart.php?client_id=<?php echo $clientId ?>&dietchart_id=-1&day=monday&course=brm" style="text-decoration:none;border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:60px;bottom:10px;display:flex;justify-content:center;align-items:center;">+</a>
             <?php require('constant/scripts.php'); ?>
 
             <script>
@@ -426,6 +488,10 @@ body {
             function getScrollPercentage() {
                 return ((slider.parentElement.scrollLeft / (slider.parentElement.scrollWidth - slider.parentElement
                     .clientWidth)) * 100);
+            }
+            function showPopup(e) {
+                // e.parentNode.parentNode.children[2].classList.toggle("show");
+                console.log(e.parentNode.parentNode.parentNode.parentNode.children[1].classList.toggle("show"));
             }
             </script>
 </body>

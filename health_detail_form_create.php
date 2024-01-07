@@ -7,13 +7,13 @@ if (isset($_POST['saveForm'])) {
     $count = $_POST['queCount'];
     $formName = $_POST['formName'];
     if (isset($_GET['form_id'])) {
-        $query = "UPDATE `dietitian_forms` SET `form_name`='$formName',`total_que`='$count',`dietitian_id`='{$_SESSION['dietitian_id']}',`dietitianuserID`='{$_SESSION['dietitianuserID']}',`form_data`='$form' WHERE form_id= {$_GET['form_id']}";
+        $query = "UPDATE `dietitian_forms` SET `form_name`='$formName',`total_que`='$count',`dietitian_id`='{$_SESSION['dietitian_id']}',`dietitianuserID`='{$_SESSION['dietitianuserID']}',`questions`='$form' WHERE form_id= {$_GET['form_id']}";
         echo $query;
         $conn->query($query);
         $form_id = $_GET['form_id'];
     } else {
 
-        $query = "INSERT INTO `dietitian_forms`(`form_name`, `total_que`, `dietitian_id`, `dietitianuserID`, `form_data`) VALUES ('$formName','$count','{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','$form')";
+        $query = "INSERT INTO `dietitian_forms`(`form_name`, `total_que`, `dietitian_id`, `dietitianuserID`, `questions`) VALUES ('$formName','$count','{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','$form')";
         $conn->query($query);
         $query = "SELECT * FROM dietitian_forms WHERE dietitian_id = '{$_SESSION['dietitian_id']}' ORDER BY form_id DESC LIMIT 1";
         $result = $conn->query($query);
@@ -27,8 +27,13 @@ if (isset($_POST['addClient'])) {
     $clientId = $_POST['clientId'];
     $userId = $_POST['userId'];
     if (isset($_GET['form_id'])) {
-        $query = "INSERT INTO `client_forms_docs`(`client_id`, `clientuserID`, `dietitian_id`, `dietitianuserID`, `form_id`) VALUES ('$clientId','$userId','{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','{$_GET['form_id']}')";
-        $conn->query($query);
+        $query = "SELECT * FROM `client_forms_docs` WHERE form_id = '{$_GET['form_id']}' AND `client_id` = '$clientId'";
+        $result = $conn->query($query);
+        $num = $result->num_rows;
+        if ($num < 1) {
+            $query2 = "INSERT INTO `client_forms_docs`(`client_id`, `clientuserID`, `dietitian_id`, `dietitianuserID`, `form_id`) VALUES ('$clientId','$userId','{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','{$_GET['form_id']}')";
+                    $conn->query($query2);
+        }
     }
 }
 if (isset($_POST['removeClient'])) {
@@ -369,6 +374,7 @@ if (isset($_POST['removeClient'])) {
     .delete-icon {
         cursor: pointer;
         font-size: 1.5rem;
+        float:right;
     }
 
     #popup-answer-type {
@@ -449,6 +455,7 @@ if (isset($_POST['removeClient'])) {
 
     .tab {
         display: none;
+/*        width: 100%;*/
     }
 
     .tab-button {
@@ -509,6 +516,16 @@ if (isset($_POST['removeClient'])) {
         color: #6883FB;
         border-radius: 10px;
     }
+
+    .inputCheck,
+    .inputRadio,
+    .inputLabel {
+        display: inline !important;
+        margin-right: 15px;
+    }
+    .tab-content{
+        width: 100%;
+    }
     </style>
 
 </head>
@@ -539,12 +556,31 @@ if (isset($_POST['removeClient'])) {
                 <div id="questions-container">
                     <?php if (isset($_GET['form_id'])):
 
-    $form = json_decode($form['form_data'], true);
+    $form = json_decode($form['questions'], true);
     foreach ($form as $que): ?>
-                    <div data-question="<?=$que['que']?>"><label><?=$que['que']?></label><input
-                            type="<?=$que['ansType']?>" placeholder="Answer"><span class="edit-icon">✎</span><span
-                            class="delete-icon">🗑</span></div>
-                    <?php endforeach;endif;?>
+                    <div data-question="<?= $que['que']; ?>"><label><?= $que['que']; ?></label>
+                                <?php if ($que['ansType'] == "checkbox") {
+                                    $options = $que['options'];
+                                    foreach ($options as $key => $value) : 
+                                        // $id = 'checkbox_'.$que['queId'];?>
+                                        <input type="<?= $que['ansType']; ?>" name="<?= $value; ?>" id="<?= $value; ?>" value="<?= $value ?>" class="inputCheck">
+                                        <label for="<?= $value; ?>" class="inputLabel"><?= $value; ?></label>
+                                    <?php endforeach;
+                                     
+                                } else if ($que['ansType'] == "radio") {
+                                    $options = $que['options'];
+                                    foreach ($options as $key => $value) : ?>
+                                        <input type="<?= $que['ansType']; ?>" name="<?= $que['name']; ?>" id="<?= $value; ?>" value="<?= $value; ?>" class="inputradio">
+                                        <label for="<?= $value; ?>" class="inputLabel"><?= $value; ?></label>
+                                    <?php endforeach;
+                                } else if ($que['ansType'] == "text") { ?>
+                                    <input type="<?= $que['ansType']; ?>" style="max-width:30vw;" placeholder="Answer">
+                                <?php }
+                                ?>
+                                <span class="edit-icon" onclick="edit_from_db(this.parentElement, this.parentElement.children[1].type, Array.prototype.indexOf.call(this.parentElement.parentElement.children, this.parentElement))">✎</span><span class="delete-icon" onclick="delete_from_db(this.parentElement)">&#128465;</span>
+                            </div>
+                    <?php endforeach;
+                    endif; ?>
                 </div>
                 <button type="button" id="add-question-button">Add Question</button>
                 </form>
@@ -570,11 +606,11 @@ if (isset($_POST['removeClient'])) {
                                         style="width:180px;height:60px;margin-right:50px;border-radius:20px;color:#6883FB;font-size:22px;border:2px solid #6883FB"><img
                                             src="<?=$DEFAULT_PATH?>assets/images/Form_plus.svg"
                                             style="margin-right:10px;margin-bottom:8px">Add Checkbox</button>
-                                    <button type="button" id="table-checkbox-button"
+                                    <!-- <button type="button" id="table-checkbox-button"
                                         style="width:280px;height:60px;margin-right:200px;border-radius:20px;color:#6883FB;font-size:22px;border:2px solid #6883FB"><img
                                             src="<?=$DEFAULT_PATH?>assets/images/Form_plus.svg"
                                             style="margin-right:10px;margin-bottom:8px">Create a table of
-                                        checkboxes</button>
+                                        checkboxes</button> -->
                                 </div>
                             </div>
                             <div class="tab" id="radio">
@@ -583,11 +619,11 @@ if (isset($_POST['removeClient'])) {
                                         style="width:180px;height:60px;margin-right:50px;border-radius:20px;color:#6883FB;font-size:22px;border:2px solid #6883FB"><img
                                             src="<?=$DEFAULT_PATH?>assets/images/Form_plus.svg"
                                             style="margin-right:10px;margin-bottom:8px">Add Radiobox</button>
-                                    <button type="button" id="table-radiobox-button"
+                                    <!-- <button type="button" id="table-radiobox-button"
                                         style="width:280px;height:60px;margin-right:200px;border-radius:20px;color:#6883FB;font-size:22px;border:2px solid #6883FB"><img
                                             src="<?=$DEFAULT_PATH?>assets/images/Form_plus.svg"
                                             style="margin-right:10px;margin-bottom:8px">Create a table of
-                                        radiobox</button>
+                                        radiobox</button> -->
                                 </div>
                             </div>
                             <div
@@ -636,13 +672,18 @@ if (isset($_POST['removeClient'])) {
                     <?php $query = "SELECT * FROM addclient WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
 $result = $conn->query($query);
 if ($result->num_rows > 0) {
-    while ($client = $result->fetch_assoc()) {?>
+    while ($client = $result->fetch_assoc()) {
+        $query2 = "SELECT * FROM `client_forms_docs` WHERE form_id = {$_GET['form_id']} AND clientuserID = '{$client['clientuserID']}'";
+        $result2 = $conn->query($query2);
+        if ($result2->num_rows < 1) {?>
                     <li>
                         <input class="addClient" data-userId="<?=$client['clientuserID']?>"
                             data-clientId="<?=$client['client_id']?>" type="checkbox" name="checkBox" id="checkBox">
                         <label for="checkBox" class="userName"><?=$client['clientuserID']?></label>
                     </li>
-                    <?php }}?>
+                    <?php
+            // code...
+        } }}?>
 
                 </ul>
             </div>
@@ -658,8 +699,11 @@ if ($result->num_rows > 0) {
 
     // Add click event listener to each tab button
     tabButtons.forEach((button) => {
+        const input = button.querySelector('input');
         button.addEventListener('click', (event) => {
             const tabName = event.target.dataset.tab;
+            openPopup('', tabName, -1);
+            input.checked = true;
             showTab(tabName);
         });
     });
@@ -679,146 +723,25 @@ if ($result->num_rows > 0) {
         }
     }
 
+    function hideTab(tabName) {
+        // Hide all tabs
+        const tabs = document.querySelectorAll('.tab');
+        // Show the selected tab
+        const selectedTab = document.getElementById(tabName);
+        if (selectedTab) {
+            selectedTab.style.display = 'none';
+        }
+    }
+
     // Initially show the first tab
     showTab('text');
     </script>
     <script>
     var editedQuestionIndex = -1;
 
-    // Function to open the popup window for adding/editing a question
-    function openPopup(question, answerType, index) {
-        var popupContainer = document.querySelector('.popup-container');
-        popupContainer.style.display = 'block';
-
-        document.getElementById('popup-question').value = question;
-        document.getElementById('popup-answer-type').value = answerType;
-
-        editedQuestionIndex = index;
-    }
-
-    // Function to close the popup window
-    function closePopup() {
-        var popupContainer = document.querySelector('.popup-container');
-        popupContainer.style.display = 'none';
-
-        editedQuestionIndex = -1;
-    }
-
-    // Function to add a question to the form
-    function addQuestion(question, answerType) {
-        var questionElement = document.createElement('div');
-        questionElement.setAttribute('data-question', question);
-        var labelElement = document.createElement('label');
-        labelElement.textContent = question;
-        questionElement.appendChild(labelElement);
-
-        var inputElement;
-        if (answerType === 'text') {
-            inputElement = document.createElement('input');
-            inputElement.type = 'text';
-            inputElement.placeholder = 'Answer';
-        } else if (answerType === 'radio') {
-            inputElement = document.createElement('input');
-            inputElement.type = 'radio';
-        } else if (answerType === 'checkbox') {
-            inputElement = document.createElement('input');
-            inputElement.type = 'checkbox';
-        }
-        questionElement.appendChild(inputElement);
-        var editIcon = document.createElement('span');
-        editIcon.classList.add('edit-icon');
-        editIcon.innerHTML = '&#9998;';
-        editIcon.addEventListener('click', function() {
-            openPopup(question, answerType, Array.from(questionElement.parentNode.children).indexOf(
-                questionElement));
-        });
-        questionElement.appendChild(editIcon);
-
-        var deleteIcon = document.createElement('span');
-        deleteIcon.classList.add('delete-icon');
-        deleteIcon.innerHTML = '&#128465;';
-        deleteIcon.addEventListener('click', function() {
-            questionElement.parentNode.removeChild(questionElement);
-        });
-        questionElement.appendChild(deleteIcon);
-
-        var container = document.getElementById('questions-container');
-        container.appendChild(questionElement);
-    }
-
-    // Event listener for "Add Question" button
-    var addButton = document.getElementById('add-question-button');
-    addButton.addEventListener('click', function() {
-        openPopup('', 'text', -1);
-    });
-
-    // Event listener for popup "Save" button
-    var popupSaveButton = document.getElementById('popup-save-button');
-    popupSaveButton.addEventListener('click', function() {
-        var question = document.getElementById('popup-question').value;
-        var answerType = document.getElementById('popup-answer-type').value;
-
-        if (editedQuestionIndex !== -1) {
-            // Editing existing question
-            var questionElement = document.getElementById('questions-container').children[editedQuestionIndex];
-            var labelElement = questionElement.querySelector('label');
-            labelElement.textContent = question;
-            labelElement.parentElement.setAttribute('data-question', question);
-            questionElement.querySelector('input').type = answerType;
-        } else {
-            // Adding new question
-            if (question !== "") {
-                addQuestion(question, answerType);
-            } else {
-                return;
-            }
-        }
-
-        closePopup();
-    });
-
-    // Event listener for popup "Cancel" button
-    var popupCancelButton = document.getElementById('popup-cancel-button');
-    popupCancelButton.addEventListener('click', closePopup);
-
-    const saveForm = document.getElementById('save');
-    const formName = document.getElementById('formName');
-    saveForm.addEventListener('click', () => {
-        if (formName.value == "") {
-            formName.style.border = '1px solid red';
-        } else {
-            formName.style.border = 'none';
-        }
-        const allQuestions = document.querySelectorAll('[data-question]');
-        console.log(allQuestions);
-        const formQuestions = [];
-        let i = 1;
-        allQuestions.forEach(el => {
-            const input = el.querySelector('input');
-            const question = el.getAttribute('data-question');
-            const queArray = {
-                queId: i,
-                que: question,
-                ansType: input.type
-            };
-            formQuestions.push(queArray);
-            i++;
-        });
-
-        console.log(formQuestions);
-        const form = $('<form action="" method="post"></form>');
-        form.append(`<input type="hidden" name="saveForm" value="true">`);
-        form.append(`<input type="hidden" name="formName" value="${formName.value}">`);
-        form.append(`<input type="hidden" name="questions" value='${JSON.stringify(formQuestions)}'>`);
-        form.append(`<input type="hidden" name="queCount" value="${formQuestions.length}">`);
-        $('body').append(form);
-        form.submit();
-    });
-    document.addEventListener('DOMContentLoaded', function() {
-        const addCheckboxButton = document.getElementById('add-checkbox-button');
-        const checkboxContainer = document.getElementById('checkbox-button-container');
-
-        addCheckboxButton.addEventListener('click', function() {
+        function generate_checkbox_content(label) {
+            const checkboxContainer = document.getElementById('checkbox-button-container');
+                
             const checkboxId = 'checkbox-option' + (checkboxContainer.children.length + 1);
 
             const checkboxDiv = document.createElement('div');
@@ -855,6 +778,10 @@ if ($result->num_rows > 0) {
                 checkboxContainer.removeChild(checkboxDiv);
             });
 
+            if (editedQuestionIndex !== -1) {
+                labelTextInput.value = label;
+            }
+
             checkboxDiv.appendChild(checkboxInput);
             checkboxDiv.appendChild(checkboxLabel);
             checkboxDiv.appendChild(labelTextInput);
@@ -862,60 +789,20 @@ if ($result->num_rows > 0) {
             checkboxDiv.appendChild(closeButton);
 
             checkboxContainer.appendChild(checkboxDiv);
-
-            var popupSaveButton = document.getElementById('popup-save-button');
-            popupSaveButton.addEventListener('click', function() {
-                var question = checkboxInput.value;
-                var answerType = document.getElementById('popup-answer-type').value;
-                if (answerType === 'checkbox') {
-                    var checkboxInputs = document.querySelectorAll(
-                        '.checkbox-content input[type="checkbox"]');
-                    checkboxInputs.forEach(function(checkbox) {
-                        if (checkbox.checked) {
-                            var checkboxId = checkbox.id;
-                            var checkboxQuestion = checkboxID;
-                            checkbox.setAttribute('data-question', checkboxQuestion);
-                        }
-                    });
-                }
-
-                if (editedQuestionIndex !== -1) {
-                    // Editing existing question
-                    var questionElement = document.getElementById('questions-container')
-                        .children[
-                            editedQuestionIndex];
-                    var labelElement = questionElement.querySelector('label');
-                    labelElement.textContent = question;
-                    labelElement.parentElement.setAttribute('data-question', question);
-                    questionElement.querySelector('input').type = answerType;
-                } else {
-                    // Adding new question
-                    if (question !== "") {
-                        addQuestion(question, answerType);
-                    } else {
-                        return;
-                    }
-                }
-                closePopup();
-            });
-        });
-    });
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const addRadioboxButton = document.getElementById('add-radiobox-button');
+    }
+        function generate_radiobox_content(label){
         const radioboxContainer = document.getElementById('radiobox-button-container');
-
-        addRadioboxButton.addEventListener('click', function() {
+        let num = 1;
+        const name = "radio_box_" + num;
             const radioboxId = 'radiobox-option' + (radioboxContainer.children.length + 1);
 
             const radioboxDiv = document.createElement('div');
             radioboxDiv.classList.add('radiobox-content');
 
             const radioboxInput = document.createElement('input');
-            radioboxInput.type = 'checkbox';
+            radioboxInput.type = 'radio';
             radioboxInput.id = radioboxId;
-            radioboxInput.name = radioboxId;
+            radioboxInput.name = name;
 
             const radioboxLabel = document.createElement('label');
             radioboxLabel.htmlFor = radioboxId;
@@ -942,6 +829,10 @@ if ($result->num_rows > 0) {
                 radioboxContainer.removeChild(radioboxDiv);
             });
 
+            if (editedQuestionIndex !== -1) {
+                labelTextInput.value = label;
+            }
+
             radioboxDiv.appendChild(radioboxInput);
             radioboxDiv.appendChild(radioboxLabel);
             radioboxDiv.appendChild(labelTextInput);
@@ -949,46 +840,410 @@ if ($result->num_rows > 0) {
             radioboxDiv.appendChild(closeButton);
 
             radioboxContainer.appendChild(radioboxDiv);
+            num+=1;
+    }
+    function edit(index){
+        let questionsContainer = document.getElementById('questions-container');
+        console.log(index);
+        let element_to_edit = questionsContainer.children[index];
+        let answerType = document.getElementById('popup-answer-type').value;
+        console.log(element_to_edit);
+        let inputs = element_to_edit.querySelectorAll('input');
+        let inputs_id = [];
+        console.log(inputs);
+        inputs.forEach((input) => {
+            inputs_id.push(input.value);
+        });
+        console.log(inputs_id);
+        if (answerType === "checkbox") {
+            let checkboxDiv = document.querySelectorAll('.checkbox-content');
+            if (checkboxDiv.length < 1){
+                for (let index = 0; index < inputs_id.length; index++) {
+                    let id1 = inputs_id[index];
+                    generate_checkbox_content(id1);
+                }    
+            }
+        }
 
-            var popupSaveButton = document.getElementById('popup-save-button');
-            popupSaveButton.addEventListener('click', function() {
-                var question = radioboxInput.value;
-                var answerType = document.getElementById('popup-answer-type').value;
-                if (answerType === 'radiobox') {
-                    var radioboxInputs = document.querySelectorAll(
-                        '.radiobox-content input[type="radiobox"]');
-                    radioboxInputs.forEach(function(radiobox) {
-                        if (radiobox.checked) {
-                            var radioboxId = radiobox.id;
-                            var radioboxQuestion = radioboxID;
-                            radiobox.setAttribute('data-question', radioboxQuestion);
-                        }
-                    });
+        if (answerType === "radio") {
+            let radioboxDiv = document.querySelectorAll('.radiobox-content');
+            if (radioboxDiv.length < 1) {
+                for (let index1 = 0; index1 < inputs_id.length; index1++) {
+                    let id2 = inputs_id[index1];
+                    generate_radiobox_content(id2);
+                }
+            }
+        }
+    }
+    // Function to open the popup window for adding/editing a question
+    function openPopup(question, answerType, index) {
+        console.log(answerType);
+        var popupContainer = document.querySelector('.popup-container');
+        popupContainer.style.display = 'block';
+
+        document.getElementById('popup-question').value = question;
+        document.getElementById('popup-answer-type').value = answerType;
+
+        editedQuestionIndex = index;
+    }
+
+    // Function to close the popup window
+    function closePopup() {
+        var popupContainer = document.querySelector('.popup-container');
+        popupContainer.style.display = 'none';
+
+        editedQuestionIndex = -1;
+    }
+
+    function delete_from_db(a) {
+        a.parentElement.removeChild(a);
+    }
+    function edit_from_db(a, b, c){
+        // let answerType = document.getElementById('popup-answer-type').value;
+        console.log(a, b, c)
+        openPopup(a.dataset.question, b, c);
+        showTab(b);
+        if (b === "text") {
+            tabButtons[0].querySelector('input').checked = true;
+        }
+        if (b === "checkbox") {
+            tabButtons[1].querySelector('input').checked = true;
+        }
+        if (b === "radio") {
+            tabButtons[2].querySelector('input').checked = true;
+        }
+        edit(c);
+    }
+
+    // Function to add a question to the form
+    function addQuestion(question, answerType, editedQuestionIndex) {
+        const questionsContainer = document.getElementById('questions-container');
+
+        var questionElement = document.createElement('div');
+        questionElement.setAttribute('data-question', question);
+        var labelElement = document.createElement('label');
+        labelElement.textContent = question;
+        questionElement.appendChild(labelElement);
+
+        var inputElement;
+        if (answerType === 'text') {
+            inputElement = document.createElement('input');
+            inputElement.type = 'text';
+            inputElement.placeholder = 'Answer';
+            questionElement.appendChild(inputElement);
+        } else if (answerType === 'radio') {
+            let radioElementParent = document.getElementById('radiobox-button-container');
+            let radioElement = radioElementParent.querySelectorAll('.radiobox-content');
+
+            let radioInputValues = [];
+
+            radioElement.forEach(function(element){
+                let radioInput = element.querySelector('input');
+                let radioInputValue = {};
+                radioInputValue.id = radioInput.id
+                radioInputValue.label = radioInput.value;
+                radioInputValue.name = radioInput.name;
+                radioInputValues.push(radioInputValue);
+            });
+
+            radioInputValues.forEach(function(value){
+                let inputRadio = document.createElement('input');
+                inputRadio.type = answerType;
+                inputRadio.id = value.id;
+                inputRadio.name = value.name;
+                inputRadio.value = value.label;
+
+                let radioLabel = document.createElement('label');
+                radioLabel.htmlFor = value.id;
+                radioLabel.textContent = value.label;
+                radioLabel.className = 'inputLabel';
+
+                questionElement.appendChild(inputRadio);
+                questionElement.appendChild(radioLabel);
+            });
+        } else if (answerType === 'checkbox') {
+            let checkElementParent = document.getElementById('checkbox-button-container');
+            let checkElement = checkElementParent.querySelectorAll('.checkbox-content');
+
+            let checkInputValues = [];
+
+            checkElement.forEach(function(element){
+                let checkInput = element.querySelector('input');
+                let checkInputValue = {};
+                checkInputValue.id = checkInput.id
+                checkInputValue.label = checkInput.value;
+                checkInputValues.push(checkInputValue);
+            });
+            console.log('checkInputValues' ,checkInputValues);
+
+            checkInputValues.forEach(function(value){
+                let inputCheck = document.createElement('input');
+                inputCheck.type = answerType;
+                inputCheck.id = value.id;
+                inputCheck.name = value.id;
+                inputCheck.value = value.label;
+
+                let checkLabel = document.createElement('label');
+                checkLabel.htmlFor = value.id;
+                checkLabel.textContent = value.label;
+                checkLabel.className = 'inputLabel';
+
+                questionElement.appendChild(inputCheck);
+                questionElement.appendChild(checkLabel);
+            });
+        }
+        var editIcon = document.createElement('span');
+        editIcon.classList.add('edit-icon');
+        editIcon.innerHTML = '&#9998;';
+        editIcon.addEventListener('click', function() {
+            openPopup(question, answerType, Array.from(questionElement.parentNode.children).indexOf(
+                questionElement));
+            if (answerType === "text") {
+                tabButtons[0].querySelector('input').checked = true;
+            }
+            if (answerType === "checkbox") {
+                tabButtons[1].querySelector('input').checked = true;
+            }
+            if (answerType === "radio") {
+                tabButtons[2].querySelector('input').checked = true;
+            }
+            showTab(answerType);
+            edit(Array.from(questionElement.parentNode.children).indexOf(
+                questionElement));
+        });
+        questionElement.appendChild(editIcon);
+
+        var deleteIcon = document.createElement('span');
+        deleteIcon.classList.add('delete-icon');
+        deleteIcon.innerHTML = '&#128465;';
+        deleteIcon.addEventListener('click', function() {
+            questionElement.parentNode.removeChild(questionElement);
+        });
+        questionElement.appendChild(deleteIcon);
+        if (editedQuestionIndex !== -1) {
+            if (answerType === "checkbox" || answerType === "radio") {
+                questionsContainer.insertBefore(questionElement, questionsContainer.children[editedQuestionIndex+1]);
+                questionsContainer.removeChild(questionsContainer.children[editedQuestionIndex]);
+            }
+        } else {
+        questionsContainer.appendChild(questionElement);
+    }
+    }
+
+    // Event listener for "Add Question" button
+    var addButton = document.getElementById('add-question-button');
+    addButton.addEventListener('click', function() {
+        openPopup('', 'text', -1);
+    });
+
+    // Event listener for popup "Save" button
+    var popupSaveButton = document.getElementById('popup-save-button');
+    popupSaveButton.addEventListener('click', function() {
+        var question = document.getElementById('popup-question').value;
+        var answerType = document.getElementById('popup-answer-type').value;
+
+        const checkboxContainer = document.getElementById('checkbox-button-container');
+        const radioboxContainer = document.getElementById('radiobox-button-container');
+        const labelTextInput = document.getElementsByClassName('text');
+        const labelButton = document.getElementsByClassName('button-gap');
+
+        if (editedQuestionIndex !== -1) {
+            if (answerType === "text") {
+                // Editing existing question
+                var questionElement = document.getElementById('questions-container').children[editedQuestionIndex];
+                var labelElement = questionElement.querySelector('label');
+                labelElement.textContent = question;
+                labelElement.parentElement.setAttribute('data-question', question);
+                questionElement.querySelector('input').type = answerType;
+            }
+
+            if (answerType === "checkbox") {
+                if (labelTextInput.length > 0 || labelButton.length > 0) {
+                    alert('Please save changes');
+                    return false;
+                } else if (checkboxContainer.querySelectorAll('.checkbox-content').length < 1) {
+                    alert('Please Add Options');
+                    return false;
+                } else {
+                        addQuestion(question, answerType, editedQuestionIndex);
+                        let checkboxDivWrap = document.querySelectorAll('.checkbox-content');
+                            console.log('checkboxDivWarp not -1',checkboxDivWrap);
+                            if (checkboxDivWrap.length !== 0) {
+                                checkboxDivWrap.forEach((content) => {
+                                    checkboxContainer.removeChild(content);
+                                });
+                            tabButtons[1].querySelector('input').checked = false;
+                            hideTab(answerType);
+                    }
+                } 
+        }
+
+            if (answerType === "radio") {
+                if (labelTextInput.length > 0 || labelButton.length > 0) {
+                    alert('Please save changes');
+                    return false;
+                } else if (radioboxContainer.querySelectorAll('.radiobox-content').length < 1) {
+                    alert('Please Add Options');
+                    return false;
+                } else {
+                    addQuestion(question, answerType, editedQuestionIndex);
+                    let radioboxDivWrap = document.querySelectorAll('.radiobox-content');
+                    console.log(radioboxDivWrap);
+                    if (radioboxDivWrap.length !== 0) {
+                        radioboxDivWrap.forEach((content) => {
+                            radioboxContainer.removeChild(content);
+                        });
+                    tabButtons[2].querySelector('input').checked = false;
+                    hideTab(answerType);
+                    } 
+                }
+            }           
+        } else {
+            // Adding new question
+            if (question !== "") {
+                if (answerType === "text"){
+                    addQuestion(question, answerType, editedQuestionIndex);
                 }
 
-                if (editedQuestionIndex !== -1) {
-                    // Editing existing question
-                    var questionElement = document.getElementById('questions-container')
-                        .children[
-                            editedQuestionIndex];
-                    var labelElement = questionElement.querySelector('label');
-                    labelElement.textContent = question;
-                    labelElement.parentElement.setAttribute('data-question', question);
-                    questionElement.querySelector('input').type = answerType;
-                } else {
-                    // Adding new question
-                    if (question !== "") {
-                        addQuestion(question, answerType);
+                if (answerType === "checkbox"){
+                    // console.log(labelTextInput.length);
+                    if (labelTextInput.length > 0 || labelButton.length > 0) {
+                        alert('Please save option');
+                        return false;
+                    } else if (checkboxContainer.querySelectorAll('.checkbox-content').length < 1) {
+                        alert('Please Add Options');
+                        return false;
                     } else {
-                        return;
+                        addQuestion(question, answerType, editedQuestionIndex);
+                        let checkboxDivWrap = document.querySelectorAll('.checkbox-content');
+                        if (checkboxDivWrap.length !== 0) {
+                            checkboxDivWrap.forEach((content) => {
+                                checkboxContainer.removeChild(content);
+                            });
+                        tabButtons[1].querySelector('input').checked = false;
+                        hideTab(answerType);
+                        }
                     }
                 }
-                closePopup();
-            });
+
+                if (answerType === "radio") {
+                    if (labelTextInput.length > 0 || labelButton.length > 0) {
+                        alert('Please save option');
+                        return false;
+                    } else if (radioboxContainer.querySelectorAll('.radiobox-content').length < 1) {
+                        alert('Please Add Options');
+                        return false;
+                    } else {
+                        addQuestion(question, answerType, editedQuestionIndex);
+                        let radioboxDivWrap = document.querySelectorAll('.radiobox-content');
+                        console.log(radioboxDivWrap);
+                        if (radioboxDivWrap.length !== 0) {
+                            radioboxDivWrap.forEach((content) => {
+                                radioboxContainer.removeChild(content);
+                            });
+                        tabButtons[2].querySelector('input').checked = false;
+                        hideTab(answerType);
+                        }
+                    }
+                }
+            } else {
+                return;
+            }
+        }
+
+        closePopup();
+    });
+
+    // Event listener for popup "Cancel" button
+    var popupCancelButton = document.getElementById('popup-cancel-button');
+    popupCancelButton.addEventListener('click', closePopup);
+
+    const saveForm = document.getElementById('save');
+    const formName = document.getElementById('formName');
+    saveForm.addEventListener('click', () => {
+        if (formName.value == "") {
+            formName.style.border = '1px solid red';
+        } else {
+            formName.style.border = 'none';
+        }
+        const allQuestions = document.querySelectorAll('[data-question]');
+        console.log(allQuestions);
+        const formQuestions = [];
+        let i = 1;
+        allQuestions.forEach(el => {
+            const input = el.querySelectorAll('input');
+            let ids = [];
+            let labels = [];
+            let type = '';
+            let name = '';
+            let optionsArray = [];
+            let optionsPair = {};
+            if (input.length > 0) {
+                input.forEach((value) => {
+                    let id = value.id;
+                    let label = value.value;
+                    ids.push(id);
+                    labels.push(label);
+                    type = value.type;
+                    name = value.name;
+                });
+                for (var a = 0; a < ids.length; a++) {
+                    optionsPair['option_' + a] = labels[a];
+                }
+                optionsArray.push(optionsPair);
+            }
+            const question = el.getAttribute('data-question');
+            let queArray = {}
+            if (type == "radio") {
+                queArray = {
+                    queId: i,
+                    que: question,
+                    ansType: type,
+                    options: optionsPair,
+                    name: name
+                };
+            } else if (type == "checkbox") {
+                queArray = {
+                    queId: i,
+                    que: question,
+                    ansType: type,
+                    options: optionsPair
+                };
+            } else {
+                queArray = {
+                    queId: i,
+                    que: question,
+                    ansType: type
+                };
+            }
+            formQuestions.push(queArray);
+        });
+
+        console.log(formQuestions);
+        const form = $('<form action="" method="post"></form>');
+        form.append(`<input type="hidden" name="saveForm" value="true">`);
+        form.append(`<input type="hidden" name="formName" value="${formName.value}">`);
+        form.append(`<input type="hidden" name="questions" value='${JSON.stringify(formQuestions)}'>`);
+        form.append(`<input type="hidden" name="queCount" value="${formQuestions.length}">`);
+        $('body').append(form);
+        form.submit();
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const addCheckboxButton = document.getElementById('add-checkbox-button');
+
+        addCheckboxButton.addEventListener('click', function() {
+            generate_checkbox_content('');
         });
     });
 
 
+    document.addEventListener('DOMContentLoaded', function() {
+        const addRadioboxButton = document.getElementById('add-radiobox-button');
+
+        addRadioboxButton.addEventListener('click', function() {
+            generate_radiobox_content('');
+        });
+    });
 
     const addClient = document.querySelectorAll('.addClient');
     addClient.forEach(client => {
@@ -1004,6 +1259,7 @@ if ($result->num_rows > 0) {
             form.submit();
         });
     });
+
     const removeClient = document.querySelectorAll('.removeClient');
     removeClient.forEach(client => {
         client.addEventListener('click', () => {

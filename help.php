@@ -125,7 +125,7 @@
     </div>
   </a>
 
-    <a href="email.html" style="text-decoration: none;">
+    <a href="mailto:infitswebteam1@gmail.com" style="text-decoration: none;">
     <div class="help-box">
       <div class="help-content">
       <img src="<?=$DEFAULT_PATH?>assets/images/help_email.svg" style="margin-right:20px ;margin-left:20px ; height: 48px;">
