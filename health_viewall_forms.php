@@ -1,5 +1,3 @@
-
-
 <?php include 'navbar.php';
 require('constant/config.php'); ?>
 <!DOCTYPE html>
@@ -192,29 +190,37 @@ img.vector{
 .options{
     margin-right: 20px;
 }
-.sub-con{
-    padding:10px;
-  height: 495px; 
-  margin-left: -10px;
-  margin-right: -40px;/* Adjust the height as needed */
-overflow-y: scroll; 
-}
-.sub-con::-webkit-scrollbar{
-    width:10px; 
-}
-.sub-con::-webkit-scrollar-thumb{
-  background: #888;
-}
-.sub-con::-webkit-scrollbar-track {
-  background: #F3F3F3; 
-  border-radius: 20px;
+
+
+.sub-con {
+    padding: 10px;
+    margin-left: -10px;
+    margin-right: -40px; 
+    overflow-y: auto;
+    max-height:68vh; 
 }
 
-/* Handle on hover */
-.sub-con::-webkit-scrollbar-thumb:hover {
-  background:  #E3E3E3;
-  border-radius: 20px; 
+.sub-con::-webkit-scrollbar {
+    width: 10px;
 }
+
+.sub-con::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.sub-con::-webkit-scrollbar-track {
+    background: #F3F3F3;
+    border-radius: 20px;
+}
+
+
+.sub-con::-webkit-scrollbar-thumb:hover {
+    background: #E3E3E3;
+    border-radius: 20px;
+}
+
+
+
 .content .created-form-container .form-card-container .form-cards .option-popup.show {
     background-color: #FFFFFF;
     width: 230px;
@@ -297,6 +303,7 @@ overflow-y: scroll;
             <div class="search-box1">
                 <img src="<?=$DEFAULT_PATH?>assets/images/search.svg" alt="#">
                 <input type="search" name="form" id="form" placeholder="Search clients">
+                <div id="suggestion-list"></div>
             </div>
         </div> 
         
@@ -333,15 +340,38 @@ overflow-y: scroll;
             </div>
         </div>
         <script>
+            
             const optionBtn = document.querySelector(".options");
             function showPopup(e) {
             e.parentNode.children[3].classList.toggle("show");
         };
+
         </script>
 <div class="button">
         <a style="background-color:none" href="health_detail_form_create.php"><button class="create_btn">+</button></a>
     </div>
     </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById('form');
+        const formCards = document.querySelectorAll('.form-cards');
+
+        searchInput.addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase().trim();
+
+            formCards.forEach(card => {
+                const formName = card.querySelector('.form-content h4').textContent.toLowerCase();
+
+                if (formName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
 
     <?php require('constant/scripts.php'); ?>
 </body>

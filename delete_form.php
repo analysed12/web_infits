@@ -8,7 +8,7 @@ if (isset($_GET['form_id'])) {
     
     if ($result) {
         echo "Deleted Successfully";
-        header("Location: forms_and_documents.php");
+        header("Location:  forms_and_documents.php");
     } else {
         die(mysqli_error($conn));
     }

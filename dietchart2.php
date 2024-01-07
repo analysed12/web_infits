@@ -4,7 +4,7 @@ if (isset($_SESSION['dietitian_id'])) {
   $dietitian_id = $_SESSION['dietitian_id'];
   $dietitianuserid = $_SESSION['dietitianuserID'];
   $clientId = $_GET['client_id'];
-  $q = "SELECT * FROM addclient WHERE dietitianuserID = '$dietitianuserid' AND client_id = $clientId;";
+  $q = "SELECT * FROM addclient WHERE dietitianuserID = '$dietitianuserid' AND client_id = '$clientId';";
   $result1 = $conn->query($q);
   if (mysqli_num_rows($result1) > 0) {
     while ($row = mysqli_fetch_assoc($result1)) {
@@ -14,7 +14,7 @@ if (isset($_SESSION['dietitian_id'])) {
   $sql = "SELECT * FROM diet_chart WHERE dietitian_id='$dietitian_id' AND client_id = '$clientId'";
   $result = $conn->query($sql);
   // if (mysqli_num_rows($result) < 1) {
-  // header("Location:dietchart_default.php?client_id=$clientId");
+  // header("Location: dietchart_default.php?client_id=$clientId");
   // }
 }
 ?>

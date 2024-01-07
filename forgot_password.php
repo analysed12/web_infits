@@ -1,9 +1,10 @@
 <?php
-include('smtp/PHPMailerAutoload.php');
-include "smtp/class.phpmailer.php";
+require_once('smtp/PHPMailerAutoload.php');
+require_once "smtp/class.phpmailer.php";
+require_once('constant/constant.php');
 session_start();
 if (isset($_POST['login_user'])) {
-    $connect = mysqli_connect('localhost', 'root', '', 'infits_db') or die('no table found');
+    $connect = mysqli_connect('localhost', 'root', '', 'infits') or die('no table found');
     $query = "select email from dietitian  where email = '" . $_POST['dietitianuserID'] . "' ";
     $result = mysqli_query($connect, $query) or die('no records Found');
     if (mysqli_num_rows($result) == 1) {
@@ -24,16 +25,16 @@ if (isset($_POST['login_user'])) {
 
             $mail = new PHPMailer();
             $mail->IsSMTP();
-            $mail->SMTPDebug = 0;
+            $mail->SMTPDebug = 1;
             $mail->SMTPAuth = true;
             $mail->SMTPSecure = 'tls';
             $mail->Host = "smtp.gmail.com";
             $mail->Port = 587;
             $mail->IsHTML(true);
             $mail->CharSet = 'UTF-8';
-            $mail->Username = "enter email id";
-            $mail->Password = "two verification email password";
-            $mail->SetFrom("enter email id");
+            $mail->Username = "infitswebteam1@gmail.com";
+            $mail->Password = "aovgecuvqzuchchm";
+            $mail->SetFrom("infitswebteam1@gmail.com");
             $mail->Subject = $subject;
             $mail->Body = $msg;
             $mail->AddAddress($to);
@@ -41,7 +42,7 @@ if (isset($_POST['login_user'])) {
             if ($mail->send()) {
 
                 
-                header("location:otp.php");
+                header("location:".$DEFAULT_PATH."otp.php");
 
                 return 1;
             } else {
@@ -629,7 +630,7 @@ body {
 
                 <div class="form_inputs login-area">
                     <form action="" method="post">
-                        <?php include('errors.php'); ?>
+                        <?php //include('errors.php'); ?>
                         <!-- Main Form -->
                         <div class="ip_box">
                             <img style="height: 25px;width: 25px" src="<?= $DEFAULT_PATH ?>assets/images/Email.svg">
