@@ -453,7 +453,7 @@ function update($client_id, $day)
 
   
                     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
-                        <img src="images/Thanksgiving Day.svg" class="image">
+                        <img src="assets/images/Thanksgiving Day.svg" class="image">
                         <p style="font-size:40px;text-align:center; color: black;">No image shared by the client yet!</p> 
                     </div>
 <!-----------------------------Calender--------------------------------><?php
@@ -513,7 +513,7 @@ function update($client_id, $day)
 
   
             <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
-                  <img src="images/Thanksgiving Day.svg" class="image">
+                  <img src="assets/images/Thanksgiving Day.svg" class="image">
                   <p style="font-size:40px;text-align:center; color: black;">No image shared by the client yet!</p> 
                   
                 </div>
@@ -571,7 +571,7 @@ function update($client_id, $day)
             <?php } }
             else {?>
                 <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
-                  <img src="images/Thanksgiving Day.svg" class="image">
+                  <img src="assets/images/Thanksgiving Day.svg" class="image">
                   <p style="font-size:40px;text-align:center; color: black;">No image shared by the client yet!</p> 
                   
                 </div>
@@ -628,7 +628,7 @@ function update($client_id, $day)
             else{
                 ?>
                 <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
-                  <img src="images/Thanksgiving Day.svg" class="image">
+                  <img src="assets/images/Thanksgiving Day.svg" class="image">
                   <p style="font-size:40px;text-align:center; color: black;">No image shared by the client yet!</p> 
                   
                 </div>

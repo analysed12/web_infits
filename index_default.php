@@ -152,9 +152,9 @@
 .dashboard_container7{
     display:flex;
     align-items:center;
-    justify-content:center;
+    justify-content:space-around;
     width:30%;
-    margin-left:11rem;
+    margin-left:9rem;
     margin-top:2rem;
 }
 #today{
@@ -330,14 +330,14 @@
             <div style="width: 35%;" class="plus">
                 <div ><a href="add_client.php" style="text-decoration:none !important;"><button id="btn1" class="btn-add">+</button></a></div>
             </div>
-            <div class="symbols-container">
-                <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame.svg" style="width:1.8rem"><span>Steps</span></div>
-                <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame-1.svg" style="width:1.8rem"><span>Heart Rate</span></div>
-                <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame-2.svg" style="width:1.8rem"><span>Water</span></div>
-                <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame-3.svg" style="width:1.8rem"><span>Sleep</span></div>
-                <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame-4.svg" style="width:1.8rem"><span>Weight</span></div>
-                <div class="symbols col-2"><img src="<?=$DEFAULT_PATH?>assets/images/Frame-5.svg" style="width:1.8rem"><span>Calories</span></div>
-            </div>
+            <div class="symbols-container col-12">
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame.svg" style="width:1.8rem"><span>Steps</span></div>
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-1.svg" style="width:2rem; margin-left:-18px;"><span>Heart Rate</span></div>
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-2.svg" style="width:1.8rem; margin-left:18px;"><span>Water</span></div>
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-3.svg" style="width:1.8rem; margin-left:18px;"><span>Sleep</span></div>
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-4.svg" style="width:1.8rem"><span>Weight</span></div>
+                    <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-5.svg" style="width:1.8rem"><span>Calories</span></div>
+                </div>
         </div>
     </div>
 
@@ -350,7 +350,7 @@
         <div class="hyphen"><p>-</p></div>
         <div class="hyphen"><p>-</p></div>
     </div>
-    <div class="dashboard_container10" style="display:flex;flex-direction:row; justify-content:space-between; width:100%;">
+    <div class="dashboard_container10" style="display:flex; flex-direction:row; gap: 60px; width:100%;">
     <div class="dashboard_container12 left" style="display:flex;flex-direction:column; margin-top: 0.5rem; ">
         <div class="task">
             <p style="font-weight:400;font-size:25px;">My Tasks List</p>
