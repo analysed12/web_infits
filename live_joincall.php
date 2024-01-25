@@ -52,12 +52,21 @@ include('navbar.php');
     }
         
     .my-3 .CAM-But{
-        background-color: white;
-        border-style: hidden;
+        border-radius: 50%;
+    background-color: red;
+    border-style: hidden;
+    height: 43px;
+    width: 43px;
+    padding-bottom: 7px;
+    padding-right: 3px;
     }
     .my-3 .Mic-But{
-        background-color: white;
-        border-style: hidden;
+        background-color: red;
+    border-style: hidden;
+    border-radius: 50%;
+    height: 43px;
+    width: 43px;
+    padding-bottom: 6px;
 
     }
 
@@ -84,10 +93,10 @@ include('navbar.php');
                 <div class="row">
                     <div class="d-flex justify-content-center">
                         <span class="mx-2 my-3">
-                            <button type="button" class="CAM-But" id="Btnn-1"><img id="cameraIcon" src="assets/icons/cam-onn.png" alt="Camera On"></button>
+                            <button type="button" class="CAM-But" id="Btnn-1"><img id="cameraIcon" src="assets/icons/video-icon.svg" alt="Camera On"></button>
                         </span>
                         <span class="mx-2 my-3">
-                            <button type="button" class="Mic-But" id="Btnn-2"><img id="microphoneIcon" src="assets/icons/mic-onn.png" alt="Microphone On"></button>
+                            <button type="button" class="Mic-But" id="Btnn-2"><img id="microphoneIcon" src="assets/icons/audio-icon.svg" alt="Microphone On"></button>
                         </span>
                     </div>
                 </div>

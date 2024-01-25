@@ -14,7 +14,6 @@ require('constant/config.php');
     //$sql2 = "Select * from addclient WHERE name='$clientname'" ;
     //$result2 = mysqli_query($conn,$sql2);
     //$row2 = mysqli_fetch_assoc($result2);
-
     //$clientuserID = $row2['client_id'];
 
 
@@ -64,7 +63,7 @@ $attachment_ext = end($attachment_ext_array);
 
     }
     if(empty($errors)==true){
-        move_uploaded_file($attachment_tmp_name, "upload/". $attachment_name);
+        move_uploaded_file($attachment_tmp_name, "upload/events/images/". $attachment_name);
   
     }
     else {
@@ -81,6 +80,9 @@ $attachment_ext = end($attachment_ext_array);
     $end_date = date('Y-m-d H:i:s', strtotime($_POST['enddate']));
     $start_date_time = substr($start_date,-8);
     $start_date_date = substr($start_date,0,10);
+
+    $time_in_ampm = date("h:i A", strtotime($start_date));
+    $date_in_desired_format = date("j M Y", strtotime($start_date));
 
     $count = 0;
     $sql = "Select * from create_event" ;
@@ -107,7 +109,15 @@ $attachment_ext = end($attachment_ext_array);
          description, attachment) VALUES ('$dietitianuserID','$eventname','$clientuserID','$meeting_type','$start_date',
          '$end_date','$place_of_meeting','$description',' $attachment_name')";
         $result1=mysqli_query($conn,$sql1);
-        printf("<script>location.href='calendar_of_events.php'</script>");
+        if($result1){
+            $sql2="INSERT INTO notification (dieticianID, dietitianuserID, ttl, body) VALUES('".$_SESSION['dietitian_id']."', '$dietitianuserID', 'Reminder', 'You have ".$meeting_type." appointment with ".$clientname." on ".$date_in_desired_format." at ".$time_in_ampm."')";
+            $result2=mysqli_query($conn, $sql2);
+        
+            if($result2){
+                // echo "hello";
+                printf("<script>location.href='calendar_of_events.php'</script>");
+            }
+        }
     }
     else{
         echo '<div style="text-align:center;background: #FFFFFF;
@@ -462,13 +472,35 @@ input {
         border: 1px solid #4B9AFB;
         border-radius: 45px;
         font-size: 18px;
-        text-align: center;
-        
-        
+        text-align: center;        
+    }
+    .files{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        column-gap: 1vw; 
+        row-gap: 1vh
+    }
+    .showlist{
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        position: relative;
+        bottom: 0;
+        z-index: 10;
+    }
+    .showlist .items:hover{
+        background-color: blue;
+        color: white;
+    }
+    .selected{
+        color:grey;
     }
 </style>
 
 <body>
+<!-- <script type="text/javascript" src="<?=$DEFAULT_PATH?>live/js/lobby.js"></script> -->
+<script type="text/javascript" src="<?=$DEFAULT_PATH?>live/js/lobby_help.js"></script>
     <!-- Contents Start -->
     <div id="content">
         <p style="margin-left:1.5rem;margin-top:0.7rem;font-weight:400;font-size:40px">Add Event</p>
@@ -534,29 +566,29 @@ input {
                     <div class=" event_title" style="font-size:28px;font-weight:400"> Event Details</div>
 
                     <div style="max-width:100%;margin:auto">
-                                <div class="input-icons" style="font-size:19px;display:flex;align-items:center">
-                                <img class="icon" style="position:absolute;min-width: 0px;" src="<?=$DEFAULT_PATH?>assets/images/Group 3.svg"
-                                style="display:flex;align-items:center">
-                                 <input type="text" placeholder="Add Client"
-                                 style="border-top:none;border-left:none;border-right:none;border-bottom: 1px solid #EFEFEF;"
-                                 name="clientname" class="input-field" required>
+                                <div class="input-icons" style="font-size:19px;display:flex;align-items:center;flex-direction:column;">
+                                <div style="width:100%;">
+                                    <img class="icon" style="position:relative;min-width: 0px;top: 3.13em;" src="<?=$DEFAULT_PATH?>assets/images/Group 3.svg"
+                                    style="display:flex;align-items:center">
+                                    <input type="text" placeholder="Add Client" style="border-top:none;border-left:none;border-right:none;border-bottom: 1px solid #EFEFEF;" onclick="update_input()" 
+                                    name="clientname" id="clientname" class="input-field" required>
                                 </div>
+                                    <div class="showlist dropdown-menu">
+                                    </div>
+                                </div>
+                                
    
                         <!-- Meeting type fields -->
                     <div class="input-icons" style="font-size:19px;display:flex;align-items:center">
                             <img class="icon" style="position:absolute;min-width: 0px;"
                                 src="<?=$DEFAULT_PATH?>assets/images/Briefcase.svg">
-
-                            <select
-                                style="border-top:none;border-left:none;border-right:none;border-bottom: 1px solid #EFEFEF;"
-                                name="meetingtype" class="input-field" required>
+                            <select style="border-top:none;border-left:none;border-right:none;border-bottom: 1px solid #EFEFEF;" name="meetingtype" class="input-field" required>
                                 <option value="" disabled selected style="font-size:19px">Meeting Type</option>
                                 <option value="Videocall">Video Call</option>
                                 <option value="Call">Call</option>
                                 <option value="In person">In person</option>
                             </select>
                         </div>
-
 
                         <!-- Date and Time fields -->
                         <div class="txt button" id="button" style="border-bottom: 1px solid #EFEFEF;">
@@ -592,47 +624,52 @@ input {
                                 class="input-field" type="text" placeholder="Place of meeting" name="placeofmeeting">
                         </div> -->
                         
-<!--<div class="input-icons">
-    <img class="icon" style="position: absolute; min-width: 0px;" src="<?=$DEFAULT_PATH?>assets/images/Briefcase.svg">
+                        <!--<div class="input-icons">
+                            <img class="icon" style="position: absolute; min-width: 0px;" src="<?=$DEFAULT_PATH?>assets/images/Briefcase.svg">
 
-    <a id="placeOfMeetingLink" href="#" style="border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #EFEFEF;"
-       class="input-field" target="_blank" rel="noopener noreferrer">
-        Place of meeting
-    </a>
-</div>-->
+                            <a id="placeOfMeetingLink" href="#" style="border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #EFEFEF;"
+                            class="input-field" target="_blank" rel="noopener noreferrer">
+                                Place of meeting
+                            </a>
+                        </div>-->
 
-<!-- Place of meeting field -->
-<div class="input-icons">
-    <img class="icon" style="position: absolute; min-width: 0px;" src="<?=$DEFAULT_PATH?>assets/images/Briefcase.svg">
+                        <!-- Place of meeting field -->
+                        <div class="input-icons">
+                            <img class="icon" style="position: absolute; min-width: 0px;" src="<?=$DEFAULT_PATH?>assets/images/Briefcase.svg">
 
-    <input id="placeOfMeeting" style="border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #EFEFEF;"
-           class="input-field" type="text" placeholder="Place of meeting" name="placeofmeeting">
-    <a id="placeOfMeetingLink" href="#" style="display: none;padding: 100px 0px 0px 50px" target="_blank" rel="noopener noreferrer" >
-        Click to join the meeting
-    </a>
-</div>
+                            <input id="placeOfMeeting" style="border-top: none; border-left: none; border-right: none; border-bottom: 1px solid #EFEFEF;"
+                                class="input-field" type="text" placeholder="Place of meeting" name="placeofmeeting">
+                            <a id="placeOfMeetingLink" href="#" style="display: none;padding: 100px 0px 0px 50px" target="_blank" rel="noopener noreferrer" >
+                            </a>
+                        </div>
 
-<script>
-    const meetingTypeSelect = document.querySelector("select[name='meetingtype']");
-    const placeOfMeeting = document.getElementById("placeOfMeeting");
-    const placeOfMeetingLink = document.getElementById("placeOfMeetingLink");
+                        <script>
+                            const meetingTypeSelect = document.querySelector("select[name='meetingtype']");
+                            const placeOfMeeting = document.getElementById("placeOfMeeting");
+                            const placeOfMeetingLink = document.getElementById("placeOfMeetingLink");
 
-    meetingTypeSelect.addEventListener("change", function () {
-        const selectedValue = this.value;
+                            
+                            let displayName = getQueryParam('displayName');
+                            let meetingCode = generateMeetingLink();
 
-        if (selectedValue === "Videocall" || selectedValue === "Call") {
-            placeOfMeeting.style.display = "none";
-            placeOfMeetingLink.style.display = "inline";
-            placeOfMeetingLink.setAttribute("href", "http://localhost/infits/dietitian/live_streaming.php?room=jMgcQ4&displayName=InfitsWebTeam");
-        } else if (selectedValue === "In person") {
-            placeOfMeeting.style.display = "inline";
-            placeOfMeetingLink.style.display = "none";
-        } else {
-            placeOfMeeting.style.display = "inline";
-            placeOfMeetingLink.style.display = "none";
-        }
-    });
-</script>
+                            meetingTypeSelect.addEventListener("change", function () {
+                                const selectedValue = this.value;
+
+                                if (selectedValue === "Videocall" || selectedValue === "Call") {
+                                    console.log('hi');
+                                    placeOfMeeting.style.display = "none";
+                                    placeOfMeetingLink.style.display = "inline";
+                                    placeOfMeetingLink.innerText = `https://web-infits/${meetingCode}`;
+                                    placeOfMeetingLink.setAttribute("href", `<?=$DEFAULT_PATH?>live_streaming.php?displayName=${encodeURIComponent(displayName)}&meetingLink=${meetingCode}`);
+                                } else if (selectedValue === "In person") {
+                                    placeOfMeeting.style.display = "inline";
+                                    placeOfMeetingLink.style.display = "none";
+                                } else {
+                                    placeOfMeeting.style.display = "inline";
+                                    placeOfMeetingLink.style.display = "none";
+                                }
+                            });
+                        </script>
 
                         <!-- Add Description Field -->
                         <div class="input-icons">
@@ -648,17 +685,17 @@ input {
 
                         <!-- Add attachment field -->
                     <div class="input-icons" style="font-size:19px;display:flex;align-items:center">
-    <img class="icon" style="position: absolute; min-width: 0px;" src="<?=$DEFAULT_PATH?>assets/images/Attach.svg">
+                        <img class="icon" style="position: absolute; min-width: 0px;" src="<?=$DEFAULT_PATH?>assets/images/Attach.svg">
 
-    <label for="attachment" style="border-top: none; border-left: none; border-right: none; border-bottom: none; 
-        padding: 0px 0px 0px 50px; cursor: pointer;">
-        Attachment
-    </label>
-    <input type="file" id="attachment" name="attachment" required >
-</div>
-
-
-
+                        <label for="attachment" style="border-top: none; border-left: none; border-right: none; border-bottom: none; 
+                            padding: 0px 0px 0px 50px; cursor: pointer;">
+                            Attachment
+                        </label>
+                        <input type="file" id="attachment" name="attachment" required onchange="udpatefile(event)" multiple>
+                        
+                    </div>
+                    <div class="files" id="attachments">
+                    </div>
                    <!--cancel and book appointment button -->
                     <div style="width:100%; margin-left:10%; margin-right:10%;font-size:19px">
                         <a href="createevent.php"><input style="display:inline-block; color:black; background:white;"
@@ -680,8 +717,7 @@ input {
             <?php
             // $date_time_start_onlytime = substr($date_time_start,-6) ;
             ?>
-            <p>You already have <> with <> at <>
-            </p>
+            <p>You already have <> with <> at <></p>
         </div>
     </div>
     <script>
@@ -713,6 +749,157 @@ input {
   
     //   link based on the selected meeting type
   
+    </script>
+    <script>
+        let attachment = document.getElementById("attachments");
+        let files = [];
+        let af_count = 0;
+        const delete_file=(div,file)=>{
+            return function(){
+                let fileInput = document.getElementById('attachment');
+                let updatedFiles = Array.from(fileInput.files).filter(f => f !== file);
+                // console.log(updatedFiles);
+                let dataTransfer = new DataTransfer();
+                updatedFiles.forEach(f => dataTransfer.items.add(f));
+                fileInput.files = dataTransfer.files;
+                files = [...dataTransfer.files]
+                div.remove();
+            }
+
+        }
+        const udpatefile=(event)=>{
+            const image = /(.(jpg|svg|png|jpeg|avif)$)/;
+            const pdffile = /.pdf$/;
+            let icon;
+            files=[...files,...Array.from(event.target.files)]
+            let datatransfer = new DataTransfer();
+            files.forEach(filename=>{
+                datatransfer.items.add(filename);
+            })
+            event.target.files = datatransfer.files;
+
+            let fileListContainer =  document.getElementById('attachments');
+            fileListContainer.innerHTML = ''
+            // console.log(event.target.files);
+            files.forEach(element => {
+                let inputattachment = document.createElement("div");
+                
+                inputattachment.id = "file"+af_count;
+                inputattachment.style = "display:flex;justify-content: space-between;";
+                af_count++; 
+                if (image.test(element['name'])){
+                    icon = "image-file.svg";
+                }
+                else if (pdffile.test(element['name'])){
+                    icon="file-pdf.svg"
+                }
+                else{
+                    icon="file-extra.svg";
+                }
+                let image_in = document.createElement("img");
+                image_in.src = "<?=$DEFAULT_PATH?>assets/images/"+icon;
+
+                let span_1 = document.createElement("span");
+                span_1.style="display: -webkit-box; overflow: hidden; -webkit-line-clamp: 1; -webkit-box-orient: vertical;  max-height: 5vh; white-space: normal; text-overflow:ellipsis;padding-top:10px;padding-left:5px;";
+                span_1.innerHTML = element['name']
+                
+                let span_2 = document.createElement("span");
+                span_2.className="closer";
+                span_2.style = "position: relative;top: 0;right: 14px;font-size: 30px;transform: rotate(45deg);cursor: pointer;"
+                span_2.textContent = '+';
+                span_2.onclick = delete_file(inputattachment,element);
+
+
+                inputattachment.appendChild(image_in);
+                inputattachment.appendChild(span_1);
+                inputattachment.appendChild(span_2);
+
+                attachment.appendChild(inputattachment);
+            });
+        }
+    </script>
+    <script>
+        let addclient=(event)=>{
+            const inputclient = document.getElementById("clientname");
+            inputclient.value = event.target.innerHTML;
+            Array.from(event.target.parentNode.children).forEach((element)=>{
+                if(element.classList.contains("selected")){
+                    element.classList.remove("selected")
+                }
+            });
+            event.target.classList.toggle("selected");
+        }
+        let update_input=()=>{
+            const divlist = document.getElementsByClassName("showlist")[0];
+            if (divlist.style.display==="" || divlist.style.display==="none"){
+                divlist.style.display="flex";
+            }else{
+                divlist.style.display="none";
+            }
+            show_results(document.getElementById("clientname"));
+        }
+        let show_results=(event)=>{
+            const inputclient = document.getElementById("clientname");
+            if (inputclient.value===""){
+                Array.from(event.parentNode.children).forEach((element)=>{
+                    if(element.classList.contains("selected")){
+                        element.classList.remove("selected")
+                    }
+                });
+            }
+            const name = event.value;
+            const dietitian_id = <?=$_SESSION['dietitian_id']?>;
+            $.ajax({
+                    type: "POST",
+                    url: "searching_clients.php",
+                    // dataType: 'json',
+                    data: {
+                        name: name,
+                        dietitian_id: dietitian_id
+                    },
+                    success: function(response) {
+                        const itemlist = document.getElementsByClassName('showlist')[0];
+                            if (itemlist.children.length>0){
+                                itemlist.innerHTML="";
+                            }
+                        if (response === ''){
+                            const div = document.createElement("div");
+                            div.classList.add('items');
+                            div.style = "padding-left:30px;font-size:1.2rem;";
+                            div.textContent = "Not Found!";
+                            document.getElementsByClassName('showlist')[0].appendChild(div);
+                        }
+                        else{
+                            // const k = new Object(response)
+                            // const k = Array.from(response);
+                            // console.log(k);
+                            // console.log("The type of this variable is :",typeof(k));
+                            const itemlist = document.getElementsByClassName('showlist')[0];
+                            if (itemlist.children.length>0){
+                                itemlist.innerHTML="";
+                            }
+                            let items = response.split(',');
+                            let i = 0;
+                            items.forEach(element => {
+                                if (element!==''){
+                                    const div = document.createElement("div");
+                                    div.classList.add('items');
+                                    div.style = "padding-left:30px;font-size:1.2rem;";
+                                    div.id = "items_"+i;
+                                    div.textContent = element;
+                                    document.getElementsByClassName('showlist')[0].appendChild(div);
+                                    i++;
+                                }
+                            });
+                            Array.from(itemlist.children).forEach(element => {
+                                element.setAttribute("onclick","addclient(event)");
+                            });
+                        }
+                    }
+                });
+        }
+        const input_client = document.getElementById('clientname');
+        input_client.setAttribute("onkeyup","show_results(input_client)");
     </script>
     <?php require('constant/scripts.php');?>
 </body>

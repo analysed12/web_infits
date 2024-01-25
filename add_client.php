@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 if (isset($_POST['clientUserId'])) {
     header('Content-Type: application/json');
     include 'constant/config.php';

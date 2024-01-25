@@ -601,7 +601,7 @@ a {
                 <div class="top"><span>Notifications</span><span id="noti-close"><i style="cursor: pointer;"
                             class="fa-solid fa-xmark"></i></span></div>
             </div>
-            <img class="profile-image" src="<?php if ($user['p_p']==='' || $user['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}else{echo 'uploads/profile/images/'.$user['p_p'];}?>" style="height: 24px; width: 24px; border-radius:50%" id="addusermale">
+            <img class="profile-image" src="<?php if ($user['p_p']==='' || $user['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}else{echo $PROFILE_IMAGE.$user['p_p'];}?>" style="height: 24px; width: 24px; border-radius:50%" id="addusermale">
 
         </div>
 

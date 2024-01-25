@@ -661,7 +661,7 @@ if (isset($_POST['removeClient'])) {
                             title="Remove">
                     </div>
 
-                    <?php }}}?>
+                    <?php }}?>
 
                 </div>
 
@@ -683,7 +683,8 @@ if ($result->num_rows > 0) {
                     </li>
                     <?php
             // code...
-        } }}?>
+        } }}
+}?>
 
                 </ul>
             </div>

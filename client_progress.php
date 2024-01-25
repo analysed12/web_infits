@@ -402,10 +402,7 @@ body {
             </div>
 
         </div>
-        <?php
-$query = "SELECT `client_id`,`name` FROM `addclient` WHERE dietitianuserID = '$dietitian_id' AND status = 1;";
-$data = fetchData($query);
-?>
+        
         <div class="dashboard_container4">
 
             <div class="container4_wrapper1">
@@ -419,52 +416,8 @@ $data = fetchData($query);
                     <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-5.svg" style="width:1.8rem"><span>Calories</span></div>
                 </div>
             </div>
-            <?php
-if(!empty($data)){
-    $count = count($data);
-    
-    for($i = 0; $i<$count; $i++){
-        $infom = fetchInformation($data[$i]['client_id']);
-?>
-            <div class="container4_wrapper2">
-                <div class="show" style="font-size:400">
-                    <span style="width: 25%;">
-                        <a href=""
-                            style="background-color:#FDFDFD; color:black;font-weight:400; font-size:20px; border:none; margin-top:1rem;text-decoration:none !important">
-                            <img src="<?=$DEFAULT_PATH?>assets/images/ronald.svg"
-                                style="width:2rem; background-color:#FDFDFD;border-radius:1rem">
-                            <?php echo($data[$i]['name']) ?></a>
-                    </span>
-                </div>
-                <div class="values-container col-12">
-                    <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_steps.php?client_id=<?php echo($data[$i]['client_id']) ?>"
-                            class="values"><?php echo($infom['steps']['progress'] . '/' . $infom['steps']['goal']) ?></a></span>
-                    <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_heart.php?client_id=<?php echo($data[$i]['client_id']) ?>"
-                            class="values"><?php echo($infom['heart']['progress']) ?> Bpm</a></span>
-                    <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_water.php?client_id=<?php echo($data[$i]['client_id']) ?>"
-                            class="values"><?php echo($infom['water']['progress'] . '/' . $infom['water']['goal']) ?>
-                            ltrs</a></span>
-                    <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_sleep.php?client_id=<?php echo($data[$i]['client_id']) ?>"
-                            class="values"><?php echo(round($infom['sleep']['progress'],2) . '/' . $infom['sleep']['goal']) ?>
-                            hrs.</a></span>
-                    <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_weight.php?client_id=<?php echo($data[$i]['client_id']) ?>"
-                            class="values"><?php echo($infom['weight']['progress'] . '/' . $infom['weight']['goal']) ?>
-                            kg</a></span>
-                    <span class="col-2"><a style="text-decoration:none !important"
-                            href="track_stats_calorie.php?client_id=<?php echo($data[$i]['client_id']) ?>"
-                            class="values"><?php echo($infom['calorie']['progress'] . '/' . $infom['calorie']['goal']) ?>
-                            kcal</a></span>
-                </div>
-            </div>
-            <?php
-    }
-}
-?>
+            <div id="placeholder" style="padding-left:20px;"></div>
+            
         </div>
     </div>
 
@@ -561,7 +514,83 @@ if(!empty($data)){
 ?>
 
 
+    <script>
+        const update_stat=()=>{
+            const container=document.getElementById("placeholder");
+            $.ajax({
+                type: 'POST',
+                url: 'updating_stats.php',
+                data:{
+                    updating:0,
+                    dietitian_id:<?=$_SESSION['dietitian_id']?>,
+                },
+                success: function(response) {
+                    container.innerHTML=""
+                    if (response!==''){
+                        let a = JSON.parse(response);
+                        Array.from(Object.keys(a)).map((ele)=>{
+                            console.log("This is ele : ",a[ele]);
+                            ele = JSON.parse(a[ele]);
+                            let div = document.createElement('div');
+                            div.classList='container4_wrapper2';
+                            div.innerHTML = `
+                            <div class="show">
+                                <span style="width: 25%;">
+                                    <a href="" style="background-color:#FDFDFD; color:black;font-weight:600; font-size:20px; border:none; margin-top:1rem;text-decoration:none;">
+                                        <img src="<?= $DEFAULT_PATH ?>assets/images/ronald.svg" style="width:2rem; background-color:#FDFDFD;border-radius:1rem">
+                                        ${ele['name']}</a>
+                                </span>
+                            </div>
+                            <div class="values-container col-12">
+                                <span class="col-2"><a style="text-decoration:none;" href="track_stats_steps.php?client_id=`+ele['client_id']+` class="values"> ${ele['steps']['progress']} / ${ele['steps']['goal']}</a></span>
+                                <span class="col-2"><a style="text-decoration:none;" href="track_stats_heart.php?client_id=${ele['client_id']}" class="values">${ele['heart']['progress'] } Bpm</a></span>
+                                <span class="col-2"><a style="text-decoration:none;" href="track_stats_water.php?client_id=${ele['client_id'] }" class="values">${ele['water']['progress']} /  ${ele['water']['goal']} ltrs</a></span>
+                                <span class="col-2"><a style="text-decoration:none;" href="track_stats_sleep.php?client_id=${ele['client_id']}" class="values">${Math.round(ele['sleep']['progress'], 2)} / ${ele['sleep']['goal']}hrs.</a></span>
+                                <span class="col-2"><a style="text-decoration:none;" href="track_stats_weight.php?client_id=${ele['client_id']}" class="values">${ele['weight']['progress']} / ${ele['weight']['goal']}kg</a></span>
+                                <span class="col-2"><a style="text-decoration:none;" href="track_stats_calorie.php?client_id=${ele['client_id'] }" class="values">${ele['calorie']['progress']} / ${ele['calorie']['goal'] }kcal</a></span>
+                            </div>`;
+                            container.appendChild(div);
+                        })
+                        
+                    }else{
+                        container.innerHTML=`
+                        <div class="container4_wrapper2">
+                            <div class="hyphen" style="width:20%;text-align:center;">
+                                <p>-</p>
+                            </div>
+                            <div class="values-container" style="width:80%">
+                                <span class="col-2 hyphen" style="text-align:center;">
+                                    <p>-</p>
+                                </span>
+                                <span class="col-2 hyphen" style="text-align:center;">
+                                    <p>-</p>
+                                </span>
+                                <span class="col-2 hyphen" style="text-align:center;">
+                                    <p>-</p>
+                                </span>
+                                <span class="col-2 hyphen" style="text-align:center;">
+                                    <p>-</p>
+                                </span>
+                                <span class="col-2 hyphen" style="text-align:center;">
+                                    <p>-</p>
+                                </span>
+                                <span class="col-2 hyphen" style="text-align:center;">
+                                    <p>-</p>
+                                </span>
 
+                            </div>
+                        </div>
+                        `
+                    }
+                },
+                complete: function() {
+                    setTimeout(update_stat, 10000); // 5000 milliseconds = 5 seconds
+
+                }
+            });
+        }
+        update_stat();
+    </script>
     <?php require('constant/scripts.php');?>
 </body>
 

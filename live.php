@@ -1,29 +1,47 @@
 <?php
     include('navbar.php');
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "infits";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-     // Get the current date in the format 'Y-m-d'
-     $currentDate = date('Y-m-d');
+    // Get the current date in the format 'Y-m-d'
+    $currentDate = date('Y-m-d');
 
-     // Modify the SQL query to include a WHERE clause for the current date
-     $sql = "SELECT * FROM create_meeting WHERE date = '$currentDate'";
- 
-     $result = $conn->query($sql);
+    // Modify the SQL query to include a WHERE clause for the current date
+    $sql = "SELECT * FROM create_meeting WHERE date = '$currentDate'";
+
+    $result = $conn->query($sql);
 
     //$sql = "SELECT * FROM create_meeting";
 
     //$result = $conn->query($sql);
+    if(isset($_POST['save'])){
+        $title = $_POST['title'];
+        $desc = $_POST['desc'];
+        $date = $_POST['mydate'];
+        $time = $_POST['mytime'];
 
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $sql = "INSERT INTO create_meeting (dietitian_id,title, description, date, time) VALUES ('{$_SESSION['dietitian_id']}','$title', '$desc', '$date','$time')";
+
+        if ($conn->query($sql) === TRUE){
+            // echo "<script>console.log('New record created successfully');</scrit>";
+        } 
+        else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+            
+        $conn->close();
+
+
+        // echo "<h1>".$title.$desc.$date.$time."</h1>";
+
+        // header("location: ".$DEFAULT_PATH."live.php");
+    }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -75,8 +93,7 @@
         }
 
         .streaming_live {
-            width:40vw;
-            min-width: 502px;
+            width: 652px;
             height: 203px;
             background: #FBFBFB;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
@@ -198,71 +215,73 @@
             border: 1px solid #CCCCCC;
             border-radius: 15px;
         }
-
+        .frm{
+            width:40vw
+        }
         .modal {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      transition: opacity 500ms;
-      align-items: center;
-    }
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        transition: opacity 500ms;
+        align-items: center;
+        }
 
-    .modal-content {
-      width: 495px;
-      left: 500px;
-      top: 20px;
-      background: #FFFFFF;
-      border: 1px solid #DDD9D9;
-      border-radius: 17px;
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-    }
+        .modal-content {
+        width: 495px;
+        left: 500px;
+        top: 20px;
+        background: #FFFFFF;
+        border: 1px solid #DDD9D9;
+        border-radius: 17px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+        }
 
-    .day:first-child {
-      grid-column-start: 4;
-    }
+        .day:first-child {
+        grid-column-start: 4;
+        }
 
-    .day {
-      padding: 0.5em;
-      text-align: center;
-    }
-.day::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-}
-.day[data-selected]::before {
-  border-radius: 0.5em;
-}
-.day[data-selected="start"]::before {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-.day[data-selected],
-.day[data-selected] ~ .day {
-  color: white;
-}
-.day[data-selected]::before,
-.day[data-selected] ~ .day::before {
-  background-color: var(--color-primary);
-}
-.day[data-selected="start"] ~ .day:not([data-selected="end"])::before {
-  opacity: 0.5;
-}
-.day[data-selected="end"][data-selected="end"]::before {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.day[data-selected="end"] ~ .day {
-  color: inherit;
-}
-.day[data-selected="end"] ~ .day::before {
-  background-color: transparent;
-}
+        .day {
+        padding: 0.5em;
+        text-align: center;
+        }
+        .day::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        }
+        .day[data-selected]::before {
+        border-radius: 0.5em;
+        }
+        .day[data-selected="start"]::before {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        }
+        .day[data-selected],
+        .day[data-selected] ~ .day {
+        color: white;
+        }
+        .day[data-selected]::before,
+        .day[data-selected] ~ .day::before {
+        background-color: var(--color-primary);
+        }
+        .day[data-selected="start"] ~ .day:not([data-selected="end"])::before {
+        opacity: 0.5;
+        }
+        .day[data-selected="end"][data-selected="end"]::before {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        }
+        .day[data-selected="end"] ~ .day {
+        color: inherit;
+        }
+        .day[data-selected="end"] ~ .day::before {
+        background-color: transparent;
+        }
 
         .title {
             width: 443px;
@@ -577,29 +596,29 @@
 
         }
         #calendar td.todays {
-    border: 1px solid #7282FB;
-    border-radius: 50px !important;
-}
+            border: 1px solid #7282FB;
+            border-radius: 50px !important;
+        }
         th,
 
         td {
             padding: 5px;
             text-align: center;
             transition: all 0.2s ease-in-out;
-
+            user-select: none;
 
         }
 
         td:hover {
             transform: scale(1.2);
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-
+            user-select: none;
             color:black;
             border-radius: 50%;
         }
         th {
 
-
+            user-select: none;
             font-family: 'NATS';
             font-style: normal;
             font-weight: 400;
@@ -751,6 +770,16 @@
                 justify-content: center !important;
             }
         }
+        @media screen and (min-width:0px) and (max-width:720px) {
+            .frm{
+                width:300px;
+            }
+        }
+        @media screen and (min-width:0px) and (max-width:767px) {
+            .form-check-label{
+               float: right;
+            }
+        }
     </style>
 </head>
 
@@ -759,7 +788,7 @@
         <!------------------------------LEFTSIDE------------------------------------->
         <div class="live_leftside">
             <h1>Live</h1>
-            <div class="streaming_live" style="">
+            <div class="streaming_live" style="width:40vw;max-width: 652px;">
                 <div style="display:flex;justify-content:space-between"><span style="font-size:26px">Now Streaming Live</span> 
                 <a style="background-color:none">
 
@@ -796,6 +825,7 @@
                     if ($result->num_rows > 0) {
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
+                            $min = new DateTime($row['time']);
                         echo 
 
 
@@ -804,18 +834,15 @@
                         <p style='font-size: 24px;line-height: 25px;'> ".$row['title']."</p>
                         <div>
                             <div style='display:flex;justify-content:center;gap:0.3rem'><img src='".$DEFAULT_PATH."assets/images/Calendar.svg' style='width:17%'> <span>". $row['date']."</span></div>
-                            <div style='display:flex;gap:0.3rem;margin-top:0.3rem;padding: 0px 19px;'> <img src='".$DEFAULT_PATH."assets/images/Clock_live.svg' style='width:27%;'> <span>". $row['time'] ."</span></div>
+                            <div style='display:flex;gap:0.3rem;margin-top:0.3rem;padding: 0px 19px;'> <img src='".$DEFAULT_PATH."assets/images/Clock_live.svg' style='width:27%;'> <span>".$min->format('h:i').(substr($min->format('h:i a'), -2)==="pm"?" p.m.":" a.m.")."</span></div>
                         </div>
                         <a href='live_joincall.php' style='background-color:none'> <button class='btn_joincall'>Join Call</button></a>
                         <button class='btn_setreminder'>Set Reminder</button>
     
                     </div> ";
                     
-                    
-                    }
-                    } else {
-                        echo "0 results";
-                    }
+                
+                    }}
                 ?>
 
                 
@@ -897,17 +924,17 @@
                         <input type="submit" value="Show Meetings">
                     </form> -->
                     <?php
-                        $servername = "localhost:3306";
-                        $username = "root";
-                        $password = "";
-                        $dbname = "infits";
+                        // $servername = "localhost:3306";
+                        // $username = "root";
+                        // $password = "";
+                        // $dbname = "infits";
 
                         //$title = $_POST['title'];
                         //$desc = $_POST['desc'];
                         //$date = $_POST['mydate'];
                         //$time = $_POST['mytime'];
 
-                        $conn = new mysqli($servername, $username, $password, $dbname);
+                        // $conn = new mysqli($servername, $username, $password, $dbname);
 
                         if ($conn->connect_error) {
                             die("Connection failed: " . $conn->connect_error);
@@ -965,70 +992,53 @@
     <div id="myModal" class="modal">
 
         <!--Modal content-->
-        <div class="modal-content">
-            <div style="margin-top:1rem;">
-                <h2 style="text-align:center" class="schedule">Scheduling live</h2>
-                <h4 style="text-align:center;color: #7C7C7C;" class="calanderdatesize">
-                    <script>
-                        // Creating a date object
-                        var today = new Date();
-
-                        // Getting full month name (e.g. "June")
-                        var month = today.toLocaleString('default', {
-                            month: 'long'
-                        });
-                        document.write(month);
-                    </script>
-                </h4>
+        <div class="content d-flex justify-content-center align-items-center">
+        <form class="frm shadow p-3 mb-5 bg-body-tertiary rounded" method="post">
+            <div class="mb-3 text-center">
+                <h4>Scheduling Live</h4>
             </div>
-
-            <div class="sliding-cal col-sm-12">
-                <div id="slider-content"></div>
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input type="text" name="title" class="form-control">
             </div>
-
-
-            <div style="padding:20px;">
-                <p style="font-size: 25px;">Title</p>
-                <input type="text" class="title" >
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="desc" id="" cols="30" rows="4"class="form-control"></textarea>
             </div>
-            <div style=" padding-left:20px;padding-right:20px">
-                <p style="font-size: 25px;">Description (Optional)</p>
-                <input type="text" class="description">
-            </div>
-            <div class="model-center" style="padding-left:20px;padding-right:20px">
-                <div style="display:flex;flex-direction:column;gap:1rem">
-                    <div style="display:flex;gap:0.4rem"><img src="<?=$DEFAULT_PATH?>assets/images/Calendar.svg" style="width:10%;margin-top:0.5rem">
-                        <div contentEditable="true" class="text_box" style="padding:10px">
-                            <script>
-                                var utc = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
-                                document.write(utc);
-                            </script>
+            <div class="row d-flex align-items-center">
+                <div class="col-md-6 ">
+                    <div class="mb-3 d-flex align-items-center">
+                        <label class="form-label me-3"><h4><i class="bi bi-calendar-date"></i></h4></label>
+                        <input type="date" name="mydate" class="form-control">
+                    </div>
+                    <div class="mb-3 d-flex align-items-center">
+                        <label class="form-label me-3"><h4><i class="bi bi-clock-fill"></i></h4></label>
+                        <input type="time" name="mytime" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check form-switch">
+                        <div class="row d-flex justify-content-center">
+                        <div class="row">
+                            <label class="form-check-label" for="flexSwitchCheckChecked" style="padding-right:40px ;">Set Reminder</label>
                         </div>
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                            
+                        </div>
+                        
                     </div>
-                    <div style="display:flex;gap:0.4rem"><img src="<?=$DEFAULT_PATH?>assets/images/Clock_live.svg" style="width:10%;margin-top:0.5rem">
-                        <form><input type="time" name="mytime" id="mytime" class="text_box" style="padding:10px" placeholder="Set Time">
-                    </div>
-                    </form>
                 </div>
-                <div style="display:flex;flex-direction:column;align-items:center;margin-top:1rem;position: absolute;left: 63%;">
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                    <p style="font-size: 25px;">Set Reminder</p>
-                </div>
-
             </div>
-            <div class="bottom_buttons">
-                <a href="live.php" style="background-color:none"><button class="cancel_btn">Cancel</button></a>
-                <button class="save_btn">Save</button>
-
+            <div class="d-flex justify-content-around">
+                <button class="btn btn-lg btn-outline-primary">Cancel</button>
+                <button type="submit" name="save" class="btn btn-lg btn-primary">Save</button>
             </div>
-
-
+        </form>
+            </div>
         </div>
 
     </div>
+
 
     <script>
         // Get the modal
@@ -1569,6 +1579,7 @@ function updateDOM() {
         fetchMeetingInfo(formattedStartDate, formattedEndDate)
            .then(meetingInfo => {
             console.log(meetingInfo);
+            rightside_middle.innerHTML = "";
             if (meetingInfo.length > 0) {
                 meetingInfo.forEach(function(meeting){
 
@@ -1818,7 +1829,8 @@ cells.forEach(cell => {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
-    <script type="text/javascript" src="<?=$DEFAULT_PATH?>live/js/lobby.js"></script>
+        <script type="text/javascript" src="<?=$DEFAULT_PATH?>live/js/lobby_help.js"></script>
+        <script type="text/javascript" src="<?=$DEFAULT_PATH?>live/js/lobby.js"></script>
     
 
 </body>

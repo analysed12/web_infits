@@ -164,7 +164,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                                                     <?= $conversation['name'] ?><br>
                                                     <small>
                                                         <?php
-                                                        echo lastChat($_SESSION['dietitian_id'], $conversation['client_id'], $conn);
+                                                        echo lastChatPDO($_SESSION['dietitian_id'], $conversation['client_id'], $conn);
                                                         ?>
                                                     </small>
 

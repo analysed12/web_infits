@@ -316,10 +316,10 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
               <div><img src="<?= $DEFAULT_PATH ?>assets/images/Ellipse_matrics.svg" style="margin-left:64px;"></div>
               <div style="position:absolute;left: 40%;right: 33.33%;top: 6.9%;bottom: 34.83%;">
 
-                <p
+                <p id="steps_bar"
                   style="color:white;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 40px;line-height: 85px;">
                   <?php echo $todaysteps; ?></p>
-                <p
+                <p 
                   style="font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 23.85px;line-height: 50px;color:#ffffff;left: 4.33%;right: 39.33%;top: 54.54%;bottom: 24.99%;position:absolute;">
                   steps</p>
               </div>
@@ -331,7 +331,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
                   style="margin-right:10px;margin-bottom:23px;">
                 <p class="gl" style="color:white;">Goal</p>
               </div>
-              <div class="right"
+              <div class="right" id="steps_value"
                 style="font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 20.1808px;line-height: 43px;color:white;">
                 <?php echo $steps; ?></div>
             </div>
@@ -351,7 +351,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
               style="background-image:url('<?= $DEFAULT_PATH ?>assets/images/matrics_heartrate_bg.svg');background-repeat:no-repeat;background-position:center;position:relative;">
               <div><img src="<?= $DEFAULT_PATH ?>assets/images/Ellipse_matrics.svg" style="margin-left:69px;"></div>
               <div style="position:absolute;left: 42%;right: 33.33%;top: 6.9%;bottom: 34.83%;">
-                <p
+                <p id="heart_bar"
                   style="color:white;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 40px;line-height: 85px;">
                   <?php echo $todayheart; ?></p>
                 <p
@@ -366,7 +366,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
                   style="margin-right:10px;margin-bottom:23px;">
                 <p class="gl" style="color:white;">Goal</p>
               </div>
-              <div class="right"
+              <div class="right" id="heart_value"
                 style="font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 20.1808px;line-height: 43px;color:white;margin-bottom:10px !important;">
                 <?php echo $heart; ?> bpm</div>
             </div>
@@ -384,7 +384,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
               style="background-image:url('<?= $DEFAULT_PATH ?>assets/images/matrics_water_bg.svg');background-repeat:no-repeat;background-position:center;position:relative;background-size:contain;">
               <div><img src="<?= $DEFAULT_PATH ?>assets/images/Ellipse_matrics.svg" style="margin-left:74px;"></div>
               <div style="position:absolute;left: 42%;right: 33.33%;top: 7.9%;bottom: 34.83%;">
-                <p
+                <p id="water_bar"
                   style="color:white;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 40px;line-height: 85px; margin:auto;">
                   <?php echo $todaywater; ?></p>
                 <p
@@ -399,7 +399,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
                   style="margin-right:10px;margin-bottom:23px;">
                 <p class="gl" style="color:white;">Goal</p>
               </div>
-              <div class="right"
+              <div class="right" id="water_value"
                 style="font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 20.1808px;line-height: 43px;color:white;">
                 <?php echo $water ?> ml</div>
             </div>
@@ -417,7 +417,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
               style="background-image:url('<?= $DEFAULT_PATH ?>assets/images/matrics_kg_bg.svg');background-repeat:no-repeat;background-position:center;position:relative;">
               <div><img src="<?= $DEFAULT_PATH ?>assets/images/Ellipse_matrics.svg" style="margin-left:69px;"></div>
               <div style="position:absolute;left: 40%;right: 33.33%;top: 6.9%;bottom: 34.83%;">
-                <p
+                <p id="weight_bar"
                   style="color:white;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 40px;line-height: 85px;">
                   <?php echo $todayweight; ?></p>
                 <p
@@ -432,7 +432,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
                   style="margin-right:10px;margin-bottom:23px;">
                 <p class="gl" style="color:white;">Goal</p>
               </div>
-              <div class="right"
+              <div class="right" id="weight_value"
                 style="font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 20.1808px;line-height: 43px;color:white;">
                 <?php echo $weight ?> kg</div>
             </div>
@@ -450,10 +450,10 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
               style="background-image:url('<?= $DEFAULT_PATH ?>assets/images/matrics_sleep_bg.svg');background-repeat:no-repeat;background-position:center;position:relative;">
               <div><img src="<?= $DEFAULT_PATH ?>assets/images/Ellipse_matrics.svg" style="margin-left:64px;"></div>
               <div style="position:absolute;left: 40%;right: 33.33%;top: 1.9%;bottom: 34.83%;">
-                <p
+                <p id="sleep_value_hrs"
                   style="color:white;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 40px;line-height: 85px;">
                   <?php echo $todaysleephrs; ?> hr</p>
-                <p
+                <p id="sleep_value_min"
                   style="font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 39.85px;line-height: 50px;color:#ffffff;left: 1%;right: 39.33%;top: 60.54%;bottom: 24.99%;position:absolute;">
                   <?php echo $todaysleepmins; ?>min</p>
               </div>
@@ -465,7 +465,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
                   style="margin-right:10px;margin-bottom:23px;">
                 <p class="gl" style="color:white;">Goal</p>
               </div>
-              <div class="right"
+              <div class="right" id="sleep_value"
                 style="font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 20.1808px;line-height: 43px;color:white;">
                 <?php echo $sleep ?> hrs</div>
             </div>
@@ -483,10 +483,10 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
               style="background-image:url('<?= $DEFAULT_PATH ?>assets/images/matrics_cal_bg.svg');background-repeat:no-repeat;background-position:center;position:relative;">
               <div><img src="<?= $DEFAULT_PATH ?>assets/images/Ellipse_matrics.svg" style="margin-left:63px;"></div>
               <div style="position:absolute;left: 40%;right: 33.33%;top: 6.9%;bottom: 34.83%;">
-                <p
+                <p id="calorie_bar"
                   style="color:white;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 40px;line-height: 85px;">
                   <?php echo $todaycalorie; ?></p>
-                <p
+                <p 
                   style="font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 23.85px;line-height: 50px;color:#ffffff;left: 10.33%;right: 39.33%;top: 54.54%;bottom: 24.99%;position:absolute;">
                   kcal</p>
               </div>
@@ -499,7 +499,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
                 style="margin-right:10px;margin-bottom:23px;">
               <p class="gl" style="color:white;">Goal</p>
             </div>
-            <div class="right"
+            <div class="right" id="calorie_value"
               style="font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 20.1808px;line-height: 43px;color:white;">
               <?php echo $calorie ?> kcal</div>
           </div>
@@ -570,6 +570,34 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
       return ((slider.parentElement.scrollLeft / (slider.parentElement.scrollWidth - slider.parentElement
         .clientWidth)) * 100);
     }
+  </script>
+  <script>
+      const update_stat = ()=>{
+          $.ajax({
+              type: 'POST',
+              url:"updating_stats.php",
+              data:{
+                  updating:7,
+                  client_id:<?=$client_id?>
+              },
+              success:function(response){
+                document.getElementById("steps_bar").innerHTML = (response['ts']===null?0:response['ts'])
+                document.getElementById("heart_bar").innerHTML = (response['th']===null?0:response['th'])
+                document.getElementById("water_bar").innerHTML = (response['tw']===null?0:response['tw'])
+                document.getElementById("weight_bar").innerHTML = (response['twe']===null?0:response['twe'])
+                document.getElementById("sleep_value_hrs").innerHTML = (response['tsh']===null?0:response['tsh'])+"hr";
+                document.getElementById("sleep_value_min").innerHTML = (response['tsm']===null?0:response['tsm'])+"min";
+                document.getElementById("calorie_bar").innerHTML = (response['tc']===null?0:response['tc'])
+                },
+              complete: function() {
+                  setTimeout(update_stat, 5000); 
+              },
+              error: function(xhr, status, error) {
+                  console.error('This is error:', error);
+              }
+          });
+      }
+      update_stat();
   </script>
 </body>
 

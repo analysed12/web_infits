@@ -950,7 +950,7 @@ tst-left-t {
                     <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                         <input hidden name="dietition" value="<?php echo($dietition) ?>">
                         <input name="setgoal" value="<?=$progressBarData[0]['weight']?>" required min="1" type="number"
-                            id="set-goal" placeholder="00000 Kg">
+                            id="set-goal" placeholder="00000 BPM">
                         <input name="clientid" type="hidden" value="<?php echo($clientId) ?>">
                         <button type="submit" name="savegoal" id="save-goal">Set</button>
                     </form>
@@ -1053,7 +1053,7 @@ $progressBarData = fetchDataSql($clientId, "", $today->format('Y-m-d'), 2);
                     <div id="progress-percent" class="progress-circle">
                         <div class="progress-circle-fill">
                             <div class="progress-circle-value"><span
-                                    id="progress-percent"><?php echo($progressBarData[0]['avg(weight)']) ?>
+                                    id="progress-percent" class="pp"><?php echo($progressBarData[0]['avg(weight)']) ?>
                                     Kg</span><span>New Weight</span></div>
                         </div>
                     </div>
@@ -1072,13 +1072,13 @@ $progressBarData = fetchDataSql($clientId, "", $today->format('Y-m-d'), 2);
                         <div class="progress-div">
                             <p>Progress Today</p>
                             <p><?php echo($today->format('d.m.Y')) ?></p>
-                            <span><?php echo($yesterday_data - $progressBarData[0]['avg(weight)']) ?></span>
+                            <span id="pt"><?php echo($yesterday_data - $progressBarData[0]['avg(weight)']) ?></span>
                         </div>
                         <div class="activity-border"></div>
                         <div class="progress-div">
                             <p>Comprared with</p>
                             <p>1 week ago</p>
-                            <span><?php echo($pastweek_data - $progressBarData[0]['avg(weight)']) ?></span>
+                            <span id="ow"><?php echo($pastweek_data - $progressBarData[0]['avg(weight)']) ?></span>
                         </div>
                     </div>
                 </div>
@@ -1508,6 +1508,37 @@ while($weekly_Day <= $weekly_lastDay){
             },
         }
     });
+    </script>
+    <script>
+    const update_stat = () =>{
+        $.ajax({
+            type: 'POST',
+            url:"updating_stats.php",
+            data:{
+                updating:5,
+                client_id:<?=$clientId?>
+            },
+            success:function(response){
+                document.getElementById("daily-count").innerHTML=(response['d']===null?0:response['d']);
+                document.getElementById("weekly-avg").innerHTML=(response['w']===null?0:response['w']);
+                document.getElementById("monthly-avg").innerHTML=(response['m']===null?0:response['m']);
+                document.getElementById("total").innerHTML=(response['t']===null?0:response['t']);
+                document.getElementById("pt").innerHTML=(response['pt']===null?0:response['pt']);
+                document.getElementById("ow").innerHTML=(response['ow']===null?0:response['ow']);
+                document.getElementsByClassName("pp")[0].innerHTML=(response['pp']===null?0:response['pp'])+"Kg";
+                const progressPercent = document.getElementById('progress-percent');
+                progressPercent.style.setProperty("background",
+                    `conic-gradient(#63AEFF ${100-response['pp']}% , #B1D4Fa 0)`);
+            },
+            complete: function() {
+                setTimeout(update_stat, 5000); 
+            },
+            error: function(xhr, status, error) {
+                console.error('This is error:', error);
+            }
+        });
+    }
+    update_stat();
     </script>
 </body>
 
