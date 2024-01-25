@@ -346,12 +346,13 @@ include('save_invite_code.php');
 
     #stream__box {
         background-color: #3f434a;
-        width: 741px;
-        height: 545px;
+        width: 53vw;
+        height: 85vh;
         display: block;
         background-image: url("<?=$DEFAULT_PATH?>live/icons/live-cover-image.svg");
         background-repeat: no-repeat;
         background-size: cover;
+        object-fit: cover;
     }
 
     #stream__box .video__container {
@@ -874,7 +875,7 @@ if (isset($_GET['displayName']) && isset($_GET['meetingLink'])) {
             document.execCommand("copy");
             document.body.removeChild(tempInput);
 
-            alert("Room ID copied to clipboard: displayName: " + displayName + ", meetingLink:" + meetingLink);
+            alert("Meeting link copied to clipboard: displayName: " + displayName + ", meetingLink:" + meetingLink);
         }
         </script>';
 } else {

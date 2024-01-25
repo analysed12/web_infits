@@ -794,8 +794,8 @@ require('constant/config.php');
                 <div class="img-dis" style="width:100%;margin-top:-35px;text-align:center;">
                     <img src="<?= $DEFAULT_PATH ?>assets/images/alooparantha.svg" style="height:115px; width:160px; margin-left:-20px;margin-top:20px;" />
                 </div>
-                <div class="d-flex justify-content-between" onmouseover='toggleShowHide(stuff="",dstuff=<?= json_encode($d) ?>)' onmouseout='toggleShowHide(stuff="",dstuff=<?= json_encode($d) ?>)'>
-                    <p class="card-food ellipsis"><?php echo $d['drecipe_name'] ?></p>
+                <div class="d-flex justify-content-between">
+                    <p class="card-food ellipsis" style="width:40px;" onmouseover='toggleShowHide(stuff="",dstuff=<?= json_encode($d) ?>)' onmouseout='toggleShowHide(stuff="",dstuff=<?= json_encode($d) ?>)'><?php echo $d['drecipe_name'] ?></p>
                     <div class="header">
                         <div class="dropdown ">
                             <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">

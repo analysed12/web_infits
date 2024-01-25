@@ -7,7 +7,7 @@ require('constant/config.php');
 if (isset($_POST['add'])) {
     global $conn;
     if (!empty($_FILES['recipeImage']['name'])) {
-        $uploadsDir = 'uploads/recipe/';
+        $uploadsDir = 'assets/uploads/recipe/';
         $uploadedFile = $_FILES['recipeImage']['tmp_name'];
         $originalName = $_FILES['recipeImage']['name'];
 
@@ -24,6 +24,8 @@ if (isset($_POST['add'])) {
          ('{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','{$_POST['recipeName']}','{$_POST['recipeingredients']}','{$_POST['recipeDirections']}','{$_POST['nutriDetails']}','{$imageName}','{$_POST['recipeCourse']}','{$_POST['recipeCategory']}','{$_POST['recipeTime']}')";
     $conn->query($query);
     header("Location:all_recipes.php");
+    print_r($_POST);
+    echo "$query";
     exit;
 } elseif (isset($_POST['edit'])) {
     global $conn;
@@ -536,7 +538,7 @@ include('navbar.php');
                 <div class="left uploadImg">
                     <?php if ($action == 'editRecipe') {
                         if ($edit['img'] != "") {
-                            $imgSrc = $DEFAULT_PATH . "uploads/recipe/" . $edit['img'];
+                            $imgSrc = $DEFAULT_PATH . "assets/uploads/recipe/" . $edit['img'];
                         } else {
                             $imgSrc = $DEFAULT_PATH . "assets/images/alooparantha.svg";
                         }

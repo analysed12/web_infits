@@ -531,13 +531,20 @@ if(isset($_GET['client_id'])){
             if ($result->num_rows > 0) {
                 $data = $result->fetch_assoc()['form_data'];
                 $data = json_decode($data,true);
-
-                while($data > 0) { ?>
-                <div class="details">
-                    <p id="question"><?php echo $que["que"]; ?></p>
-                    <p id="answer"><?php echo $que["ans"]; ?></p>
-                </div>
-            <?php } } ?>
+                if (is_array($data) && count($data)>0){
+                    foreach($data as $que) { ?>
+                    <div class="details">
+                        <p id="question"><?php echo $que["que"]; ?></p>
+                        <p id="answer"><?php echo $que["ans"]; ?></p>
+                    </div>
+                <?php } } 
+            else{
+                echo "<span class='text-center'>No Forms Found!</span>";
+            }
+        }else{
+            echo "<span class='text-center'>No Forms Found!</span>";
+        }
+        ?>
 
             </div>
 
@@ -549,28 +556,32 @@ if(isset($_GET['client_id'])){
                 if ($result->num_rows > 0) {
                     $data = $result->fetch_assoc()['docs'];
                     $data = json_decode($data,true);
-    
-                    while($data > 0) { ?>
-                    <div class="details">
-                        <div class="title">
-                            <img src="<?=$DEFAULT_PATH?>assets/images/Pdf.svg" alt="PDF">
-                            <div class="info-box">
-                                <p class="name"><?=$doc['docName']?></p>
-                                <div class="minor-details">
-                                    <span><?=$doc['uploadedOn']?></span>
-                                    <span><?=$doc['fileSize']?></span>
+                    if (is_array($data) && count($data)>0){
+                    foreach($data as $doc) { ?>
+                        <div class="details">
+                            <div class="title">
+                                <img src="<?=$DEFAULT_PATH?>assets/images/Pdf.svg" alt="PDF">
+                                <div class="info-box">
+                                    <p class="name"><?=$doc['docName']?></p>
+                                    <div class="minor-details">
+                                        <span><?=$doc['uploadedOn']?></span>
+                                        <span><?=$doc['fileSize']?></span>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="options">
+                                <a href="<?=$doc['fileLink']?>"  download ><img src="<?=$DEFAULT_PATH?>assets/images/Download.svg" alt="Download" title="Download"></a>
+                                <button id="popup_btn" style="background-color:white;border:none"><img src="<?=$DEFAULT_PATH?>assets/images/Share_Black.svg" alt="Share" title="Share" class="shareBtn"></button>
+                                <img src="<?=$DEFAULT_PATH?>assets/images/Delete2.svg" alt="Delete" title="Delete">
+                            </div>
                         </div>
-                        <div class="options">
-                            <a href="<?=$doc['fileLink']?>"  download ><img src="<?=$DEFAULT_PATH?>assets/images/Download.svg" alt="Download" title="Download"></a>
-                            <button id="popup_btn" style="background-color:white;border:none"><img src="<?=$DEFAULT_PATH?>assets/images/Share_Black.svg" alt="Share" title="Share" class="shareBtn"></button>
-                            <img src="<?=$DEFAULT_PATH?>assets/images/Delete2.svg" alt="Delete" title="Delete">
-                        </div>
-                    </div>
                 <?php
+                }}else{
+                    echo "<span class='text-center'>No Documents Found!</span>";
+                }}
+                else{
+                    echo "<span class='text-center'>No Documents Found!</span>";
                 }
-            }
 
                 ?>
                 <div id="myModal" class="modal">

@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 require('constant/config.php');
 session_start();
 if(isset($_SESSION['dietitianuserID'])){
@@ -55,13 +56,12 @@ ob_start();
        
         color: black;
         padding: 1rem;
-           
-            width: 475px;
-            height: 318px;
+        min-width: 430px;
+        min-height: 318px;
         background: #FFFFFF;
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
-            border-radius: 1.25rem !important;
-            border: none !important;
+        border-radius: 1.25rem !important;
+        border: none !important;
     }
 
     .cards {
@@ -77,9 +77,11 @@ ob_start();
     }
 
     .card-upper-image {
-      
-
         display: inline;
+    }
+    .card-upper-image img {
+        min-height: 130px;
+        min-width: 124px;
     }
 
     .card-upper-details {
@@ -123,7 +125,6 @@ ob_start();
     }
 
   
-
     input:focus {
         outline: none !important;
     }
@@ -171,6 +172,12 @@ justify-content: center;
     margin-bottom: 1rem;
 }
 
+.features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            row-gap: 1vh;
+            column-gap: 0.5vw;        
+        }
 
 
 
@@ -320,7 +327,7 @@ if(isset($_GET['search-btn']))
                             </div>
                            
                         </div>
-                        <div class="card-middle row" style="color:#919191 !important">
+                        <div class="card-middle row" style="color:#919191  !important">
                             <?php echo $row1['description']?>
                         </div>
                         <div class="card-below row">
@@ -359,10 +366,10 @@ else{
 
                     <div class="card col-lg-5 p-3" container>
                         <div class="card-upper row">
-                            <div class="card-upper-image col-3">
+                            <div class="card-upper-image col-4" style="min-height: 130px; min-width: 124px;">
                                 <img src="<?=$DEFAULT_PATH?>assets/images/fruit_salad.svg" alt="">
                             </div>
-                            <div class="card-upper-details col-9">
+                            <div class="card-upper-details col-8">
                                 <div class="row">
                                     <div
                                         style=" display: flex; justify-content: space-between; align-items: center;">
@@ -391,10 +398,25 @@ else{
                                         </span>/month
                                     </div>
                                     <div class="col-7"
-                                        style="font-size:13px;font-weight:bold;display:flex;align-items:center;justify-content:center;">
-                                        <?php $orgDate = $row['start_date']; $newDate = date("d/m/Y", strtotime($orgDate)); echo $newDate ?>
-                                        to
-                                        <?php $orgDate = $row['end_date']; $newDate = date("d/m/Y", strtotime($orgDate)); echo $newDate ?>
+                                    style="color: #000;
+                               font-family: NATS;
+                                font-size: 22px;
+                               font-style: normal;
+                               font-weight: 400;
+                               line-height:30.896px;; /* 140.434% */
+                       
+                               " 
+                                        >
+                                        <?php
+                                          $startDate = new DateTime($row["start_date"]);
+                                             $endDate = new DateTime($row["end_date"]);
+
+                                               $interval = $startDate->diff($endDate);
+                                              $months = ($interval->y * 12) + $interval->m;
+
+                                                   echo "$months Months";
+
+                                         ?>
                                     </div>
                                     <div class="w-100 d-flex flex-wrap gap-1"></div>
                                     <?php
@@ -414,7 +436,7 @@ else{
                            
 
                                 </div>
-                        <div class="card-middle row" style="color:#919191 !important">
+                        <div class="card-middle row" style="color:#919191; font-size:14px;line-height:1em;!important">
                             <?php echo $row['description']?>
                             </div>
                         <div class="card-below row">
@@ -422,16 +444,16 @@ else{
                                 <div class="row">FEATURES</div>
                                 
                                 <?php
+                                        echo '<div class="features-grid">';
                                             $mark=explode(',', $row['features']);
                                             foreach($mark as $out) {
-
-                                               
+                                                echo '<div>';  
                                                 echo '<div style="display:inline-block;width:auto;margin-right:5px; "><i style="color:black;" class="fa-regular fa-circle-check"></i></div>';
                                                 echo '<div style="display:inline-block;width:auto; margin-right:20px;">'.$out.'</div>';
-                                                
-                                            
+                                                echo '</div>';
                                             }
-                                            ?>
+                                        echo '</div>';    
+                                ?>
                                
                             </div>
                         </div>

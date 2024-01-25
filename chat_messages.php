@@ -2,7 +2,14 @@
 ob_start();
 
 include 'navbar.php';
+// require_once('constant/config.php');
+/* 
+$HOSTNAME = "localhost";
+$USERNAME = "root";
+$PASSWORD = "";
+$DBNAME = "shared_db_infits"; */
 
+// $conn = mysqli_connect($HOSTNAME, $USERNAME, $PASSWORD, $DBNAME);
 
 if (isset($_SESSION['dietitianuserID'])) {
     # database connection file
@@ -41,7 +48,8 @@ if (isset($_SESSION['dietitianuserID'])) {
     $chats = getChats($_SESSION['dietitian_id'], $chatWith['client_id'], $conn);
 
     opened($chatWith['client_id'], $conn, $chats);
-
+     
+    // if ($chat) {}
     ?>
 
     <!DOCTYPE html>
@@ -337,7 +345,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                                                     <?= $conversation['name'] ?><br>
                                                     <small>
                                                         <?php
-                                                        echo lastChat($_SESSION['dietitian_id'], $conversation['client_id'], $conn);
+                                                        echo lastChatPDO($_SESSION['dietitian_id'], $conversation['client_id'], $conn);
                                                         ?>
                                                     </small>
 
@@ -493,7 +501,18 @@ if (isset($_SESSION['dietitianuserID'])) {
                                         ?>
 
 
-                                    <?php } else { ?>
+                                    <?php } else {
+                                        /* $ttl = 'Message';
+                                        $body = 'You have new message from '.$_GET['user'];
+                                        $sql2="INSERT INTO notification (dieticianID, dietitianuserID, ttl, body) VALUES(:dieticianID, :dietitianuserID, :ttl, :body)";
+                                        $stmt = $conn->prepare($sql2);
+
+                                        $stmt->bindParam(':dieticianID', $_SESSION['dietitian_id'], PDO::PARAM_STR);
+                                        $stmt->bindParam(':dietitianuserID', $_SESSION['dietitianuserID'], PDO::PARAM_STR);
+                                        $stmt->bindParam(':ttl', $ttl, PDO::PARAM_STR);
+                                        $stmt->bindParam(':body', $body, PDO::PARAM_STR);
+                                        $stmt->execute(); */
+                                        // $result2=mysqli_query($conn, $sql2); ?>
                                         <?php if (substr($chat['message'], 0, 4) == "IMG-") { ?>
 
                                             <p class="ltext align-self-start">
@@ -505,7 +524,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                                                 </small>
                                             </p>
                                         <?php } else { ?>
-                                            <p class="ltext align-self-end">
+                                            <p class="ltext align-self-start">
                                                 <?= $chat['message'] ?>
                                                 <small class="d-block">
                                                     <?= last_time($chat['created_at']) ?>

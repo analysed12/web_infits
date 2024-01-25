@@ -1081,7 +1081,7 @@ $dietition = $_SESSION['name']; ?>
                 </div>
                 <div class="progress-bar-container">
                     <div class="total-consumed">
-                        <span>
+                        <span id="tc">
                             <?php echo ($calorieRemaining) ?> Liters
                         </span>
                         <p style="text-align: end;">Remaining</p>
@@ -1089,13 +1089,13 @@ $dietition = $_SESSION['name']; ?>
                     <div id="progress-percent" class="progress-circle">
                         <div class="progress-circle-fill">
                             <div class="progress-circle-value"><span id="progress-percent"><img
-                                        src="<?= $DEFAULT_PATH ?>assets/images/water_drop.svg" alt=""></span><span>
+                                        src="<?= $DEFAULT_PATH ?>assets/images/water_drop.svg" alt=""></span><span id="pp">
                                     <?php echo ($progressPercent) ?>%
                                 </span></div>
                         </div>
                     </div>
                     <div class="total-remaining">
-                        <span>
+                        <span id="tr">
                             <?php echo ((int) $calorieConsumed) ?> Liters
                         </span>
                         <p style="text-align: end;">Consumed</p>
@@ -1524,6 +1524,38 @@ $dietition = $_SESSION['name']; ?>
             },
         }
     });
+    </script>
+    <script>
+    const update_stat = () =>{
+        $.ajax({
+            type: 'POST',
+            url:"updating_stats.php",
+            data:{
+                updating:4,
+                client_id:<?=$clientId?>
+            },
+            success:function(response){
+                console.log("This is response : ",response);
+                document.getElementById("daily-count").innerHTML=(response['d']===null?0:response['d']);
+                document.getElementById("weekly-avg").innerHTML=(response['w']===null?0:response['w']);
+                document.getElementById("monthly-avg").innerHTML=(response['m']===null?0:response['m']);
+                document.getElementById("total").innerHTML=(response['t']===null?0:response['t']);
+                document.getElementById("tc").innerHTML=(response['tc']===null?0:response['tc'])+" Liters";
+                document.getElementById("tr").innerHTML=(response['tr']===null?0:response['tr'])+" Liters";
+                document.getElementById("pp").innerHTML=(response['pp']===null?0:response['pp'])+"%";
+                const progressPercent = document.getElementById('progress-percent');
+                progressPercent.style.setProperty("background",
+                    `conic-gradient(#63AEFF ${100-response['pp']}% , #B1D4Fa 0)`);
+            },
+            complete: function() {
+                setTimeout(update_stat, 5000); 
+            },
+            error: function(xhr, status, error) {
+                console.error('This is error:', error);
+            }
+        });
+    }
+    update_stat();
     </script>
 </body>
 
