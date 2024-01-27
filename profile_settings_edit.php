@@ -3,7 +3,7 @@
     require('constant/config.php');
 ?>
 <?php 
-    $sql  = "SELECT * FROM dietitian WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+    $sql  = "SELECT * FROM dietitian WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}' AND dietitian_id = '{$_SESSION['dietitian_id']}'";
     global $conn;
     $result = $conn->query($sql);
     $data = $result->fetch_assoc();
@@ -35,28 +35,31 @@
                     $imageFileName = preg_replace('/^\d{4}_/', '', $imageFileName);
                 }
 
-                $targetDir = "assets/uploads/profile/images/";
+                $targetDir = "uploads/profile/images/";
                 $randomNumber = mt_rand(1000, 9999);
                 $imageFileName = $randomNumber . '_' . $imageFileName;
                 $imgPath = $targetDir. $imageFileName;
                 move_uploaded_file($image, $imgPath); // for original images
                 $sql_=$sql_.", `p_p`='$imageFileName'";
                 
-            } 
+            }else{
+                $imageFileName = "";
+                $sql_=$sql_.", `p_p`='$imageFileName'";
+            }
             $sql_2 = ",`location`='$location',`age`='$age',`gender`='$gender',`experience`='$experience',`achievements`='$achievements' WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
             $sql_ = $sql_.$sql_2;
             $result = mysqli_query($conn, $sql_);
             if ($result){
                 $temp_name = $_SESSION['dietitianuserID'];
                 $_SESSION['dietitianuserID'] = $username;
-                $sql  = "SELECT * FROM dietitian WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+                // $_SESSION['dietitian_id'] = $data['dietitian_id'];
+                $sql  = "SELECT * FROM dietitian WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}' AND dietitian_id = '{$_SESSION['dietitian_id']}'";
                 $result = $conn->query($sql);
                 $data1 = $result->fetch_assoc();
                 // making sure that the user doesn't logout
                 $_SESSION['name'] = $data1['name'];
-                $_SESSION['dietitian_id'] = $data1['dietitian_id'];
                 // # updating the Session
-                
+
                 if ($temp_name!==$username){
                     $result1 = $conn->query("SHOW TABLES");
                     $tables = $result1->fetch_all();
@@ -73,10 +76,53 @@
                         if ($columnExistsResult->num_rows > 0) {
                             // The column exists in the current table
                             $updateStatement = "UPDATE $tableName SET dietitianuserID = '".$username."'WHERE dietitianuserID='".$temp_name."'";
-                            $conn->query($updateStatement);
+                            $result = $conn->query($updateStatement);
+                            // Check for errors
+                            if (!$result) {
+                                echo "Error: " . $conn->error;
+                            }
                         }
                     }
                 }
+                if($data1["referred_by"]!== null){
+                    $normalarray = array();
+                    $jsondata = json_decode($data1["referred_by"]);
+                    foreach ($jsondata as $key => $value) {
+                        $normalarray[] = $key;
+                        $normalarray[] = $value;
+                    }
+                    $updateStatement = "SELECT referral_users FROM dietitian WHERE dietitianuserID='{$normalarray[1]}' AND dietitian_id = '{$normalarray[0]}'";
+                    $result = mysqli_query($conn,$updateStatement);
+                    $data_ = mysqli_fetch_assoc($result);
+                    $jsondata = json_decode($data_['referral_users'],true);
+                    
+                    foreach($jsondata as $user_id => $user_name){
+                        if ($jsondata[$user_id] !== $temp_name){
+                            $jsondata[$user_id] = $username;
+                        }
+                    }
+                    $update_json = json_encode($jsondata);
+                    $updateStatement = "UPDATE dietitian SET referral_users ='{$update_json}' WHERE dietitianuserID='{$normalarray[1]}' AND dietitian_id = '{$normalarray[0]}'";
+                    $result = $conn->query($updateStatement);
+                    // Check for errors
+                    if (!$result) {
+                        echo "Error: " . $conn->error;
+                    }
+                }
+
+                if($data1["referral_users"]!== null){
+                    $prepare = json_encode(array("{$_SESSION['dietitian_id']}"=>"{$_SESSION['dietitianuserID']}"));
+                    $jsondata = json_decode($data1["referral_users"],true);
+                    foreach($jsondata as $id => $name){
+                        $updateStatement = "UPDATE dietitian SET referred_by = '$prepare' WHERE dietitianuserID='$name' AND dietitian_id = '$id' ";
+                        $result = $conn->query($updateStatement);
+                        // Check for errors
+                        if (!$result) {
+                            echo "Error: " . $conn->error;
+                        } 
+                    }
+                }
+
                 
                 // header("Location: profile_settings_show.php");
                 // exit;
@@ -90,8 +136,7 @@
         if(isset($_POST['save_socials'])){
             $socials = $_POST['socials'];
             $link = $_POST['link'];
-            // echo "<script>console.log('This is socials:$socials');</script>";
-            $sql_3 = "UPDATE dietitian SET $socials = '$link' WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+            $sql_3 = "UPDATE dietitian SET $socials = '$link' WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'  AND dietitian_id = '{$_SESSION['dietitian_id']}'";
             $result4 = $conn->query($sql_3);
             if ($result4){
                 echo "<script>console.log('Done!');</script>";
@@ -571,7 +616,7 @@
 
             <div class="middle" style="display:flex;flex-direction:column;gap:1rem">
                 <span style="display:flex;flex-direction:column">
-                    Username <input type="text" class="input_field" name = "username" placeholder="<?=$data['dietitianuserID']?>" value="<?=$data['dietitianuserID']?>" required> <!-- <?php //if($data['socialLogin']==1){echo "readonly";}else{echo "name='dietitianuserID'";} ?> -->
+                    Username <input type="text" class="input_field" name = "username" placeholder="<?=$data['dietitianuserID']?>" value="<?=$data['dietitianuserID']?>" required> 
                 </span>
 
                 <span style="display:flex;flex-direction:column">
@@ -597,13 +642,13 @@
                 </span>
                 <a href="#popup3" style="text-decoration:none;background:none;color:black">
                     <span style="display:flex;flex-direction:column">
-                        Acheivements and Certificates <input type="text" class="input_field" placeholder="XXXXX" name="achievements"  value="<?=$data['achievements']?>" required>
+                        Acheivements and Certificates <input type="text" class="input_field" placeholder="XXXXX" name="achievements"  value="<?=$data['achievements']?>" readonly required>
                     </span>
                 </a>
             </div>
             <div class="rightside" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2rem">
                 <div class="profiles" style="display:flex;flex-direction:column;position:relative; width:fit-content;">
-                    <img class="profile_image" src="<?php if ($data['p_p']!=='user-default.png'){echo $PROFILE_IMAGE.$data['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$data['p_p'];}?>" style="height: 150px; width: 150px; border-radius: 25px;z-index:-1;" alt="">
+                    <img class="profile_image" src="<?php if ($data['p_p']==='' || $data['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}else{echo 'uploads/profile/images/'.$data['p_p'];}?>" style="height: 150px; width: 150px; border-radius: 25px;z-index:-1;" alt="">
                     <a href="#popup2" class="edit" id="edit" style="border:3px solid white; background:#0177FD; border-radius:50%; width:38px;height:38px;position:absolute;right:15px;bottom:18px;text-decoration: none;display:flex;align-items:center;justify-content:center">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/Edit-Img.svg"></a>
 
@@ -652,10 +697,10 @@
         <div class="modal-img">
             <a class="img-close" href="#">&times;</a>
             <div class="d-flex pop">
-                <img class="profile_image" src="<?php if ($data['p_p']!=='user-default.png'){echo $PROFILE_IMAGE.$data['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$data['p_p'];}?>">
+                <img class="profile_image" src="<?php if ($data['p_p']==='' || $data['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}else{echo 'uploads/profile/images/'.$data['p_p'];}?>">
                 <div class="d-flex flex-column upload">
                     <button class="upload-btn" id="upload-btn" onclick="clickMe()">Upload New<img src="<?= $DEFAULT_PATH ?>assets/images/Edit-Profile.svg" class="up"> </button>
-                    <button class="upload-btn">Remove Picture<img src="<?= $DEFAULT_PATH ?>assets/images/del-Profile.svg" class="del"></button>
+                    <button class="upload-btn" id="remove-btn" onclick="removeit()">Remove Picture<img src="<?= $DEFAULT_PATH ?>assets/images/del-Profile.svg" class="del"></button>
                 </div>
             </div>
         </div>
@@ -707,6 +752,7 @@
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
         var span = document.getElementsByClassName("close")[0];
+        let imagePreview = Array.from(document.getElementsByClassName('profile_image'));
 
     //  this condition is because in the socialLogin the "eyeicon == null" 
     //  as it is null in the socialLogin it will not run the code below...
@@ -731,7 +777,6 @@
         
         function showImagePreview(event) {
             var input = event.target;
-            let imagePreview = Array.from(document.getElementsByClassName('profile_image'));
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
@@ -766,6 +811,11 @@
                 input.placeholder = `${obj[social]}`;
                 input.value = `${obj[social]}`;
             }
+        }
+        const removeit=()=>{
+            imagePreview.forEach((img,index)=>{
+                img.setAttribute('src', "<?=$DEFAULT_PATH.'assets/images/user-default.png'?>");
+            })
         }
         
         // this block is for show and hide of the popUp named "myModel"
