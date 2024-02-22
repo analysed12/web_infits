@@ -283,7 +283,7 @@ include "navbar.php";
 
             <div class="rightside" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2rem">
                 <div>
-                    <img src="<?php if ($user['p_p']!=='user-default.png'){echo $PROFILE_IMAGE.$user['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$user['p_p'];}?>" style="height: 150px; width: 150px; border-radius: 25px;" />
+                    <img src="<?php if ($user['p_p']!=='user-default.png'){echo 'uploads/profile/images/'.$user['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$user['p_p'];}?>" style="border-radius:25px;" />
                     <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding-top:1rem;">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/Star.svg" style="background:none">
                         <h3 style="font-size:25px;padding-top:0.5rem">4.8</h3>

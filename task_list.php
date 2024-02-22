@@ -86,8 +86,13 @@ if (isset($_POST['create-submit'])) {
     $to_time = $_POST['task-to-time'];
     $sql = "INSERT INTO `dietitian_tasks`(`dietitianuserID`, `title`, `description`, `date`, `start_time`, `end_time`) VALUES ('$dietition','$title','$description','$date','$from_time','$to_time')";
 
+    $date1 = date("j M Y", strtotime($date));
+    $from_time1 = date("h:i A", strtotime($from_time));
+
     $result = mysqli_query($conn, $sql);
     if ($result) {
+        $sql1 = "INSERT INTO notification (dieticianID, dietitianuserID, ttl, body) VALUES('".$_SESSION['dietitian_id']."', '$dietition', 'Reminder', 'You have a task ".$title." on ".$date1." at ".$from_time1.".')";
+        $result1 = mysqli_query($conn, $sql1);
         ?>
         <script>
             location.replace("task_list.php");

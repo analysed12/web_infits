@@ -36,7 +36,7 @@ if (isset($_SESSION['dietitianuserID'])) {
 date_default_timezone_set("Asia/Calcutta");
 $date = new DateTime();
 
-function fetchData($query)
+function fetchData1($query)
 {
     // echo $query;
     include('constant/config.php');
@@ -49,7 +49,7 @@ function fetchData($query)
     $conn->close();
     return ($data);
 }
-function fetchInformation($client_id)
+function fetchInformation1($client_id)
 {
     date_default_timezone_set("Asia/Calcutta");
     $date = new DateTime();
@@ -80,35 +80,35 @@ function fetchInformation($client_id)
         ),
     );
     $query = "SELECT steps FROM goals WHERE client_id = '$client_id'";
-    $value = fetchData($query);
+    $value = fetchData1($query);
     if (!empty($value)) {
         $data['steps']['goal'] = $value[0]['steps'];
     } else {
         $data['steps']['goal'] = 0;
     }
     $query = "SELECT water FROM goals WHERE client_id = '$client_id'";
-    $value = fetchData($query);
+    $value = fetchData1($query);
     if (!empty($value)) {
         $data['water']['goal'] = $value[0]['water'];
     } else {
         $data['water']['goal'] = 0;
     }
     $query = "SELECT sleep FROM goals WHERE client_id = '$client_id'";
-    $value = fetchData($query);
+    $value = fetchData1($query);
     if (!empty($value)) {
         $data['sleep']['goal'] = $value[0]['sleep'];
     } else {
         $data['sleep']['goal'] = 0;
     }
     $query = "SELECT weight FROM goals WHERE client_id = '$client_id'";
-    $value = fetchData($query);
+    $value = fetchData1($query);
     if (!empty($value)) {
         $data['weight']['goal'] = $value[0]['weight'];
     } else {
         $data['weight']['goal'] = 0;
     }
     $query = "SELECT calorie FROM goals WHERE client_id = '$client_id'";
-    $value = fetchData($query);
+    $value = fetchData1($query);
     if (!empty($value)) {
         $data['calorie']['goal'] = $value[0]['calorie'];
     } else {
@@ -116,7 +116,7 @@ function fetchInformation($client_id)
     }
 
     $query = "SELECT SUM(steps) FROM steptracker WHERE client_id= '$client_id' AND `dateandtime` >= '{$date->format('y-m-d')} 00:00:00' AND `dateandtime` <= '{$date->format('y-m-d')} 23:59:59'";
-    $value = fetchData($query);
+    $value = fetchData1($query);
     if ($value[0]['SUM(steps)'] != '') {
         $data['steps']['progress'] = $value[0]['SUM(steps)'];
     } else {
@@ -124,7 +124,7 @@ function fetchInformation($client_id)
     }
 
     $query = "SELECT avg(average) FROM heartrate WHERE client_id= '$client_id' AND `dateandtime` >= '{$date->format('y-m-d')} 00:00:00' AND `dateandtime` <= '{$date->format('y-m-d')} 23:59:59'";
-    $value = fetchData($query);
+    $value = fetchData1($query);
     if ($value[0]['avg(average)'] != '') {
         $data['heart']['progress'] = $value[0]['avg(average)'];
     } else {
@@ -132,7 +132,7 @@ function fetchInformation($client_id)
     }
 
     $query = "SELECT SUM(drinkConsumed) FROM watertracker WHERE client_id= '$client_id' AND  `dateandtime` = '{$date->format('y-m-d')}'";
-    $value = fetchData($query);
+    $value = fetchData1($query);
     if ($value[0]['SUM(drinkConsumed)'] != '') {
         $data['water']['progress'] = $value[0]['SUM(drinkConsumed)'];
     } else {
@@ -140,13 +140,13 @@ function fetchInformation($client_id)
     }
 
     $query = "SELECT SUM(hrsSlept) FROM sleeptracker WHERE client_id= '$client_id' AND `sleeptime` >= '{$date->format('y-m-d')} 00:00:00' AND `waketime` <= '{$date->format('y-m-d')} 23:59:59'";
-    $hours = fetchData($query)[0]['SUM(hrsSlept)'];
+    $hours = fetchData1($query)[0]['SUM(hrsSlept)'];
     $query = "SELECT SUM(minsSlept) FROM sleeptracker WHERE client_id= '$client_id' AND `sleeptime` >= '{$date->format('y-m-d')} 00:00:00' AND `waketime` <= '{$date->format('y-m-d')} 23:59:59'";
-    $mins = fetchData($query)[0]['SUM(minsSlept)'];
+    $mins = fetchData1($query)[0]['SUM(minsSlept)'];
     $data['sleep']['progress'] = (float) $hours + $mins / 60;
 
     $query = "SELECT avg(weight) FROM weighttracker WHERE client_id= '$client_id' AND `dateandtime` >= '{$date->format('y-m-d')} 00:00:00' AND `dateandtime` <= '{$date->format('y-m-d')} 23:59:59'";
-    $value = fetchData($query);
+    $value = fetchData1($query);
     if ($value[0]['avg(weight)'] != '') {
         $data['weight']['progress'] = $value[0]['avg(weight)'];
     } else {
@@ -154,7 +154,7 @@ function fetchInformation($client_id)
     }
 
     $query = "SELECT SUM(caloriesconsumed) FROM calorietracker WHERE client_id= '$client_id' AND `dateandtime` >= '{$date->format('y-m-d')} 00:00:00' AND `dateandtime` <= '{$date->format('y-m-d')} 23:59:59'";
-    $value = fetchData($query);
+    $value = fetchData1($query);
     if ($value[0]['SUM(caloriesconsumed)'] != '') {
         $data['calorie']['progress'] = $value[0]['SUM(caloriesconsumed)'];
     } else {
@@ -300,6 +300,7 @@ function fetchInformation($client_id)
             overflow-x: auto;
             scrollbar-width: thin;
             scrollbar-color: #7282FB;
+            flex-direction: column;
         }
         .events-container::-webkit-scrollbar {
             Width: 8px;
@@ -453,20 +454,20 @@ function fetchInformation($client_id)
         }
 
         .container4_wrapper2 {
-            display: flex;
-            background-color: #FDFDFD;
-            width: fit-content;
-            padding: 0.7rem;
-            padding-left: 1rem;
-            padding-right: 0rem;
-            margin-top: 1rem;
-            justify-content: space-between;
-            width: 95%;
-            margin-left: -4px;
-            border-radius: 9.221px;
-            border: 0.922px solid #F4F4F4;
+        display: flex;
+        background-color: #FDFDFD;
+        border: 1px solid #e4e1e1;
+        width: fit-content;
+        padding: 0.7rem;
+        padding-left: 1rem;
+        padding-right: 1.5rem;
+        border-radius: 0.5rem;
+        margin-top: 1rem;
+        justify-content: space-between;
+        width: 95%;
+        margin-left: -4px;
 
-        }
+    }
 
         .values {
             margin-top: 2rem;
@@ -1055,19 +1056,20 @@ function fetchInformation($client_id)
         <?php
             $today = new DateTime();
             $query = "SELECT * FROM `create_event` WHERE dietitianuserID = '{$dietitian_id}' AND start_date > '{$today->format('Y-m-d')} 00:00:00' ORDER BY start_date;";
-            $up_event = fetchData($query);
+            $up_event = fetchData1($query);
             ?>
 
-            <?php
+             
+                
+            <div class="dashboard_container2">
+                <?php
             if (!empty($up_event)) {
                 $EC = count($up_event);
                 $color = 0;
                 for ($i = 0; $i < $EC; $i++) {
                     $time = new DateTime($up_event[$i]['start_date']);
                     
-            ?>  
-                
-            <div class="dashboard_container2">
+            ?> 
                 <div class="container2_wrapper box<?php echo ($color) ?>">
                     <div class="container2_upper">
                         <span>      
@@ -1112,7 +1114,7 @@ function fetchInformation($client_id)
         </div>
         <?php
         $query = "SELECT `client_id`,`name` FROM `addclient` WHERE dietitianuserID = '$dietitian_id' AND status = 1;";
-        $data = fetchData($query);
+        $data = fetchData1($query);
         ?>
         <div class="dashboard_container4">
             <div class="container4_wrapper1">
@@ -1126,9 +1128,15 @@ function fetchInformation($client_id)
                     <div class="symbols col-2"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-5.svg" style="width:1.8rem"><span>Calories</span></div>
                 </div>
             </div>
-            <div id="placeholder" style="padding-left:20px;"></div>
-            
-        </div>
+              
+            <div id="placeholder" style="padding-left:20px;"></div> 
+            </div>
+            <?php
+            //     }
+            // }
+            ?>
+        <!-- </div> -->
+        <!-- </div> -->
 
 
 
@@ -1144,7 +1152,7 @@ function fetchInformation($client_id)
                     $lim = count($data);
                 }
                 for ($i = 0; $i < $lim; $i++) {
-                    $infom = fetchInformation($data[$i]['client_id']);
+                    $infom = fetchInformation1($data[$i]['client_id']);
             ?>
                     <div class="mobileview_clientprogress">
 
@@ -1705,7 +1713,7 @@ function fetchInformation($client_id)
         }
         update_stat();
         </script>
-</body>
+    </div></body>
 
 </body>
 

@@ -963,7 +963,7 @@ require "constant/config.php";
             eyeicon.src = "<?=$DEFAULT_PATH?>assets/images/eye-open.png";
         } else {
             password.type = "password";
-            eyeicon.src = " ";
+            eyeicon.src = "<?=$DEFAULT_PATH?>assets/images/eye.svg";
         }
     }
     </script>

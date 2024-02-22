@@ -87,7 +87,7 @@ body{
 
 .content .created-client-form-container .client-card-container .client-cards {
     height: 190px;
-    width: 186px;
+    width: 250px;
     position: relative;
     display: flex;
     flex-direction: column;

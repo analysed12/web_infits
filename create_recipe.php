@@ -1,4 +1,5 @@
 <?php
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -7,9 +8,10 @@ require('constant/config.php');
 if (isset($_POST['add'])) {
     global $conn;
     if (!empty($_FILES['recipeImage']['name'])) {
-        $uploadsDir = 'assets/uploads/recipe/';
+        $uploadsDir = 'uploads/recipe/';
         $uploadedFile = $_FILES['recipeImage']['tmp_name'];
         $originalName = $_FILES['recipeImage']['name'];
+        $recipe_name = $_POST['recipe_name'];
 
         // Generate a random number and append it to the image filename
         $randomNumber = rand(100000, 999999);
@@ -21,11 +23,9 @@ if (isset($_POST['add'])) {
         move_uploaded_file($uploadedFile, $imagePath);
     }
     $query = "INSERT INTO `dietitian_recipes`( `dietitian_id`, `dietitianuserID`, `recipe_name`, `recipe_ingredients`, `recipe_recipe`, `recipe_nutritional_information`,`recipe_img`,`recipe_courses`,`recipe_category`,`recipe_time`) VALUES
-         ('{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','{$_POST['recipeName']}','{$_POST['recipeingredients']}','{$_POST['recipeDirections']}','{$_POST['nutriDetails']}','{$imageName}','{$_POST['recipeCourse']}','{$_POST['recipeCategory']}','{$_POST['recipeTime']}')";
+         ('{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','{$_POST['recipe_name']}','{$_POST['recipeingredients']}','{$_POST['recipeDirections']}','{$_POST['nutriDetails']}','{$imageName}','{$_POST['recipeCourse']}','{$_POST['recipeCategory']}','{$_POST['recipeTime']}')";
     $conn->query($query);
     header("Location:all_recipes.php");
-    print_r($_POST);
-    echo "$query";
     exit;
 } elseif (isset($_POST['edit'])) {
     global $conn;
@@ -45,7 +45,7 @@ if (isset($_POST['add'])) {
         if (!empty($imagePath && $imageName)) {
             move_uploaded_file($uploadedFile, $imagePath);
         }
-        $query1 = "INSERT INTO `dietitian_recipes`( `dietitian_id`, `dietitianuserID`, `recipe_name`, `recipe_ingredients`, `recipe_recipe`, `recipe_nutritional_information`,`recipe_img`,`recipe_courses`, `recipe_category`,`recipe_time`) VALUES ('{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','{$_POST['recipeName']}','{$_POST['recipeingredients']}','{$_POST['recipeDirections']}','{$_POST['nutriDetails']}','{$imageName}','{$_POST['recipeCourse']}','{$_POST['recipeCategory']}','{$_POST['recipeTime']}')";
+        $query1 = "INSERT INTO `dietitian_recipes`( `dietitian_id`, `dietitianuserID`, `recipe_name`, `recipe_ingredients`, `recipe_recipe`, `recipe_nutritional_information`,`recipe_img`,`recipe_courses`, `recipe_category`,`recipe_time`) VALUES ('{$_SESSION['dietitian_id']}','{$_SESSION['dietitianuserID']}','{$_POST['recipe_name']}','{$_POST['recipeingredients']}','{$_POST['recipeDirections']}','{$_POST['nutriDetails']}','{$imageName}','{$_POST['recipeCourse']}','{$_POST['recipeCategory']}','{$_POST['recipeTime']}')";
         $reuslt = $conn->query($query1);
         $query = "INSERT INTO `updated_by_users`(`dietitian_id`, `updated_drecipe_id`) VALUES ('{$_SESSION['dietitian_id']}','{$_GET['recipe_id']}')";
         $conn->query($query);
@@ -56,14 +56,13 @@ if (isset($_POST['add'])) {
                 $conn->query($query);
             }
         }
-        $query = "UPDATE `dietitian_recipes` SET `recipe_name`='{$_POST['recipeName']}',`recipe_ingredients`='{$_POST['recipeingredients']}',`recipe_recipe`='{$_POST['recipeDirections']}',`recipe_nutritional_information`='{$_POST['nutriDetails']}',`recipe_courses`='{$_POST['recipeCourse']}',`recipe_category`='{$_POST['recipeCategory']}',`recipe_time`='{$_POST['recipeTime']}' WHERE recipe_id = '{$_GET['recipe_id']}' AND dietitian_id='{$_SESSION['dietitian_id']}'";
+        $query = "UPDATE `dietitian_recipes` SET `recipe_name`='{$_POST['recipe_name']}',`recipe_ingredients`='{$_POST['recipeingredients']}',`recipe_recipe`='{$_POST['recipeDirections']}',`recipe_nutritional_information`='{$_POST['nutriDetails']}',`recipe_courses`='{$_POST['recipeCourse']}',`recipe_category`='{$_POST['recipeCategory']}',`recipe_time`='{$_POST['recipeTime']}' WHERE recipe_id = '{$_GET['recipe_id']}' AND dietitian_id='{$_SESSION['dietitian_id']}'";
         $conn->query($query);
     }
     header("Location:all_recipes.php");
     exit;
 }
 include('navbar.php');
-
 
 ?>
 
@@ -534,11 +533,11 @@ include('navbar.php');
                                                                                                         } ?></button>
                 </div>
             </div>
-            <div class="ctop">
+            <div class="ctop"><!--//////////-->
                 <div class="left uploadImg">
                     <?php if ($action == 'editRecipe') {
                         if ($edit['img'] != "") {
-                            $imgSrc = $DEFAULT_PATH . "assets/uploads/recipe/" . $edit['img'];
+                            $imgSrc = $DEFAULT_PATH . "uploads/recipe/" . $edit['img'];
                         } else {
                             $imgSrc = $DEFAULT_PATH . "assets/images/alooparantha.svg";
                         }
@@ -553,12 +552,7 @@ include('navbar.php');
                 </div>
 
                 <div class="right">
-                    <input data-name="recipeName" required class="form-control" style="border:none;font-size:30px"
-                        type="text"
-                        value="<?php if ($action == 'editRecipe') {
-                                                                                                                                            echo $edit['name'];
-                                                                                                                                        } ?>"
-                        name="recipeName" id="" placeholder="Recipe Name">
+                    <input class="form-control input_bar" type="text" style="border:none;font-size:30px" required class="form-control" placeholder="Recipe Name" value="<?php if ($action == 'editRecipe') { echo $edit['name']; } ?>">
                     <span style="font-size:20px;margin-left:22px">(auto sync)</span>
                 </div>
             </div>
@@ -573,11 +567,8 @@ include('navbar.php');
                         <div class="d-flex align-items-center justify-content-center flex-column gap-3">
                             <div class="row w-100">
                                 <div class="col">
-                                    <input class="form-control input_bar" type="text" required class="form-control"
-                                        placeholder="Recipe Name"
-                                        value="<?php if ($action == 'editRecipe') {
-                                                                                                                                                            echo $edit['name'];
-                                                                                                                                                        } ?>">
+                                    <!--Name problem location-->
+                                    <input data-name="recipe_name" required class="form-control" type="text" value="<?php if ($action == 'editRecipe') { echo $edit['name']; } ?>" name="recipe_name" id="" placeholder="Recipe Name">
                                 </div>
                                 <div class="col dropdown-container">
                                     <select data-validate name="courses" id="recipeCourse"
@@ -895,12 +886,13 @@ include('navbar.php');
 
     <script>
     function validateForm() {
-        const recipeName = document.querySelector('[data-name="recipeName"]');
+        const recipe_name = document.querySelector('[data-name="recipe_name"]');
+        console.log("Recipe Name:", recipe_name.value);
         const recipePrepTime = document.querySelector('[data-name="recipePrepTime"]');
         const recipeCourse = document.querySelector('#recipeCourse');
         const recipeCategory = document.querySelector('#recipeCategory');
 
-        if (recipeName.value.trim() === "") {
+        if (recipe_name.value.trim() === "") {
             alert("Please fill out the Recipe Name.");
             return false;
         }
@@ -1166,7 +1158,7 @@ include('navbar.php');
         const actionInput = document.getElementById('action');
         const allIngredient = document.querySelectorAll('[data-ingredient-name]');
         const recipeDetails = document.querySelectorAll('[data-name]');
-        const recipeName = document.querySelector('[data-name="recipeName"]');
+        const recipe_name = document.querySelector('[data-name="recipe_name"]');
         const recipeTime = document.querySelector('[data-name="recipePrepTime"]');
         const recipeCourse = document.querySelector('#recipeCourse');
         const recipeCategory = document.querySelector('#recipeCategory');
@@ -1215,7 +1207,7 @@ include('navbar.php');
         } else if (actionInput.value === "editRecipe") {
             form.append(`<input type="hidden" name="edit" value="true">`);
         }
-        form.append(`<input type="hidden" name="recipeName" value="${recipeName.value}">`);
+        form.append(`<input type="hidden" name="recipe_name" value="${recipe_name.value}">`);
         form.append(`<input type="hidden" name="recipeCourse" value="${recipeCourse.value}">`);
         form.append(`<input type="hidden" name="recipeCategory" value="${recipeCategory.value}">`);
         form.append(`<input type="hidden" name="recipeTime" value="${recipeTime.value}">`);

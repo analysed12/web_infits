@@ -3,7 +3,6 @@ require('constant/config.php');
 $client_array = array();
 if (isset($_POST['clientList'])) {
     $client_array = json_decode($_POST['clientList']);
-
 }
 if (!isset($_SESSION)) {
     session_start();
@@ -111,7 +110,6 @@ if (isset($_POST['create_goal'])) {
                 $query = "INSERT INTO `goals`(`dietitian_id`, `client_id`, `heart`) VALUES ('{$dietitian_id}',{$c_id},'{$heart}')";
                 $result = $conn->query($query) or die("Query Failed");
             }
-       
         }
     }
 
@@ -282,7 +280,8 @@ if (mysqli_num_rows($result) > 0) {
         $map = explode(',', $row['GROUP_CONCAT(client_id)']);
     }
 }
-function getClientName($ID, $conn, $dietitian_id){
+function getClientName($ID, $conn, $dietitian_id)
+{
     $query = "SELECT name FROM `addclient` WHERE client_id = {$ID} AND dietitian_id = '{$dietitian_id}'";
     $name = mysqli_query($conn, $query);
     while ($row = mysqli_fetch_assoc($name)) {
@@ -294,6 +293,7 @@ function getClientName($ID, $conn, $dietitian_id){
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -306,20 +306,23 @@ function getClientName($ID, $conn, $dietitian_id){
             /* overflow-x: hidden; */
             font-family: 'NATS', sans-serif;
         }
+
         .setgoals {
             margin-top: 2rem;
-            /* margin-left: 14rem; */
+            margin-left: 14rem;
 
         }
 
         .setgoals p {
             margin-left: 41px;
         }
+
         .generalgoals {
             display: flex;
             gap: 2rem;
             margin-left: 75px;
         }
+
         .tooltip-text {
             visibility: hidden;
             position: absolute;
@@ -336,6 +339,7 @@ function getClientName($ID, $conn, $dietitian_id){
         .hover-text:hover .tooltip-text {
             visibility: visible;
         }
+
         #right {
             top: -8px;
             left: 120%;
@@ -348,6 +352,7 @@ function getClientName($ID, $conn, $dietitian_id){
             font-family: 'NATS', sans-serif;
             text-align: center;
         }
+
         .setgoals_contaner1 {
             margin-left: 76px;
             padding-bottom: 2rem;
@@ -356,6 +361,7 @@ function getClientName($ID, $conn, $dietitian_id){
             flex-direction: column;
             gap: 3rem;
         }
+
         .setgoals_button {
             color: white;
             height: 8rem;
@@ -364,28 +370,36 @@ function getClientName($ID, $conn, $dietitian_id){
             border: 1.31579px solid #FF6666;
             box-shadow: 0px 1.81819px 13.6364px rgba(0, 0, 0, 0.25);
             border-radius: 19.7368px;
+
+
         }
-       #button3 {
+
+        #button3 {
             background: linear-gradient(217.35deg, #F97EAA 0%, #C389D5 100%) !important;
             border: 1.31579px solid #E266A9 !important;
 
         }
+
         #button5 {
             background: linear-gradient(212.32deg, #633FDD 0%, #AB83F0 93.37%) !important;
             border: 1.31578px solid #7D5DE6 !important;
         }
+
         #button7 {
             background: linear-gradient(38.98deg, #768B93 7.65%, #8FC4C3 87.93%) !important;
             border: 1.31578px solid #267E7B !important;
         }
+
         #button9 {
             background: linear-gradient(216.13deg, #5CA7F8 9.2%, #ABB3F0 91.57%) !important;
             border: 1.31579px solid #3A97FF !important;
         }
+
         #button11 {
             background: linear-gradient(37.35deg, #E2809B 0%, #EBD3C8 100%) !important;
             border: 1.31578px solid #E3738D !important;
         }
+
         .setgoals_popup2 {
             width: 330px;
             height: 360px;
@@ -399,54 +413,43 @@ function getClientName($ID, $conn, $dietitian_id){
             background-repeat: no-repeat;
             background-attachment: scroll;
             background-position: bottom right;
+
+
+
+
         }
-        .nutri{
-    display: flex !important;
-    gap: 2px;
-    flex-direction: row !important;
-    margin-left:-50px;
-  }
-  .nutri1{
-    display: flex !important;
-    gap: 2px;
-    flex-direction: row !important;
-    margin-left:-50px;
-    margin-top: -5px;
-  } 
-  .item1{
-    margin: 10px;
-    width: 120px !important;
-  }
-  .item2{
-    margin: 10px;
-    width: 120px !important;
-  }
+
         .block1 {
             display: flex;
             gap: 5rem;
             justify-content: space-around;
         }
+
         .block2 {
             display: flex;
             gap: 5rem;
             justify-content: space-around;
         }
+
         .firstbutton {
             display: flex;
             /* text-align: right; */
         }
+
         #close {
             color: #100e0e;
             float: right;
             font-size: 35px;
             font-weight: bold;
         }
+
         #close2 {
             color: #90AEF4;
             font-size: 1.2rem;
             margin-left: 1.5rem;
         }
-       #close2:hover,
+
+        #close2:hover,
         #close2:focus {
 
             cursor: pointer;
@@ -458,6 +461,7 @@ function getClientName($ID, $conn, $dietitian_id){
             text-decoration: none;
             cursor: pointer;
         }
+
         #label1 {
             margin-left: 2.5rem;
             width: 184px;
@@ -470,6 +474,7 @@ function getClientName($ID, $conn, $dietitian_id){
             padding: 0.5rem;
             text-align: center;
         }
+
         .setbutton {
             width: 124px;
             height: 45px;
@@ -481,33 +486,43 @@ function getClientName($ID, $conn, $dietitian_id){
             margin-left: 4rem;
             margin-top: 0.5rem;
             box-sizing: border-box;
+            /* align-items: end; */
+            /* text-align: right; */
         }
+
         #button4 {
             background: linear-gradient(264.28deg, #D483C6 1.62%, #F37FAF 93.12%) !important;
 
         }
+
         #button6 {
             background: linear-gradient(263.28deg, #AB84F0 0%, #9FB0F2 0.01%, #633FDD 93.31%) !important;
         }
+
         #button8 {
             background: linear-gradient(263.28deg, #8EC2C1 0%, #8CBFBE 0.01%, #788F97 93.31%) !important;
         }
+
         #button10 {
             background: linear-gradient(263.28deg, #FA8686 0%, #9FB0F2 0.01%, #5CA7F8 93.31%) !important;
         }
+
         #button12 {
             background: linear-gradient(263.28deg, #E69BAF 0%, #E69EB0 0.01%, #E07498 93.31%) !important;
         }
+
         .container1_wrapper1 {
             display: flex;
             gap: 5rem;
             flex-wrap: wrap;
         }
+
         .container1_wrapper2 {
             display: flex;
             gap: 5rem;
             margin-top: 2rem;
         }
+
         .leftside_wrapper1 {
             width: 620px;
             height: 118px;
@@ -520,10 +535,12 @@ function getClientName($ID, $conn, $dietitian_id){
             background-attachment: scroll;
             background-position: bottom right;
         }
+
         #image1 {
             margin-top: 2.2rem;
             margin-left: 2rem;
         }
+
         .leftside_wrapper1 {
             display: flex;
             gap: 2rem;
@@ -531,6 +548,7 @@ function getClientName($ID, $conn, $dietitian_id){
             font-size: 1.2rem;
 
         }
+
         #label2 {
             background: #FFFFFF;
             border: 1px solid #DFDFDF;
@@ -544,6 +562,7 @@ function getClientName($ID, $conn, $dietitian_id){
             width: 150px;
 
         }
+
         #label3 {
             background: #FFFFFF;
             border: 1px solid #DFDFDF;
@@ -558,6 +577,7 @@ function getClientName($ID, $conn, $dietitian_id){
             text-align: center;
 
         }
+
         .userimage {
             border-radius: 15px;
             border: none;
@@ -566,6 +586,7 @@ function getClientName($ID, $conn, $dietitian_id){
             margin-top: 2.5rem;
 
         }
+
         .userimage2 {
             box-shadow: 0px 1.7079px 4.26974px rgba(0, 0, 0, 0.25);
             border-radius: 8.53948px;
@@ -575,6 +596,7 @@ function getClientName($ID, $conn, $dietitian_id){
             height: 45px;
 
         }
+
         .userimage3 {
             border-radius: 15px;
             border: none;
@@ -583,6 +605,7 @@ function getClientName($ID, $conn, $dietitian_id){
             margin-top: 1rem;
 
         }
+
         .pastreminders_leftside {
             display: flex;
             flex-direction: column;
@@ -594,6 +617,7 @@ function getClientName($ID, $conn, $dietitian_id){
             display: flex;
             gap: 5%;
         }
+
         .rightside_wrapper1 {
             width: 347px;
             min-height: 80vh;
@@ -610,6 +634,7 @@ function getClientName($ID, $conn, $dietitian_id){
 
 
         }
+
         @keyframes slidein {
             from {
                 margin-left: 100%;
@@ -625,18 +650,23 @@ function getClientName($ID, $conn, $dietitian_id){
         #rightside_wrapper1 {
             display: none;
         }
+
         #rightside_wrapper2 {
             display: none;
         }
+
         #rightside_wrapper3 {
             display: none;
         }
+
         #rightside_wrapper4 {
             display: none;
         }
+
         #rightside_wrapper5 {
             display: none;
         }
+
         #rightside_wrapper6 {
             display: none;
         }
@@ -652,6 +682,7 @@ function getClientName($ID, $conn, $dietitian_id){
             padding: 0.4rem;
             font-size: 1.4rem;
         }
+
         .bluetext {
             color: #90AEF4;
             font-size: 1.2rem;
@@ -664,23 +695,27 @@ function getClientName($ID, $conn, $dietitian_id){
             background: #EFF4FF;
             border-radius: 8px;
         }
+
         #clientscheck {
             border: 1.84977px solid #7282FB;
             border-radius: 7.3991px;
             color: #7282FB;
             margin-left: 1rem;
         }
+
         #checklabel {
             font-size: 1.3rem;
             color: #7282FB;
             font-weight: 400;
             margin-left: 1rem;
         }
+
         .checkbox {
             overflow-y: scroll;
             margin-top: 1rem;
             padding-bottom: 1rem;
         }
+
         #vector1 {
             position: absolute;
             left: 515px;
@@ -688,9 +723,11 @@ function getClientName($ID, $conn, $dietitian_id){
             background: linear-gradient(180.84deg, #F3F3FF 45.23%, rgba(243, 243, 255, 0.29) 96.71%, #F2F2FF 96.71%);
             transform: rotate(-121.89deg);
         }
+
         .mobview_pastgoals {
             display: none;
         }
+
         .mobview_wrapper1 {
             width: auto;
             height: 300px;
@@ -707,103 +744,106 @@ function getClientName($ID, $conn, $dietitian_id){
 
 
 
-        @media screen and (min-width:300px) and (max-width: 720px) {
+        @media screen and (max-width: 720px) {
+            .setgoals {
+                margin-left: 1rem;
+            }
 
-.setgoals_contaner1{
- margin-left: 50px !important;
- display: flex;
- flex-direction: column;
-}
-.leftside_wrapper1{
- height: 200px !important;
-}
- .tooltip-text{
-     width: auto;
- }
- .container1_wrapper1{
-     display: flex;
-     flex-direction: column;
- }
- .leftside_wrapper1{
-     width: auto !important;
-     height: 500px !important;
- }
-   .setgoals_popup2{
-     left: 25px;
-     top: 307.5px;
-     position: absolute;
-     background-image: none;
-     background: #FFFFFF;
-   }
-   .pastreminders_leftside{
-     display: none;
-   }
-   .pastreminders{
-     display: flex;
-     flex-direction: column;
-     gap: 1rem;
-   }
-   .mobview_pastgoals{
-     display: flex;
-     flex-direction: column;
-     gap: 2rem;
-     margin: 0 10px;
-   }
-   .rightside_wrapper1{
-     display: flex;
-   margin-left:2rem;
-   width:auto
-   }
-   .pastreminders_rightside{
-     left: 35px;
-     top: 307.5px;
+            .tooltip-text {
+                width: auto;
+            }
 
-   }
-   #mobside_wrapper1{
-     display: none;
-   }
-   #mobside_wrapper2{
-     display: none;
-   }
-   #mobside_wrapper3{
-     display: none;
-   }
-   #mobside_wrapper4{
-     display: none;
-   }
-   #mobside_wrapper5{
-     display: none;
-   }
-   #mobside_wrapper6{
-     display: none;
-   }
-  
-   .container1_wrapper2 {
-     justify-content: space-around;
-     margin-left: 15px;
-   }
+            .container1_wrapper1 {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
 
-}
-@media screen and (min-width:720px) and (max-width: 2000px) {
- .setgoals{
-     margin-left:15rem;
- }
-}
-@media screen and (min-width:720px) and (max-width: 1004px) {
- .firstbutton{
-     margin-left: 70px;
- }
-}
-  
-  </style>
+            .setgoals_contaner1 {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                margin-left: 1rem;
+            }
+
+            .setgoals_popup2 {
+                left: 25px;
+                top: 307.5px;
+                position: absolute;
+                background-image: none;
+                background: #FFFFFF;
+            }
+
+            .pastreminders_leftside {
+                display: none;
+            }
+
+            .pastreminders {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .mobview_pastgoals {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+                margin: 0 10px;
+            }
+
+            .rightside_wrapper1 {
+                display: flex;
+                margin-left: 2rem;
+                width: auto
+            }
+
+            .pastreminders_rightside {
+                left: 35px;
+                top: 307.5px;
+
+            }
+
+            #mobside_wrapper1 {
+                display: none;
+            }
+
+            #mobside_wrapper2 {
+                display: none;
+            }
+
+            #mobside_wrapper3 {
+                display: none;
+            }
+
+            #mobside_wrapper4 {
+                display: none;
+            }
+
+            #mobside_wrapper5 {
+                display: none;
+            }
+
+            #mobside_wrapper6 {
+                display: none;
+            }
+
+            .container1_wrapper2 {
+                justify-content: space-around;
+            }
+
+        }
+    </style>
 </head>
+
 <body>
 
     <div class="setgoals">
         <p style="font-size:40px; font-weight:400">Set Goals For Clients </p>
-        <div class="generalgoals"> <div style="font-size:1.5rem; font-weight:400;">General Goals</div>
+        <div class="generalgoals">
+            <div style="font-size:1.5rem; font-weight:400;">General Goals</div>
             <div class="hover-text" style="margin-top:0.3rem"><span class="material-symbols-outlined" style="color:#9C74F5">error</span>
-                <span class="tooltip-text" id="right">Set default daily fitness for all the clients from here!</span> </div>
+                <span class="tooltip-text" id="right">Set default daily fitness for all the clients from here!</span>
+            </div>
         </div>
 
         <div class="setgoals_contaner1">
@@ -827,11 +867,9 @@ function getClientName($ID, $conn, $dietitian_id){
                                 <input name="create_goal_steps" id="label1" class="label1" min="0" type="number" placeholder="0000 Steps">
                                 <input name="create_goal" hidden>
                                 <input hidden name="clientList" value='<?= $_POST['clientList'] ?>'>
-                            </form>
-                            </div>
+                        </div>
 
 
-                            
                     </div>
 
                     <div class="firstbutton">
@@ -934,33 +972,35 @@ function getClientName($ID, $conn, $dietitian_id){
                         <span style=" margin-top:1rem;margin-left:0.5rem ;font-size:1.4rem">Calories</span>
                     </button>
 
-                    <div class="setgoals_popup2" id="setgoals6">
-                            <div style="justify-content: space-between; display: flex; margin-top: 0.5rem">
-                                <span style="font-size: 1.4rem; font-weight: 400; margin-top: 0.5rem">Nutrient Goal</span>
-                                <span class="close6 close_button" id="close">&times;</span>
-                            </div>
-                            <span style="color: #E48FA7">Daily Nutrient Counts</span> <br>
-                            <img src="<?=$DEFAULT_PATH?>assets/images/Caloriegoal.svg" style="margin-left: 3rem; height: 130px !important;" ><br>
-                            <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" >
-                            <div class="nutri">   
-                            <label for="carbs"></label> 
-                                <input name="carbs" class="item1" id="label1" min="0" type="number" placeholder="0000 Carbs" required>
+                    <div class="setgoals_popup2" id="setgoals6" >
+                        <div style="justify-content: space-between; display: flex; margin-top: 0.5rem">
+                            <span style="font-size: 1.4rem; font-weight: 400; margin-top: 0.5rem">Nutrient Goal</span>
+                            <span class="close6 close close_button" id="close">&times;</span>
+                        </div>
+                        <span style="color: #E48FA7">Daily Nutrient Counts</span> <br>
+                        <img src="<?= $DEFAULT_PATH ?>assets/images/Caloriegoal.svg" style="margin-left: 3rem"><br>
+                        <label for="carbs"></label>
+                        <input name="carbs" id="label1" class="label1" min="0" type="number" placeholder="0000 Carbs">
 
-                                <label for="fats"></label>
-                                <input name="fats" class="item2" id="label1" min="0" type="number" placeholder="0000 Fats" required>
-                            </div>
-                            <div class="nutri1">
-                                <label for="fiber"></label>
-                                <input name="fiber" class="item1" id="label1" min="0" type="number" placeholder="0000 Fiber" required>
+                        <label for="fats"></label>
+                        <input name="fats" id="label1" class="label1" min="0" type="number" placeholder="0000 Fats">
 
-                                <label for="protein"></label>
-                                <input name="protein" class="item2" id="label1" min="0" type="number" placeholder="0000 Protein" required>
+                        <label for="fiber"></label>
+                        <input name="fiber" id="label1" class="label1" min="0" type="number" placeholder="0000 Fiber">
 
-                                <input name="create_goal" hidden>
-                            </div>
-                        
-                            </form>
-                        </div> 
+                        <label for="protein"></label>
+                        <input name="protein" id="label1" class="label1" min="0" type="number" placeholder="0000 Protein">
+
+                        <input name="create_goal" hidden>
+
+                        <script>
+                            /* document.getElementById('nutrientForm').addEventListener('input', function() {
+
+                                var allFilled = [...this.elements].every(e => e.value.trim() !== "");
+                                document.getElementById('button12').disabled = !allFilled;
+                            }); */
+                        </script>
+                    </div>
 
 
                 </div>
@@ -1177,33 +1217,45 @@ function getClientName($ID, $conn, $dietitian_id){
                         }
 
 
-                ?>  <div class="leftside_wrapper1" style="height:238px !important;margin-bottom:50px;">
-                <div><img src="<?=$DEFAULT_PATH?>assets/images/Frame-5.svg" id="image1" style="margin-top:5rem ;"></div>
-                <div style="display:flex;flex-direction:column; margin-top:5rem">
-                    <span style="color:#E39F9A">Calorie Goal</span>
-                    <span style="color:#FF8B8B"></span>
-                </div>
-                <div style="display:flex;flex-direction:column; margin-top:1.2rem ;font-size:1.2rem; font-weight:400;margin-left:0.7rem">
-                    <span >Carbs Count</span>
-                    <input value="<?php echo($row['carbs']) ?>" name="past_goal_calorie<?php echo($i) ?>" id="label2" min="0" type="number" placeholder="0000 Kcal">
-                </div>
-                <div style="display:flex;flex-direction:column; margin-top:1.2rem ;font-size:1.2rem; font-weight:400;margin-left:0.7rem">
-                    <span >Fats Count</span>
-                    <input value="<?php echo($row['fats']) ?>" name="past_goal_calorie<?php echo($i) ?>" id="label2" min="0" type="number" placeholder="0000 Kcal">
-                </div>
-                <div style="display:flex;flex-direction:column; margin-top:120px ;font-size:1.2rem; font-weight:400;margin-left:-180px;">
-                    <span style="display:flex;f;ex-direction:row">Fiber Count</span>
-                    <input value="<?php echo($row['fiber']) ?>" name="past_goal_calorie<?php echo($i) ?>" id="label2" min="0" type="number" placeholder="0000 Kcal" >
-                </div>
-                    <div style="display:flex;flex-direction:column; margin-top:120px ;font-size:1.2rem; font-weight:400;margin-left:-375px">
-                    <span >protein Count</span>
-                    <input value="<?php echo($row['protein']) ?>" name="past_goal_calorie<?php echo($i) ?>" id="label2" min="0" type="number" placeholder="0000 Kcal">
-                </div>
-                <div class="button" style="margin-left:160px; margin-top:20px;">
-                <button onclick="showWrapper('caloriewrapper<?php echo($i) ?>')" class="userimage" style="background-color: #E39F9A;margin-left:0.8rem" id="userimage6"><img src="<?=$DEFAULT_PATH?>assets/images/User_White.svg" ></button>
-                <button onclick="update_goal('calorie','past_goal_calorie<?php echo($i) ?>','calorie_selected<?php echo($i) ?>')" class="userimage" style="background-color: #E39F9A;margin-left:15px;margin-top:55px;"><img src="<?=$DEFAULT_PATH?>assets/images/Right_White.svg" ></button>
-                </div>
-             </div>
+                ?>
+                        <div class="leftside_wrapper1" style="flex-wrap:wrap;width:100% !important;height:auto;gap:2rem !important;max-width:820px !important;">
+                        <div style="display:flex;"> 
+                            <div><img src="<?= $DEFAULT_PATH ?>assets/images/Frame-5.svg" id="image1"></div>
+                            <div style="display:flex;flex-direction:column; margin-top:2rem">
+                                <span style="color:#E39F9A">Calorie Goal</span>
+                                <span style="color:#FF8B8B">Daily Calorie Count</span>
+                            </div>
+                            <div style="display: flex; flex-direction:column;">
+                                <div style="display:flex;flex-direction:column; margin-top:1.2rem ;font-size:1.2rem; font-weight:400;margin-left:0.7rem;">
+                                    <span>Carbs Count</span>
+                                    <input value="<?php echo ($row['carbs']) ?>" name="past_goal_calorie<?php echo ($i) ?>" id="label2" min="0" type="number" placeholder="0000 Kcal">
+                                </div>
+                                <div style="display:flex;flex-direction:column; margin-top:1.2rem ;font-size:1.2rem; font-weight:400;margin-left:0.7rem">
+                                    <span>Fats Count</span>
+                                    <input value="<?php echo ($row['fats']) ?>" name="past_goal_calorie<?php echo ($i) ?>" id="label2" min="0" type="number" placeholder="0000 Kcal">
+                                </div>
+                            </div>
+                            <div style="display:flex; flex-direction:column;">
+                                <div style="display:flex;flex-direction:column; margin-top:1.2rem ;font-size:1.2rem; font-weight:400;margin-left:0.7rem">
+                                    <span>Fiber Count</span>
+                                    <input value="<?php echo ($row['fiber']) ?>" name="past_goal_calorie<?php echo ($i) ?>" id="label2" min="0" type="number" placeholder="0000 Kcal">
+                                </div> 
+                                <div style="display:flex;flex-direction:column; margin-top:1.2rem ;font-size:1.2rem; font-weight:400;margin-left:0.7rem">
+                                    <span>protein Count</span>
+                                    <input value="<?php echo ($row['protein']) ?>" name="past_goal_calorie<?php echo ($i) ?>" id="label2" min="0" type="number" placeholder="0000 Kcal">
+                                </div>
+                            </div>
+                            <button onclick="showWrapper('caloriewrapper<?php echo ($i) ?>')" class="userimage" style="background-color: #E39F9A;margin-left:0.8rem;" id="userimage6"><img src="<?= $DEFAULT_PATH ?>assets/images/User_White.svg"></button>
+                            <button onclick="update_goal('calorie','past_goal_calorie<?php echo ($i) ?>','calorie_selected<?php echo ($i) ?>')" class="userimage" style="background-color: #E39F9A;margin-left:0.8rem;"><img src="<?= $DEFAULT_PATH ?>assets/images/Right_White.svg"></button>
+                        </div>
+                            
+                            
+                            
+                            
+                            
+
+
+                        </div>
 
                 <?php
                         $i++;

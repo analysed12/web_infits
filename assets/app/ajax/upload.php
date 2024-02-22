@@ -33,7 +33,7 @@ if (isset($_POST['to_id']) && isset($_FILES['my_image'])) {
         if ($img_size > 1250000) {
             echo "Too largeHello";
             $em = "Sorry, your file is too large.";
-            header("Location: index.php?error=$em");
+            header("Location:  index.php?error=$em");
         } else {
             $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
             $img_ex_lc = strtolower($img_ex);
@@ -70,13 +70,13 @@ if (isset($_POST['to_id']) && isset($_FILES['my_image'])) {
                 // $res  = $stmt->execute([$new_img_name]);
 
                 echo "Inserted1 done";
-                header("Location: ../../chat_home.php");
+                header("Location:  ../../chat_home.php");
                 // header()
 
 
                 // mysqli_query($conn1, $sql);
-                // header("Location: view.php");
-                // header("Location: view.php");
+                // header("Location:  view.php");
+                // header("Location:  view.php");
 
                 
 
@@ -84,19 +84,19 @@ if (isset($_POST['to_id']) && isset($_FILES['my_image'])) {
                 echo "cant uploaded";
 
                 $em = "You can't upload files of this type";
-                header("Location: index.php?error=$em");
+                header("Location:  index.php?error=$em");
             }
         }
     } else {
         echo "cant unknown error";
 
         $em = "unknown error occurred!";
-        header("Location: index.php?error=$em");
+        header("Location:  index.php?error=$em");
     }
 
 
 }else{
     echo "wrong post";
 
-    // header("Location: index.php");
+    // header("Location:  index.php");
 }

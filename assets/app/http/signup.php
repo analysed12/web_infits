@@ -22,7 +22,7 @@ if(isset($_POST['dietitianuserID']) &&
    	  $em = "Name is required";
 
    	  # redirect to 'signup.php' and passing error message
-   	  header("Location: ../../signup.php?error=$em");
+   	  header("Location:  ../../signup.php?error=$em");
    	  exit;
    }else if(empty($dietitianuserID)){
       # error message
@@ -32,7 +32,7 @@ if(isset($_POST['dietitianuserID']) &&
     	redirect to 'signup.php' and 
     	passing error message and data
       */
-   	  header("Location: ../../signup.php?error=$em&$data");
+   	  header("Location:  ../../signup.php?error=$em&$data");
    	  exit;
    }else if(empty($password)){
    	  # error message
@@ -42,7 +42,7 @@ if(isset($_POST['dietitianuserID']) &&
     	redirect to 'signup.php' and 
     	passing error message and data
       */
-   	  header("Location: ../../signup.php?error=$em&$data");
+   	  header("Location:  ../../signup.php?error=$em&$data");
    	  exit;
    }else {
    	  # checking the database if the dietitianuserID is taken
@@ -54,7 +54,7 @@ if(isset($_POST['dietitianuserID']) &&
 
       if($stmt->rowCount() > 0){
       	$em = "The dietitianuserID ($dietitianuserID) is taken";
-      	header("Location: ../../signup.php?error=$em&$data");
+      	header("Location:  ../../signup.php?error=$em&$data");
    	    exit;
       }else {
       	# Profile Picture Uploading
@@ -100,7 +100,7 @@ if(isset($_POST['dietitianuserID']) &&
                     move_uploaded_file($tmp_name, $img_upload_path);
 				}else {
 					$em = "You can't upload files of this type";
-			      	header("Location: ../../signup.php?error=$em&$data");
+			      	header("Location:  ../../signup.php?error=$em&$data");
 			   	    exit;
 				}
 
@@ -132,12 +132,12 @@ if(isset($_POST['dietitianuserID']) &&
       	$sm = "Account created successfully";
 
       	# redirect to 'index.php' and passing success message
-      	header("Location: ../../index.php?success=$sm");
+      	header("Location:  ../../index.php?success=$sm");
      	exit;
       }
 
    }
 }else {
-	header("Location: ../../signup.php");
+	header("Location:  ../../signup.php");
    	exit;
 }

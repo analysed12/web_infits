@@ -36,7 +36,7 @@ if (isset($_POST['savegoal'])) {
         if ($result) {
             unset($_POST["savegoal"]);
             unset($_POST["setgoal"]);
-            header(("Location: track_stats_steps.php?client_id={$client}"));
+            header("Location: track_stats_steps.php?client_id=$client");
         }
     }
 }
@@ -1079,24 +1079,7 @@ tst-left-t {
                 </div>
             </div>
         </div>
-        <?php
-
-
-        // All Data Total Sum
-        $allDataSum = fetchDataSql($clientId, '', $today->format('Y-3-d'), 1)[0]['SUM(steps)'];
-        // Today Data Sum
-        $todayData = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 2)[0]['SUM(steps)'];
-        $todayDatad = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 6)[0]['SUM(distance)'];
-        $todayDatac = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 7)[0]['SUM(calories)'];
-        // Week Average
-        $pastWeek = new DateTime();
-        $pastWeek->modify('-1 week');
-        $weekAvg = fetchDataSql($clientId, $pastWeek->format('Y-m-d'), $today->format('Y-m-d'))[0]['avg(steps)'];
-        // Month Average
-        $pastMonth = new DateTime();
-        $pastMonth->modify('-1 month');
-        $monthAvg = fetchDataSql($clientId, $pastMonth->format('Y-m-d'), $today->format('Y-m-d'))[0]['avg(steps)'];
-        ?>
+        
         <div class="row ts-down">
             <div class="col-lg-7 tsd-left">
                 <div class="tsd-left-t">
@@ -1105,7 +1088,6 @@ tst-left-t {
                             <div class="stat-data">
                                 <span class="title">Daily Count</span>
                                 <span id="daily-count" class="value">
-                                    <?php echo (ceil($todayData)) ?>
                                 </span><span class="unit">Steps</span>
                             </div>
                         </div>
@@ -1113,7 +1095,6 @@ tst-left-t {
                             <div class="stat-data">
                                 <span class="title">Weekly Avg</span>
                                 <span id="weekly-avg" class="value">
-                                    <?php echo (ceil($weekAvg)) ?>
                                 </span><span class="unit">Steps</span>
                             </div>
                         </div>
@@ -1121,7 +1102,6 @@ tst-left-t {
                             <div class="stat-data">
                                 <span class="title">Monthly Avg</span>
                                 <span id="monthly-avg" class="value">
-                                    <?php echo (ceil($monthAvg)) ?>
                                 </span><span class="unit">Steps</span>
                             </div>
                         </div>
@@ -1129,7 +1109,6 @@ tst-left-t {
                             <div class="stat-data">
                                 <span class="title">Total</span>
                                 <span id="total" class="value">
-                                    <?php echo (ceil($allDataSum)) ?>
                                 </span><span class="unit">Steps</span>
                             </div>
                         </div>
@@ -1143,7 +1122,8 @@ tst-left-t {
                 <div class="tsd-left-b table-activity">
                     <div class="heading">
                         <p>Past Activity</p>
-                        <a href="past_activities_steps.php?client_id=<?php echo ($clientId) ?>"><span>View All</span></a>
+                        <a href="past_activities_steps.php?client_id=<?php echo ($clientId) ?>"><span>View
+                                All</span></a>
                     </div>
                     <div class="heading-border"></div>
                     <div class="activity-container">
@@ -1178,7 +1158,7 @@ tst-left-t {
                     </div>
                 </div>
             </div>
-            <?php
+            <?php 
             $progressBarData = fetchDataSql($clientId, '', '', 4);
             $calorieConsumed = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 2);
             if (empty($calorieConsumed)) {
@@ -1192,9 +1172,7 @@ tst-left-t {
             } else {
                 $currentGoal = $progressBarData[0]['steps'];
                 $progressPercent = round(($calorieConsumed / $currentGoal) * 100, 2);
-            }
-            $calorieRemaining = (int) $currentGoal - (int) $calorieConsumed;
-            ?>
+            }?>
             <div class="col-lg-5 tsd-right">
                 <div class="heading">
                     <p>Daily Progress</p>
@@ -1206,28 +1184,27 @@ tst-left-t {
                         <div class="left">
                             <div id="progress-percent" class="progress-circle">
                                 <div class="progress-circle-fill">
-                                    <div class="progress-circle-value"><span class="colorid "
-                                            id="progress-percent "><?php echo ($progressPercent) ?>%</span><span>Of daily step goal</span></div>
+                                    <div class="progress-circle-value"><span class="colorid pp"
+                                            id="progress-percent">%</span><span>Of
+                                            daily
+                                            step goal</span></div>
                                 </div>
                             </div>
                         </div>
                         <div class="right">
                             <div class="right_div">
                                 <span>Daily goal</span>
-                                <p>
-                                    <?php echo $currentGoal ?>
+                                <p id="dailyg">
                                 </p>
                             </div>
                             <div class="right_div">
                                 <span>Weekly goal</span>
-                                <p>
-                                    <?php echo 7 * $currentGoal ?>
+                                <p id="weekg">
                                 </p>
                             </div>
                             <div class="right_div">
                                 <span>Monthly goal</span>
-                                <p>
-                                    <?php echo 30 * $currentGoal ?>
+                                <p id="monthg">
                                 </p>
                             </div>
                         </div>
@@ -1236,22 +1213,19 @@ tst-left-t {
                         <div class="progress-bottom-div">
                             <span>
                                 <img src="<?= $DEFAULT_PATH ?>assets/images/footsteps.svg" alt=""> Steps</span>
-                            <p>
-                                <?php echo (ceil($todayData)) ?>
+                            <p id="st">
                             </p>
                         </div>
                         <div class="progress-bottom-div">
                             <span>
                                 <img src="<?= $DEFAULT_PATH ?>assets/images/distance.svg" alt=""> Distance</span>
-                            <p>
-                                <?php echo (ceil($todayDatad)) ?>
+                            <p  id="di">
                             </p>
                         </div>
                         <div class="progress-bottom-div">
                             <span>
                                 <img src="<?= $DEFAULT_PATH ?>assets/images/fire.svg" alt=""> Burned</span>
-                            <p>
-                                <?php echo (ceil($todayDatac)) ?>
+                            <p  id="bu">
                             </p>
                         </div>
                     </div>
@@ -1680,6 +1654,41 @@ tst-left-t {
             },
         }
     });
+    </script>
+    <script>
+        const update_stat = ()=>{
+            $.ajax({
+                type: 'POST',
+                url:"updating_stats.php",
+                data:{
+                    updating:2,
+                    client_id:<?=$clientId?>
+                },
+                success:function(response){
+                    document.getElementById("daily-count").innerHTML=(response['d']===null?0:response['d']);
+                    document.getElementById("weekly-avg").innerHTML=(response['w']===null?0:response['w']);
+                    document.getElementById("monthly-avg").innerHTML=(response['m']===null?0:response['m']);
+                    document.getElementById("total").innerHTML=(response['t']===null?0:response['t']);
+                    document.getElementsByClassName("pp")[0].innerHTML=(response['pp']===null?0:response['pp'])+"%";
+                    document.getElementById("monthg").innerHTML=(response['mg']===null?0:response['mg']);
+                    document.getElementById("weekg").innerHTML=(response['wg']===null?0:response['wg']);
+                    document.getElementById("dailyg").innerHTML=(response['dg']===null?0:response['dg']);
+                    document.getElementById("st").innerHTML=(response['st']===null?0:response['st']);
+                    document.getElementById("di").innerHTML=(response['di']===null?0:response['di']);
+                    document.getElementById("bu").innerHTML=(response['bu']===null?0:response['bu']);
+                    const progressPercent = document.getElementById('progress-percent');
+                    progressPercent.style.setProperty("background",
+                    `conic-gradient(#63AEFF ${100-response['pp']}% , #B1D4Fa 0)`);
+                },
+                complete: function() {
+                    setTimeout(update_stat, 5000); 
+                },
+                error: function(xhr, status, error) {
+                    console.error('This is error:', error);
+                }
+            });
+        }
+        update_stat();
     </script>
 </body>
 

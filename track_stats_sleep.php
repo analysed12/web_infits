@@ -130,7 +130,7 @@ $dietition = $_SESSION['name'];
     flex-direction: column;
 }
 
-tst-left-t {
+.tst-left-t {
     padding-left: 3%;
 }
 
@@ -938,8 +938,6 @@ tst-left-t {
 }
 
 @keyframes growProgressBar {
-
-    0%,
     33% {
         --pgPercentage: 0;
     }
@@ -982,7 +980,6 @@ div[role="progressbar"]::before {
 
 div[role="progressbar1"] {
     --size: 163.21px;
-    ;
     --fg: #6844E2;
     --bg: #D9D0F7;
     --pgPercentage: var(--value);
@@ -1157,9 +1154,10 @@ div[role="progressbar2"]::before {
         margin-right: 5%;
     }
 }
+}
 </style>
-
 <body>
+
     <div class="content">
         <div class="row ts-top">
             
@@ -1308,22 +1306,7 @@ div[role="progressbar2"]::before {
                 </div>
             </div>
         </div>
-        <?php
-
-
-        // All Data Total Sum
-        $allDataSum = fetchDataSql($clientId, '', $today->format('Y-3-d'), 1)[0]['SUM(hrsSlept)'];
-        // Today Data Sum
-        $todayData = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 2)[0]['SUM(hrsSlept)'];
-        // Week Average
-        $pastWeek = new DateTime();
-        $pastWeek->modify('-1 week');
-        $weekAvg = fetchDataSql($clientId, $pastWeek->format('Y-m-d'), $today->format('Y-m-d'))[0]['avg(hrsSlept)'];
-        // Month Average
-        $pastMonth = new DateTime();
-        $pastMonth->modify('-1 month');
-        $monthAvg = fetchDataSql($clientId, $pastMonth->format('Y-m-d'), $today->format('Y-m-d'))[0]['avg(hrsSlept)'];
-        ?>
+        
         <div class="row ts-down">
             <div class="col-lg-7 tsd-left">
                 <div class="tsd-left-t">
@@ -1332,7 +1315,6 @@ div[role="progressbar2"]::before {
                             <div class="stat-data">
                                 <span class="title">Daily Count</span>
                                 <span id="daily-count" class="value">
-                                    <?php echo (ceil($todayData)) ?>
                                 </span><span class="unit">Hours</span>
                             </div>
                         </div>
@@ -1340,7 +1322,6 @@ div[role="progressbar2"]::before {
                             <div class="stat-data">
                                 <span class="title">Weekly Avg</span>
                                 <span id="weekly-avg" class="value">
-                                    <?php echo (ceil($weekAvg)) ?>
                                 </span><span class="unit">Hours</span>
                             </div>
                         </div>
@@ -1348,7 +1329,6 @@ div[role="progressbar2"]::before {
                             <div class="stat-data">
                                 <span class="title">Monthly Avg</span>
                                 <span id="monthly-avg" class="value">
-                                    <?php echo (ceil($monthAvg)) ?>
                                 </span><span class="unit">Hours</span>
                             </div>
                         </div>
@@ -1356,7 +1336,6 @@ div[role="progressbar2"]::before {
                             <div class="stat-data">
                                 <span class="title">Total</span>
                                 <span id="total" class="value">
-                                    <?php echo (ceil($allDataSum)) ?>
                                 </span><span class="unit">Hours</span>
                             </div>
                         </div>
@@ -1409,6 +1388,7 @@ div[role="progressbar2"]::before {
             $progressBarData = fetchDataSql($clientId, '', '', 4);
             $sleepConsumed = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 2);
             $sleepConsumedl = fetchDataSql($clientId, $today->format('Y-m-d'), $today->format('Y-m-d'), 6);
+            // $progressPercenta=0;
             if (empty($sleepConsumed)) {
                 $sleepConsumed = 0;
             } else {
@@ -1458,20 +1438,17 @@ div[role="progressbar2"]::before {
                         <div class="heart_beat_box">
                             <div class="avg">
                                 <span>Light Sleep</span>
-                                <p>
-                                    <?php echo ((int) $sleepConsumedl) ?> %
+                                <p id="ls">
                                 </p>
                             </div>
                             <div class="max">
                                 <span>Awake Period</span>
-                                <p>
-                                    <?php echo ((int) $progressPercenta) ?>%
+                                <p id="ap">
                                 </p>
                             </div>
                             <div class="low">
                                 <span>Deep Sleep</span>
-                                <p>
-                                    <?php echo ((int) $progressPercent) ?>%
+                                <p id="ds">
                                 </p>
                             </div>
                         </div>
@@ -1900,6 +1877,39 @@ div[role="progressbar2"]::before {
             },
         }
     });
+    </script>
+    <script>
+    const update_stat = () =>{
+        $.ajax({
+            type: 'POST',
+            url:"updating_stats.php",
+            data:{
+                updating:3,
+                client_id:<?=$clientId?>
+            },
+            success:function(response){
+                console.log("This is response : ",response);
+                document.getElementById("daily-count").innerHTML=(response['d']===null?0:response['d']);
+                document.getElementById("weekly-avg").innerHTML=(response['w']===null?0:response['w']);
+                document.getElementById("monthly-avg").innerHTML=(response['m']===null?0:response['m']);
+                document.getElementById("total").innerHTML=(response['t']===null?0:response['t']);
+                document.body.style=`--value:${(response['pp']===null?0:response['pp'])}`;
+                document.getElementById("ls").innerHTML=(response['ls']===null?0:response['ls'])+"%";
+                document.getElementById("ap").innerHTML=(response['ap']===null?0:response['ap'])+"%";
+                document.getElementById("ds").innerHTML=(response['ds']===null?0:response['ds'])+"%";
+                const progressPercent = document.getElementById('progress-percent');
+                progressPercent.style.setProperty("background",
+                    `conic-gradient(#FFE0D1 ${100-response['pp']}% , #FF8B8B 0)`);
+            },
+            complete: function() {
+                setTimeout(update_stat, 5000); 
+            },
+            error: function(xhr, status, error) {
+                console.error('This is error:', error);
+            }
+        });
+    }
+    update_stat();
     </script>
 </body>
 

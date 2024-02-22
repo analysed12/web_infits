@@ -591,11 +591,11 @@ if (isset($_POST['removeClient'])) {
                         <input type="text" placeholder="Type your Question here..." id="popup-question">
                         <div class="tabs" id="popup-answer-type">
                             <button class="tab-button radio-box" data-tab="text"><input type="radio" name="options"
-                                    class="radio" value="radio">Text Field</button>
+                                    class="radio" value="radio" id="text">Text Field</button>
                             <button class="tab-button radio-box" data-tab="checkbox"><input type="radio" name="options"
-                                    class="radio" value="radio">Checkbox</button>
+                                    class="radio" value="radio" id="check">Checkbox</button>
                             <button class="tab-button radio-box" data-tab="radio"><input type="radio" name="options"
-                                    class="radio" value="radio">Radio Button</button>
+                                    class="radio" value="radio" id="radio">Radio Button</button>
                         </div>
                         <div class="tab-content">
                             <div class="tab" id="text">
@@ -705,6 +705,7 @@ if ($result->num_rows > 0) {
             const tabName = event.target.dataset.tab;
             openPopup('', tabName, -1);
             input.checked = true;
+            console.log(input.id);
             showTab(tabName);
         });
     });

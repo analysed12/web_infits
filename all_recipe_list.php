@@ -426,6 +426,15 @@ $res2 = mysqli_query($conn, $sql2);
     .card-upper{
         margin-left: -25px;
     }
+    .card-upper-text {
+            font-size: 15px;
+            padding: 5px 10px;
+            background-color: #FEA945;
+            box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.75);
+            border-radius: 8px;
+            color: white;
+            line-height: 18px;
+        }
     .dropdown-content {
         left:-125px;
         bottom:-70px;
@@ -555,6 +564,8 @@ $res2 = mysqli_query($conn, $sql2);
     background: rgba(0, 0, 0, 0.569);
     transition: opacity 500ms;
     justify-content: center;
+    popholder.style.display = "block";
+    popholder.style.display = "none";
     align-items: center;
     z-index:10;
 }
@@ -605,27 +616,56 @@ $res2 = mysqli_query($conn, $sql2);
                 </div>
                 <div class="img-dis" style="width:100%; text-align:center;">
                     <?php if ($d['recipe_img'] != "") {
-                        $imgSrc = $DEFAULT_PATH . "uploads/recipe/" . $d['recipe_img'];
+                        $imgSrc = $DEFAULT_PATH . "uploads/" . $d['recipe_img'];
                     } else {
                         $imgSrc = $DEFAULT_PATH . "assets/images/alooparantha.svg";
                     } ?>
-                    <img src="<?= $DEFAULT_PATH ?>assets/images/alooparantha.svg" style="height:115px; width:160px; margin-top:0px;margin-left:-20px;" />
+                    
+
+                    <img src="<?= $DEFAULT_PATH ?>uploads/<?= $d['recipe_img'] ?>" style="height: 115px; width: 160px; margin-top: 0px; margin-left: -20px;" />
+
                 </div>
-                <div class="d-flex justify-content-between" style="margin-top:-10px;" onmouseover='toggleShowHide(stuff=<?= json_encode($temp_data)?>)' onmouseout='toggleShowHide(stuff=<?= json_encode($temp_data)?>)'>
+
+
+                <!-- <div class="d-flex justify-content-between" style="margin-top:-10px;" onmouseover='toggleShowHide(stuff=<?= json_encode($temp_data)?>)' onmouseout='toggleShowHide(stuff=<?= json_encode($temp_data)?>)'>
                     <p class="card-food ellipsis"><?php echo $d['recipe_name'] ?></p>
+                    
                     <div class="header">
                         <div class="dropdown ">
                             <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
                                 <img class="" src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="" style="margin-right:25px;">
                             </div>
 
+
+
                             <div id="myDropdownContent" class="dropdown-content dropdown-card " style="display:none;">
                                 <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?= $d['recipe_id'] ?>&action=editRecipe&isDefault=false">Edit</a>
                                 <a style="color: white;" class="delete-button" href="deleteRecipe.php?recipeId=<?= $d['recipe_id'] ?>&isDefault=false">Delete</a>
                             </div>
+
+                         
+
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="d-flex justify-content-between">
+                    <p class="card-food ellipsis card-food-name" style="max-width:40px;" onmouseover='toggleShowHide(stuff=<?= json_encode($temp_data) ?>)' onmouseout='toggleShowHide(stuff=<?= json_encode($temp_data) ?>)'><?php echo $d['recipe_name'] ?></p>
+                    <div class="header">
+                        <div class="dropdown">
+                            <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
+                                <img class="" src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="" style="margin-right:25px;">
+                            </div>
+
+                            <div id="myDropdownContent" class="dropdown-content dropdown-card ">
+                                <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?= $d['recipe_id'] ?>&action=editRecipe&isDefault=false">Edit</a>
+                                <a onclick="return confirm('Are you sure to delete this?')" style="color: white;" class="delete-button" href="deleteRecipe.php?recipeId=<?= $d['recipe_id'] ?>&isDefault=false">Delete</a>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                
                 <div class="d-flex justify-content-between" style="align-items:center;">
                     <p class="card-calorie"> <img src="<?= $DEFAULT_PATH ?>assets/images/calorie.svg" alt=""> <?php echo $nutritional['Calories'] ?> kcal</p>
                     <div class="d-flex align-items-center card-num">
@@ -652,7 +692,12 @@ $res2 = mysqli_query($conn, $sql2);
                     <p id="bu" class="card-upper-text"><i class="fa-solid fa-clock"></i> <?php echo $d['drecipe_time']; ?> </p>
                 </div>
                 <div class="img-dis" style="width:100%; text-align:center;">
-                    <img src="<?= $DEFAULT_PATH ?>assets/images/alooparantha.svg" style="height:115px; width:160px; margin-top:0px;margin-left:-20px;" />
+                    <?php if ($d['recipe_img'] != "") {
+                        $imgSrc = $DEFAULT_PATH . "uploads/recipe/" . $d['recipe_img'];
+                    } else {
+                        $imgSrc = $DEFAULT_PATH . "assets/images/alooparantha.svg";
+                    } ?>
+                    <img src="<?= $imgSrc ?>" style="height:115px; width:160px; margin-top:0px;margin-left:-20px;" />
                 </div>
                 <div class="d-flex justify-content-between" style="margin-top:-10px;">
                     <p class="card-food ellipsis" onmouseover='toggleShowHide(stuff="",dstuff=<?=json_encode($d)?>)' onmouseout='toggleShowHide(stuff="",dstuff=<?=json_encode($d)?>)'><?php echo $d['drecipe_name'] ?></p>
@@ -665,6 +710,11 @@ $res2 = mysqli_query($conn, $sql2);
                             <div id="myDropdownContent" class="dropdown-content dropdown-card ">
                                 <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?= $d['drecipe_id'] ?>&action=editRecipe&isDefault=true">Edit</a>
                                 <a style="color: white;" class="delete-button" href="deleteRecipe.php?recipeId=<?= $d['drecipe_id'] ?>&isDefault=true">Delete</a>
+                            </div>
+
+                            <div id="myDropdownContent" class="dropdown-content dropdown-card ">
+                                <a style="color: white;" class="edit-button" href="create_recipe.php?recipe_id=<?= $d['drecipe_id'] ?>&action=editRecipe&isDefault=true">Edit</a>
+                                <a onclick="return confirm('Are you sure to delete this?')" style="color: white;" class="delete-button" href="deleteRecipe.php?recipeId=<?= $d['drecipe_id'] ?>&isDefault=true">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -685,6 +735,28 @@ $res2 = mysqli_query($conn, $sql2);
     <?php require('constant/scripts.php'); ?>
 </body>
 <script>
+
+
+document.addEventListener("DOMContentLoaded", function () {
+        const dropdownContent = document.getElementById('myDropdownContent');
+
+        dropdownContent.addEventListener("mouseenter", () => {
+            event.stopPropagation();
+        });
+
+        dropdownContent.addEventListener("mouseleave", () => {
+            
+            event.stopPropagation();
+        });
+    });
+
+function showDropdown(event) {
+        event.stopPropagation();
+        var dropdownContent = document.getElementById("myDropdownContent");
+        dropdownContent.style.display = (dropdownContent.style.display === "block") ? "none" : "block";
+    }
+
+
     function myFunction() {
         const element = document.getElementById("myDIV");
         let x = element.scrollLeft;
@@ -715,6 +787,9 @@ $res2 = mysqli_query($conn, $sql2);
             }
         }
     }
+
+
+
     const toggleShowHide=(stuff="",dstuff="")=>{
         let hover_img = document.getElementsByClassName('hover-img')[0];
         let aloo_paratha = document.getElementsByClassName("aloo-paratha")[0];
@@ -736,7 +811,7 @@ $res2 = mysqli_query($conn, $sql2);
                 });
                 aloo_paratha.innerHTML=stuff["recipe_name"];
                 if (stuff['recipe_img']!=="" && stuff['recipe_img']!==null){
-                    hover_img.src = "<?=$DEFAULT_PATH?>uploads/recipe/"+stuff['recipe_img'];
+                    hover_img.src = "<?=$DEFAULT_PATH?>uploads/"+stuff['recipe_img'];
                 }else{
                     hover_img.src = "<?=$DEFAULT_PATH?>assets/images/alooparantha.svg"
                 }
@@ -763,6 +838,11 @@ $res2 = mysqli_query($conn, $sql2);
             // document.body.style = " background: none;transition: none";
         }
     }
+
+
+
+
+
 </script>
 
 </html>
