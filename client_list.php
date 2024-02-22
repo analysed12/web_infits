@@ -533,22 +533,29 @@ echo $output;
 
 
             <div class="clients_operations">
-                <div class="add_set_client" id="add_set_client" style="cursor:pointer;">
-                    <div><a href="add_client.php"><button id="btn1"><span class="material-symbols-outlined">add</span></button></a></div>
-                    <div class="add_set" style="color:#9C74F5;">
-                    <a href="add_client.php"><span style="color:#9C74F5;">Add Clients</span></a>
+                <button id="btn1">
+                <div class="add_set_client" id="add_set_client">
+                    <div><a href="add_client.php"><span
+                                    class="material-symbols-outlined">add</span></a></div>
+                    <div class="add_set">
+                        <span>Add Clients</span>
                     </div>
                 </div>
-                <div onclick="goals('Set Goals');" class="add_set_client" style="cursor:pointer;">
-                    <div><button id="btn1"><span class="material-symbols-outlined">settings</span></button> </div>
-                    <div class="add_set"> <span>Set Goals</span></div>
+                </button>
+                <button id="btn1">
+                <div onclick="goals('Set Goals');" class="add_set_client">
+                    <div><span class="material-symbols-outlined">settings</span> </div>
+                    <div class="add_set"><span>Set Goals</span></div>
                 </div>
+                </button>
 
-                <div onclick="toast('Set Reminders');" class="add_set_client" style="cursor:pointer;">
-                    <div><button id="btn1"><span class="material-symbols-outlined">notification_add</span></button>
+                <button id="btn1">
+                <div onclick="toast('Set Reminders');" class="add_set_client">
+                    <div><span class="material-symbols-outlined">notification_add</span>
                     </div>
                     <div class="add_set"> <span>Set Reminders</span></div>
                 </div>
+                </button>
                 <div onclick="del('Delete Clients');" class="delete_client">
                     <button id="btn2"><span class="material-symbols-outlined">delete</span></button>
                 </div>

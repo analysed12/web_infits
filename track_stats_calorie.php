@@ -816,6 +816,7 @@ ob_end_flush();
         }
 >>>>>>> Stashed changes
     }
+
 </style>
 
 <body>
@@ -1096,19 +1097,19 @@ ob_end_flush();
                 </div>
                 <div class="progress-bar-container">
                     <div class="total-consumed">
-                        <span>
+                        <span id="tc">
                             <?php echo ((int) $calorieConsumed) ?> Kcal
                         </span>
                         <p>Consumed</p>
                     </div>
                     <div id="progress-percent" class="progress-circle">
                         <div class="progress-circle-fill">
-                            <div class="progress-circle-value"><span id="progress-percent"><?php echo ($progressPercent) ?>%</span><span>Kcal
+                            <div class="progress-circle-value"><span class='pp' id="progress-percent" ><?php echo ($progressPercent) ?>%</span><span>Kcal
                                     gained</span></div>
                         </div>
                     </div>
                     <div class="total-remaining">
-                        <span>
+                        <span id="tr">
                             <?php echo ($calorieRemaining) ?> Kcal
                         </span>
                         <p>Remaining</p>
@@ -1563,6 +1564,36 @@ ob_end_flush();
             document.body.appendChild(form);
             form.submit();
         }
+    </script>
+    <script>
+    const update_stat = () =>{
+        $.ajax({
+            type: 'POST',
+            url:"updating_stats.php",
+            data:{
+                updating:6,
+                client_id:<?=$clientId?>
+            },
+            success:function(response){
+                document.getElementById("daily-count").innerHTML=(response['d']===null?0:response['d']);
+                document.getElementById("weekly-avg").innerHTML=(response['w']===null?0:response['w']);
+                document.getElementById("monthly-avg").innerHTML=(response['m']===null?0:response['m']);
+                document.getElementById("total").innerHTML=(response['t']===null?0:response['t']);
+                document.getElementById("tc").innerHTML=(response['tc']===null?0:response['tc'])+" Kcal";
+                document.getElementById("tr").innerHTML=(response['tr']===null?0:response['tr'])+" Kcal";
+                document.getElementsByClassName("pp")[0].innerHTML=(response['pp']===null?0:response['pp'])+" Kcal";
+                const progressPercent = document.getElementById('progress-percent');
+                progressPercent.style.setProperty("background",`conic-gradient(#63AEFF ${100-response['pp']}% , #B1D4Fa 0)`);
+            },
+            complete: function() {
+                setTimeout(update_stat, 5000); 
+            },
+            error: function(xhr, status, error) {
+                console.error('This is error:', error);
+            }
+        });
+    }
+    update_stat();
     </script>
 </body>
 

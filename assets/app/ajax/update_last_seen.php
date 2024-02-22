@@ -18,6 +18,6 @@ if (isset($_SESSION['dietitianuserID'])) {
 	$stmt->execute([$id]);
 
 }else {
-	header("Location: ../../index.php");
+	header("Location:  ../../index.php");
 	exit;
 }

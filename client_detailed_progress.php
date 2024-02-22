@@ -291,7 +291,7 @@ border-radius: 50px !important;
 th,
 
 td {
-user-select: none;
+
 padding: 5px;
 text-align: center;
 transition: all 0.2s ease-in-out;
@@ -304,11 +304,10 @@ transform: scale(1.2);
 box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 color:black;
 border-radius: 50%;
-user-select: none;
 }
 th {
 
-user-select: none;
+
 font-family: 'NATS';
 font-style: normal;
 font-weight: 400;

@@ -18,13 +18,13 @@ if(isset($_POST['dietitianuserID']) &&
       $em = "dietitianuserID is required";
 
       # redirect to 'index.php' and passing error message
-      header("Location: ../../index.php?error=$em");
+      header("Location:  ../../index.php?error=$em");
    }else if(empty($password)){
       # error message
       $em = "Password is required";
 
       # redirect to 'index.php' and passing error message
-      header("Location: ../../index.php?error=$em");
+      header("Location:  ../../index.php?error=$em");
    }else {
     
       $sql  = "SELECT * FROM 
@@ -50,25 +50,25 @@ if(isset($_POST['dietitianuserID']) &&
             $_SESSION['dietitian_id'] = $user['dietitian_id'];
 
             # redirect to 'home.php'
-            header("Location: ../../home.php");
+            header("Location:  ../../home.php");
 
           }else {
             # error message
             $em = "Incorect password";
 
             # redirect to 'index.php' and passing error message
-            header("Location: ../../index.php?error=$em");
+            header("Location:  ../../index.php?error=$em");
           }
         }else {
           # error message
           $em = "Incorect dietitianuserID or password";
 
           # redirect to 'index.php' and passing error message
-          header("Location: ../../index.php?error=$em");
+          header("Location:  ../../index.php?error=$em");
         }
       }
    }
 }else {
-  header("Location: ../../index.php");
+  header("Location:  ../../index.php");
   exit;
 }

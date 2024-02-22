@@ -111,9 +111,11 @@ if (isset($_POST['from_date']) and isset($_POST['to_date'])) {
     echo ($CustomData);
     exit();
 }
+
 include('navbar.php');
 $dietition = $_SESSION['name'];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -1027,7 +1029,6 @@ tst-left-t {
                             <div class="stat-data">
                                 <span class="title">Daily Count</span>
                                 <span id="daily-count" class="value">
-                                    <?php echo (ceil($todayData)) ?>
                                 </span><span class="unit">Bpm</span>
                             </div>
                         </div>
@@ -1035,7 +1036,6 @@ tst-left-t {
                             <div class="stat-data">
                                 <span class="title">Weekly Avg</span>
                                 <span id="weekly-avg" class="value">
-                                    <?php echo (ceil($weekAvg)) ?>
                                 </span><span class="unit">Bpm</span>
                             </div>
                         </div>
@@ -1043,7 +1043,6 @@ tst-left-t {
                             <div class="stat-data">
                                 <span class="title">Monthly Avg</span>
                                 <span id="monthly-avg" class="value">
-                                    <?php echo (ceil($monthAvg)) ?>
                                 </span><span class="unit">Bpm</span>
                             </div>
                         </div>
@@ -1051,7 +1050,6 @@ tst-left-t {
                             <div class="stat-data">
                                 <span class="title">Total</span>
                                 <span id="total" class="value">
-                                    <?php echo (ceil($allDataSum)) ?>
                                 </span><span class="unit">Bpm</span>
                             </div>
                         </div>
@@ -1141,26 +1139,26 @@ tst-left-t {
                     <div id="progress-percent" class="progress-circle">
                         <div class="progress-circle-fill">
                             <div class="progress-circle-value"><span
-                                    id="progress-percent">❤️<?php echo ((int) ($calorieConsumed)) ?></span><span>Bpm</span>
+                                    id="progress-percent" class="pp">❤️<?php echo ((int) ($calorieConsumed)) ?></span><span>Bpm</span>
                             </div>
                         </div>
                     </div>
                     <div class="heart_beat_box">
                         <div class="avg">
                             <span>Avg</span>
-                            <p>
+                            <p id="avg-bpm">
                                 <?php echo ((int) $calorieConsumed) ?> BPM
                             </p>
                         </div>
                         <div class="max">
                             <span>Max</span>
-                            <p>
+                            <p id="max-bpm">
                                 <?php echo ($heartRateM) ?> BPM
                             </p>
                         </div>
                         <div class="low">
                             <span>Low</span>
-                            <p>
+                            <p id="min-bpm">
                                 <?php echo ($heartRatem) ?> BPM
                             </p>
                         </div>
@@ -1591,6 +1589,41 @@ tst-left-t {
         }
     });
     </script>
+    <script>
+        const update_stat=()=>{
+            $.ajax({
+                type: 'POST',
+                url: 'updating_stats.php',
+                // dataType:'json',
+                data:{
+                    updating:1,
+                    client_id:<?=$clientId?>
+                },
+                success: function(response) {
+                    console.log(response);
+                    document.getElementById("daily-count").innerHTML=(response['d']===null?0:response['d']);
+                    document.getElementById("weekly-avg").innerHTML=(response['w']===null?0:response['w']);
+                    document.getElementById("monthly-avg").innerHTML=(response['m']===null?0:response['m']);
+                    document.getElementById("total").innerHTML=(response['t']===null?0:response['t']);
+                    document.getElementsByClassName("pp")[0].innerHTML="❤️"+(response['sh']===null?0:response['sh']);
+                    document.getElementById("avg-bpm").innerHTML=(response['avg']===null?0:response['avg'])+" bpm";
+                    document.getElementById("max-bpm").innerHTML=(response['max']===null?0:response['max'])+" bpm";
+                    document.getElementById("min-bpm").innerHTML=(response['low']===null?0:response['low'])+" bpm";
+                    const progressPercent = document.getElementById('progress-percent');
+                    progressPercent.style.setProperty("background",
+                    `conic-gradient(#63AEFF ${(100-response['pp'])}% , #B1D4Fa 0)`);
+
+                },
+                complete: function() {
+                    setTimeout(update_stat, 5000); 
+                },
+                error: function(xhr, status, error) {
+                    console.error('This is error:', error);
+                }
+            });
+        }
+        update_stat();
+        </script>
 </body>
 
 </html>

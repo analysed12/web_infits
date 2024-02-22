@@ -141,7 +141,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                                     style="background: white !important; border:none;" id="serachBtn">
                                     <i class="fa fa-search"></i>
                                 </button>
-                                <input type="text" placeholder="Search" id="searchText"
+                                <input type="text" placeholder="Search" id="searchText1"
                                     style="background: white !important; border:none;"
                                     class="form-control bg-light text-secondary">
                             </div>
@@ -154,8 +154,8 @@ if (isset($_SESSION['dietitianuserID'])) {
                                 foreach ($conversations as $conversation) { ?>
                                     <li class="list-group-item">
                                         <a href="chat_messages.php?user=<?= $conversation['clientuserID'] ?>" class="d-flex
-                                  justify-content-between
-                                  align-items-center">
+                                justify-content-between
+                                align-items-center">
                                             <div class="d-flex
                                         align-items-center">
                                                 <img src="<?= $DEFAULT_PATH ?>assets/images/<?= $conversation['p_p'] ?>"
@@ -206,11 +206,11 @@ if (isset($_SESSION['dietitianuserID'])) {
                     $(document).ready(function () {
 
                         // Search
-                        $("#searchText").on("input", function () {
-                            var searchText = $(this).val();
-                            if (searchText == "") return;
+                        $("#searchText1").on("input", function () {
+                            var searchText1 = $(this).val();
+                            //if (searchText1 == "") return;
                             $.post('assets/app/ajax/search.php', {
-                                key: searchText
+                                key: searchText1
                             },
                                 function (data, status) {
                                     $("#chatList").html(data);
@@ -218,32 +218,59 @@ if (isset($_SESSION['dietitianuserID'])) {
                         });
 
                         // Search using the button
+                        // $("#serachBtn").on("click", function () {
+                        //     var searchText1 = $("#searchText1").val();
+                        //     if (searchText1 == "") return;
+                        //     $.post('assets/app/ajax/search.php', {
+                        //         key: searchText
+                        //     },
+                        //         function (data, status) {
+                        //             $("#chatList").html(data);
+                        //         });
+                        // });
+
                         $("#serachBtn").on("click", function () {
-                            var searchText = $("#searchText").val();
-                            if (searchText == "") return;
-                            $.post('assets/app/ajax/search.php', {
-                                key: searchText
-                            },
-                                function (data, status) {
-                                    $("#chatList").html(data);
-                                });
-                        });
-                        let lastSeenUpdate = function () {
-                            $.get("app/ajax/update_last_seen.php");
-                        }
-                        lastSeenUpdate();
-                        /** 
-                        auto update last seen 
-                        every 10 sec
-                        **/
-                        setInterval(lastSeenUpdate, 10000);
+                                // console.log("searchBtn pressed");
+                                var searchText1 = $("#searchText1").val();
+                                // console.log(searchText1);
+                                //if (searchText1 == "") return;
+
+                                $.post('http://localhost/analysed/assets/app/ajax/search.php', { key: searchText })
+                                    .done(function (data, textStatus, jqXHR) {
+                                        // This function is called when the request is successful
+                                        console.log('Success:', data);
+
+                                        // Check HTTP status code
+                                        if (jqXHR.status === 200) {
+                                            // The request was successful
+                                            $("#chatList").html(data);
+                                        } else {
+                                            // Handle other status codes if needed
+                                            console.error('Unexpected HTTP status code:', jqXHR.status);
+                                        }
+                                    })
+                                    .fail(function (jqXHR, textStatus, errorThrown) {
+                                        // This function is called if the request fails
+                                        console.error('Error:', errorThrown);
+                                    });
+                            });
+
+                        // let lastSeenUpdate = function () {
+                        //     $.get("app/ajax/update_last_seen.php");
+                        // }
+                        // lastSeenUpdate();
+                        // /** 
+                        // auto update last seen 
+                        // every 10 sec
+                        // **/
+                        // setInterval(lastSeenUpdate, 10000);
 
                     });
                 </script>
             </div>
             <div class="d-flex flex-column
                 flex-fill
-             vh-100 justify-content-center align-items-center md-3">
+            vh-100 justify-content-center align-items-center md-3">
                 <img src="<?= $DEFAULT_PATH ?>assets/images/infitsWeb.svg" class="d-block fs-big"
                     style="height:250px; width:250px; padding-bottom:20px;">
                 <h1 class="mt-5 pt-2" style="color: #8D8D8D;"> Infits for Web </h1>
@@ -253,62 +280,62 @@ if (isset($_SESSION['dietitianuserID'])) {
         <?php require('constant/scripts.php'); ?>
 
         <script>
-            var scrollDown = function () {
-                let chatBox = document.getElementById('chatBox');
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }
+            // var scrollDown = function () {
+            //     let chatBox = document.getElementById('chatBox');
+            //     chatBox.scrollTop = chatBox.scrollHeight;
+            // }
 
-            scrollDown();
+            // scrollDown();
 
-            $(document).ready(function () {
+            // $(document).ready(function () {
 
-                $("#sendBtn").on('click', function () {
-                    message = $("#message").val();
-                    if (message == "") return;
+            //     $("#sendBtn").on('click', function () {
+            //         message = $("#message").val();
+            //         if (message == "") return;
 
-                    $.post("app/ajax/insert.php", {
-                        message: message,
-                        to_id: <?= $chatWith['client_id'] ?>
-                    },
-                        function (data, status) {
-                            $("#message").val("");
-                            $("#chatBox").append(data);
-                            scrollDown();
-                        });
-                });
+            //         $.post("app/ajax/insert.php", {
+            //             message: message,
+            //             to_id: <?= $chatWith['client_id'] ?>
+            //         },
+            //             function (data, status) {
+            //                 $("#message").val("");
+            //                 $("#chatBox").append(data);
+            //                 scrollDown();
+            //             });
+            //     });
 
                 /** 
                 auto update last seen 
                 for logged in user
                 **/
-                let lastSeenUpdate = function () {
-                    $.get("app/ajax/update_last_seen.php");
-                }
-                lastSeenUpdate();
-                /** 
-                auto update last seen 
-                every 10 sec
-                **/
-                setInterval(lastSeenUpdate, 10000);
-                // auto refresh / reload
-                let fechData = function () {
-                    $.post("app/ajax/getMessage.php", {
-                        id_2: <?= $chatWith['client_id'] ?>
-                    },
-                        function (data, status) {
-                            $("#chatBox").append(data);
-                            if (data != "") scrollDown();
-                        });
-                }
+            //     let lastSeenUpdate = function () {
+            //         $.get("app/ajax/update_last_seen.php");
+            //     }
+            //     lastSeenUpdate();
+            //     /** 
+            //     auto update last seen 
+            //     every 10 sec
+            //     **/
+            //     setInterval(lastSeenUpdate, 10000);
+            //     // auto refresh / reload
+            //     let fechData = function () {
+            //         $.post("app/ajax/getMessage.php", {
+            //             id_2: <?= $chatWith['client_id'] ?>
+            //         },
+            //             function (data, status) {
+            //                 $("#chatBox").append(data);
+            //                 if (data != "") scrollDown();
+            //             });
+            //     }
 
-                fechData();
-                /** 
-                auto update last seen 
-                every 0.5 sec
-                **/
-                setInterval(fechData, 500);
+            //     fechData();
+            //     /** 
+            //     auto update last seen 
+            //     every 0.5 sec
+            //     **/
+            //     setInterval(fechData, 500);
 
-            });
+            // });
         </script>
         </div>
         </div>
@@ -331,4 +358,5 @@ header('Cache-Control: no-cache');
 // Flush the headers to the browser
 ob_end_flush();
 echo $output;
+// echo 'hi';
 ?>

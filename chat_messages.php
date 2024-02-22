@@ -2,14 +2,7 @@
 ob_start();
 
 include 'navbar.php';
-// require_once('constant/config.php');
-/* 
-$HOSTNAME = "localhost";
-$USERNAME = "root";
-$PASSWORD = "";
-$DBNAME = "shared_db_infits"; */
 
-// $conn = mysqli_connect($HOSTNAME, $USERNAME, $PASSWORD, $DBNAME);
 
 if (isset($_SESSION['dietitianuserID'])) {
     # database connection file
@@ -297,6 +290,16 @@ if (isset($_SESSION['dietitianuserID'])) {
                     flex-direction: row !important;
                 }
             }
+            .message_search_div{
+                visibility: hidden;
+            }
+            
+        .match{
+            background-color: yellow;
+            /* padding: 10px; */
+            color: black;
+            font-weight: bolder;
+        }
         </style>
 
         </style>
@@ -323,7 +326,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                                 style="background: white !important; border:none;" id="serachBtn">
                                 <i class="fa fa-search"></i>
                             </button>
-                            <input type="text" placeholder="Search" id="searchText"
+                            <input type="text" placeholder="Search" id="searchText1"
                                 style="background: white !important; border:none;" class="form-control bg-light ">
                         </div>
                         <div class="scroll">
@@ -386,33 +389,126 @@ if (isset($_SESSION['dietitianuserID'])) {
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
                 <script>
+                    let clientuserID =  "<?php echo $chatWith['clientuserID']; ?>";
                     $(document).ready(function () {
 
                         // Search
-                        $("#searchText").on("input", function () {
-                            var searchText = $(this).val();
-                            if (searchText == "") return;
+                        //$("#searchText1").on("input", function () {
+                        //var searchText1 = $(this).val();
+                        //if (searchText1 == "") return;
+                        //$.post('assets/app/ajax/search.php', {
+                        //key: searchText1
+                          //   },
+                        //function (data, status) {
+                         //$("#chatList").html(data);
+                          //       });
+                        //});
+
+                        // // Search using the button
+                        //$("#serachBtn").on("click", function () {
+                          //   var searchText1 = $("#searchText1").val();
+                            // if (searchText1 == "") return;
+                             //$.post('assets/app/ajax/search.php', {
+                               //  key: searchText1
+                             //},
+                               // function (data, status) {
+                                 //    $("#chatList").html(data);
+                                 //});
+                         //});
+
+                        $("#searchText1").on("input", function () {
+                            var searchText1 = $(this).val();
+                            console.log(searchText1);
+                            if (searchText1 == "") return;
                             $.post('assets/app/ajax/search.php', {
-                                key: searchText
+                                key: searchText1
                             },
                                 function (data, status) {
                                     $("#chatList").html(data);
                                 });
                         });
 
-                        // Search using the button
                         $("#serachBtn").on("click", function () {
-                            var searchText = $("#searchText").val();
-                            if (searchText == "") return;
+                            var searchText1 = $('#searchText1').val();
+                            if (searchText1 == "") return;
                             $.post('assets/app/ajax/search.php', {
-                                key: searchText
+                                key: searchText1
                             },
                                 function (data, status) {
                                     $("#chatList").html(data);
                                 });
-                        });
+                            });
 
 
+
+
+                            let chat_box = $('#chatBox');
+            
+            let search_box = $('#searchMessage');
+            // let messageBtn = $('#messageBtn');
+            search_box.change(function(){
+                console.log('search_box');
+                search(clientuserID);
+            });
+            function search(name) {
+                let messageText = search_box.val();
+                
+                // if (messageText !== '') {
+                    let messageData = {messageData:messageText, clientUserId:clientuserID};
+                    $.post('messages_search.php', messageData, function(data, status){
+                        if (status === 'success') {
+                            // console.log('Success');
+                            // console.log(data);
+                            
+                            if (data !== '') {
+
+                                // chat_box.empty();
+                                chat_box.html(data);
+                                // chat_box.scrollTop = chat_box.scrollHeight - chat_box.clientHeight;
+                                var lastMatch = $('.match:last');
+                                console.log(lastMatch);
+
+                                // Check if the element is found
+                                if (lastMatch.length > 0) {
+                                    // Scroll to the last element with class "match"
+                                    /* chat_box.animate({
+                                    scrollTop: lastMatch.offset().top
+                                    }, 1000); // You can adjust the duration as needed */
+                                    
+                                    var containerHeight = chat_box.height();
+                                    var scrollTo = lastMatch.offset().top - chat_box.offset().top + chat_box.scrollTop();
+
+                                    // Scroll to the last matching element
+                                    chat_box.scrollTop(scrollTo);
+                                }
+                            } /* else {
+                                chat_box.empty();
+                            } */
+
+                        } else {
+                            // console.log('Fail');
+                        }
+                    });
+                /*}  else {
+                    // console.log('Cannot be empty');
+                } */ /* else {
+                        chat_box.empty()
+                        } */
+            }
+            let vector_i = $('#vector-i');
+            vector_i.click(function(){
+                let message_search_div = $('.message_search_div');
+                let search_box_visibility = message_search_div.css('visibility');
+                console.log(search_box_visibility);
+                if (search_box_visibility === 'visible') {
+                    message_search_div.css({'visibility':'hidden'});
+                    // message_search_div.val('');
+                    // chat_box.empty();
+                } else {
+                    message_search_div.css({'visibility':'visible'});
+                }
+                // console.log(search_box_display);
+            });
                         /** 
                         auto update last seen 
                         for logged in user
@@ -462,13 +558,21 @@ if (isset($_SESSION['dietitianuserID'])) {
 
                         </div>
 
+
+                        <div class="input-group mb-3  d-flex align-items-center message_search_div" style="width:100%; max-width:350px;">
+                            <button class="btn  grey-color text-secondary" style="background: white !important; border:none;" id="messageBtn">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <input type="text" placeholder="Search" id="searchMessage" style="/* width:75%; */background: white !important; border:none;" class="form-control bg-light ">
+                        </div>
+                        
                         <div class="d-flex  align-items-center ">
                             <div onclick="videocall('<?= $chatWith['clientuserID'] ?>', '<?= $_SESSION['name'] ?>')">
                                 <img class="" src="<?= $DEFAULT_PATH ?>assets/icons/videocall.svg"
                                     style="width:20px;margin-right:24px; cursor: pointer;" />
                             </div>
                             <img class=" " src="<?= $DEFAULT_PATH ?>assets/icons/vector-i.svg"
-                                style="width:20px;margin-right:5px; cursor: pointer;">
+                                style="width:20px;margin-right:5px; cursor: pointer;" id="vector-i">
                             <button class="back_btn" onclick="history.back()">Go Back</button>
                         </div>
                     </div>
@@ -481,7 +585,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                                 foreach ($chats as $chat) {
                                     if ($chat['from_id'] == $_SESSION['dietitian_id']) { ?>
                                         <?php if (substr($chat['message'], 0, 4) == "IMG-") { ?>
-
+                                            <!-- echo "<script>console.log('We are in the template section');</script>"; -->
                                             <p class="rtext align-self-end">
 
                                                 <img src="<?= $DEFAULT_PATH ?>assets/images/<?= $chat['message'] ?>"
@@ -500,19 +604,17 @@ if (isset($_SESSION['dietitianuserID'])) {
                                         <?php }
                                         ?>
 
+                                    <?php } else { ?>
+                                        <?php if (substr($chat['message'], 0, 4) == "IMG-") { ?>
 
-                                    <?php } else {
-                                        /* $ttl = 'Message';
-                                        $body = 'You have new message from '.$_GET['user'];
-                                        $sql2="INSERT INTO notification (dieticianID, dietitianuserID, ttl, body) VALUES(:dieticianID, :dietitianuserID, :ttl, :body)";
-                                        $stmt = $conn->prepare($sql2);
+                                            <p class="ltext align-self-start">
 
-                                        $stmt->bindParam(':dieticianID', $_SESSION['dietitian_id'], PDO::PARAM_STR);
-                                        $stmt->bindParam(':dietitianuserID', $_SESSION['dietitianuserID'], PDO::PARAM_STR);
-                                        $stmt->bindParam(':ttl', $ttl, PDO::PARAM_STR);
-                                        $stmt->bindParam(':body', $body, PDO::PARAM_STR);
-                                        $stmt->execute(); */
-                                        // $result2=mysqli_query($conn, $sql2); ?>
+                                                <img src="<?= $DEFAULT_PATH ?>assets/images/<?= $chat['message'] ?>"
+                                                    style="max-width: 250px">
+                                                <small class="d-block mt-2">
+                                                    <?= last_time($chat['created_at']) ?>
+                                                </small>
+                                            </p>
                                         <?php if (substr($chat['message'], 0, 4) == "IMG-") { ?>
 
                                             <p class="ltext align-self-start">
@@ -535,7 +637,7 @@ if (isset($_SESSION['dietitianuserID'])) {
 
                                     <?php }
                                 }
-                            } else { ?>
+                            } }else { ?>
                                 <div class="alert alert-info 
                                 text-center">
                                     <i class="fa fa-comments d-block fs-big"></i>
@@ -677,7 +779,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                         auto update last seen 
                         every 0.5 sec
                         **/
-                        setInterval(fechData, 500);
+                        // setInterval(fechData, 500);
 
                     });
                 </script>

@@ -236,72 +236,82 @@ ob_start(); ?><?php
                         // "diet_chart" => $DEFAULT_PATH. "dietchart.php"
                         "notification" => $DEFAULT_PATH. "notification.php"
                     );
+      // start of search all files
+      
+      $showAll = false;
+      if(isset($_POST["show_all"]) && $_POST["show_all"] === "true"){
+          $showAll = true;
+      }
 
-                    $showAll = isset($_POST["show_all"]) && $_POST["show_all"] === "true";
+      $searchResult = '';
+      $resultCount = 0;
 
-                    $searchResult = '';
-                    $resultCount = 0;
-                    
-    $fileNames = ['index.php' , 'all_recipes.php','all_recipe_list.php','add_client.php','calendar_of_events.php', 'appointments.php', 'chat_home.php', 'choose_recipe.php', 'client_detailed_progress.php', 'client_list.php', 'client_progress.php', 'editRecipe_main.php', 'forms_and_documents.php', 'health_viewall_forms_and_documents.php', 'health_viewall_forms.php',  'live_personalcall.php', 'live.php', 'myplan.php', 'profile_settings_edit.php', 'profile_settings_show.php', 'refer_friend.php', 'set_reminders.php', 'setgoals.php', 'settings.php', 'task_list.php'];
+    $fileNames = ['client_progress.php','index.php'  ,  'all_recipes.php', /*'all_recipe_list.php',*/'add_client.php','calendar_of_events.php', 'appointments.php', 'choose_recipe.php', 'client_detailed_progress.php', 'client_list.php',  'editRecipe_main.php', 'forms_and_documents.php', 'health_viewall_forms_and_documents.php', 'health_viewall_forms.php',  'live_personalcall.php', 'live.php', 'myplan.php', 'profile_settings_edit.php', 'profile_settings_show.php', 'refer_friend.php', 'set_reminders.php', 'settings.php'];
     $matchedFiles = [];
-    $displayFileNames = array('index.php'=>'Dashboard' , 'all_recipes.php'=>'All Recipes', 'all_recipe_list.php'=>'All Recipe List', 'add_client.php'=>'Add Client', 'calendar_of_events.php'=>'Appointments', 'appointments.php'=>'Appointments', 'chat_home.php'=>'Messages', 'choose_recipe.php'=> 'Choose Recipe', 'client_detailed_progress.php'=>'Client Detailed Progress', 'client_list.php'=>'Clients', 'client_progress.php'=>'Client Progress', 'editRecipe_main.php'=>'Edit Recipe Main', 'forms_and_documents.php'=>'Forms and Documents', 'health_viewall_forms_and_documents.php'=>'Health Froms and Documents View All', 'health_viewall_forms.php'=>'Health Forms View All','live_personalcall.php'=>'Live Personal Call', 'live.php'=>'Live', 'myplan.php'=>'My Plan', 'profile_settings_edit.php'=>'Profile Settings Edit', 'profile_settings_show.php'=>'Profile Settings Show', 'refer_friend.php'=>'Refer Friends', 'set_reminders.php'=>'Set Reminders', 'setgoals.php'=>'Set Goals', 'settings.php'=>'Settings', 'task_list.php'=>'Task List');
+    $displayFileNames = array('client_progress.php'=>'Client Progress','index.php'=>'Dashboard'  , 'all_recipes.php'=>'All Recipes', 'all_recipe_list.php'=>'All Recipe List', 'add_client.php'=>'Add Client', 'calendar_of_events.php'=>'Appointments', 'appointments.php'=>'Appointments', 'choose_recipe.php'=> 'Choose Recipe', 'client_detailed_progress.php'=>'Client Detailed Progress', 'client_list.php'=>'Clients',  'editRecipe_main.php'=>'Edit Recipe Main', 'forms_and_documents.php'=>'Forms and Documents', 'health_viewall_forms_and_documents.php'=>'Health Froms and Documents View All', 'health_viewall_forms.php'=>'Health Forms View All','live_personalcall.php'=>'Live Personal Call', 'live.php'=>'Live', 'myplan.php'=>'My Plan', 'profile_settings_edit.php'=>'Profile Settings Edit', 'profile_settings_show.php'=>'Profile Settings Show', 'refer_friend.php'=>'Refer Friends', 'set_reminders.php'=>'Set Reminders', 'settings.php'=>'Settings');
 
     foreach ($fileNames as $fileName) {
         ob_start();
         echo $fileName;
-        require_once($fileName);
+        include_once($fileName);
         $cleaned_output =  ob_get_clean();
-        // echo $cleaned_output;
         
         $pattern = '/<[^>]+>(*SKIP)(*F)|\b' . preg_quote($searchText, '/') . '\b/i';
         if (preg_match($pattern, $cleaned_output)) {
             $matchedFiles[] = $fileName;
         }
-        $cleaned_output = '';
+        // else {
+        //     echo $fileName." : None ";
+        // }
+        // $cleaned_output = '';
     }
+    print_r($matchedFiles);
     if (!empty($matchedFiles)) {
         foreach ($matchedFiles as $matchedFile) {
             $searchResult .= "<a href='".$DEFAULT_PATH.$matchedFile."' class='table-link'><div class='search-result'><b>".$searchText.".".$displayFileNames[$matchedFile]."</b><img src='" . $DEFAULT_PATH . "assets/icons/arrow.svg' class='result-arrow'></div></a>";
             $resultCount++;
         }
     }
+    //end of all serach file
 
-                    foreach ($tableColumnText as $tableName => $columnsText) {
-                        $tableDisplayName = isset($tableDisplayNames[$tableName]) ? $tableDisplayNames[$tableName] : " ";
-                        $tableLink = isset($tableLinks[$tableName]) ? $tableLinks[$tableName] : "#";
-                        /*  $dietitianuser_id = $_SESSION['dietitianuserID'];
-                       if ($tableName === "default_recipes") {
-                            $tableQuery = "SELECT dr.* FROM `default_recipes` dr LEFT JOIN `updated_by_users` ubu ON dr.`drecipe_id` = ubu.`updated_drecipe_id`AND ubu.`dietitian_id`='{$_SESSION['dietitian_id']}' WHERE ubu.`updated_drecipe_id` IS NULL AND ubu.`dietitian_id` IS NULL AND ";
-                        } else { */
-                        $tableQuery = "SELECT * FROM $tableName WHERE   ";
-                        // }
+                    //start of search database no longer needed    
+                    // foreach ($tableColumnText as $tableName => $columnsText) {
+                    //     $tableDisplayName = isset($tableDisplayNames[$tableName]) ? $tableDisplayNames[$tableName] : " ";
+                    //     $tableLink = isset($tableLinks[$tableName]) ? $tableLinks[$tableName] : "#";
+                    //     /*  $dietitianuser_id = $_SESSION['dietitianuserID'];
+                    //    if ($tableName === "default_recipes") {
+                    //         $tableQuery = "SELECT dr.* FROM `default_recipes` dr LEFT JOIN `updated_by_users` ubu ON dr.`drecipe_id` = ubu.`updated_drecipe_id`AND ubu.`dietitian_id`='{$_SESSION['dietitian_id']}' WHERE ubu.`updated_drecipe_id` IS NULL AND ubu.`dietitian_id` IS NULL AND ";
+                    //     } else { */
+                    //     $tableQuery = "SELECT * FROM $tableName WHERE   ";
+                    //     // }
 
-                        $firstColumn = true;
-                        foreach ($columnsText as $columnName => $displayColumnName) {
-                            if (!$firstColumn) {
-                                $tableQuery .= " OR ";
-                            }
-                            $tableQuery .= "$columnName LIKE '%$searchText%'";
-                            $firstColumn = false;
-                        }
-                        $result = $conn->query($tableQuery);
-                        $tableLink .= "?search=" . urlencode($searchText);
-                        while ($row = $result->fetch_assoc()) {
-                            foreach ($row as $columnValue) {
-                                $words = explode(' ', $columnValue);
+                    //     $firstColumn = true;
+                    //     foreach ($columnsText as $columnName => $displayColumnName) {
+                    //         if (!$firstColumn) {
+                    //             $tableQuery .= " OR ";
+                    //         }
+                    //         $tableQuery .= "$columnName LIKE '%$searchText%'";
+                    //         $firstColumn = false;
+                    //     }
+                    //     $result = $conn->query($tableQuery);
+                    //     $tableLink .= "?search=" . urlencode($searchText);
+                    //     while ($row = $result->fetch_assoc()) {
+                    //         foreach ($row as $columnValue) {
+                    //             $words = explode(' ', $columnValue);
 
-                                // Find and highlight the matched word
-                                foreach ($words as $word) {
+                    //             // Find and highlight the matched word
+                    //             foreach ($words as $word) {
 
-                                    if (stristr($word, $searchText)) {
-                                        $highlightedWord = str_ireplace($searchText, "<b>$searchText</b>", $word);
-                                        $searchResult .= "<a href='$tableLink' class='table-link'><div class='search-result'>$highlightedWord <b> . </b> $tableDisplayName<b> . </b> $displayColumnName <img src='" . $DEFAULT_PATH . "assets/icons/arrow.svg' class='result-arrow'></div></a>";
-                                        $resultCount++;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //                 if (stristr($word, $searchText)) {
+                    //                     $highlightedWord = str_ireplace($searchText, "<b>$searchText</b>", $word);
+                    //                     $searchResult .= "<a href='$tableLink' class='table-link'><div class='search-result'>$highlightedWord <b> . </b> $tableDisplayName<b> . </b> $displayColumnName <img src='" . $DEFAULT_PATH . "assets/icons/arrow.svg' class='result-arrow'></div></a>";
+                    //                     $resultCount++;
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    //end of database search once again its no longer needed
 
                     if ($showAll) {
                         if (!empty($searchResult)) {
@@ -311,6 +321,7 @@ ob_start(); ?><?php
                             echo $noResultMessage;
                         }
                     } else {
+                        // echo "$searchResult : ".$searchResult;
                         $maxResultsToShow = 5; // Maximum number of results to show initially
 
                         $limitedResults = '';

@@ -54,6 +54,6 @@ if (isset($_SESSION['dietitianuserID'])) {
     }
 
 }else {
-	header("Location: ../../index.php");
+	header("Location:  ../../index.php");
 	exit;
 }

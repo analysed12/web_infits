@@ -4,7 +4,7 @@ require_once "smtp/class.phpmailer.php";
 require_once('constant/constant.php');
 session_start();
 if (isset($_POST['login_user'])) {
-    $connect = mysqli_connect('localhost', 'root', '', 'infits') or die('no table found');
+    $connect = mysqli_connect('localhost', 'root', '', 'u991535966_shared_infits') or die('no table found');
     $query = "select email from dietitian  where email = '" . $_POST['dietitianuserID'] . "' ";
     $result = mysqli_query($connect, $query) or die('no records Found');
     if (mysqli_num_rows($result) == 1) {
@@ -645,7 +645,7 @@ body {
 
           
                             <p></p>
-                            <a href="/login.php" class="sign_in_sec">
+                            <a href="./login.php" class="sign_in_sec">
                                 <span style="font-size:20px; color:#4F1963;"><i
                                         class="fa-solid fa-arrow-left me-2"></i>Back to Sign in</span>
                             </a>

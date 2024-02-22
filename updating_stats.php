@@ -668,6 +668,55 @@ if (isset($_POST['updating'])){
         echo ($responsedata);
         exit;
     }
+    else if($_POST['updating']==="7"){
+        require('constant/config.php');
+        date_default_timezone_set("Asia/Calcutta");
+        $today = new DateTime();
+        $today = $today->format('Y-m-d');
+        $client_id = $_POST['client_id'];
+        $sql2 = "SELECT SUM(steps) FROM `steptracker` WHERE client_id = $client_id AND `dateandtime` >= '{$today} 00:00:00' AND `dateandtime` <= '{$today} 23:59:59'; ";
+        $result2 = $conn->query($sql2);
+        $row2 = mysqli_fetch_assoc($result2);
+        $todaysteps = $row2['SUM(steps)'];
+
+        $sql3 = "SELECT SUM(average) FROM `heartrate` WHERE client_id = $client_id AND `dateandtime` >= '{$today} 00:00:00' AND `dateandtime` <= '{$today} 23:59:59'; ";
+        $result3 = $conn->query($sql3);
+        $row3 = mysqli_fetch_assoc($result3);
+        $todayheart = $row3['SUM(average)'];
+
+        $sql4 = "SELECT SUM(amount) FROM `watertracker` WHERE client_id = $client_id AND `dateandtime` >= '{$today} 00:00:00' AND `dateandtime` <= '{$today} 23:59:59'; ";
+        $result4 = $conn->query($sql4);
+        $row4 = mysqli_fetch_assoc($result4);
+        $todaywater = $row4['SUM(amount)'];
+
+        $sql5 = "SELECT SUM(weight) FROM `weighttracker` WHERE client_id = $client_id AND `dateandtime` >= '{$today} 00:00:00' AND `dateandtime` <= '{$today} 23:59:59'; ";
+        $result5 = $conn->query($sql5);
+        $row5 = mysqli_fetch_assoc($result5);
+        $todayweight = $row5['SUM(weight)'];
+
+        $sql6 = "SELECT SUM(hrsSlept), SUM(minsSlept) FROM `sleeptracker` WHERE client_id = $client_id AND `dateandtime` >= '{$today} 00:00:00' AND `dateandtime` <= '{$today} 23:59:59'; ";
+        $result6 = $conn->query($sql6);
+        $row6 = mysqli_fetch_assoc($result6);
+        $todaysleephrs = $row6['SUM(hrsSlept)'];
+        $todaysleepmins = $row6['SUM(minsSlept)'];
+
+        $sql7 = "SELECT SUM(caloriesConsumed) FROM `calorietracker` WHERE client_id = $client_id AND `dateandtime` >= '{$today} 00:00:00' AND `dateandtime` <= '{$today} 23:59:59'; ";
+        $result7 = $conn->query($sql7);
+        $row7 = mysqli_fetch_assoc($result7);
+        $todaycalorie = $row7['SUM(caloriesConsumed)'];
+        $responsedata = json_encode(array(
+            "ts"=>$todaysteps,
+            "th"=>$todayheart,
+            "tw"=>$todaywater,
+            "twe"=>$todayweight,
+            "tsh"=>$todaysleephrs,
+            "tsm"=>$todaysleepmins,
+            "tc"=>$todaycalorie
+        ));
+        header("Content-type: application/json");
+        echo ($responsedata);
+        exit;
+    }
 }
 
 ?>

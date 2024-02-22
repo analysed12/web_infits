@@ -1,5 +1,5 @@
 <?php
 
-$DEFAULT_PATH = 'https://infits.in/';
+$DEFAULT_PATH = 'http://localhost/updated_infits/';
 
 ?>

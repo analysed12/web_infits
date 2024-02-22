@@ -6,7 +6,6 @@ require("vendor/autoload.php");
     <link rel="stylesheet" href="<?=$DEFAULT_PATH?>vendor/components/font-awesome/css/all.min.css">
     <link rel="stylesheet" href="<?=$DEFAULT_PATH?>vendor/components/font-awesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="<?=$DEFAULT_PATH?>/assets/css/independent_search.css" />
 </head>
 <style>
     @font-face {
