@@ -30,7 +30,7 @@ if (isset($_GET['logout'])) {
 
 body {
     margin: 0;
-    background: url('./assets/images/Vector_Bottom_Right.svg');
+    background: url('<?=$DEFAULT_PATH?>assets/images/Vector_Bottom_Right.svg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: bottom -51px right -40px;
@@ -321,7 +321,7 @@ a {
     background: #FFFFFF;
     padding: 15px 20px;
     display: none;
-    z-index: 9999;
+    z-index: 9999; /* Adjust the value based on your needs  */
 }
 
 @keyframes slideDown {
@@ -482,50 +482,6 @@ a {
         float: right;
         margin: 6px;
     }
-    
-    .noti_li{
-        list-style: none;
-        display: flex;
-        width: 100%;
-        /* height: ; */
-        box-sizing: border-box;
-        height: 70px;
-        margin-bottom: 5px;
-    }
-    .img_container{
-        box-sizing: inherit;
-        width: 85px;
-        /* width: auto; */
-        height: 70px;
-        background-image: url("./assets/images/noti_reminder.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        /* background-color: #000000; */
-        /* border: 1px solid black; */
-        /* padding: 5px; */
-        /* background-clip: content-box; */
-    }
-    .content_container{
-        display: flex;
-        flex-direction: column;
-        box-sizing: inherit;
-        width: 100%;
-        height: 70px;
-        /* background-color: #0177FB; */
-        /* border: 1px solid black; */
-        padding: 0 0 0 15px;
-        /* background-clip: content-box; */
-        color:black;
-    }
-    .noti_content{
-        line-height: 14px;
-    }
-    .noti_image{
-        width: 100%;
-        height: auto;
-        margin: 0px !important;
-    }
 </style>
 
 
@@ -635,9 +591,9 @@ a {
                             <img src="<?= $DEFAULT_PATH ?>assets/images/search1.svg" class="search-icon" onclick="performSearch(false)">
                             <input type="search" class="search-input" name="search_text" id="searchText" placeholder="Enter your search here" onchange="performSearch(false)">
                         </div>
-                        <div id="searchResultsContainer" class="search-results-container">
+                        <!-- <div id="searchResultsContainer" class="search-results-container"> -->
                             <!-- This is where search results will be displayed -->
-                        </div>
+                        <!-- </div> -->
             </div>
 
             <img id="notifications-pop" src="<?=$DEFAULT_PATH?>assets/images/notification.svg"
@@ -646,15 +602,15 @@ a {
                 <div class="top"><span>Notifications</span><span id="noti-close"><i style="cursor: pointer;"
                             class="fa-solid fa-xmark"></i></span></div>
             </div>
-            <img class="profile-image" src="<?php if ($user['p_p']==='' || $user['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}else{echo 'uploads/profile/images/'.$user['p_p'];}?>" style="height: 24px; width: 24px; border-radius:50%" id="addusermale">
+            <img class="profile-image" src="<?php if ($user['p_p']==='' || $user['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}else{echo $PROFILE_IMAGE.$user['p_p'];}?>" style="height: 24px; width: 24px; border-radius:50%" id="addusermale">
 
         </div>
 
     </div>
 
-    <!-- <div id="searchResultsContainer" style="width: 100vw; padding-left:50px" class="search-results-container"> -->
+    <div id="searchResultsContainer" style="width: 100vw; padding-left:50px" class="search-results-container">
                                 <!-- This is where search results will be displayed -->
-                            <!-- </div> -->
+                            </div>
 
     <!----------------------------------- MOBILE MENU ----------------------------------------->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -722,160 +678,58 @@ a {
     document.getElementById('notifications-pop').addEventListener('click', () => {
         document.getElementsByClassName('noti-box')[0].style.animation = 'slideDown 0.5s forwards';
         document.getElementsByClassName('noti-box')[0].style.display = 'block';
-        document.getElementsByClassName('noti-box')[0].style.zIndex = 5;
 
     });
     document.getElementById('noti-close').addEventListener('click', () => {
         document.getElementsByClassName('noti-box')[0].style.animation = 'slideUp 0.5s forwards';
-        document.getElementsByClassName('noti-box')[0].style.zIndex = 0;
       
     }); 
-    // const currentPath = window.location.pathname;
-    // const lastPage = currentPath.split('/').pop().split('.').shift();
-    // document.getElementsByClassName('nav-' + lastPage)[0].classList.add('navactive');
-    // const active_bar = document.querySelector('.navactive');
-    // iconChange(active_bar);
+    const currentPath = window.location.pathname;
+    const lastPage = currentPath.split('/').pop().split('.').shift();
+    document.getElementsByClassName('nav-' + lastPage)[0].classList.add('navactive');
+    const active_bar = document.querySelector('.navactive');
+    iconChange(active_bar);
 
-    // function iconChange(el, active = "__active") {
-    //     const src = el.firstElementChild.getAttribute('src');
-    //     let new_src = src.split('/').pop().split('.').shift();
-    //     if (active == "") {
-    //         new_src = src.split('/').pop().split('.').shift().split('__').shift();
-    //     }
-    //     el.firstElementChild.setAttribute('src', `<?=$DEFAULT_PATH?>assets/images/${new_src}${active}.svg`);
-
-    // }
-    // const side_links_hover = document.querySelectorAll('.sidenavlink');
-    // side_links_hover.forEach(el => {
-    //     el.addEventListener('mouseover', () => {
-    //         if (el.classList.contains('navactive')) {
-    //             return true;
-    //         }
-    //         iconChange(el);
-    //     });
-    //     el.addEventListener('mouseout', () => {
-    //         if (el.classList.contains('navactive')) {
-    //             return true;
-    //         }
-    //         iconChange(el, "");
-    //     })
-    // });
-
-    // const side_links_hover2 = document.querySelectorAll('.sidenavlink2');
-    // side_links_hover2.forEach(el => {
-    //     el.addEventListener('mouseover', () => {
-    //         if (el.classList.contains('navactive')) {
-    //             return true;
-    //         }
-    //         iconChange(el);
-    //     });
-    //     el.addEventListener('mouseout', () => {
-    //         if (el.classList.contains('navactive')) {
-    //             return true;
-    //         }
-    //         iconChange(el, "");
-    //     })
-    // });
-
-    if (typeof window.currentPath === 'undefined') {
-    // If it's not declared, declare it
-    window.currentPath = window.location.pathname;
-    console.log(window.currentPath); // Do something with currentPath
-} else {
-    // If it's already declared, you can choose to update it or perform other actions
-    console.log('currentPath is already declared');
-    console.log(window.currentPath); // Access the existing value of currentPath
-}
-
-if (typeof window.lastPage === 'undefined') {
-    // If it's not declared, declare it
-    window.lastPage = currentPath.split('/').pop().split('.').shift();
-    console.log(window.lastPage); // Do something with currentPath
-} else {
-    // If it's already declared, you can choose to update it or perform other actions
-    console.log('lastPage is already declared');
-    console.log(window.lastPage); // Access the existing value of currentPath
-}
-//console.log('currentPath', currentPath);
-// const lastPage = currentPath.split('/').pop().split('.').shift();
-console.log('lastPage', lastPage);
-console.log('get element',document.querySelectorAll('.nav-' + lastPage));
-document.getElementsByClassName('nav-' + lastPage)[0].classList.add('navactive');
-//const active_bar = document.querySelector('.navactive');
-
-if (typeof window.active_bar === 'undefined') {
-    // If it's not declared, declare it
-    window.active_bar = document.querySelector('.navactive');
-    console.log(window.active_bar); // Do something with currentPath
-} else {
-    // If it's already declared, you can choose to update it or perform other actions
-    console.log('active_bar is already declared');
-    console.log(window.active_bar); // Access the existing value of currentPath
-}
-
-iconChange(active_bar);
-
-function iconChange(el, active = "__active") {
-    const src = el.firstElementChild.getAttribute('src');
-    let new_src = src.split('/').pop().split('.').shift();
-    /* if (active == "") {
-        new_src = src.split('/').pop().split('.').shift().split('__').shift();
-    } */
-    el.firstElementChild.setAttribute('src', `<?=$DEFAULT_PATH?>assets/images/${new_src}.svg`);
-
-}
-
-if (typeof window.side_links_hover === 'undefined') {
-    // If it's not declared, declare it
-    window.side_links_hover = document.querySelectorAll('.sidenavlink');
-    console.log(window.side_links_hover); // Do something with currentPath
-} else {
-    // If it's already declared, you can choose to update it or perform other actions
-    console.log('side_links_hover is already declared');
-    console.log(window.side_links_hover); // Access the existing value of currentPath
-}
-//const side_links_hover = document.querySelectorAll('.sidenavlink');
-side_links_hover.forEach(el => {
-    el.addEventListener('mouseover', () => {
-        if (el.classList.contains('navactive')) {
-            return true;
+    function iconChange(el, active = "__active") {
+        const src = el.firstElementChild.getAttribute('src');
+        let new_src = src.split('/').pop().split('.').shift();
+        if (active == "") {
+            new_src = src.split('/').pop().split('.').shift().split('__').shift();
         }
-        iconChange(el);
+        el.firstElementChild.setAttribute('src', `<?=$DEFAULT_PATH?>assets/images/${new_src}${active}.svg`);
+
+    }
+    const side_links_hover = document.querySelectorAll('.sidenavlink');
+    side_links_hover.forEach(el => {
+        el.addEventListener('mouseover', () => {
+            if (el.classList.contains('navactive')) {
+                return true;
+            }
+            iconChange(el);
+        });
+        el.addEventListener('mouseout', () => {
+            if (el.classList.contains('navactive')) {
+                return true;
+            }
+            iconChange(el, "");
+        })
     });
-    el.addEventListener('mouseout', () => {
-        if (el.classList.contains('navactive')) {
-            return true;
-        }
-        iconChange(el, "");
-    })
-});
 
-if (typeof window.side_links_hover2 === 'undefined') {
-    // If it's not declared, declare it
-    window.side_links_hover2 = document.querySelectorAll('.sidenavlink2');
-    console.log(window.side_links_hover2); // Do something with currentPath
-} else {
-    // If it's already declared, you can choose to update it or perform other actions
-    console.log('side_links_hover2 is already declared');
-    console.log(window.side_links_hover2); // Access the existing value of currentPath
-}
-
-//const side_links_hover2 = document.querySelectorAll('.sidenavlink2');
-side_links_hover2.forEach(el => {
-    el.addEventListener('mouseover', () => {
-        if (el.classList.contains('navactive')) {
-            return true;
-        }
-        iconChange(el);
+    const side_links_hover2 = document.querySelectorAll('.sidenavlink2');
+    side_links_hover2.forEach(el => {
+        el.addEventListener('mouseover', () => {
+            if (el.classList.contains('navactive')) {
+                return true;
+            }
+            iconChange(el);
+        });
+        el.addEventListener('mouseout', () => {
+            if (el.classList.contains('navactive')) {
+                return true;
+            }
+            iconChange(el, "");
+        })
     });
-    el.addEventListener('mouseout', () => {
-        if (el.classList.contains('navactive')) {
-            return true;
-        }
-        iconChange(el, "");
-    })
-});
-
     function toggleSearch() {
         var searchContainer = document.getElementById("searchContainer");
         searchContainer.style.display = (searchContainer.style.display === "flex") ? "none" : "flex";
@@ -907,64 +761,10 @@ side_links_hover2.forEach(el => {
     </script>
 
 <script>
-        // let profile_image = document.getElementsByClassName("profile-image")[0];
-        // profile_image.addEventListener("click",()=>{
-        //     window.location = 'profile_settings_show.php';
-        // });
-
-        if(typeof window.profile_image === "undefined") {
-            let profile_image = document.getElementsByClassName("profile-image")[0];
-            profile_image.addEventListener("click",()=>{
+        let profile_image = document.getElementsByClassName("profile-image")[0];
+        profile_image.addEventListener("click",()=>{
             window.location = 'profile_settings_show.php';
-        });
-        }
-        
-        function get_notifications(){
-            console.log('get_notifications()');
-            $.ajax(
-            {
-                type: "POST", // HTTP method
-                url: "notification_fetch.php", // URL to send the request
-                data:{dietitianuserID:<?='"'.$id11.'"';?>},
-                success: function(response) {
-                    var notifications = JSON.parse(response);
-                    var notificationList = $('.noti-box');
-                    console.log("This is response : ",response);
-
-                    // Display notifications in the notification bar
-                    notifications.forEach(function(notification) {
-                        /* notification_content = [notification.ttl, notification.body];
-                        notification_content.forEach((noti_c)=>{
-                        }); */
-                        let listItemContent = "<b>" + notification.ttl + "</b>" + " " + notification.body;
-                        let listItem = $('<li class = "noti_li">');
-                        let listDiv1 = $('<div class = "img_container">');
-                        // let listImg = $('<img>');
-                        // listImg.attr('src', './assets/images/reminder.svg');
-                        // listImg.attr('class', 'noti_image');
-                        let listDiv2 = $('<div class = "content_container">');
-                        let h1 = $('<span class = "noti_ttl">');
-                        h1.text(notification.ttl);
-                        let p = $('<span class = "noti_content">');
-                        p.text(notification.body);
-                        listDiv2.append(h1);
-                        listDiv2.append(p);
-                        // listDiv1.append(listImg);
-                        listItem.append(listDiv1);
-                        listItem.append(listDiv2);
-                        notificationList.append(listItem);
-                    });
-                    // Function to handle successful response
-                    console.log("Response:", response);
-                },
-                error: function(xhr, status, error) {
-                    // Function to handle errors
-                    console.error("Error:", error);
-                }
-            }
-        );
-        }
-        get_notifications();
+        })
 </script>
 </body>
 

@@ -257,7 +257,7 @@ body{
 
 .content .created-client-form-container .client-card-container .client-cards {
     height: 190px;
-    width: 186px;
+    width: 250px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -547,7 +547,7 @@ padding-bottom:0.5rem;
                 const formName = card.querySelector('.form-content h4').textContent.toLowerCase();
 
                 if (formName.includes(searchTerm)) {
-                    card.style.display = 'block';
+                    card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
                 }
