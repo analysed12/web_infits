@@ -713,6 +713,8 @@
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
         var span = document.getElementsByClassName("close")[0];
+        let imagePreview = Array.from(document.getElementsByClassName('profile_image'));
+
 
     //  this condition is because in the socialLogin the "eyeicon == null" 
     //  as it is null in the socialLogin it will not run the code below...
@@ -737,7 +739,6 @@
         
         function showImagePreview(event) {
             var input = event.target;
-            let imagePreview = Array.from(document.getElementsByClassName('profile_image'));
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
