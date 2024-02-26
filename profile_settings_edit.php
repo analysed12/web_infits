@@ -609,7 +609,7 @@
             </div>
             <div class="rightside" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2rem">
                 <div class="profiles" style="display:flex;flex-direction:column;position:relative; width:fit-content;">
-                    <img class="profile_image" src="<?php if ($data['p_p']!=='user-default.png'){echo 'uploads/profile/images/'.$data['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$data['p_p'];}?>" style="height: 150px; width: 150px; border-radius: 25px;z-index:-1;" alt="">
+                    <img class="profile_image" src="<?php if ($data['p_p']!=='user-default.png'){echo 'uploads/profile/images/'.$data['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$data['p_p'];}?>" style="height: 150px !important; width: 150px !important; border-radius: 25px;z-index:-1;" alt="">
                     <a href="#popup2" class="edit" id="edit" style="border:3px solid white; background:#0177FD; border-radius:50%; width:38px;height:38px;position:absolute;right:15px;bottom:18px;text-decoration: none;display:flex;align-items:center;justify-content:center">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/Edit-Img.svg"></a>
 
@@ -658,10 +658,10 @@
         <div class="modal-img">
             <a class="img-close" href="#">&times;</a>
             <div class="d-flex pop">
-                <img class="profile_image" src="<?php if ($data['p_p']!=='user-default.png'){echo 'uploads/profile/images/'.$data['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$data['p_p'];}?>">
+                <img class="profile_image" src="<?php if ($data['p_p']!=='user-default.png'){echo 'uploads/profile/images/'.$data['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$data['p_p'];}?>" style="height: 150px !important; width: 150px !important;">
                 <div class="d-flex flex-column upload">
                     <button class="upload-btn" id="upload-btn" onclick="clickMe()">Upload New<img src="<?= $DEFAULT_PATH ?>assets/images/Edit-Profile.svg" class="up"> </button>
-                    <button class="upload-btn">Remove Picture<img src="<?= $DEFAULT_PATH ?>assets/images/del-Profile.svg" class="del"></button>
+                    <button class="upload-btn" onclick="removeit()">Remove Picture<img src="<?= $DEFAULT_PATH ?>assets/images/del-Profile.svg" class="del"></button>
                 </div>
             </div>
         </div>
@@ -772,6 +772,11 @@
                 input.placeholder = `${obj[social]}`;
                 input.value = `${obj[social]}`;
             }
+        }
+        const removeit=()=>{
+            imagePreview.forEach((img,index)=>{
+                img.setAttribute('src', "<?=$DEFAULT_PATH.'assets/images/user-default.png'?>");
+            })
         }
         
         // this block is for show and hide of the popUp named "myModel"
