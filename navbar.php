@@ -30,7 +30,7 @@ if (isset($_GET['logout'])) {
 
 body {
     margin: 0;
-    background: url('<?=$DEFAULT_PATH?>assets/images/Vector_Bottom_Right.svg');
+    background: url('./assets/images/Vector_Bottom_Right.svg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: bottom -51px right -40px;
@@ -321,7 +321,7 @@ a {
     background: #FFFFFF;
     padding: 15px 20px;
     display: none;
-    z-index: 9999; /* Adjust the value based on your needs  */
+    z-index: 9999;
 }
 
 @keyframes slideDown {
@@ -482,6 +482,79 @@ a {
         float: right;
         margin: 6px;
     }
+    
+    .noti_li{
+        list-style: none;
+        display: flex;
+        width: 100%;
+        /* height: ; */
+        box-sizing: border-box;
+        height: 70px;
+        margin-bottom: 5px;
+    }
+    .img_container{
+        box-sizing: inherit;
+        width: 85px;
+        /* width: auto; */
+        height: 70px;
+        background-image: url("./assets/images/noti_reminder.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        /* background-color: #000000; */
+        /* border: 1px solid black; */
+        /* padding: 5px; */
+        /* background-clip: content-box; */
+    }
+    .content_container{
+        display: flex;
+        flex-direction: column;
+        box-sizing: inherit;
+        width: 100%;
+        height: 70px;
+        /* background-color: #0177FB; */
+        /* border: 1px solid black; */
+        padding: 0 0 0 15px;
+        /* background-clip: content-box; */
+        color:black;
+    }
+    .noti_content{
+        line-height: 14px;
+    }
+    .noti_image{
+        width: 100%;
+        height: auto;
+        margin: 0px !important;
+    }
+
+    .scrolling-navbar {
+        overflow-y: auto;
+    }
+    .nav600{
+        max-height: 60vh;
+    }
+    .nav550{
+        max-height: 58vh;
+    }
+    .nav500{
+        max-height: 55vh;
+    }
+    .nav450{
+        max-height: 50vh;
+    }
+    .nav400{
+        max-height: 41.5vh;
+    }
+    .scrolling-navbar::-webkit-scrollbar {
+        width: 6px;
+        background-color: white;
+    }
+
+    .scrolling-navbar::-webkit-scrollbar-thumb {
+        background: linear-gradient(0deg, #cb1fd5, #2b5eeb);
+        border-radius: 3px;
+    }
+    
 </style>
 
 
@@ -490,60 +563,87 @@ a {
     <div class="sidenav" id="sidenavbar">
         <img src="<?=$DEFAULT_PATH?>assets/images/InfitsLogo.svg" class="sidenavlink" id="logo">
         <!-- changed id of below a tag from index to dashboard for search process -->
-        <a id="dashboard"
-            class="sidenavlink nav-index nav-task_list nav-track_stats_steps nav-track_stats_water nav-track_stats_heart nav-track_stats_sleep nav-track_stats_weight nav-track_stats_calorie"
-            href="index.php"><img src="<?=$DEFAULT_PATH?>assets/images/dashboard.svg" class="nav-icon">Dashboard</a>
-        <a id="messages" class="sidenavlink nav-chat_home" href="chat_home.php"><img
-                src="<?=$DEFAULT_PATH?>assets/images/chat.svg" class="nav-icon">Messages</a>
-        <a id="live" class="sidenavlink" href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg"
-                class="nav-icon">Live</a>
-        <a id="calendar_of_events" class="sidenavlink nav-calendar_of_events" href="appointments.php"><img
-                src="<?=$DEFAULT_PATH?>assets/images/calendar.svg" class="nav-icon">Appoinments</a>
-        <a id="client_list"
-            class="sidenavlink nav-add_client nav-client_list nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
-            href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg" class="nav-icon">Clients</a>
-        <a id="myplan" class="sidenavlink nav-update_plan"><img
-                src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg" class="nav-icon">Diet Plans</a>
-            <div class="dropdown-container fixing" style="display:none;">
-                <a class="nav-myplan nav-create_plan nav-dietplan_default sidenavlink2" href="myplan.php">&nbsp;&nbsp;&nbsp; My Plans</a>
-            </div>
-        <a id="payments" class="sidenavlink"><img  
-                src="<?=$DEFAULT_PATH?>assets/images/payment.svg" class="nav-icon">Payments</a>
-            <div class="dropdown-container fixing" style="display:none;">
-                <a class="nav-billingAndInvoices sidenavlink2" href="billingAndInvoices.php">&nbsp;&nbsp;&nbsp; Your Bills</a>
-                <a class="nav-payments sidenavlink2" href="payments.php">&nbsp;&nbsp;&nbsp; Client Payment</a>
-            </div>
-        <a id="create_recipe" class="sidenavlink nav-recipe_breakfast nav-recipe_all_breakfast nav-recipe_lunch nav-recipe_all_lunch 
-                nav-recipe_snacks nav-recipe_all_snacks nav-recipe_dinner nav-recipe_all_dinner"><img
-                src="<?=$DEFAULT_PATH?>assets/images/recipies.svg" class="nav-icon">Recipes</a>
-            <div class="dropdown-container fixing" style="display:none;">
-                <a class="nav-all_recipes sidenavlink2" href="all_recipes.php">&nbsp;&nbsp;&nbsp; My Recipes</a>
-                <a class="nav-create_recipe sidenavlink2" href="create_recipe.php">&nbsp;&nbsp;&nbsp; Add Recipe</a>
-            </div>
-        <a id="healthform" class="sidenavlink nav-healthform"><img
-                src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg" class="nav-icon">Health Form</a>
-            <div class="dropdown-container fixing" style="display:none;">
-                <a class="nav-forms_and_documents nav-health_detail_form_blank sidenavlink2" href="forms_and_documents.php">&nbsp;&nbsp;&nbsp; My Forms</a>
-            </div>
-            <script>
-                // Get all dropdown buttons
-                var dropdownBtns = document.getElementsByClassName('sidenavlink ');
-                // Loop through the dropdown buttons and add the onclick event
-                for (var i = 0; i < dropdownBtns.length; i++) {
-                dropdownBtns[i].addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    var dropdownContainer = this.nextElementSibling;
-                    if (dropdownContainer.style.display === 'block') {
-                    dropdownContainer.style.display = 'none';
-                    dropdownContainer.style.borderLeft = 'none';
-                    } 
-                    else {
-                    dropdownContainer.style.display = 'block';
-                    dropdownContainer.style.borderLeft = '5px #0177FB';
+        <div style=" display: flex; flex-direction: column; " id="basicnavbar">   
+            <a id="dashboard"
+                class="sidenavlink nav-index nav-task_list nav-track_stats_steps nav-track_stats_water nav-track_stats_heart nav-track_stats_sleep nav-track_stats_weight nav-track_stats_calorie"
+                href="index.php"><img src="<?=$DEFAULT_PATH?>assets/images/dashboard.svg" class="nav-icon">Dashboard</a>
+            <a id="messages" class="sidenavlink nav-chat_home" href="chat_home.php"><img
+                    src="<?=$DEFAULT_PATH?>assets/images/chat.svg" class="nav-icon">Messages</a>
+            <a id="live" class="sidenavlink" href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg"
+                    class="nav-icon">Live</a>
+            <a id="calendar_of_events" class="sidenavlink nav-calendar_of_events" href="appointments.php"><img
+                    src="<?=$DEFAULT_PATH?>assets/images/calendar.svg" class="nav-icon">Appoinments</a>
+            <a id="client_list"
+                class="sidenavlink nav-add_client nav-client_list nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
+                href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg" class="nav-icon">Clients</a>
+            <a id="myplan" class="sidenavlink nav-update_plan"><img
+                    src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg" class="nav-icon">Diet Plans</a>
+                <div class="dropdown-container fixing" style="display:none;">
+                    <a class="nav-myplan nav-create_plan nav-dietplan_default sidenavlink2" href="myplan.php">&nbsp;&nbsp;&nbsp; My Plans</a>
+                </div>
+            <a id="payments" class="sidenavlink"><img  
+                    src="<?=$DEFAULT_PATH?>assets/images/payment.svg" class="nav-icon">Payments</a>
+                <div class="dropdown-container fixing" style="display:none;">
+                    <a class="nav-billingAndInvoices sidenavlink2" href="billingAndInvoices.php">&nbsp;&nbsp;&nbsp; Your Bills</a>
+                    <a class="nav-payments sidenavlink2" href="payments.php">&nbsp;&nbsp;&nbsp; Client Payment</a>
+                </div>
+            <a id="create_recipe" class="sidenavlink nav-recipe_breakfast nav-recipe_all_breakfast nav-recipe_lunch nav-recipe_all_lunch 
+                    nav-recipe_snacks nav-recipe_all_snacks nav-recipe_dinner nav-recipe_all_dinner"><img
+                    src="<?=$DEFAULT_PATH?>assets/images/recipies.svg" class="nav-icon">Recipes</a>
+                <div class="dropdown-container fixing" style="display:none;">
+                    <a class="nav-all_recipes sidenavlink2" href="all_recipes.php">&nbsp;&nbsp;&nbsp; My Recipes</a>
+                    <a class="nav-create_recipe sidenavlink2" href="create_recipe.php">&nbsp;&nbsp;&nbsp; Add Recipe</a>
+                </div>
+            <a id="healthform" class="sidenavlink nav-healthform"><img
+                    src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg" class="nav-icon">Health Form</a>
+                <div class="dropdown-container fixing" style="display:none;">
+                    <a class="nav-forms_and_documents nav-health_detail_form_blank sidenavlink2" href="forms_and_documents.php">&nbsp;&nbsp;&nbsp; My Forms</a>
+                </div>
+                <script>
+                    // Get all dropdown buttons
+                    var dropdownBtns = document.getElementsByClassName('sidenavlink ');
+                    // Loop through the dropdown buttons and add the onclick event
+                    for (var i = 0; i < dropdownBtns.length; i++) {
+                    dropdownBtns[i].addEventListener('click', function() {
+                        this.classList.toggle('active');
+                        var dropdownContainer = this.nextElementSibling;
+                        if (dropdownContainer.style.display === 'block') {
+                        dropdownContainer.style.display = 'none';
+                        dropdownContainer.style.borderLeft = 'none';
+                        } 
+                        else {
+                        dropdownContainer.style.display = 'block';
+                        dropdownContainer.style.borderLeft = '5px #0177FB';
+                        }
+                    });
                     }
-                });
+                </script>
+        </div>
+        <script>
+            window.addEventListener('resize', function() {
+                var navbarContainer = document.getElementById('basicnavbar');
+                var windowHeight = window.innerHeight;
+
+                if (windowHeight < 400) {
+                    navbarContainer.classList.remove('nav600', 'nav550', 'nav500', 'nav450');
+                    navbarContainer.classList.add('nav400', 'scrolling-navbar');
+                } else if (windowHeight < 450) {
+                    navbarContainer.classList.remove('nav600', 'nav550', 'nav500', 'nav400');
+                    navbarContainer.classList.add('nav450', 'scrolling-navbar');
+                } else if (windowHeight < 500) {
+                    navbarContainer.classList.remove('nav600', 'nav550', 'nav450', 'nav400');
+                    navbarContainer.classList.add('nav500', 'scrolling-navbar');
+                } else if (windowHeight < 550) {
+                    navbarContainer.classList.remove('nav600', 'nav500', 'nav450', 'nav400');
+                    navbarContainer.classList.add('nav550', 'scrolling-navbar');
+                } else if (windowHeight < 600) {
+                    navbarContainer.classList.remove('nav550', 'nav500', 'nav450', 'nav400');
+                    navbarContainer.classList.add('nav600', 'scrolling-navbar');
+                } else {
+                    navbarContainer.classList.remove('nav600', 'nav550', 'nav500', 'nav450', 'nav400', 'scrolling-navbar');
                 }
-            </script>
+            });
+        </script>
         <div class="menu-bottom">
             <a class="sidenavlink nav-help" href="help.php"><img src="<?=$DEFAULT_PATH?>assets/images/getHelp.svg"
                     class="nav-icon">Get Help</a>
@@ -591,9 +691,9 @@ a {
                             <img src="<?= $DEFAULT_PATH ?>assets/images/search1.svg" class="search-icon" onclick="performSearch(false)">
                             <input type="search" class="search-input" name="search_text" id="searchText" placeholder="Enter your search here" onchange="performSearch(false)">
                         </div>
-                        <!-- <div id="searchResultsContainer" class="search-results-container"> -->
+                        <div id="searchResultsContainer" class="search-results-container">
                             <!-- This is where search results will be displayed -->
-                        <!-- </div> -->
+                        </div>
             </div>
 
             <img id="notifications-pop" src="<?=$DEFAULT_PATH?>assets/images/notification.svg"
@@ -602,15 +702,15 @@ a {
                 <div class="top"><span>Notifications</span><span id="noti-close"><i style="cursor: pointer;"
                             class="fa-solid fa-xmark"></i></span></div>
             </div>
-            <img class="profile-image" src="<?php if ($user['p_p']==='' || $user['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}else{echo $PROFILE_IMAGE.$user['p_p'];}?>" style="height: 24px; width: 24px; border-radius:50%" id="addusermale">
+            <img class="profile-image" src="<?php if ($user['p_p']==='' || $user['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}else{echo 'uploads/profile/images/'.$user['p_p'];}?>" style="height: 24px; width: 24px; border-radius:50%" id="addusermale">
 
         </div>
 
     </div>
 
-    <div id="searchResultsContainer" style="width: 100vw; padding-left:50px" class="search-results-container">
+    <!-- <div id="searchResultsContainer" style="width: 100vw; padding-left:50px" class="search-results-container"> -->
                                 <!-- This is where search results will be displayed -->
-                            </div>
+                            <!-- </div> -->
 
     <!----------------------------------- MOBILE MENU ----------------------------------------->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -678,58 +778,160 @@ a {
     document.getElementById('notifications-pop').addEventListener('click', () => {
         document.getElementsByClassName('noti-box')[0].style.animation = 'slideDown 0.5s forwards';
         document.getElementsByClassName('noti-box')[0].style.display = 'block';
+        document.getElementsByClassName('noti-box')[0].style.zIndex = 5;
 
     });
     document.getElementById('noti-close').addEventListener('click', () => {
         document.getElementsByClassName('noti-box')[0].style.animation = 'slideUp 0.5s forwards';
+        document.getElementsByClassName('noti-box')[0].style.zIndex = 0;
       
     }); 
-    const currentPath = window.location.pathname;
-    const lastPage = currentPath.split('/').pop().split('.').shift();
-    document.getElementsByClassName('nav-' + lastPage)[0].classList.add('navactive');
-    const active_bar = document.querySelector('.navactive');
-    iconChange(active_bar);
+    // const currentPath = window.location.pathname;
+    // const lastPage = currentPath.split('/').pop().split('.').shift();
+    // document.getElementsByClassName('nav-' + lastPage)[0].classList.add('navactive');
+    // const active_bar = document.querySelector('.navactive');
+    // iconChange(active_bar);
 
-    function iconChange(el, active = "__active") {
-        const src = el.firstElementChild.getAttribute('src');
-        let new_src = src.split('/').pop().split('.').shift();
-        if (active == "") {
-            new_src = src.split('/').pop().split('.').shift().split('__').shift();
+    // function iconChange(el, active = "__active") {
+    //     const src = el.firstElementChild.getAttribute('src');
+    //     let new_src = src.split('/').pop().split('.').shift();
+    //     if (active == "") {
+    //         new_src = src.split('/').pop().split('.').shift().split('__').shift();
+    //     }
+    //     el.firstElementChild.setAttribute('src', `<?=$DEFAULT_PATH?>assets/images/${new_src}${active}.svg`);
+
+    // }
+    // const side_links_hover = document.querySelectorAll('.sidenavlink');
+    // side_links_hover.forEach(el => {
+    //     el.addEventListener('mouseover', () => {
+    //         if (el.classList.contains('navactive')) {
+    //             return true;
+    //         }
+    //         iconChange(el);
+    //     });
+    //     el.addEventListener('mouseout', () => {
+    //         if (el.classList.contains('navactive')) {
+    //             return true;
+    //         }
+    //         iconChange(el, "");
+    //     })
+    // });
+
+    // const side_links_hover2 = document.querySelectorAll('.sidenavlink2');
+    // side_links_hover2.forEach(el => {
+    //     el.addEventListener('mouseover', () => {
+    //         if (el.classList.contains('navactive')) {
+    //             return true;
+    //         }
+    //         iconChange(el);
+    //     });
+    //     el.addEventListener('mouseout', () => {
+    //         if (el.classList.contains('navactive')) {
+    //             return true;
+    //         }
+    //         iconChange(el, "");
+    //     })
+    // });
+
+    if (typeof window.currentPath === 'undefined') {
+    // If it's not declared, declare it
+    window.currentPath = window.location.pathname;
+    console.log(window.currentPath); // Do something with currentPath
+} else {
+    // If it's already declared, you can choose to update it or perform other actions
+    console.log('currentPath is already declared');
+    console.log(window.currentPath); // Access the existing value of currentPath
+}
+
+if (typeof window.lastPage === 'undefined') {
+    // If it's not declared, declare it
+    window.lastPage = currentPath.split('/').pop().split('.').shift();
+    console.log(window.lastPage); // Do something with currentPath
+} else {
+    // If it's already declared, you can choose to update it or perform other actions
+    console.log('lastPage is already declared');
+    console.log(window.lastPage); // Access the existing value of currentPath
+}
+//console.log('currentPath', currentPath);
+// const lastPage = currentPath.split('/').pop().split('.').shift();
+console.log('lastPage', lastPage);
+console.log('get element',document.querySelectorAll('.nav-' + lastPage));
+document.getElementsByClassName('nav-' + lastPage)[0].classList.add('navactive');
+//const active_bar = document.querySelector('.navactive');
+
+if (typeof window.active_bar === 'undefined') {
+    // If it's not declared, declare it
+    window.active_bar = document.querySelector('.navactive');
+    console.log(window.active_bar); // Do something with currentPath
+} else {
+    // If it's already declared, you can choose to update it or perform other actions
+    console.log('active_bar is already declared');
+    console.log(window.active_bar); // Access the existing value of currentPath
+}
+
+iconChange(active_bar);
+
+function iconChange(el, active = "__active") {
+    const src = el.firstElementChild.getAttribute('src');
+    let new_src = src.split('/').pop().split('.').shift();
+    /* if (active == "") {
+        new_src = src.split('/').pop().split('.').shift().split('__').shift();
+    } */
+    el.firstElementChild.setAttribute('src', `<?=$DEFAULT_PATH?>assets/images/${new_src}.svg`);
+
+}
+
+if (typeof window.side_links_hover === 'undefined') {
+    // If it's not declared, declare it
+    window.side_links_hover = document.querySelectorAll('.sidenavlink');
+    console.log(window.side_links_hover); // Do something with currentPath
+} else {
+    // If it's already declared, you can choose to update it or perform other actions
+    console.log('side_links_hover is already declared');
+    console.log(window.side_links_hover); // Access the existing value of currentPath
+}
+//const side_links_hover = document.querySelectorAll('.sidenavlink');
+side_links_hover.forEach(el => {
+    el.addEventListener('mouseover', () => {
+        if (el.classList.contains('navactive')) {
+            return true;
         }
-        el.firstElementChild.setAttribute('src', `<?=$DEFAULT_PATH?>assets/images/${new_src}${active}.svg`);
-
-    }
-    const side_links_hover = document.querySelectorAll('.sidenavlink');
-    side_links_hover.forEach(el => {
-        el.addEventListener('mouseover', () => {
-            if (el.classList.contains('navactive')) {
-                return true;
-            }
-            iconChange(el);
-        });
-        el.addEventListener('mouseout', () => {
-            if (el.classList.contains('navactive')) {
-                return true;
-            }
-            iconChange(el, "");
-        })
+        iconChange(el);
     });
+    el.addEventListener('mouseout', () => {
+        if (el.classList.contains('navactive')) {
+            return true;
+        }
+        iconChange(el, "");
+    })
+});
 
-    const side_links_hover2 = document.querySelectorAll('.sidenavlink2');
-    side_links_hover2.forEach(el => {
-        el.addEventListener('mouseover', () => {
-            if (el.classList.contains('navactive')) {
-                return true;
-            }
-            iconChange(el);
-        });
-        el.addEventListener('mouseout', () => {
-            if (el.classList.contains('navactive')) {
-                return true;
-            }
-            iconChange(el, "");
-        })
+if (typeof window.side_links_hover2 === 'undefined') {
+    // If it's not declared, declare it
+    window.side_links_hover2 = document.querySelectorAll('.sidenavlink2');
+    console.log(window.side_links_hover2); // Do something with currentPath
+} else {
+    // If it's already declared, you can choose to update it or perform other actions
+    console.log('side_links_hover2 is already declared');
+    console.log(window.side_links_hover2); // Access the existing value of currentPath
+}
+
+//const side_links_hover2 = document.querySelectorAll('.sidenavlink2');
+side_links_hover2.forEach(el => {
+    el.addEventListener('mouseover', () => {
+        if (el.classList.contains('navactive')) {
+            return true;
+        }
+        iconChange(el);
     });
+    el.addEventListener('mouseout', () => {
+        if (el.classList.contains('navactive')) {
+            return true;
+        }
+        iconChange(el, "");
+    })
+});
+
     function toggleSearch() {
         var searchContainer = document.getElementById("searchContainer");
         searchContainer.style.display = (searchContainer.style.display === "flex") ? "none" : "flex";
@@ -761,10 +963,64 @@ a {
     </script>
 
 <script>
-        let profile_image = document.getElementsByClassName("profile-image")[0];
-        profile_image.addEventListener("click",()=>{
+        // let profile_image = document.getElementsByClassName("profile-image")[0];
+        // profile_image.addEventListener("click",()=>{
+        //     window.location = 'profile_settings_show.php';
+        // });
+
+        if(typeof window.profile_image === "undefined") {
+            let profile_image = document.getElementsByClassName("profile-image")[0];
+            profile_image.addEventListener("click",()=>{
             window.location = 'profile_settings_show.php';
-        })
+        });
+        }
+        
+        function get_notifications(){
+            console.log('get_notifications()');
+            $.ajax(
+            {
+                type: "POST", // HTTP method
+                url: "notification_fetch.php", // URL to send the request
+                data:{dietitianuserID:<?='"'.$id11.'"';?>},
+                success: function(response) {
+                    var notifications = JSON.parse(response);
+                    var notificationList = $('.noti-box');
+                    console.log("This is response : ",response);
+
+                    // Display notifications in the notification bar
+                    notifications.forEach(function(notification) {
+                        /* notification_content = [notification.ttl, notification.body];
+                        notification_content.forEach((noti_c)=>{
+                        }); */
+                        let listItemContent = "<b>" + notification.ttl + "</b>" + " " + notification.body;
+                        let listItem = $('<li class = "noti_li">');
+                        let listDiv1 = $('<div class = "img_container">');
+                        // let listImg = $('<img>');
+                        // listImg.attr('src', './assets/images/reminder.svg');
+                        // listImg.attr('class', 'noti_image');
+                        let listDiv2 = $('<div class = "content_container">');
+                        let h1 = $('<span class = "noti_ttl">');
+                        h1.text(notification.ttl);
+                        let p = $('<span class = "noti_content">');
+                        p.text(notification.body);
+                        listDiv2.append(h1);
+                        listDiv2.append(p);
+                        // listDiv1.append(listImg);
+                        listItem.append(listDiv1);
+                        listItem.append(listDiv2);
+                        notificationList.append(listItem);
+                    });
+                    // Function to handle successful response
+                    console.log("Response:", response);
+                },
+                error: function(xhr, status, error) {
+                    // Function to handle errors
+                    console.error("Error:", error);
+                }
+            }
+        );
+        }
+        get_notifications();
 </script>
 </body>
 
