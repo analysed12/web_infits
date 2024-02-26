@@ -279,7 +279,7 @@ $name = explode(" ", $row['dietitianuserID']);
     <div class="webview">
         <div class="container">
             <div style="height:175px;" class="d-flex justify-content-center align-items-center gap-5">
-            <img class="profile-image" src="<?php if ($user['p_p']==='' || $user['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}else{echo 'uploads/profile/images/'.$user['p_p'];}?>" class="h-100 rounded" alt="...">
+            <img class="profile-image" src="<?php if ($user['p_p']==='' || $user['p_p']==='user-default.png'){echo $DEFAULT_PATH.'assets/images/user-default.png';}else{echo 'uploads/profile/images/'.$user['p_p'];}?>" class="h-100 rounded" alt="..." style="height:150px; width:150px;">
                 <h3><?=$_SESSION['name']?></h3>
             </div>
         </div>
