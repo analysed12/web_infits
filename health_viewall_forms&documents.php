@@ -172,7 +172,7 @@ margin-top: -30px;
 }
 .sub-con{
     padding:10px;
-  height: 610px; 
+  height: 44rem; 
   margin-left: -20px;
   margin-right: -40px;
   overflow-y: scroll;
