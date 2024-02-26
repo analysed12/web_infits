@@ -1200,7 +1200,7 @@ function getClientName($ID, $conn, $dietitianuserID)
                         allcardbtn[i].style.marginLeft = "0px";
                     }
                     if (cardid != "") {
-                        document.getElementById(cardid).style.marginLeft = "230px";
+                        document.getElementById(cardid).style.marginLeft = "0px";
                     }
                     showDialog.style.display = "flex";
                 }
