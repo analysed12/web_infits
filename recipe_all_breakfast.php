@@ -1,6 +1,6 @@
 <?php include('navbar.php');
 $sql = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_courses = 'breakfast'";
-$sql2 = "SELECT dr.* FROM `default_recipes` dr LEFT JOIN `updated_by_users` ubu ON dr.`drecipe_id` = ubu.`updated_drecipe_id`AND ubu.`dietitian_id`='{$_SESSION['dietitian_id']}' WHERE ubu.`updated_drecipe_id` IS NULL AND ubu.`dietitian_id` IS NULL AND drecipe_course = 'breakfast'";
+// $sql2 = "SELECT dr.* FROM `default_recipes` dr LEFT JOIN `updated_by_users` ubu ON dr.`drecipe_id` = ubu.`updated_drecipe_id`AND ubu.`dietitian_id`='{$_SESSION['dietitian_id']}' WHERE ubu.`updated_drecipe_id` IS NULL AND ubu.`dietitian_id` IS NULL AND drecipe_course = 'breakfast'";
 if (isset($_SESSION['breakfast_recipe_search'])) {
     $breakfastRecipeSearch = $_SESSION['breakfast_recipe_search'];
 }
@@ -15,7 +15,7 @@ if (!empty($breakfastRecipeSearch)) {
     $sql2 .= " AND drecipe_name LIKE '%$breakfastRecipeSearch%'";
 }
 $res = mysqli_query($conn, $sql);
-$res2 = mysqli_query($conn, $sql2);
+// $res2 = mysqli_query($conn, $sql2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -349,16 +349,17 @@ $res2 = mysqli_query($conn, $sql2);
                 </div>
             </div>
         <?php } ?>
-        <?php while ($d = mysqli_fetch_assoc($res2)) {
-            $drecipeDirections = trim($d['drecipe_recipe'], '{}');
-            $drecipe_recipe = explode('}, {', $drecipeDirections);
-            $steps = count($drecipe_recipe);
-            $nutritional = json_decode($d['drecipe_nutritional_information'], true);
-            $temp_data=array("drecipe_name"=>$d['drecipe_name'],"recipe_nutritional_information"=>$d['drecipe_nutritional_information']);
+        <?php 
+        // while ($d = mysqli_fetch_assoc($res2)) {
+        //     $drecipeDirections = trim($d['drecipe_recipe'], '{}');
+        //     $drecipe_recipe = explode('}, {', $drecipeDirections);
+        //     $steps = count($drecipe_recipe);
+        //     $nutritional = json_decode($d['drecipe_nutritional_information'], true);
+        //     $temp_data=array("drecipe_name"=>$d['drecipe_name'],"recipe_nutritional_information"=>$d['drecipe_nutritional_information']);
 
         ?>
 
-            <div class="card d-flex" style="padding:15px; width:310px; border-radius:16px;height:238px;margin:35px 35px;">
+            <!-- <div class="card d-flex" style="padding:15px; width:310px; border-radius:16px;height:238px;margin:35px 35px;">
                 <div class="card-upper d-flex justify-content-between">
                     <p id="bu" class="card-upper-text"> Default Recipe </p>
                     <p id="bu" class="card-upper-text"><img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:10px"> <?php echo $d['drecipe_time']; ?> </p>
@@ -389,8 +390,8 @@ $res2 = mysqli_query($conn, $sql2);
                         <div class="">steps</div>
                     </div>
                 </div>
-            </div>
-        <?php } ?>
+            </div> -->
+        <?php //} ?>
         <a class="but" href="create_recipe.php" style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:fixed;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;box-shadow:0px 0px 30px 0px #9C74F5;">+</a>
     </div>
 
