@@ -20,7 +20,8 @@ if ($result1->num_rows > 0) {
   $sleep = $row1['sleep'];
   $calorie = $row1['calorie'];
 } else {
-  header('Location: client_list.php');
+  // header('Location: client_list.php');
+  // echo '<script>window.location.href="client_list.php";</script>';
 }
 
 $sql2 = "SELECT SUM(steps) FROM `steptracker` WHERE client_id = $client_id AND `dateandtime` >= '{$today} 00:00:00' AND `dateandtime` <= '{$today} 23:59:59'; ";

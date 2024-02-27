@@ -695,13 +695,13 @@ require('constant/config.php');
     <!-- recipes from db -->
     <?php
     $sql = "SELECT * FROM `dietitian_recipes` WHERE dietitian_id = '{$_SESSION['dietitian_id']}' AND recipe_courses = 'breakfast'";
-    $sql2 = "SELECT dr.* FROM `default_recipes` dr LEFT JOIN `updated_by_users` ubu ON dr.`drecipe_id` = ubu.`updated_drecipe_id`AND ubu.`dietitian_id`='{$_SESSION['dietitian_id']}' WHERE ubu.`updated_drecipe_id` IS NULL AND ubu.`dietitian_id` IS NULL AND drecipe_course = 'breakfast'";
+    // $sql2 = "SELECT dr.* FROM `default_recipes` dr LEFT JOIN `updated_by_users` ubu ON dr.`drecipe_id` = ubu.`updated_drecipe_id`AND ubu.`dietitian_id`='{$_SESSION['dietitian_id']}' WHERE ubu.`updated_drecipe_id` IS NULL AND ubu.`dietitian_id` IS NULL AND drecipe_course = 'breakfast'";
     if (!empty($breakfastRecipeSearch)) {
         $sql .= " AND recipe_name LIKE '%$breakfastRecipeSearch%'";
         $sql2 .= " AND drecipe_name LIKE '%$breakfastRecipeSearch%'";
     }
     $res = mysqli_query($conn, $sql);
-    $res2 = mysqli_query($conn, $sql2);
+    // $res2 = mysqli_query($conn, $sql2);
     ?>
      <div class="popupholder">
         <?php include("namehover.php"); ?>
@@ -760,19 +760,19 @@ require('constant/config.php');
                 </div>
             </div>
         <?php }
-        while ($d = mysqli_fetch_assoc($res2)) {
-            $drecipeDirections = trim($d['drecipe_recipe'], '{}');
-            $drecipe_recipe = explode('}, {', $drecipeDirections);
-            $steps = count($drecipe_recipe);
-            $nutritional = json_decode($d['drecipe_nutritional_information'], true);
-            $temp_data=array("drecipe_name"=>$d['drecipe_name'],"recipe_nutritional_information"=>$d['drecipe_nutritional_information']);
+        // while ($d = mysqli_fetch_assoc($res2)) {
+        //     $drecipeDirections = trim($d['drecipe_recipe'], '{}');
+        //     $drecipe_recipe = explode('}, {', $drecipeDirections);
+        //     $steps = count($drecipe_recipe);
+        //     $nutritional = json_decode($d['drecipe_nutritional_information'], true);
+        //     $temp_data=array("drecipe_name"=>$d['drecipe_name'],"recipe_nutritional_information"=>$d['drecipe_nutritional_information']);
 
-            if ($counter == 5) {
-                break;
-            }
-            $counter++;
+        //     if ($counter == 5) {
+        //         break;
+        //     }
+        //     $counter++;
         ?>
-            <div class="card d-flex" style="padding:15px; width:310px; height:238px;border-radius:16px; margin:35px 35px;">
+            <!-- <div class="card d-flex" style="padding:15px; width:310px; height:238px;border-radius:16px; margin:35px 35px;">
                 <div class="card-upper d-flex justify-content-between"style="white-space:nowrap;">
                     <p id="bu" class="card-upper-text"> Default Recipe </p>
                     <p id="bu" class="card-upper-text d-flex" ><img src="<?= $DEFAULT_PATH ?>assets/images/Clock.svg" style="margin-right:10px"></i></i> <?php echo $d['drecipe_time']; ?> </p>
@@ -802,8 +802,8 @@ require('constant/config.php');
                         <div class="" style="margin-top:-8px;">steps</div>
                     </div>
                 </div>
-            </div>
-        <?php } ?>
+            </div> -->
+        <?php //} ?>
         <a class="butt" href="create_recipe.php" style="border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;text-decoration:none;">+</a>
     </div>
     <?php require('constant/scripts.php'); ?>

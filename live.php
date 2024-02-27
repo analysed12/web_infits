@@ -25,9 +25,10 @@ if (isset($_POST['save'])) {
         die("Connection failed: " . $conn->connect_error);
     }
     $sql = "INSERT INTO create_meeting (dietitian_id,title, description, date, time) VALUES ('{$_SESSION['dietitian_id']}','$title', '$desc', '$date','$time')";
-
+        // $conn->query($sql);
     if ($conn->query($sql) === TRUE) {
-        // echo "<script>console.log('New record created successfully');</scrit>";
+        unset($_POST['save']);
+        echo '<script>window.location.href = "live.php";</script>';
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -1618,6 +1619,7 @@ if (isset($_POST['save'])) {
             function updateDOM() {
                 const rightside_middle = document.getElementsByClassName('rightside_middle')[0];
                 // console.log(rightside_middle);
+                rightside_middle.innerHTML = "";
                 // ... (existing code)
                 // Log the values of data.firDate and data.secondDate
                 console.log('data.firDate:', data.firDate);
