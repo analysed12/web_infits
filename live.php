@@ -27,6 +27,8 @@ if (isset($_POST['save'])) {
     $sql = "INSERT INTO create_meeting (dietitian_id,title, description, date, time) VALUES ('{$_SESSION['dietitian_id']}','$title', '$desc', '$date','$time')";
 
     if ($conn->query($sql) === TRUE) {
+        unset($_POST['save']);
+        echo '<script>window.location.href="live.php";</script>';
         // echo "<script>console.log('New record created successfully');</scrit>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
