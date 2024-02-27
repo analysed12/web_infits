@@ -25,10 +25,9 @@ if (isset($_POST['save'])) {
         die("Connection failed: " . $conn->connect_error);
     }
     $sql = "INSERT INTO create_meeting (dietitian_id,title, description, date, time) VALUES ('{$_SESSION['dietitian_id']}','$title', '$desc', '$date','$time')";
-        // $conn->query($sql);
+
     if ($conn->query($sql) === TRUE) {
-        unset($_POST['save']);
-        echo '<script>window.location.href = "live.php";</script>';
+        // echo "<script>console.log('New record created successfully');</scrit>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -1275,49 +1274,52 @@ if (isset($_POST['save'])) {
             $("#calendar").html(table);
 
             function updateSelectedMonthYear(month, year) {
+    // Remove the "active" class from the previously selected month
+    $(".dropdown-menu .row .month.active").removeClass("active");
 
-                selectedMonth = month;
-                selectedYear = year;
-                $("#selected-month-year").text(selectedMonth + " " + selectedYear);
+    selectedMonth = month;
+    selectedYear = year;
+    $("#selected-month-year").text(selectedMonth + " " + selectedYear);
 
-                // Generate the calendar table
-                let firstDay = new Date(selectedYear, months.indexOf(selectedMonth), 1);
-                let lastDay = new Date(selectedYear, months.indexOf(selectedMonth) + 1, 0);
-                let table = $("<table>");
-                let tbody = $("<tbody>");
-                let row = $("<tr>");
-                let dayNames = ["S", "M", "T", "W", "T", "F", "S"];
-                for (let i = 0; i < dayNames.length; i++) {
-                    let th = $("<th>").text(dayNames[i]);
-                    row.append(th);
+    // Add the "active" class to the newly selected month
+    $(".dropdown-menu .row .month:contains('" + month + "')").addClass("active");
+
+    // Generate the calendar table
+    let firstDay = new Date(selectedYear, months.indexOf(selectedMonth), 1);
+    let lastDay = new Date(selectedYear, months.indexOf(selectedMonth) + 1, 0);
+    let table = $("<table>");
+    let tbody = $("<tbody>");
+    let row = $("<tr>");
+    let dayNames = ["S", "M", "T", "W", "T", "F", "S"];
+    for (let i = 0; i < dayNames.length; i++) {
+        let th = $("<th>").text(dayNames[i]);
+        row.append(th);
+    }
+    tbody.append(row);
+    let date = 1;
+    let today = new Date(); 
+    for (let i = 0; i < 6; i++) {
+        row = $("<tr>");
+        for (let j = 0; j < 7; j++) {
+            if ((i === 0 && j < firstDay.getDay()) || date > lastDay.getDate()) {
+                let td = $(`<td>`);
+                row.append(td);
+            } else {
+                let td = $(`<td class="d" id="${date}" data-day="${date}">`).text(date);
+                if (selectedMonth === months[today.getMonth()] && selectedYear === today.getFullYear() && date === today
+                    .getDate()) {
+                    td.addClass("today");
                 }
-                tbody.append(row);
-                let date = 1;
-                let today = new Date();
-                // let currentdate = new Date().getDate(); 
-                for (let i = 0; i < 6; i++) {
-                    row = $("<tr>");
-                    for (let j = 0; j < 7; j++) {
-                        if ((i === 0 && j < firstDay.getDay()) || date > lastDay.getDate()) {
-                            let td = $(`<td>`);
-                            row.append(td);
-                        } else {
-                            let td = $(`<td class="d" id="${date}" data-day="${date}">`).text(date);
-                            if (selectedMonth === months[today.getMonth()] && selectedYear === today.getFullYear() && date === today.getDate()) {
-                                td.addClass("today");
-                            }
-                            row.append(td);
-                            date++;
-                        }
-
-                    }
-                    tbody.append(row);
-
-                }
-                table.append(tbody);
-                $("#calendar").html(table);
-                newfun();
+                row.append(td);
+                date++;
             }
+        }
+        tbody.append(row);
+    }
+    table.append(tbody);
+    $("#calendar2").html(table);
+    newfun();
+}
 
             // Update the displayed year and months in the dropdown
             function updateDropdownYear(year) {
@@ -1619,7 +1621,6 @@ if (isset($_POST['save'])) {
             function updateDOM() {
                 const rightside_middle = document.getElementsByClassName('rightside_middle')[0];
                 // console.log(rightside_middle);
-                rightside_middle.innerHTML = "";
                 // ... (existing code)
                 // Log the values of data.firDate and data.secondDate
                 console.log('data.firDate:', data.firDate);
@@ -1899,7 +1900,8 @@ if (isset($_POST['save'])) {
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
             crossorigin="anonymous"></script>
         <script type="text/javascript" src="<?= $DEFAULT_PATH ?>live/js/lobby_help.js"></script>
-        <script type="text/javascript" src="<?= $DEFAULT_PATH ?>live/js/lobby.js"></script>
+        <!-- <script type="text/javascript" src="<?= $DEFAULT_PATH ?>live/js/lobby.js"></script> -->
+        <?php require_once('live/js/lobby.php'); ?>
 
 
 </body>

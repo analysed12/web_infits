@@ -817,9 +817,15 @@ table.append(tbody);
 $("#calendar2").html(table);
 
 function updateSelectedMonthYear(month, year) {
+    // Remove the "active" class from the previously selected month
+    $(".dropdown-menu .row .month.active").removeClass("active");
+
     selectedMonth = month;
     selectedYear = year;
     $("#selected-month-year").text(selectedMonth + " " + selectedYear);
+
+    // Add the "active" class to the newly selected month
+    $(".dropdown-menu .row .month:contains('" + month + "')").addClass("active");
 
     // Generate the calendar table
     let firstDay = new Date(selectedYear, months.indexOf(selectedMonth), 1);
@@ -857,6 +863,7 @@ function updateSelectedMonthYear(month, year) {
     $("#calendar2").html(table);
     newfun();
 }
+
 
 function updateDropdownYear(year) {
     $(".dropdown-menu .year").text(year);
