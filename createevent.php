@@ -11,6 +11,7 @@ require('constant/config.php');
     $dietitianuserID = $_SESSION['name'];
     $eventname = $_POST['subject'];
     $clientname = $_POST['clientname'];
+    $client_id = $_POST['clientid'];
     //$sql2 = "Select * from addclient WHERE name='$clientname'" ;
     //$result2 = mysqli_query($conn,$sql2);
     //$row2 = mysqli_fetch_assoc($result2);
@@ -33,9 +34,6 @@ if ($result2) {
     // Handle query error
     echo "Error executing client query: " . mysqli_error($conn);
 }
-
-
-
     $meeting_type = $_POST['meetingtype'];
     $place_of_meeting = $_POST['placeofmeeting'];
     $description = $_POST['description'];
@@ -47,9 +45,8 @@ if(isset($_FILES['attachment'])) {
     $attachment_tmp_name = $_FILES['attachment']['tmp_name'];
     $attachment_size = $_FILES['attachment']['size'];
     $attachment_type = $_FILES['attachment']['type'];
-   // $attachment_ext = end(explode('.',$attachment_name ));
     $attachment_ext_array = explode('.', $attachment_name);
-$attachment_ext = end($attachment_ext_array);
+    $attachment_ext = end($attachment_ext_array);
 
     $extention =array("jpeg","jpg","png");
 
@@ -63,7 +60,7 @@ $attachment_ext = end($attachment_ext_array);
 
     }
     if(empty($errors)==true){
-        move_uploaded_file($attachment_tmp_name, "upload/events/images/". $attachment_name);
+        move_uploaded_file($attachment_tmp_name, "uploads/events/images/". $attachment_name);
   
     }
     else {
@@ -72,10 +69,6 @@ $attachment_ext = end($attachment_ext_array);
     }
     //echo "Attachment Name: " . $attachment_name;   
 }
-    
-
-
-
     $start_date = date('Y-m-d H:i:s', strtotime($_POST['startdate']));
     $end_date = date('Y-m-d H:i:s', strtotime($_POST['enddate']));
     $start_date_time = substr($start_date,-8);
@@ -105,9 +98,10 @@ $attachment_ext = end($attachment_ext_array);
 
     if ($count== 0)
     {
-        $sql1 = "INSERT INTO create_event (dietitianuserID,eventname, clientuserID, meeting_type, start_date, end_date, place_of_meeting,
-         description, attachment) VALUES ('$dietitianuserID','$eventname','$clientuserID','$meeting_type','$start_date',
+        $sql1 = "INSERT INTO create_event (dietitian_id,dietitianuserID,client_id, eventname, clientuserID, meeting_type, start_date, end_date, place_of_meeting,
+         description, attachment) VALUES ({$_SESSION['dietitian_id']},'$dietitianuserID',$client_id,'$eventname','$clientname','$meeting_type','$start_date',
          '$end_date','$place_of_meeting','$description',' $attachment_name')";
+         echo $sql1;
         $result1=mysqli_query($conn,$sql1);
         if($result1){
             $sql2="INSERT INTO notification (dieticianID, dietitianuserID, ttl, body) VALUES('".$_SESSION['dietitian_id']."', '$dietitianuserID', 'Reminder', 'You have ".$meeting_type." appointment with ".$clientname." on ".$date_in_desired_format." at ".$time_in_ampm."')";
@@ -572,6 +566,7 @@ input {
                                     style="display:flex;align-items:center">
                                     <input type="text" placeholder="Add Client" style="border-top:none;border-left:none;border-right:none;border-bottom: 1px solid #EFEFEF;" onclick="update_input()" 
                                     name="clientname" id="clientname" class="input-field" required>
+                                    <input type="hidden" name="clientid" id="clientid" value=0>
                                 </div>
                                     <div class="showlist dropdown-menu">
                                     </div>
@@ -821,7 +816,9 @@ input {
     <script>
         let addclient=(event)=>{
             const inputclient = document.getElementById("clientname");
+            const inputclientid = document.getElementById("clientid");
             inputclient.value = event.target.innerHTML;
+            inputclientid.value = event.target.id;
             Array.from(event.target.parentNode.children).forEach((element)=>{
                 if(element.classList.contains("selected")){
                     element.classList.remove("selected")
@@ -881,12 +878,13 @@ input {
                             let items = response.split(',');
                             let i = 0;
                             items.forEach(element => {
+                                let k = element.split("=");
                                 if (element!==''){
                                     const div = document.createElement("div");
                                     div.classList.add('items');
                                     div.style = "padding-left:30px;font-size:1.2rem;";
-                                    div.id = "items_"+i;
-                                    div.textContent = element;
+                                    div.id = k[1];
+                                    div.textContent = k[0];
                                     document.getElementsByClassName('showlist')[0].appendChild(div);
                                     i++;
                                 }
