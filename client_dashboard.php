@@ -229,7 +229,7 @@ include "navbar.php";
                         <img src="<?= $DEFAULT_PATH ?>assets/images/Cutlery.svg" style="width:67%;" alt="">
                     </div>
                     <div>
-                        Track Meal
+                        Meal Tracker
                     </div>
                 </div>
                 </a>
