@@ -58,7 +58,7 @@ body {
     display: flex;
     flex-direction: column;
     border-right: #E8ECF5 2px solid;
-    background: url('assets/images/Vector_Top_Left.svg');
+    background: url('<?=$DEFAULT_PATH?>assets/images/Vector_Top_Left.svg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: 0 -60px;
@@ -526,6 +526,35 @@ a {
         height: auto;
         margin: 0px !important;
     }
+
+    .scrolling-navbar {
+        overflow-y: auto;
+    }
+    .nav600{
+        max-height: 60vh;
+    }
+    .nav550{
+        max-height: 58vh;
+    }
+    .nav500{
+        max-height: 55vh;
+    }
+    .nav450{
+        max-height: 50vh;
+    }
+    .nav400{
+        max-height: 41.5vh;
+    }
+    .scrolling-navbar::-webkit-scrollbar {
+        width: 6px;
+        background-color: white;
+    }
+
+    .scrolling-navbar::-webkit-scrollbar-thumb {
+        background: linear-gradient(0deg, #cb1fd5, #2b5eeb);
+        border-radius: 3px;
+    }
+    
 </style>
 
 
@@ -534,60 +563,87 @@ a {
     <div class="sidenav" id="sidenavbar">
         <img src="<?=$DEFAULT_PATH?>assets/images/InfitsLogo.svg" class="sidenavlink" id="logo">
         <!-- changed id of below a tag from index to dashboard for search process -->
-        <a id="dashboard"
-            class="sidenavlink nav-index nav-task_list nav-track_stats_steps nav-track_stats_water nav-track_stats_heart nav-track_stats_sleep nav-track_stats_weight nav-track_stats_calorie"
-            href="index.php"><img src="<?=$DEFAULT_PATH?>assets/images/dashboard.svg" class="nav-icon">Dashboard</a>
-        <a id="messages" class="sidenavlink nav-chat_home" href="chat_home.php"><img
-                src="<?=$DEFAULT_PATH?>assets/images/chat.svg" class="nav-icon">Messages</a>
-        <a id="live" class="sidenavlink" href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg"
-                class="nav-icon">Live</a>
-        <a id="calendar_of_events" class="sidenavlink nav-calendar_of_events" href="appointments.php"><img
-                src="<?=$DEFAULT_PATH?>assets/images/calendar.svg" class="nav-icon">Appoinments</a>
-        <a id="client_list"
-            class="sidenavlink nav-add_client nav-client_list nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
-            href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg" class="nav-icon">Clients</a>
-        <a id="myplan" class="sidenavlink nav-update_plan"><img
-                src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg" class="nav-icon">Diet Plans</a>
-            <div class="dropdown-container fixing" style="display:none;">
-                <a class="nav-myplan nav-create_plan nav-dietplan_default sidenavlink2" href="myplan.php">&nbsp;&nbsp;&nbsp; My Plans</a>
-            </div>
-        <a id="payments" class="sidenavlink"><img  
-                src="<?=$DEFAULT_PATH?>assets/images/payment.svg" class="nav-icon">Payments</a>
-            <div class="dropdown-container fixing" style="display:none;">
-                <a class="nav-billingAndInvoices sidenavlink2" href="billingAndInvoices.php">&nbsp;&nbsp;&nbsp; Your Bills</a>
-                <a class="nav-payments sidenavlink2" href="payments.php">&nbsp;&nbsp;&nbsp; Client Payment</a>
-            </div>
-        <a id="create_recipe" class="sidenavlink nav-recipe_breakfast nav-recipe_all_breakfast nav-recipe_lunch nav-recipe_all_lunch 
-                nav-recipe_snacks nav-recipe_all_snacks nav-recipe_dinner nav-recipe_all_dinner"><img
-                src="<?=$DEFAULT_PATH?>assets/images/recipies.svg" class="nav-icon">Recipes</a>
-            <div class="dropdown-container fixing" style="display:none;">
-                <a class="nav-all_recipes nav-all_recipe_list sidenavlink2" href="all_recipes.php">&nbsp;&nbsp;&nbsp; My Recipes</a>
-                <a class="nav-create_recipe sidenavlink2" href="create_recipe.php">&nbsp;&nbsp;&nbsp; Add Recipe</a>
-            </div>
-        <a id="healthform" class="sidenavlink nav-healthform"><img
-                src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg" class="nav-icon">Health Form</a>
-            <div class="dropdown-container fixing" style="display:none;">
-                <a class="nav-forms_and_documents nav-health_detail_form_blank sidenavlink2" href="forms_and_documents.php">&nbsp;&nbsp;&nbsp; My Forms</a>
-            </div>
-            <script>
-                // Get all dropdown buttons
-                var dropdownBtns = document.getElementsByClassName('sidenavlink ');
-                // Loop through the dropdown buttons and add the onclick event
-                for (var i = 0; i < dropdownBtns.length; i++) {
-                dropdownBtns[i].addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    var dropdownContainer = this.nextElementSibling;
-                    if (dropdownContainer.style.display === 'block') {
-                    dropdownContainer.style.display = 'none';
-                    dropdownContainer.style.borderLeft = 'none';
-                    } 
-                    else {
-                    dropdownContainer.style.display = 'block';
-                    dropdownContainer.style.borderLeft = '5px #0177FB';
+        <div style=" display: flex; flex-direction: column; " id="basicnavbar">   
+            <a id="dashboard"
+                class="sidenavlink nav-index nav-task_list nav-track_stats_steps nav-track_stats_water nav-track_stats_heart nav-track_stats_sleep nav-track_stats_weight nav-track_stats_calorie"
+                href="index.php"><img src="<?=$DEFAULT_PATH?>assets/images/dashboard.svg" class="nav-icon">Dashboard</a>
+            <a id="messages" class="sidenavlink nav-chat_home" href="chat_home.php"><img
+                    src="<?=$DEFAULT_PATH?>assets/images/chat.svg" class="nav-icon">Messages</a>
+            <a id="live" class="sidenavlink" href="live.php"><img src="<?=$DEFAULT_PATH?>assets/images/live.svg"
+                    class="nav-icon">Live</a>
+            <a id="calendar_of_events" class="sidenavlink nav-calendar_of_events" href="appointments.php"><img
+                    src="<?=$DEFAULT_PATH?>assets/images/calendar.svg" class="nav-icon">Appoinments</a>
+            <a id="client_list"
+                class="sidenavlink nav-add_client nav-client_list nav-client_dashboard nav-setgoals nav-set_reminders nav-mealTracker"
+                href="client_list.php"><img src="<?=$DEFAULT_PATH?>assets/images/clients.svg" class="nav-icon">Clients</a>
+            <a id="myplan" class="sidenavlink nav-update_plan"><img
+                    src="<?=$DEFAULT_PATH?>assets/images/dietPlan.svg" class="nav-icon">Diet Plans</a>
+                <div class="dropdown-container fixing" style="display:none;">
+                    <a class="nav-myplan nav-create_plan nav-dietplan_default sidenavlink2" href="myplan.php">&nbsp;&nbsp;&nbsp; My Plans</a>
+                </div>
+            <a id="payments" class="sidenavlink"><img  
+                    src="<?=$DEFAULT_PATH?>assets/images/payment.svg" class="nav-icon">Payments</a>
+                <div class="dropdown-container fixing" style="display:none;">
+                    <a class="nav-billingAndInvoices sidenavlink2" href="billingAndInvoices.php">&nbsp;&nbsp;&nbsp; Your Bills</a>
+                    <a class="nav-payments sidenavlink2" href="payments.php">&nbsp;&nbsp;&nbsp; Client Payment</a>
+                </div>
+            <a id="create_recipe" class="sidenavlink nav-recipe_breakfast nav-recipe_all_breakfast nav-recipe_lunch nav-recipe_all_lunch 
+                    nav-recipe_snacks nav-recipe_all_snacks nav-recipe_dinner nav-recipe_all_dinner"><img
+                    src="<?=$DEFAULT_PATH?>assets/images/recipies.svg" class="nav-icon">Recipes</a>
+                <div class="dropdown-container fixing" style="display:none;">
+                    <a class="nav-all_recipes sidenavlink2" href="all_recipes.php">&nbsp;&nbsp;&nbsp; My Recipes</a>
+                    <a class="nav-create_recipe sidenavlink2" href="create_recipe.php">&nbsp;&nbsp;&nbsp; Add Recipe</a>
+                </div>
+            <a id="healthform" class="sidenavlink nav-healthform"><img
+                    src="<?=$DEFAULT_PATH?>assets/images/healthForm.svg" class="nav-icon">Health Form</a>
+                <div class="dropdown-container fixing" style="display:none;">
+                    <a class="nav-forms_and_documents nav-health_detail_form_blank sidenavlink2" href="forms_and_documents.php">&nbsp;&nbsp;&nbsp; My Forms</a>
+                </div>
+                <script>
+                    // Get all dropdown buttons
+                    var dropdownBtns = document.getElementsByClassName('sidenavlink ');
+                    // Loop through the dropdown buttons and add the onclick event
+                    for (var i = 0; i < dropdownBtns.length; i++) {
+                    dropdownBtns[i].addEventListener('click', function() {
+                        this.classList.toggle('active');
+                        var dropdownContainer = this.nextElementSibling;
+                        if (dropdownContainer.style.display === 'block') {
+                        dropdownContainer.style.display = 'none';
+                        dropdownContainer.style.borderLeft = 'none';
+                        } 
+                        else {
+                        dropdownContainer.style.display = 'block';
+                        dropdownContainer.style.borderLeft = '5px #0177FB';
+                        }
+                    });
                     }
-                });
+                </script>
+        </div>
+        <script>
+            window.addEventListener('resize', function() {
+                var navbarContainer = document.getElementById('basicnavbar');
+                var windowHeight = window.innerHeight;
+
+                if (windowHeight < 400) {
+                    navbarContainer.classList.remove('nav600', 'nav550', 'nav500', 'nav450');
+                    navbarContainer.classList.add('nav400', 'scrolling-navbar');
+                } else if (windowHeight < 450) {
+                    navbarContainer.classList.remove('nav600', 'nav550', 'nav500', 'nav400');
+                    navbarContainer.classList.add('nav450', 'scrolling-navbar');
+                } else if (windowHeight < 500) {
+                    navbarContainer.classList.remove('nav600', 'nav550', 'nav450', 'nav400');
+                    navbarContainer.classList.add('nav500', 'scrolling-navbar');
+                } else if (windowHeight < 550) {
+                    navbarContainer.classList.remove('nav600', 'nav500', 'nav450', 'nav400');
+                    navbarContainer.classList.add('nav550', 'scrolling-navbar');
+                } else if (windowHeight < 600) {
+                    navbarContainer.classList.remove('nav550', 'nav500', 'nav450', 'nav400');
+                    navbarContainer.classList.add('nav600', 'scrolling-navbar');
+                } else {
+                    navbarContainer.classList.remove('nav600', 'nav550', 'nav500', 'nav450', 'nav400', 'scrolling-navbar');
                 }
-            </script>
+            });
+        </script>
         <div class="menu-bottom">
             <a class="sidenavlink nav-help" href="help.php"><img src="<?=$DEFAULT_PATH?>assets/images/getHelp.svg"
                     class="nav-icon">Get Help</a>
