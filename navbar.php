@@ -783,7 +783,7 @@ a {
     });
     document.getElementById('noti-close').addEventListener('click', () => {
         document.getElementsByClassName('noti-box')[0].style.animation = 'slideUp 0.5s forwards';
-        document.getElementsByClassName('noti-box')[0].style.zIndex = 0;
+        // document.getElementsByClassName('noti-box')[0].style.zIndex = 0;
       
     }); 
     // const currentPath = window.location.pathname;

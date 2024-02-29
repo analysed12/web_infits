@@ -595,7 +595,7 @@ if (isset($_POST['removeClient'])) {
                             <button class="tab-button radio-box" data-tab="checkbox"><input type="radio" name="options"
                                     class="radio" value="radio" id="check">Checkbox</button>
                             <button class="tab-button radio-box" data-tab="radio"><input type="radio" name="options"
-                                    class="radio" value="radio" id="radio">Radio Button</button>
+                                    class="radio" value="radio" id="radiobox">Radio Button</button>
                         </div>
                         <div class="tab-content">
                             <div class="tab" id="text">
@@ -705,7 +705,7 @@ if ($result->num_rows > 0) {
             const tabName = event.target.dataset.tab;
             openPopup('', tabName, -1);
             input.checked = true;
-            console.log(input.id);
+            // console.log(input.id);
             showTab(tabName);
         });
     });
@@ -894,6 +894,23 @@ if ($result->num_rows > 0) {
         var popupContainer = document.querySelector('.popup-container');
         popupContainer.style.display = 'none';
 
+        let checkboxContainer = document.querySelectorAll('.checkbox-content');
+        checkboxContainer.forEach(function (check) {
+            check.parentNode.removeChild(check);            
+        });
+
+        let radiboxContainer = document.querySelectorAll('.radiobox-content');
+        radiboxContainer.forEach(function (radio) {
+            radio.parentNode.removeChild(radio);            
+        });
+
+        tabButtons.forEach((button) => {
+        const input = button.querySelector('input');
+        input.checked = false;
+        hideTab('checkbox');
+        hideTab('radio');
+        hideTab('text');
+        });
         editedQuestionIndex = -1;
     }
 
