@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2024 at 03:40 PM
+-- Generation Time: Feb 23, 2024 at 03:49 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -114,12 +114,25 @@ CREATE TABLE `calorietracker` (
   `goal` int(11) NOT NULL,
   `meal` varchar(50) DEFAULT NULL,
   `name` varchar(30) NOT NULL,
-  `carbs` int(11) DEFAULT NULL,
-  `fiber` int(11) DEFAULT NULL,
-  `protein` int(11) DEFAULT NULL,
-  `fat` int(11) DEFAULT NULL,
+  `totalcaloriesBurn` int(11) DEFAULT NULL,
+  `calorieConsumeGoal` int(11) NOT NULL,
+  `calorieBurnGoal` int(11) NOT NULL,
+  `carbsGoal` int(11) DEFAULT NULL,
+  `fiberGoal` int(11) DEFAULT NULL,
+  `proteinGoal` int(11) DEFAULT NULL,
+  `fatGoal` int(11) DEFAULT NULL,
   `dateandtime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `calorietracker`
+--
+
+INSERT INTO `calorietracker` (`row_id`, `client_id`, `clientuserID`, `dietitian_id`, `dietitianuserID`, `caloriesConsumed`, `goal`, `meal`, `name`, `totalcaloriesBurn`, `calorieConsumeGoal`, `calorieBurnGoal`, `carbsGoal`, `fiberGoal`, `proteinGoal`, `fatGoal`, `dateandtime`) VALUES
+(15, 4, 'testuser', 1, 'infitsWebTeam', 2210, 0, NULL, '', NULL, 2900, 3144, 156, 269, 267, 251, '2024-02-09 14:05:57'),
+(16, 4, 'testuser', 1, 'infitsWebTeam', 2210, 0, NULL, '', NULL, 2900, 3144, 269, 156, 251, 267, '2024-02-10 00:10:31'),
+(17, 4, 'testuser', 1, 'infitsWebTeam', 2210, 0, NULL, '', NULL, 2549, 2050, 187, 248, 207, 141, '2024-02-11 14:32:26'),
+(18, 4, 'testuser', 1, 'infitsWebTeam', 2210, 0, NULL, '', NULL, 2050, 1486, 158, 154, 145, 118, '2024-02-15 10:52:18');
 
 -- --------------------------------------------------------
 
@@ -138,6 +151,23 @@ CREATE TABLE `calorie_burnt` (
   `duration` time NOT NULL,
   `dateandtime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `calorie_burnt`
+--
+
+INSERT INTO `calorie_burnt` (`row_id`, `client_id`, `clientuserID`, `dietitian_id`, `dietitianuserID`, `activity_name`, `calorie_burnt`, `duration`, `dateandtime`) VALUES
+(1, 4, 'testuser', 1, 'infitsWebTeam', 'running', 400, '03:12:12', '2024-02-08 17:20:26'),
+(2, 4, 'testuser', 1, 'infitsWebTeam', 'running', 400, '04:58:03', '2024-02-08 18:28:03'),
+(3, 4, 'testuser', 1, 'infitsWebTeam', 'running', 400, '04:58:03', '2024-02-08 18:28:03'),
+(4, 4, 'testuser', 1, 'infitsWebTeam', 'walking', 400, '11:03:09', '2024-02-08 18:28:58'),
+(5, 4, 'testuser', 1, 'infitsWebTeam', 'walking', 400, '11:03:09', '2024-02-08 18:28:58'),
+(6, 4, 'testuser', 1, 'infitsWebTeam', 'cycling', 400, '04:58:03', '2024-02-08 18:31:32'),
+(7, 4, 'testuser', 1, 'infitsWebTeam', 'cycling', 400, '04:58:03', '2024-02-08 18:31:32'),
+(8, 4, 'testuser', 1, 'infitsWebTeam', 'running', 40, '00:02:00', '2024-02-09 08:32:31'),
+(9, 4, 'testuser', 1, 'infitsWebTeam', 'running', 40, '00:02:00', '2024-02-09 08:32:31'),
+(10, 4, 'testuser', 1, 'infitsWebTeam', 'cycling', 80, '00:05:43', '2024-02-09 08:35:42'),
+(11, 4, 'testuser', 1, 'infitsWebTeam', 'cycling', 80, '00:05:43', '2024-02-09 08:35:42');
 
 -- --------------------------------------------------------
 
@@ -233,7 +263,11 @@ INSERT INTO `chats` (`chat_id`, `from_id`, `to_id`, `message`, `opened`, `create
 (52, 1, 4, 'hi', 0, '2024-02-05 17:35:37'),
 (53, 1, 4, 'hi', 0, '2024-02-05 17:35:38'),
 (54, 1, 4, 'hi', 0, '2024-02-05 17:35:40'),
-(55, 1, 4, 'hi', 0, '2024-02-05 17:35:42');
+(55, 1, 4, 'hi', 0, '2024-02-05 17:35:42'),
+(56, 1, 4, 'kjnkjbhjbjhbjb', 0, '2024-02-12 22:03:56'),
+(57, 1, 4, 'jhbhjbhjbhbh', 0, '2024-02-12 22:09:54'),
+(58, 1, 4, 'jnjknjnjkn', 0, '2024-02-12 22:10:24'),
+(59, 1, 4, 'Hi', 0, '2024-02-17 12:55:17');
 
 -- --------------------------------------------------------
 
@@ -302,7 +336,6 @@ INSERT INTO `client_forms_docs` (`rid`, `client_id`, `clientuserID`, `dietitian_
 (29, 4, 'testuser', 1, 'infitsWebTeam', 24, '', ''),
 (30, 6, 'testuser2', 1, 'infitsWebTeam', 24, '', ''),
 (40, 4, 'testuser', 1, 'infitsWebTeam', 5, '', ''),
-(41, 6, 'testuser2', 1, 'infitsWebTeam', 3, '', ''),
 (45, 4, 'testuser', 1, 'infitsWebTeam', 4, '', ''),
 (46, 5, 'testuser1', 1, 'infitsWebTeam', 4, '', ''),
 (47, 6, 'testuser2', 1, 'infitsWebTeam', 4, '', ''),
@@ -386,7 +419,8 @@ INSERT INTO `create_event` (`eventID`, `dietitian_id`, `dietitianuserID`, `clien
 (29, 0, 'infitsWebTeam', '4', 0, 'Checkup', 'In person', '2024-01-09 19:00:00', '2024-01-09 20:00:00', 'vasai', 'aaaaaaaaa', ' Screenshot (23).png'),
 (30, 0, 'infitsWebTeam', '', 0, 'physical checkup', 'In person', '2024-01-09 19:00:00', '2024-01-09 20:00:00', 'vasai', 'aaaaaaaaa', ' Screenshot (52).png'),
 (31, 0, 'infitsWebTeam', '', 0, 'Check Up', 'In person', '2024-01-10 18:30:00', '2024-01-10 19:30:00', 'mumbai', 'aaaa', ' before.png'),
-(32, 0, 'infitsWebTeam', '11', 0, 'Checkup', 'Call', '2024-01-15 16:40:00', '2024-01-15 17:40:00', '', 'querty', ' after.png');
+(32, 0, 'infitsWebTeam', '11', 0, 'Checkup', 'Call', '2024-01-15 16:40:00', '2024-01-15 17:40:00', '', 'querty', ' after.png'),
+(33, 0, 'infitsWebTeam', '4', 0, 'Checkup01', 'In person', '2024-02-17 21:01:00', '2024-02-18 21:01:00', 'mumbai', 'aaaaaaaaa', ' 3124520.jpg');
 
 -- --------------------------------------------------------
 
@@ -788,7 +822,7 @@ CREATE TABLE `dietitian` (
 --
 
 INSERT INTO `dietitian` (`dietitian_id`, `dietitianuserID`, `password`, `name`, `qualification`, `email`, `mobile`, `profilePhoto`, `p_p`, `location`, `age`, `gender`, `experience`, `about_me`, `no_of_clients`, `referral_code`, `facebook`, `whatsapp`, `twitter`, `linkedin`, `instagram`, `achievements`, `greetings_to_show`, `greetings_shown`, `last_seen`, `verification_code`, `OTP`, `referred_by`, `referral_users`, `joined_date`) VALUES
-(1, 'infitsWebTeam', '$2y$10$Z4lNr3Q66ndviLKWSwibBOjfJnwZhLjNnHPq8QjhlUkuJxLKpzTZa', 'Infits Web Team', 'MD', 'teaminfits@gmail.com', '9988776644', NULL, '', 'mumbai', 0, 'F', 7, NULL, 8, 'INF4581265', NULL, NULL, NULL, NULL, NULL, '1', 1, 1, '2024-02-12 20:09:53', 'c5BH9DYATy', '123456', NULL, NULL, '0000-00-00 00:00:00'),
+(1, 'infitsWebTeam', '$2y$10$Z4lNr3Q66ndviLKWSwibBOjfJnwZhLjNnHPq8QjhlUkuJxLKpzTZa', 'Infits Web Team', 'MD', 'teaminfits@gmail.com', '9988776644', NULL, '', 'mumbai', 0, 'F', 7, NULL, 8, 'INF4581265', NULL, NULL, NULL, NULL, NULL, '1', 1, 1, '2024-02-23 20:19:52', 'c5BH9DYATy', '123456', NULL, NULL, '0000-00-00 00:00:00'),
 (2, 'Test ', '123', 'Test', NULL, 'Test@gmail.com', '13243546', NULL, 'user-default.png', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-07-07 14:04:23', 'tFmPbEX7K8', '', NULL, NULL, '0000-00-00 00:00:00'),
 (3, 'SumitKumar', 'Su@071002', 'Sumit Kumar', NULL, 'srvbar1e14@gmail.com', '1234567890', NULL, 'user-default.png', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-08-28 16:54:08', 'IAPkFXaEf2', '', NULL, NULL, '0000-00-00 00:00:00'),
 (4, 'sdfsd', 'hi', 'sdfsdfs', NULL, 'ardsfsdfsd@gamil.com', '23423423423', NULL, 'user-default.png', NULL, NULL, NULL, NULL, NULL, 0, 'zKLTJWZ74v', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2023-09-01 13:06:33', 'QeSOcxtWkD', '', NULL, NULL, '0000-00-00 00:00:00'),
@@ -854,7 +888,8 @@ INSERT INTO `dietitian_recipes` (`recipe_id`, `dietitian_id`, `dietitianuserID`,
 (1, 1, 'infitsWebTeam', 'new my rexipe', '[]', '{}', '{\"Calories\":\"\",\"Protein (g)\":\"\",\"Fat (g)\":\"\",\"Carbohydrates (g)\":\"\",\"Fibre (g)\":\"\"}', '', 'breakfast', 'Categories', '20min', '2023-09-21 06:15:40'),
 (2, 1, 'infitsWebTeam', 'Spiced Jerusalem Artichokes', '[\"500g Jerusalem artichokes\",\"2 tbsp vegetable oil\",\"1 heaped tsp cumin seeds\",\"large pinch of asafoetida\",\"1 green chilli, chopped\",\"?xa0tsp salt\",\"1 lemon\",\"1 tsp garam masala\",\"Handful of fresh coriander\"]', '{,{ },{ },{ },{ },}', '{\"Calories\":\"164\",\"Protein (g)\":\"3\",\"Fat (g)\":\"7\",\"Carbohydrates (g)\":\"26\",\"Fibre (g)\":\"3\"}', '', 'breakfast', 'Pancake', '1hr 20min', '2023-11-15 12:55:50'),
 (3, 1, 'infitsWebTeam', 'Spiced Jerusalem Artichokes', '[\"500g Jerusalem artichokes\",\"2 tbsp vegetable oil\",\"1 heaped tsp cumin seeds\",\"large pinch of asafoetida\",\"1 green chilli, chopped\",\"?xa0tsp salt\",\"1 lemon\",\"1 tsp garam masala\",\"Handful of fresh coriander\"]', '{},{ },{ },{ },{ },{}', '{\"Calories\":\"164\",\"Protein (g)\":\"3\",\"Fat (g)\":\"7\",\"Carbohydrates (g)\":\"26\",\"Fibre (g)\":\"3\"}', '', 'breakfast', 'Pancake', '', '2023-11-15 12:56:03'),
-(4, 1, 'infitsWebTeam', '', '[]', '{}', '{\"Calories\":\"\",\"Protein (g)\":\"\",\"Fat (g)\":\"\",\"Carbohydrates (g)\":\"\",\"Fibre (g)\":\"\"}', '', 'Courses', 'Categories', '', '2023-11-30 12:03:14');
+(4, 1, 'infitsWebTeam', '', '[]', '{}', '{\"Calories\":\"\",\"Protein (g)\":\"\",\"Fat (g)\":\"\",\"Carbohydrates (g)\":\"\",\"Fibre (g)\":\"\"}', '', 'Courses', 'Categories', '', '2023-11-30 12:03:14'),
+(5, 1, 'infitsWebTeam', 'ccxc', '[]', '{}', '{\"Calories\":\"1\",\"Protein (g)\":\"2\",\"Fat (g)\":\"3\",\"Carbohydrates (g)\":\"4\",\"Fibre (g)\":\"5\"}', '306793_before.png', 'breakfast', 'Categories', '2hr 3min', '2024-02-22 07:17:31');
 
 -- --------------------------------------------------------
 
@@ -914,7 +949,11 @@ INSERT INTO `dietitian_tasks` (`task_id`, `dietitianuserID`, `title`, `descripti
 (60, 'infitsWebTeam', 'hi', 'asasass', '2024-02-01', '16:30', '17:30', 0, '2024-02-01 10:57:33'),
 (61, 'infitsWebTeam', 'bye', 'aa', '2024-02-02', '16:30', '17:30', 0, '2024-02-01 10:57:49'),
 (64, 'infitsWebTeam', 'hi', 'sddsd', '2024-02-10', '20:45', '21:45', 0, '2024-02-10 14:12:52'),
-(65, 'infitsWebTeam', 'hi', 'ibjn', '2024-02-12', '19:45', '20:45', 0, '2024-02-12 14:14:16');
+(65, 'infitsWebTeam', 'hi', 'ibjn', '2024-02-12', '19:45', '20:45', 0, '2024-02-12 14:14:16'),
+(66, 'infitsWebTeam', 'zxzx', 'xzXzxx', '2024-02-21', '23:15', '23:30', 0, '2024-02-21 17:38:31'),
+(67, 'infitsWebTeam', 'cxzc', 'xcx', '2024-02-22', '20:25', '21:25', 0, '2024-02-22 14:50:23'),
+(68, 'infitsWebTeam', 'today task', 'desciption', '2024-02-23', '14:20', '15:20', 0, '2024-02-23 08:44:54'),
+(69, 'infitsWebTeam', 'upcoming task', 'description for upcoming task', '2024-02-25', '15:20', '16:20', 0, '2024-02-23 08:45:48');
 
 -- --------------------------------------------------------
 
@@ -959,22 +998,18 @@ CREATE TABLE `favourite_food_items` (
   `calorie` varchar(15) NOT NULL,
   `protein` varchar(15) NOT NULL,
   `carb` varchar(15) NOT NULL,
-  `fat` varchar(15) NOT NULL
+  `fat` varchar(15) NOT NULL,
+  `fiber` varchar(15) NOT NULL,
+  `icon` text NOT NULL,
+  `image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `favourite_food_items`
 --
 
-INSERT INTO `favourite_food_items` (`clientID`, `nameofFoodItem`, `calorie`, `protein`, `carb`, `fat`) VALUES
-('', '', '', '', '', ''),
-('4', 'chichen', '20', '20', '20', '20'),
-('', '', '', '', '', ''),
-('4', 'chichen', '20', '20', '20', '20'),
-('', '', '', '', '', ''),
-('4', 'chichen', '20', '20', '20', '20'),
-('', '', '', '', '', ''),
-('4', 'chichen', '20', '20', '20', '20');
+INSERT INTO `favourite_food_items` (`clientID`, `nameofFoodItem`, `calorie`, `protein`, `carb`, `fat`, `fiber`, `icon`, `image`) VALUES
+('testuser', 'Pizza', '20  kcal', '20', '20', '20', '10', 'http://192.168.1.70/androidApi/upload/Recipies/pizza.png', 'http://192.168.1.70/androidApi/upload/food/pizzaimg.JPG');
 
 -- --------------------------------------------------------
 
@@ -986,10 +1021,19 @@ CREATE TABLE `food_info` (
   `name` varchar(30) NOT NULL,
   `calorie` varchar(10) NOT NULL,
   `protein` varchar(10) NOT NULL,
-  `fibre` varchar(10) NOT NULL,
+  `fiber` varchar(10) NOT NULL,
   `carb` varchar(10) NOT NULL,
-  `fat` varchar(10) NOT NULL
+  `fat` varchar(10) NOT NULL,
+  `icon` text NOT NULL,
+  `image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `food_info`
+--
+
+INSERT INTO `food_info` (`name`, `calorie`, `protein`, `fiber`, `carb`, `fat`, `icon`, `image`) VALUES
+('Pizza', '20', '20', '10', '20', '20', 'http://192.168.1.70/androidApi/upload/Recipies/pizza.png', 'http://192.168.1.70/androidApi/upload/food/pizzaimg.JPG');
 
 -- --------------------------------------------------------
 
@@ -1161,16 +1205,33 @@ CREATE TABLE `meal_tracker` (
   `currentDay` varchar(15) NOT NULL,
   `name` varchar(30) NOT NULL,
   `meal` varchar(30) NOT NULL,
-  `Calories` varchar(10) NOT NULL,
+  `size` varchar(30) NOT NULL,
+  `quantity` varchar(11) NOT NULL,
+  `calories` varchar(10) NOT NULL,
   `carbs` int(11) NOT NULL,
   `fiber` int(11) NOT NULL,
   `protein` int(11) NOT NULL,
   `fat` int(11) NOT NULL,
   `position` int(11) NOT NULL,
   `dateandtime` datetime NOT NULL,
+  `icon` text NOT NULL,
   `image` text DEFAULT NULL,
   `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `meal_tracker`
+--
+
+INSERT INTO `meal_tracker` (`row_id`, `mealchart_id`, `client_id`, `dietitian_id`, `clientuserID`, `dietitianuserID`, `currentDay`, `name`, `meal`, `size`, `quantity`, `calories`, `carbs`, `fiber`, `protein`, `fat`, `position`, `dateandtime`, `icon`, `image`, `description`) VALUES
+(1, 111, 4, 1, 'testuser', 'infitsWebTeam', 'hDJOASJAONJ', 'Naan', 'BK', '1.5', '1', '1', 1, 10, 20, 20, 1, '2024-02-14 07:57:22', '', NULL, NULL),
+(5, 111, 4, 1, 'testuser', 'infitsWebTeam', 'hDJOASJAONJ', 'Naan', 'BK', '1.5', '1', '1', 1, 10, 20, 20, 1, '2024-02-15 06:19:27', ' mjjkmb,kb', 'hvjvjvjkvbk', 'vjv nj vm bkb '),
+(2365, 0, 0, 0, 'testuser', 'testuser', '', 'Pizza', 'Snacks', 'Regular', '1', '20  kcal', 20, 10, 20, 20, 0, '2024-02-13 14:41:41', 'http://192.168.1.70/androidApi/upload/Recipies/pizza.png', 'http://192.168.1.70/androidApi/upload/food/pizzaimg.JPG', ''),
+(2366, 0, 0, 0, 'testuser', 'testuser', '', 'Pizza', 'Snacks', 'Regular', '1', '20  kcal', 20, 10, 20, 20, 0, '2024-02-13 14:41:56', 'http://192.168.1.70/androidApi/upload/Recipies/pizza.png', 'http://192.168.1.70/androidApi/upload/food/pizzaimg.JPG', ''),
+(2367, 0, 0, 0, 'testuser', 'testuser', '', 'Pizza', 'Lunch', 'Small', '1', '10.00', 10, 5, 10, 10, 0, '2023-04-07 16:49:55', 'http://192.168.1.70/androidApi/upload/Recipies/pizza.png', 'http://192.168.1.70/androidApi/upload/food/pizzaimg.JPG', ''),
+(2368, 0, 0, 0, 'testuser', 'testuser', '', 'Pizza', 'Lunch', 'Large', '2', '80.00', 80, 40, 80, 80, 0, '2024-02-01 17:33:15', 'http://192.168.1.70/androidApi/upload/Recipies/pizza.png', 'http://192.168.1.70/androidApi/upload/food/pizzaimg.JPG', ''),
+(2369, 0, 0, 0, 'testuser', 'testuser', '', 'Pizza', 'Lunch', 'Large', '2', '80.00', 80, 40, 80, 80, 0, '2024-02-15 10:52:42', 'http://192.168.1.70/androidApi/upload/Recipies/pizza.png', 'http://192.168.1.70/androidApi/upload/food/pizzaimg.JPG', ''),
+(2370, 0, 0, 0, 'testuser', 'testuser', '', 'Pizza', 'BreakFast', 'Regular', '1', '20  kcal', 20, 10, 20, 20, 0, '2024-02-15 11:18:04', 'http://192.168.1.70/androidApi/upload/Recipies/pizza.png', 'http://192.168.1.70/androidApi/upload/food/pizzaimg.JPG', '');
 
 -- --------------------------------------------------------
 
@@ -1232,7 +1293,12 @@ INSERT INTO `notification` (`s_no`, `dieticianID`, `dietitianuserID`, `frmID`, `
 (54, 1, 'infitsWebTeam', NULL, 'Profile Update', 'You Updated your Profile now.', NULL, NULL, '2024-01-22 10:14:01'),
 (55, 1, 'infitsWebTeam', NULL, 'Reminder', 'You have a task hi on 23 Jan 2024 at 05:10 PM.', NULL, NULL, '2024-01-22 10:40:22'),
 (56, 1, 'infitsWebTeam', NULL, 'Reminder', 'You have a task hi on 1 Feb 2024 at 04:30 PM.', NULL, NULL, '2024-02-01 10:57:33'),
-(57, 1, 'infitsWebTeam', NULL, 'Reminder', 'You have a task bye on 2 Feb 2024 at 04:30 PM.', NULL, NULL, '2024-02-01 10:57:49');
+(57, 1, 'infitsWebTeam', NULL, 'Reminder', 'You have a task bye on 2 Feb 2024 at 04:30 PM.', NULL, NULL, '2024-02-01 10:57:49'),
+(58, 1, 'infitsWebTeam', NULL, 'Reminder', 'You have In person appointment with test user 1 on 17 Feb 2024 at 09:01 PM', NULL, NULL, '2024-02-17 15:31:19'),
+(59, 1, 'infitsWebTeam', NULL, 'Reminder', 'You have a task zxzx on 21 Feb 2024 at 11:15 PM.', NULL, NULL, '2024-02-21 17:38:31'),
+(60, 1, 'infitsWebTeam', NULL, 'Reminder', 'You have a task cxzc on 22 Feb 2024 at 08:25 PM.', NULL, NULL, '2024-02-22 14:50:23'),
+(61, 1, 'infitsWebTeam', NULL, 'Reminder', 'You have a task today task on 23 Feb 2024 at 02:20 PM.', NULL, NULL, '2024-02-23 08:44:54'),
+(62, 1, 'infitsWebTeam', NULL, 'Reminder', 'You have a task upcoming task on 25 Feb 2024 at 03:20 PM.', NULL, NULL, '2024-02-23 08:45:48');
 
 -- --------------------------------------------------------
 
@@ -2122,19 +2188,19 @@ ALTER TABLE `activitytracker`
 -- AUTO_INCREMENT for table `addclient`
 --
 ALTER TABLE `addclient`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `calorietracker`
 --
 ALTER TABLE `calorietracker`
-  MODIFY `row_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `row_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `calorie_burnt`
 --
 ALTER TABLE `calorie_burnt`
-  MODIFY `row_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `row_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `calorie_consumed`
@@ -2146,13 +2212,13 @@ ALTER TABLE `calorie_consumed`
 -- AUTO_INCREMENT for table `chats`
 --
 ALTER TABLE `chats`
-  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `client_forms_docs`
 --
 ALTER TABLE `client_forms_docs`
-  MODIFY `rid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `rid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `conversations`
@@ -2164,7 +2230,7 @@ ALTER TABLE `conversations`
 -- AUTO_INCREMENT for table `create_event`
 --
 ALTER TABLE `create_event`
-  MODIFY `eventID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `eventID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `create_plan`
@@ -2194,13 +2260,13 @@ ALTER TABLE `dietitian_forms`
 -- AUTO_INCREMENT for table `dietitian_recipes`
 --
 ALTER TABLE `dietitian_recipes`
-  MODIFY `recipe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `recipe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `dietitian_tasks`
 --
 ALTER TABLE `dietitian_tasks`
-  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `diet_chart`
@@ -2236,13 +2302,13 @@ ALTER TABLE `livemessage`
 -- AUTO_INCREMENT for table `meal_tracker`
 --
 ALTER TABLE `meal_tracker`
-  MODIFY `row_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `row_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2371;
 
 --
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `s_no` int(123) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `s_no` int(123) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `notification_show_status`

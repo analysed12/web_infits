@@ -1,15 +1,15 @@
 <?php 
 
 $HOSTNAME = "localhost";
-$USERNAME = "root";
-$PASSWORD = "";
-$DBNAME = "shared_db_infits";
+$USERNAME = "u991535966_shared_infits";
+$PASSWORD = "Teaminfits@123";
+$DBNAME = "u991535966_shared_infits";
 
 $conn1 = mysqli_connect($HOSTNAME, $USERNAME, $PASSWORD, $DBNAME);
 
 #creating database connection
 try {
-    $conn = new PDO("mysql:host=$HOSTNAME;dbname=$DBNAME", $USERNAME, $PASSWORD);
+    $conn = new PDO("mysql:zhost=$HOSTNAME;dbname=$DBNAME", $USERNAME, $PASSWORD);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
    
 }catch(PDOException $e){
