@@ -1,14 +1,16 @@
 <?php
+//require_once('config.php');
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
 require('constant/config.php');
+
 if (isset($_POST['add'])) {
     global $conn;
     if (!empty($_FILES['recipeImage']['name'])) {
-        $uploadsDir = 'uploads/recipe/';
+        $uploadsDir = 'uploads/';
         $uploadedFile = $_FILES['recipeImage']['tmp_name'];
         $originalName = $_FILES['recipeImage']['name'];
         $recipe_name = $_POST['recipe_name'];
@@ -474,6 +476,27 @@ include('navbar.php');
     .dropdown-container {
         margin-left: 0;
     }
+
+    .img_ingredient{
+        font-size: 16px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 2px 2px 2px black;
+        width: 100%;
+        height: 40px;
+        outline: none;
+    }
+
+    ::-webkit-file-upload-button{
+        color: white;
+        background:#A85CF1;
+        
+        border: none;
+        border-radius: 20px;
+        height: 40px;
+        box-shadow: 1px 0 1px 1px #6b4559;
+        outline:none;
+    }
     </style>
 </head>
 
@@ -518,7 +541,7 @@ include('navbar.php');
     ?>
     <form action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
         <input type="hidden" name="action" id="action" value="<?php echo $action; ?>">
-        <div id="content" class="container-fluid">
+        <div id="content" class="container-fluid" style="padding-bottom: 15vh;" >
             <div class="row">
                 <div class="col cheader d-flex justify-content-between">
                     <span style="font-size:40px;margin-top:0.5rem;margin-left:1.5rem"><?php if ($action == 'createRecipe') {
@@ -537,7 +560,7 @@ include('navbar.php');
                 <div class="left uploadImg">
                     <?php if ($action == 'editRecipe') {
                         if ($edit['img'] != "") {
-                            $imgSrc = $DEFAULT_PATH . "uploads/recipe/" . $edit['img'];
+                            $imgSrc = $DEFAULT_PATH . "uploads/" . $edit['img'];  // recipe/
                         } else {
                             $imgSrc = $DEFAULT_PATH . "assets/images/alooparantha.svg";
                         }
@@ -551,7 +574,7 @@ include('navbar.php');
                         name="recipeImage" onchange="previewImage(this)">
                 </div>
 
-                <div class="right">
+                <div class="right" style="margin-left: 8vw;">
                     <input class="form-control input_bar" type="text" style="border:none;font-size:30px" required class="form-control" placeholder="Recipe Name" value="<?php if ($action == 'editRecipe') { echo $edit['name']; } ?>">
                     <span style="font-size:20px;margin-left:22px">(auto sync)</span>
                 </div>
@@ -636,12 +659,11 @@ include('navbar.php');
                             </div>
                             <div class="row w-75">
                                 <div class="col">
-                                    <input data-nutri="Fat (g)" name="Fats" required class="form-control input_bar"
-                                        type="text" class="form-control" placeholder="saturates"
+                                    <input data-nutri="Fibre (g)" name="Fibre" required class="form-control input_bar"
+                                        type="text" class="form-control" placeholder="Fibres"
                                         value="<?php if ($action == 'editRecipe') {
-                                                                                                                                                                                        echo $edit['nutritional']['Fat (g)'];
-                                                                                                                                                                                    } ?>"
-                                        placeholder="Fats">
+                                                                                                                                                                                        echo $edit['nutritional']['Fibre (g)'];
+                                                                                                                                                                                    } ?>">
                                 </div>
                                 <div class="col">
                                     <input data-nutri="Carbohydrates (g)" required name="Cars"
@@ -652,38 +674,36 @@ include('navbar.php');
                                                                                                                                                                                                     } ?>">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <input data-nutri="Fibre (g)" name="Fibre" required class="form-control input_bar"
-                                        type="text" class="form-control" placeholder="Fibres"
-                                        value="<?php if ($action == 'editRecipe') {
-                                                                                                                                                                                        echo $edit['nutritional']['Fibre (g)'];
-                                                                                                                                                                                    } ?>">
-                                </div>
-
-                            </div>
-
+                            <!-- this is previous location of fiber -->
                         </div>
                     </div>
+                    <!--*********Rajat-->
                     <div class="rtab-content ingredient-tab">
                         <div class="add-ingredient">
                             <button class="plus" id="btn_plus2">+</button>
                             <span>Add Ingredients</span>
                         </div>
                         <div class="ingre-icards" id="ingredients_box">
-                            <!-- Dont Remove this code it will help in edit page -->
+                            <!-- Done by Rajat intern -->
                             <?php if (isset($edit['ingredients'])) :
-                                foreach ($edit['ingredients'] as $ingre) : ?>
-                            <div class="icard">
-                                <img src="<?= $DEFAULT_PATH ?>assets/images/salt.svg" alt="" srcset="">
-                                <span class="igre-name"><?= $ingre ?></span>
-                                <input data-ingredient-name="<?= $ingre ?>" data-ingredient="true" checked
-                                    type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
-                            </div>
+                                foreach ($edit['ingredients'] as $ingre) : 
+                                    // Extract ingredient_name from $ingre
+                                    $split_ingre = explode(':', $ingre); // Split $ingre using ':'
+                                    $ingredient_name = trim($split_ingre[0]); // Extract the first part and trim any whitespace
+
+                                    // Extract img_name from $ingre
+                                    $img_name = trim(end($split_ingre)); // Extract the last part and trim any whitespace
+                            ?>
+                                    <div class="icard">
+                                        <!-- Use $ingredient_name for the ingredient name -->
+                                        <!-- Use $img_name for the image source -->
+                                        <img src="<?= $DEFAULT_PATH ?>uploads/recipe/ingredients/<?= $img_name ?>.svg" alt="<?= $img_name ?>" srcset="">
+                                        <span class="igre-name"><?= $ingredient_name ?></span>
+                                        <input data-ingredient-name="<?= $ingre ?>" data-ingredient="true" checked
+                                            type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
+                                    </div>
                             <?php endforeach;
                             endif; ?>
-
-
                         </div>
                     </div>
                     <div class="rtab-content direction-tab">
@@ -701,21 +721,33 @@ include('navbar.php');
                             </div>
                         </div>
                         <div class="direction-list">
-                            <ul class="direcions" id="direcions">
+                            <ul class="direcions" id="direcions" style="width: 100%">
                                 <!-- don't delete this code  -->
                                 <?php if (isset($edit['directions'])) :
                                     foreach ($edit['directions'] as $dir) : ?>
-                                <li data-direction="<?= $dir ?>" class="direction">
+                                <li data-direction="<?= $dir ?>" class="direction" style="display: flex; align-items: center; flex-direction: row;">
                                     <?php if (filter_var($dir, FILTER_VALIDATE_URL)) : ?>
-                                    <a href="<?= $dir ?>" target="_blank"><?= $dir ?></a>
+                                    <a href="<?= $dir ?>" target="_blank" style="text-decoration: none; color: #BD59EB;" ><?= $dir ?></a>
                                     <?php else : ?>
                                     <?= htmlspecialchars($dir) ?>
                                     <?php endif; ?>
+                                    <button id="deleteLastButton" style="border-radius: 10px;border: 2px solid #BD59EB;background-color: #BD59EB;color: white;margin-left: auto;" >Delete</button>
                                 </li>
                                 <?php endforeach;
                                 endif; ?>
                             </ul>
                         </div>
+                        <script>
+                            // Add event listener to the delete button
+                            document.getElementById('deleteLastButton').addEventListener('click', function() {
+                                // Get the last <li> element in the list
+                                const listItems = document.querySelectorAll('#direcions > li');
+                                const lastItem = listItems[listItems.length - 1];
+
+                                // Remove the last <li> element from the list
+                                lastItem.parentNode.removeChild(lastItem);
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
@@ -744,35 +776,27 @@ include('navbar.php');
         <div class="popup" style="padding: 20px 60px !important">
             <button class="close-btn" onclick="closePopup('popup2')">
                 <p style="font-size: 30px">Cancel</p>
-
             </button>
 
             <p style="font-size: 40px">Add Ingredients</p>
             <div class="popup2_wrapper">
-                <!--<a href="#" class="plus" style="height: 50px">+</a>-->
-
-
-
+                
                 <div class="input_form">
-                    <form action="">
+                    <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
                         <div class="input-group">
-                            <input type="text" value="" placeholder="Name Of the ingredient" id="ingredient_name"
-                                class="ingredient">
-
+                            <input type="file" class="img_ingredient" id="ingredient_image" accept="image/svg+xml" style="" >
+                            <input type="text" value="" placeholder="Name Of the ingredient" id="ingredient_name" class="ingredient" style="padding-left: 10px;">
                             <div class="qty" style="display:flex;position:relative;">
                                 <div class="qty-value">
-                                    <input type="text" value="" placeholder="Quantity" id="quantity" class="ingredient">
-
+                                    <input type="text" value="" placeholder="Quantity" id="quantity" class="ingredient" onclick="handleClick()" style="padding-left: 10px;">
                                 </div>
-                                <div class="qty_btn"
-                                    style="padding-top:6px; position:absolute;margin-inline-start:262px">
-
-                                    <button type="button" id="increaseQuantityBtn" class="qty-plus" style=""
-                                        onclick="increment()">+</button>
-
-                                    <button type="button" id="decreaseQuantityBtn" class="minus" style=""
-                                        onclick="decrement()">-</button>
-
+                                <div class="qty_btn" style="position:absolute;margin-inline-start:272px">
+                                    <button type="button" id="increaseQuantityBtn" class="qty-plus" style=" height: 43px; padding-bottom: 20px; margin-top: 3px;" onclick="increment()">
+                                        <h5 style=" padding: 0px; padding-top: 7px;" >+</h5>
+                                    </button>
+                                    <button type="button" id="decreaseQuantityBtn" class="minus" style=" height: 10px; margin: 0px; " onclick="decrement()">
+                                        <h5>-</h5>
+                                    </button>
                                 </div>
                             </div>
                             <select id="measurementUnit" class="ingredient_select">
@@ -790,41 +814,133 @@ include('navbar.php');
                     </form>
                 </div>
 
-                <!-- Increase And Decrease Quantity Buttons code -->
-
-                <!-- <script>
-                    var quantityInput = 0;
-                    function increment() {
-                        quantityInput++;
-                        document.getElementById('quantity').value = quantityInput;
-
-                    }
-                
-                    function decrement() {
-                        if (quantityInput > 0){
-                            quantityInput --;
-                            document.getElementById('quantity').value = quantityInput;
-                        }
-                    }
-                </script> -->
-
                 <script>
-                function increment() {
-                    const quantityInput = document.getElementById('quantity');
-                    quantityInput.value = parseInt(quantityInput.value) + 1;
-                }
+                    // JavaScript function to handle file upload
+                    function handleFileUpload() {
+                        const input = document.getElementById('ingredient_image');
+                        const file = input.files[0];
+                        const formData = new FormData();
+                        console.log('File data:', formData);
+                        formData.append('file', file);
+                        
+                        formData.append('destination', '<?= $DEFAULT_PATH ?>uploads/recipe/ingredients/');
+                        
+                        const xhr = new XMLHttpRequest();
 
-                function decrement() {
-                    const quantityInput = document.getElementById('quantity');
-                    let value = parseInt(quantityInput.value) - 1;
-                    // Ensure value doesn't go below 0
-                    value = value < 0 ? 0 : value;
-                    quantityInput.value = value;
-                }
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === XMLHttpRequest.DONE) {
+                                if (xhr.status === 200) {
+                                    console.log('File uploaded successfully.');
+                                } else {
+                                    console.error('Failed to upload file.');
+                                }
+                            }
+                        };
+
+                        xhr.open('POST', '<?= $_SERVER['PHP_SELF'] ?>');
+                        console.log('print: <?= $_SERVER['PHP_SELF'] ?>');
+
+                        xhr.send(formData);
+                    }
                 </script>
 
+                <?php
+                // if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
+                //     $file = $_FILES['file'];
 
+                //     // Initialize the project directory variable
+                //     $project_directory = '';
 
+                //     // Parse the current script path to determine the project directory
+                //     $script_path = $_SERVER['PHP_SELF'];
+                //     $directories = explode('/', $script_path);
+                //     foreach ($directories as $directory) {
+                //         if (is_dir($_SERVER['DOCUMENT_ROOT'] . '/' . $directory . '/uploads')) {
+                //             $project_directory = $directory;
+                //             break; // Exit loop once project directory is found
+                //         }
+                //     }
+
+                //     // Check if project directory is found
+                //     if ($project_directory !== '') {
+                //         $destination_relative = '/uploads/recipe/ingredients/'; // Relative path to the destination directory
+                //         $destination = $_SERVER['DOCUMENT_ROOT'] . '/' . $project_directory . $destination_relative;
+
+                //         if ($file['type'] === 'image/svg+xml') {
+                //             $filename = $file['name'];
+                //             $destinationPath = $destination . $filename;
+
+                //             if (move_uploaded_file($file['tmp_name'], $destinationPath)) {
+                //                 echo 'File uploaded successfully.';
+                //             } else {
+                //                 echo 'Failed to move file.';
+                //             }
+                //         } else {
+                //             echo 'Invalid file format. Please upload an SVG image.';
+                //         }
+                //     } else {
+                //         echo 'Project directory not found.';
+                //     }
+                // } else {
+                //     // Handle other cases if needed
+                // }
+                ?>
+                 
+                <?php
+                // Rajat dhinchak code HaHaHaaaa...
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
+                    $file = $_FILES['file'];
+
+                    // Extract directory path from PHP_SELF and remove script filename
+                    $script_path = $_SERVER['PHP_SELF'];
+                    $directory_path = dirname($script_path);
+
+                    // Construct destination directory based on document root, directory path, and destination relative path
+                    $destination_relative = '/uploads/recipe/ingredients/';
+                    $destination = $_SERVER['DOCUMENT_ROOT'] . $directory_path . $destination_relative;
+
+                    if ($file['type'] === 'image/svg+xml') {
+                        $filename = $file['name'];
+                        $destinationPath = $destination . $filename;
+
+                        if (move_uploaded_file($file['tmp_name'], $destinationPath)) {
+                            echo 'File uploaded successfully.';
+                        } else {
+                            echo 'Failed to move file.';
+                        }
+                    } else {
+                        echo 'Invalid file format. Please upload an SVG image.';
+                    }
+                } else {
+                    // Handle other cases if needed
+                }
+                ?>
+
+                <script>
+                    let isInputClicked = false;
+
+                    function handleClick() {
+                        const quantityInput = document.getElementById('quantity');
+                        if (!isInputClicked) {
+                            quantityInput.value = '0';
+                            isInputClicked = true;
+                        }
+                    }
+
+                    function increment() {
+                        const quantityInput = document.getElementById('quantity');
+                        let value = parseInt(quantityInput.value || 0) + 1; // Default value to 0 if input is empty
+                        quantityInput.value = value;
+                    }
+
+                    function decrement() {
+                        const quantityInput = document.getElementById('quantity');
+                        let value = parseInt(quantityInput.value || 0) - 1; // Default value to 0 if input is empty
+                        // Ensure value doesn't go below 0
+                        value = value < 0 ? 0 : value;
+                        quantityInput.value = value;
+                    }
+                </script>
             </div>
             <button onclick="add_ingredient()" class="direction_btn">+ Add</button>
         </div>
@@ -1066,7 +1182,7 @@ include('navbar.php');
 
         const videoLink = document.createElement("a");
         videoLink.href = videoInput;
-        videoLink.textContent = "Uploaded URL";
+        videoLink.textContent = videoInput;
         videoLink.style.textDecoration = "none";
         videoLink.style.color = "#D257E6";
         videoLink.style.fontWeight = "bold";
@@ -1098,15 +1214,55 @@ include('navbar.php');
         });
     });
 
+    // function add_ingredient() {
+    //     const div = document.getElementById("ingredients_box");
+    //     const icard = document.createElement("div");
+    //     const ingredient_name = document.getElementById("ingredient_name");
+    //     const quantity = document.getElementById("quantity");
+    //     const measurementUnit = document.getElementById("measurementUnit"); // Get the measurement unit dropdown
+
+    //     if (ingredient_name.value == "" || quantity.value == "") {
+    //         // console.log('snskjc');
+    //         ingredient_name.style.border = "1px solid red";
+    //         quantity.style.border = "1px solid red";
+    //         return;
+    //     }
+
+    //     const ingredientWithUnit = `${quantity.value} ${measurementUnit.value}`; // Combine quantity and unit
+
+    //     icard.classList.add("icard");
+    //     icard.innerHTML = `
+    //     <img src="<//?= $DEFAULT_PATH ?>assets/images/salt.svg" alt="" srcset="">
+    //     <span class="igre-name">${ingredient_name.value}</span>
+    //     <span class="igre-amount">${ingredientWithUnit}</span>
+    //     <input data-ingredient-name="${ingredient_name.value} ${ingredientWithUnit}" data-ingredient="true" checked type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
+    // `;
+
+    //     div.appendChild(icard);
+    //     ingredient_name.value = "";
+    //     quantity.value = "";
+    //     const div2 = document.getElementById("popup2");
+    //     div2.style.display = "none";
+    //     checkBoxEvent();
+    // }
     function add_ingredient() {
         const div = document.getElementById("ingredients_box");
         const icard = document.createElement("div");
         const ingredient_name = document.getElementById("ingredient_name");
         const quantity = document.getElementById("quantity");
         const measurementUnit = document.getElementById("measurementUnit"); // Get the measurement unit dropdown
+        const ingredientImageInput = document.getElementById("ingredient_image");
+        const ingredient_img_name = ingredientImageInput.value.split('\\').pop().split('/').pop().split('.').shift(); // Extract image name without extension
+        const file = ingredientImageInput.files[0];
+
+          // Check if a file is selected
+        if (file) {
+          handleFileUpload();
+        } else {
+          alert('Please select an SVG image to upload');
+        }
 
         if (ingredient_name.value == "" || quantity.value == "") {
-            // console.log('snskjc');
             ingredient_name.style.border = "1px solid red";
             quantity.style.border = "1px solid red";
             return;
@@ -1116,19 +1272,21 @@ include('navbar.php');
 
         icard.classList.add("icard");
         icard.innerHTML = `
-        <img src="<?= $DEFAULT_PATH ?>assets/images/salt.svg" alt="" srcset="">
+        <img src="<?= $DEFAULT_PATH ?>uploads/recipe/ingredients/${ingredient_img_name}.svg" alt="${ingredient_img_name}" srcset="">
         <span class="igre-name">${ingredient_name.value}</span>
         <span class="igre-amount">${ingredientWithUnit}</span>
-        <input data-ingredient-name="${ingredient_name.value} ${ingredientWithUnit}" data-ingredient="true" checked type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
-    `;
+        <input data-ingredient-name="${ingredient_name.value} ${ingredientWithUnit} :${ingredient_img_name}" data-ingredient="true" checked type="checkbox" name="ingredient[]" id="" value="1" class="input_bar check">
+        `;
 
         div.appendChild(icard);
         ingredient_name.value = "";
         quantity.value = "";
+        ingredientImageInput.value = ""; // Clear the image input field
         const div2 = document.getElementById("popup2");
         div2.style.display = "none";
         checkBoxEvent();
     }
+
 
 
     // function add_video() {
