@@ -158,7 +158,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                                 align-items-center">
                                             <div class="d-flex
                                         align-items-center">
-                                                <img src="<?= $DEFAULT_PATH ?>assets/images/<?= $conversation['p_p'] ?>"
+                                                <img src="<?= $conversation['p_p']===""? $DEFAULT_PATH."assets/images/user-default.png":$DEFAULT_PATH.'uploads/profile/images/'.$conversation['p_p'] ?>"
                                                     class="rounded-circle" style="width:40px">
                                                 <h3 class="fs-xs m-2 text-dark">
                                                     <?= $conversation['name'] ?><br>

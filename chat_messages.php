@@ -342,7 +342,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                                   align-items-center">
                                             <div class="d-flex
                                         align-items-center">
-                                                <img src="<?= $DEFAULT_PATH ?>assets/images/<?= $conversation['p_p'] ?>"
+                                                <img src="<?= $conversation['p_p']===""? $DEFAULT_PATH."assets/images/user-default.png":$DEFAULT_PATH.'uploads/profile/images/'.$conversation['p_p'] ?>"
                                                     class="rounded-circle" style="width:40px">
                                                 <h3 class="fs-xs m-2 text-dark">
                                                     <?= $conversation['name'] ?><br>
@@ -354,8 +354,7 @@ if (isset($_SESSION['dietitianuserID'])) {
 
                                                 </h3>
                                             </div>
-                                            <div class="d-flex
-                                        align-items-center " style="margin-left: auto;">
+                                            <div class="d-flex align-items-center " style="margin-left: auto;">
                                                 <h3 class="fs-xs p-2 text-dark">
 
                                                     <small>
@@ -532,7 +531,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                 <div class="  d-inline-block p-2 flex-fill justify-content-between chat">
                     <div class="d-flex flex-row justify-content-between  mx-4">
                         <div class="d-flex  align-items-center  ">
-                            <img src="<?= $DEFAULT_PATH ?>assets/images/<?= $chatWith['p_p'] ?>" class="rounded-circle"
+                            <img src="<?= $chatWith['p_p']===""? $DEFAULT_PATH."assets/images/user-default.png":$DEFAULT_PATH.'uploads/profile/images/'.$chatWith['p_p'] ?>" class="rounded-circle"
                                 style="width:50px">
 
                             <h6 class="display-4 fs-sm m-2">
