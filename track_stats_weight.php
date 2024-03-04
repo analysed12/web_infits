@@ -145,7 +145,7 @@ tst-left-t {
     display: flex;
     flex-wrap: wrap;
     /* justify-content: space-between; */
-    gap: 5%;
+    gap: 4%;
     padding-left: 1%;
 }
 
@@ -835,16 +835,16 @@ tst-left-t {
                                 <p style="color:#52A4FF;">Water</p>
                             </a>
                         </div>
-                        <div class="client-card client-card-weight" style="color:#7D5DE6; border: 1px solid #7D5DE6;">
+                        <div class="client-card client-card-weight" style="color:#54AFAC; border: 1px solid #54AFAC;">
                             <a href="track_stats_weight.php?client_id=<?php echo ($clientId) ?>">
                                 <img src="<?= $DEFAULT_PATH ?>assets/images/weight_selected.svg" alt="">
                                 <p style="color:#FFFFFF;">Weight<br>Track</p>
                             </a>
                         </div>
-                        <div class="client-card" style="color:#54AFAC; border: 1px solid #54AFAC;">
+                        <div class="client-card" style="color:#7D5DE6; border: 1px solid #7D5DE6;">
                             <a href="track_stats_sleep.php?client_id=<?php echo ($clientId) ?>">
-                                <i style="color:#54AFAC;" class="fa-solid fa-moon"></i>
-                                <p style="color:#54AFAC;">Sleep</p>
+                                <i style="color:#7D5DE6;" class="fa-solid fa-moon"></i>
+                                <p style="color:#7D5DE6;">Sleep</p>
                             </a>
                         </div>
                         <div class="client-card" style="color:#E3738D; border: 1px solid #E3738D;">

@@ -1,5 +1,18 @@
 <?php
 include "navbar.php";
+$sql_fetch = "SELECT * FROM dietitian WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+$result_fetch = $conn->query($sql_fetch);
+$data_fetch = $result_fetch->fetch_assoc();
+
+
+$links = array(
+    'whatsapp' => $data_fetch['whatsapp'],
+    'twitter' => $data_fetch['twitter'],
+    'facebook' => $data_fetch['facebook'],
+    'linkedin' => $data_fetch['linkedin'],
+    'instagram' => $data_fetch['instagram']
+);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -217,65 +230,63 @@ include "navbar.php";
         <h1 style="font-size:40px;font-weight:400;padding-bottom:1rem">Profile Settings</h1>
         <div class="maincontainer_wrapper">
             <div class="leftside" style="display:flex;flex-direction:column;gap:1rem">
-            <?php $sql  = "SELECT * FROM dietitian WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
-            global $conn;
-            $result = $conn->query($sql);
-            $data = $result->fetch_assoc();
-            ?>
+                <?php $sql  = "SELECT * FROM dietitian WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+                global $conn;
+                $result = $conn->query($sql);
+                $data = $result->fetch_assoc();
+                ?>
                 <span style="display:flex;flex-direction:column">
-                    User ID <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['dietitian_id']?>" >
+                    User ID <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?= $data['dietitian_id'] ?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Name <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['name']?>">
+                    Name <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?= $data['name'] ?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Email <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['email']?>">
+                    Email <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?= $data['email'] ?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Mobile No <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['mobile']?>">
+                    Mobile No <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?= $data['mobile'] ?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Qualification <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['qualification']?>">
+                    Qualification <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?= $data['qualification'] ?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
                     Password
-                    <span style="display:flex;align-items:center;justify-content:space-between "
-                        class="input_field"><input readonly type="password" id="password" placeholder="Enter Value" value="<?=$data['password']?>"  style="border:none;color: #AEAEAE;">
-        
-                        <img style="cursor: pointer;width:25px;" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon"
-                            alt="eye" ></span>
+                    <span style="display:flex;align-items:center;justify-content:space-between " class="input_field"><input readonly type="password" id="password" placeholder="Enter Value" value="<?= $data['password'] ?>" style="border:none;color: #AEAEAE;">
+
+                        <img style="cursor: pointer;width:25px;" src="<?= $DEFAULT_PATH ?>assets/images/eye.svg" id="eyeicon" alt="eye"></span>
                 </span>
 
             </div>
 
             <div class="middle" style="display:flex;flex-direction:column;gap:1rem">
                 <span style="display:flex;flex-direction:column">
-                    Username <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['dietitianuserID']?>">
+                    Username <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?= $data['dietitianuserID'] ?>">
                 </span>
 
                 <span style="display:flex;flex-direction:column">
-                    Location <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['location']?>">
+                    Location <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?= $data['location'] ?>">
                 </span>
 
 
                 <span style="display:flex;gap:1.5rem">
                     <span style="display:flex;flex-direction:column">
-                        Gender <input readonly type="text" placeholder="Enter Value" class="gender" value="<?=$data['gender']?>">
+                        Gender <input readonly type="text" placeholder="Enter Value" class="gender" value="<?= $data['gender'] ?>">
                     </span>
                     <span style="display:flex;flex-direction:column">
-                        Age <input readonly type="text" placeholder="Enter Value" class="gender" value="<?=$data['age']?>">
+                        Age <input readonly type="text" placeholder="Enter Value" class="gender" value="<?= $data['age'] ?>">
                     </span>
 
                 </span>
 
                 <span style="display:flex;flex-direction:column">
-                    Experience <input readonly type="text" class="input_field" placeholder="Enter Value"  value="<?=$data['experience']?>">
+                    Experience <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?= $data['experience'] ?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Refferal Code <input  readonly type="text" class="input_field" placeholder="Enter Value" value="<?=$data['referral_code']?>">
+                    Refferal Code <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?= $data['referral_code'] ?>">
                 </span>
                 <span style="display:flex;flex-direction:column">
-                    Acheivements and Certificates <input readonly type="text" class="input_field" placeholder="Enter Value"  value="<?=$data['achievements']?>" >
+                    Acheivements and Certificates <input readonly type="text" class="input_field" placeholder="Enter Value" value="<?= $data['achievements'] ?>">
                 </span>
 
             </div>
@@ -283,24 +294,34 @@ include "navbar.php";
 
             <div class="rightside" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2rem">
                 <div>
-                    <img src="<?php if ($user['p_p']!=='user-default.png'){echo 'uploads/profile/images/'.$user['p_p'];}else{echo $DEFAULT_PATH.'assets/images/'.$user['p_p'];}?>" style="height:150px; width:150px; border-radius:25px;" />
+                    <img src="<?php if ($user['p_p'] !== 'user-default.png') {
+                                    echo 'uploads/profile/images/' . $user['p_p'];
+                                } else {
+                                    echo $DEFAULT_PATH . 'assets/images/' . $user['p_p'];
+                                } ?>" style="border-radius:25px;" />
                     <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding-top:1rem;">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/Star.svg" style="background:none">
                         <h3 style="font-size:25px;padding-top:0.5rem">4.8</h3>
                     </div>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:2rem">
-                    <div style="display:flex;align-items:center;gap:1rem"><img
-                            src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg"><span>Whatsapp</span></div>
-                    <div style="display:flex;align-items:center;gap:1rem"><img
-                            src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"><span>Twitter</span></div>
-                    <div style="display:flex;align-items:center;gap:1rem"><img
-                            src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"><span>Facebook</span></div>
-                    <div style="display:flex;align-items:center;gap:1rem"><img
-                            src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"><span>Linkdin</span></div>
-                    <div style="display:flex;align-items:center;gap:1rem"><img
-                            src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg"><span>Instagram</span></div>
+                    <?php foreach ($links as $platform => $url) : ?>
+                        <div style="display:flex;align-items:center;gap:1rem">
+                            <?php if (!empty($url)) : ?>
+                                <a href="<?= $url ?>" style="text-decoration: none " target="_blank">
+                                    <img src="<?= $DEFAULT_PATH ?>assets/images/<?= $platform ?>.svg">
+                                    <span style="color: black"><?= ucfirst($platform) ?></span>
+                                </a>
+                            <?php else : ?>
+                                <div>
+                                    <img src="<?= $DEFAULT_PATH ?>assets/images/<?= $platform ?>.svg">
+                                    <span style="color: black"><?= ucfirst($platform) ?> </span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
+
 
 
             </div>
@@ -322,14 +343,10 @@ include "navbar.php";
             </div>
 
             <div class="content" style="display:flex;gap:1rem;margin-left:1rem">
-                <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img
-                        src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg"></a>
-                <a class="twitter-share-button" href="https://twitter.com/intent/tweet"><img
-                        src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"></a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank"> <img
-                        src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"></a>
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url={url}"><img
-                        src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"></a>
+                <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg"></a>
+                <a class="twitter-share-button" href="https://twitter.com/intent/tweet"><img src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank"> <img src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"></a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={url}"><img src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"></a>
                 <img src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg">
             </div>
         </div>
@@ -339,7 +356,7 @@ include "navbar.php";
     <script>
         let eyeicon = document.getElementById("eyeicon");
         let password = document.getElementById("password");
-        eyeicon.onclick = function () {
+        eyeicon.onclick = function() {
             if (password.type == "password") {
                 password.type = "text";
                 eyeicon.src = "<?= $DEFAULT_PATH ?>assets/images/eye-open.png";

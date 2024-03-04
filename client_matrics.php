@@ -306,8 +306,8 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
     <div class="images"
       style="display:flex;flex-wrap:wrap;width:100%; margin-top:50px;flex-direction:row !important; justify-content: center">
       <?php echo '<a style="text-decoration:none" href="track_stats_steps.php?client_id=' . $client_id . '">' ?>
-      <div class="img "
-        style="background: linear-gradient(208.27deg, rgba(255, 108, 108, 0.891) 40.23%, rgba(255, 92, 0, 0.468) 95.3%);border-radius: 20px;width: 274.26px;height: 270.88px; margin:30px 65px;">
+      <div class="img"
+        style="background: linear-gradient(208.27deg, rgba(255, 108, 108, 0.891) 40.23%, rgba(255, 92, 0, 0.468) 95.3%);border-radius: 20px;width: 274.26px;height: 270.88px; margin:30px 40px;">
         <div class="" style="flex-direction:column;display:flex;">
           <p class="img_title">Steps</p>
           <div style="margin-top:-30px !important;">
@@ -341,7 +341,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
       </a>
       <?php echo '<a style="text-decoration:none" href="track_stats_heart.php?client_id=' . $client_id . '">' ?>
       <div class="img "
-        style="background: linear-gradient(206.14deg, rgba(255, 96, 145, 0.81) 0%, rgba(81, 39, 221, 0.468) 145.34%);border-radius: 20px;width: 274.26px;height: 270.88px; margin:30px 65px">
+        style="background: linear-gradient(206.14deg, rgba(255, 96, 145, 0.81) 0%, rgba(81, 39, 221, 0.468) 145.34%);border-radius: 20px;width: 274.26px;height: 270.88px; margin:30px 40px">
         <div class="" style="flex-direction:column;display:flex;">
           <p
             style="width: 157px;height: 85px;left: 58px;top: -6px;font-family: 'NATS';font-style: normal;font-weight: 400;font-size: 40px;line-height: 85px;color: #FFFFFF;position:relative;">
@@ -376,7 +376,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
       </a>
       <?php echo '<a style="text-decoration:none" href="track_stats_water.php?client_id=' . $client_id . '">' ?>
       <div class="img "
-        style="background: linear-gradient(208.27deg, rgba(39, 142, 255, 0.72) 41.57%, rgba(98, 113, 255, 0.416) 93.17%);border-radius: 20px;width: 274.26px;height: 270.88px;margin:30px 65px;">
+        style="background: linear-gradient(208.27deg, rgba(39, 142, 255, 0.72) 41.57%, rgba(98, 113, 255, 0.416) 93.17%);border-radius: 20px;width: 274.26px;height: 270.88px;margin:30px 40px;">
         <div class="" style="flex-direction:column;display:flex;">
           <p class="img_title">Water</p>
           <div style="margin-top:-30px !important;">
@@ -409,7 +409,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
       </a>
       <?php echo '<a style="text-decoration:none" href="track_stats_weight.php?client_id=' . $client_id . '">' ?>
       <div class="img "
-        style="background: linear-gradient(237.6deg, rgba(78, 205, 196, 0.468) -24.24%, rgba(85, 98, 112, 0.81) 100%);border-radius: 20px;width: 274.26px;height: 270.88px;margin:30px 65px;">
+        style="background: linear-gradient(237.6deg, rgba(78, 205, 196, 0.468) -24.24%, rgba(85, 98, 112, 0.81) 100%);border-radius: 20px;width: 274.26px;height: 270.88px;margin:30px 40px;">
         <div class="" style="flex-direction:column;display:flex;">
           <p class="img_title" style="left: 84.12px;top: -1px;">Weight</p>
           <div style="margin-top:-30px !important;">
@@ -442,7 +442,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
       </a>
       <?php echo '<a style="text-decoration:none" href="track_stats_sleep.php?client_id=' . $client_id . '">' ?>
       <div class="img "
-        style="background: linear-gradient(208.27deg, rgba(69, 24, 219, 0.81) 30.7%, rgba(123, 41, 255, 0.468) 95.3%);border-radius: 20px;width: 274.26px;height: 270.88px;margin:30px 65px;">
+        style="background: linear-gradient(208.27deg, rgba(69, 24, 219, 0.81) 30.7%, rgba(123, 41, 255, 0.468) 95.3%);border-radius: 20px;width: 274.26px;height: 270.88px;margin:30px 40px;">
         <div class="" style="flex-direction:column;display:flex;">
           <p class="img_title">Sleep</p>
           <div style="margin-top:-35px !important;">
@@ -475,7 +475,7 @@ $todaycalorie = $row7['SUM(caloriesConsumed)'];
       </a>
       <?php echo '<a style="text-decoration:none" href="track_stats_calorie.php?client_id=' . $client_id . '">' ?>
       <div class="img "
-        style="background: linear-gradient(61.08deg, rgba(221, 94, 137, 0.9) 0%, rgba(247, 187, 151, 0.52) 130.74%);border-radius: 20px;width: 274.26px;height: 270.88px;margin:30px 65px;">
+        style="background: linear-gradient(61.08deg, rgba(221, 94, 137, 0.9) 0%, rgba(247, 187, 151, 0.52) 130.74%);border-radius: 20px;width: 274.26px;height: 270.88px;margin:30px 40px;">
         <div class="" style="flex-direction:column;display:flex;">
           <p class="img_title" style="left: 78.26px;top: -1px;">Calories</p>
           <div style="margin-top:-30px !important;">
