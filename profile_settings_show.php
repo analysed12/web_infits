@@ -344,9 +344,9 @@ $links = array(
 
             <div class="content" style="display:flex;gap:1rem;margin-left:1rem">
                 <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img src="<?= $DEFAULT_PATH ?>assets/images/WhatsApp.svg"></a>
-                <a class="twitter-share-button" href="https://twitter.com/intent/tweet"><img src="<?= $DEFAULT_PATH ?>assets/images/Twitter.svg"></a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank"> <img src="<?= $DEFAULT_PATH ?>assets/images/Facebook.svg"></a>
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url={url}"><img src="<?= $DEFAULT_PATH ?>assets/images/Linkedin.svg"></a>
+                <a class="twitter-share-button" href="https://twitter.com/intent/tweet"><img src="<?= $DEFAULT_PATH ?>assets/images/twitter.svg"></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank"> <img src="<?= $DEFAULT_PATH ?>assets/images/facebook.svg"></a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={url}"><img src="<?= $DEFAULT_PATH ?>assets/images/LinkedIn-Circled.svg"></a>
                 <img src="<?= $DEFAULT_PATH ?>assets/images/Instagram.svg">
             </div>
         </div>
