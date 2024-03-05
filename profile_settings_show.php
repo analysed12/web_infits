@@ -6,11 +6,11 @@ $data_fetch = $result_fetch->fetch_assoc();
 
 
 $links = array(
-    'whatsapp' => $data_fetch['whatsapp'],
-    'twitter' => $data_fetch['twitter'],
-    'facebook' => $data_fetch['facebook'],
-    'linkedin' => $data_fetch['linkedin'],
-    'instagram' => $data_fetch['instagram']
+    'wWatsApp' => $data_fetch['whatsapp'],
+    'Twitter' => $data_fetch['twitter'],
+    'Facebook' => $data_fetch['facebook'],
+    'Linkedin' => $data_fetch['linkedin'],
+    'Instagram' => $data_fetch['instagram']
 );
 
 ?>
@@ -306,17 +306,7 @@ $links = array(
                 </div>
                 <div style="display:flex;flex-direction:column;gap:2rem">
                     <?php
-                    $newarray = array();
-                    foreach ($links as $platform => $url) : 
-                        $str = "";
-                        if ($platform === "whatsapp"){
-                            $str = "WhatsApp";
-                        }else{
-                            $str = ucwords($platform);
-                        }
-                        $newarray[$platform] = $url;
-                    endforeach;
-                    foreach ($newarray as $platform => $url) : ?>
+                    foreach ($links as $platform => $url) : ?>
                         <div style="display:flex;align-items:center;gap:1rem">
                             <?php if (!empty($url)) : ?>
                                 <a href="<?= $url ?>" style="text-decoration: none " target="_blank">
