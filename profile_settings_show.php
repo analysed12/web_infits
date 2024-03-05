@@ -314,7 +314,7 @@ $links = array(
                         }else{
                             $str = ucwords($platform);
                         }
-                        $newarray[$paltform] = $url;
+                        $newarray[$platform] = $url;
                     endforeach;
                     foreach ($newarray as $platform => $url) : ?>
                         <div style="display:flex;align-items:center;gap:1rem">
