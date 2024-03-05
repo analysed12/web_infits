@@ -6,7 +6,7 @@ $data_fetch = $result_fetch->fetch_assoc();
 
 
 $links = array(
-    'wWatsApp' => $data_fetch['whatsapp'],
+    'WhatsApp' => $data_fetch['whatsapp'],
     'Twitter' => $data_fetch['twitter'],
     'Facebook' => $data_fetch['facebook'],
     'Linkedin' => $data_fetch['linkedin'],
