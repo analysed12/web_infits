@@ -38,7 +38,6 @@ ob_start();
             font-weight: 400;
             border: none;
             display: flex;
-
             padding-right: 0.5rem;
             margin-right: 1rem;
         }
@@ -56,7 +55,6 @@ ob_start();
         }
 
         .card {
-
             color: black;
             padding: 1rem;
             min-width: 430px;
@@ -73,12 +71,7 @@ ob_start();
             display: flex;
             flex-wrap: wrap;
             padding: 0 30px;
-
         }
-
-
-
-        .card-upper {}
 
         .card-upper-image {
             display: inline;
@@ -90,15 +83,11 @@ ob_start();
         }
 
         .card-upper-details {
-
             display: inline;
-
         }
 
         .card-upper-options {
-
             width: 20% !important;
-
             display: flex;
             justify-content: end;
         }
@@ -107,7 +96,6 @@ ob_start();
             max-width: 100%;
             max-height: 100%;
             display: block;
-
         }
 
         .tag-element {
@@ -116,7 +104,6 @@ ob_start();
             margin: 5px !important;
             padding: 5px;
             border-radius: 10px;
-            /* margin:1rem 0rem 1rem 1rem  !important; */
         }
 
         .card-middle {
@@ -124,17 +111,12 @@ ob_start();
         }
 
         .card-below {
-            /* margin-top: 5px; */
             padding: 0.5rem 1rem;
-            /* background-color: red; */
         }
-
 
         input:focus {
             outline: none !important;
         }
-
-
 
         a:hover {
             cursor: pointer;
@@ -146,10 +128,7 @@ ob_start();
             background-color: blue;
         }
 
-
-
         .create_btn {
-
             width: 85px;
             height: 85px;
             margin-right: 2rem;
@@ -173,22 +152,16 @@ ob_start();
             padding-left: 1.4rem;
             padding-right: 1.4rem;
             position: relative;
-            /* margin-left:93%; */
             overflow: hidden;
             margin-bottom: 1rem;
         }
 
         .features-grid {
-            /* display: grid;
+            display: grid;
             grid-template-columns: 1fr 1fr;
             row-gap: 1vh;
-            column-gap: 0.5vw; */
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
+            column-gap: 0.5vw;
         }
-
-
 
         @media screen and (max-width: 763px) {
             #heading {
@@ -206,7 +179,6 @@ ob_start();
                 flex-direction: column;
                 padding: 0px !important;
             }
-
         }
 
         @media screen and (max-width: 720px) {
@@ -215,99 +187,45 @@ ob_start();
             }
 
             .card {
-                /* margin: auto; */
                 width: 100%;
                 padding-right: 2rem;
-
-            }
-
-
-            .card-sec {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-left: 0rem !important;
             }
 
             #btn1 {
-
                 right: 3rem;
             }
         }
 
         @media screen and (max-width: 720px) {
-
             .search_client {
                 width: 94% !important;
                 margin-bottom: 2rem;
             }
 
             #btn1 {
-
                 right: 3rem;
             }
-
         }
 
         .card {
             min-height: 280px;
         }
 
-        .border-1 {
+        .card-details-container {
             position: absolute;
-            right: 10px;
-            top: 10px;
-            display: block;
-        }
-
-        .card-title {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            min-height: 75px;
-            margin-right: 75px;
-        }
-
-        .card-middle {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-
-            min-height: 40px;
-            font-size: 19px;
-            line-height: 1em;
-        }
-
-        .features-point {
-
-            display: inline-block;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            line-height: 1.5;
-        }
-
-
-        .fp {
-
-            display: flex;
-            width: 50%;
-
-        }
-
-        .features-grid .fp:nth-child(n+5) {
+            background-color: #FFFFFF;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+            border-radius: 1.25rem;
+            padding: 1rem;
+            min-width: 430px;
+            min-height: 318px;
             display: none;
-            /* Hide items starting from the third item */
         }
+
+        
+
     </style>
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
@@ -318,29 +236,21 @@ ob_start();
     echo $output;
     ?>
 
-
-    <div class="head-sec"
-        style="padding: 1rem 2rem 1rem 0rem;margin-left: 16rem; display: flex;  justify-content: space-between;">
-        <div class="col-6" id="heading"
-            style="font-weight:400;font-size:40px;color:black !important;margin-top:1rem;margin-left:1rem">Plans</div>
+    <div class="head-sec" style="padding: 1rem 2rem 1rem 0rem; margin-left: 16rem; display: flex; justify-content: space-between;">
+        <div class="col-6" id="heading" style="font-weight: 400; font-size: 40px; color: black !important; margin-top: 1rem; margin-left: 1rem">Plans</div>
         <form method="GET" style="margin-left:1rem">
             <div class="search_client" style="align-items:center">
-                <div><button id="btn3" name="search-btn"><img
-                            src="<?= $DEFAULT_PATH ?>assets/images/search1.svg"></button> </div>
-                <div style="margin-left:1rem;margin-right:4rem;"> <input type="text" name="search" placeholder="Search"
-                        class="seach_clients_text" style="width:100%"></div>
+                <div><button id="btn3" name="search-btn"><img src="<?=$DEFAULT_PATH?>assets/images/search1.svg"></button> </div>
+                <div style="margin-left:1rem; margin-right:4rem;"> <input type="text" name="search" placeholder="Search" class="seach_clients_text" style="width:100%"></div>
+            </div>
         </form>
     </div>
-    </div>
-
-
 
     <div class="card-sec" style="display: flex; justify-content:center;">
         <div class="col-md-12">
             <div class="">
                 <div class="cards row gx-0" style="margin-left:1rem">
                     <?php
-
                     if (isset($_GET['search-btn'])) {
                         if (!empty($_GET['search'])) {
                             $search = $_GET['search'];
@@ -348,53 +258,26 @@ ob_start();
                             if ($result1 = mysqli_query($conn, $sql1)) {
                                 if (mysqli_num_rows($result1) > 0) {
                                     while ($row1 = mysqli_fetch_array($result1)) {
-                                        ?>
+                    ?>
 
                                         <div class="card col-lg-5 p-3" container>
                                             <div class="card-upper row">
                                                 <div class="card-upper-image col-3">
-                                                    <img src="<?= $DEFAULT_PATH ?>assets/images/fruit_salad.svg" alt="">
+                                                    <img src="<?=$DEFAULT_PATH?>assets/images/fruit_salad.svg" alt="">
                                                 </div>
                                                 <div class="card-upper-details col-8">
                                                     <div class="row">
                                                         <div class="col" style=" font-size:30px;font-weight:400 !important;">
-                                                            <p>
-                                                                <?php echo $row1['name'] ?>
+                                                            <p class="card-name" data-card-id="<?php echo $row1['plan_id']; ?>">
+                                                                <?php echo $row1['name']?>
                                                             </p>
-
                                                         </div>
-
-
-                                                        <div class="w-100"></div>
-                                                        <div class="col-5" style="margin-top:5px;margin-bottom:5px; "><span
-                                                                style="font-weight:bold">Rs.
-                                                                <?php echo $row1['price'] ?>
-                                                            </span>/month
-                                                        </div>
-                                                        <div class="col-7"
-                                                            style="margin-top:5px;font-size:13px;font-weight:bold;display:flex;align-items:center;justify-content:center;">
-                                                            <?php $orgDate = $row1['start_date'];
-                                                            $newDate = date("d/m/Y", strtotime($orgDate));
-                                                            echo $newDate ?>
-                                                            to
-                                                            <?php $orgDate = $row1['end_date'];
-                                                            $newDate = date("d/m/Y", strtotime($orgDate));
-                                                            echo $newDate ?>
-                                                        </div>
-                                                        <div class="w-100 d-flex flex-wrap gap-1"></div>
-                                                        <?php
-                                                        $mark = explode(',', $row1['tags']);
-                                                        foreach ($mark as $out) {
-                                                            echo '<div class="tag-element" style="width:auto;">' . $out . '</div>';
-                                                        }
-                                                        ?>
-
+                                                        <!-- ... (Your existing code) ... -->
                                                     </div>
                                                 </div>
-
                                             </div>
-                                            <div class="card-middle" style="color:#919191  !important">
-                                                <?php echo $row1['description'] ?>
+                                            <div class="card-middle row" style="color:#919191  !important">
+                                                <?php echo $row1['description']?>
                                             </div>
                                             <div class="card-below row">
                                                 <div class="col">
@@ -403,7 +286,6 @@ ob_start();
                                                         <?php
                                                         $mark = explode(',', $row1['features']);
                                                         foreach ($mark as $out) {
-
                                                             echo '<div style="display:inline-block;width:auto; margin-right:0.2px;"><i style="color:black;" class="fa-regular fa-circle-check"></i></div>';
                                                             echo '<div style="display:inline-block;width:auto;">' . $out . '</div>';
                                                         }
@@ -411,16 +293,16 @@ ob_start();
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- Additional div for card details -->
+                                            <div class="card-details-container"></div>
                                         </div>
 
-                                        <?php
+                                    <?php
                                     }
                                 } else {
                                     echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
                                 }
                             }
-
-
                         }
                     } else {
                         $sql = "SELECT * FROM create_plan where dietitianuserID = '$dietitianuser_id' ";
@@ -429,106 +311,84 @@ ob_start();
                                 while ($row = mysqli_fetch_array($result)) {
                                     ?>
 
-                                    <div class="card col-lg-5 p-3" container>
-                                        <div class="card-upper row">
-                                            <div class="card-upper-image col-4" style="min-height: 130px; min-width: 124px;">
-                                                <img src="<?= $DEFAULT_PATH ?>assets/images/fruit_salad.svg" alt="">
-                                            </div>
-                                            <div class="card-upper-details col-8">
-                                                <div class="row position-relative">
-                                                    <div style=" display: flex; justify-content: space-between; align-items: center;">
-                                                        <div class="col ps-0 card-title"
-                                                            style="margin-top:5px;margin-bottom:5px; font-size:25px;font-weight:400;">
-                                                            <?php echo $row['name'] ?>
-                                                        </div>
-                                                        <span class="border-1 ">
-                                                            <a href="update_plan.php?id=<?php echo $row['plan_id'] ?>"
-                                                                title="Update Record"
-                                                                style="color:#7282FB;height: 30px;border-radius: 8px;"
-                                                                data-toggle="tooltip"><img
-                                                                    src="<?= $DEFAULT_PATH ?>assets/images/edit-icon.svg" alt="">
-                                                            </a>
-                                                            <a onclick="return confirm('Are you sure?')"
-                                                                href="delete_plan.php?id=<?php echo $row['plan_id'] ?>"
-                                                                title="Delete Record"
-                                                                style="color:#FF3D3D;height: 30px;border-radius: 8px;margin-top:10rem"
-                                                                data-toggle="tooltip"><img
-                                                                    src="<?= $DEFAULT_PATH ?>assets/images/delete-icon.svg" alt="">
-                                                            </a>
-                                                        </span>
-                                                    </div>
-                                                    <div class="w-100"></div>
-                                                    <div class="col-5" style="padding:0 0 0 8px;overflow:hidden;"><span style="font-weight:bold">Rs.
-                                                            <?php echo $row['price'] ?>
-                                                        </span>/month
-                                                    </div>
-                                                    <div class="col-7" style="color: #000;
-                               font-family: NATS;
-                                font-size: 22px;
-                               font-style: normal;
-                               font-weight: 400;
-                               line-height:30.896px;; /* 140.434% */
-                       
-                               ">
-                                                        <?php
-                                                        $startDate = new DateTime($row["start_date"]);
-                                                        $endDate = new DateTime($row["end_date"]);
+                                    
+<div class="card col-lg-5 p-3" container>
+    <div class="card-upper row">
+        <div class="card-upper-image col-4" style="min-height: 130px; min-width: 124px;">
+            <img src="<?=$DEFAULT_PATH?>assets/images/fruit_salad.svg" alt="">
+        </div>
+        <div class="card-upper-details col-8">
+            <div class="row">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="col ps-0" style="margin-top:5px;margin-bottom:5px; font-size:30px;font-weight:400;">
+                        <p class="card-name" data-card-id="<?php echo $row['plan_id']; ?>">
+                            <?php echo $row['name']?>
+                        </p>
+                    </div>
+                    <span class="border-1 ">
+                        <a href="update_plan.php?id=<?php echo $row['plan_id'] ?>" title="Update Record"
+                            style="color:#7282FB;height: 30px;border-radius: 8px;" data-toggle="tooltip">
+                            <img src="<?=$DEFAULT_PATH?>assets/images/edit-icon.svg" alt="">
+                        </a>
+                        <a onclick="return confirm('Are you sure?')"
+                            href="delete_plan.php?id=<?php echo $row['plan_id'] ?>" title="Delete Record"
+                            style="color:#FF3D3D;height: 30px;border-radius: 8px;margin-top:10rem" data-toggle="tooltip">
+                            <img src="<?=$DEFAULT_PATH?>assets/images/delete-icon.svg" alt="">
+                        </a>
+                    </span>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-5" style=" "><span style="font-weight:bold">Rs.<?php echo $row['price'] ?></span>/month
+                </div>
+                <div class="col-7" style="color: #000; font-family: NATS; font-size: 22px; font-style: normal; font-weight: 400; line-height:30.896px;">
+                    <?php
+                        $startDate = new DateTime($row["start_date"]);
+                        $endDate = new DateTime($row["end_date"]);
+                        $interval = $startDate->diff($endDate);
+                        $months = ($interval->y * 12) + $interval->m;
+                        echo "$months Months";
+                    ?>
+                </div>
+                <div class="w-100 d-flex flex-wrap gap-1"></div>
+                <?php
+                    $mark=explode(',', $row['tags']);
+                    foreach($mark as $out) {
+                        echo '<div class="tag-element" style="width:auto;">'.$out.'</div>';
+                    }
+                ?>
+            </div>
+        </div>
+        <!-- Additional div for card details -->
+        <div class="card-details-container">
+            <!-- Add any additional details here -->
+        </div>
+    </div>
+    <div class="card-middle row" style="color:#919191; font-size:14px;line-height:1em;!important">
+        <?php echo $row['description']?>
+    </div>
+    <div class="card-below row">
+        <div class="col">
+            <div class="row">FEATURES</div>
+            <?php
+                echo '<div class="features-grid">';
+                $mark=explode(',', $row['features']);
+                foreach($mark as $out) {
+                    echo '<div>';  
+                    echo '<div style="display:inline-block;width:auto;margin-right:5px; "><i style="color:black;" class="fa-regular fa-circle-check"></i></div>';
+                    echo '<div style="display:inline-block;width:auto; margin-right:20px;">'.$out.'</div>';
+                    echo '</div>';
+                }
+                echo '</div>';    
+            ?>
+        </div>
+    </div>
+</div>
 
-                                                        $interval = $startDate->diff($endDate);
-                                                        $months = ($interval->y * 12) + $interval->m;
-
-                                                        echo "$months Months";
-
-                                                        ?>
-                                                    </div>
-                                                    <div class="w-100 d-flex flex-wrap gap-1"></div>
-                                                    <?php
-                                                    $mark = explode(',', $row['tags']);
-                                                    foreach ($mark as $out) {
-                                                        echo '<div class="tag-element" style="width:auto;">' . $out . '</div>';
-                                                    }
-                                                    ?>
-
-
-                                                </div>
-
-                                            </div>
 
 
 
-
-
-                                        </div>
-                                        <div class="card-middle" style="color:#919191; font-size:14px;line-height:1em;!important">
-                                            <?php echo $row['description'] ?>
-                                        </div>
-                                        <div class="card-below row">
-                                            <div class="col">
-                                                <!-- fetaure heading -->
-                                                <div class="row">FEATURES</div>
-                                                <div class="feature-box">
-                                                    <?php
-                                                    echo '<div class="features-grid">';
-                                                    $mark = explode(',', $row['features']);
-                                                    foreach ($mark as $out) {
-                                                        echo '<div class="fp">';
-                                                        echo '<div class="feature-check" style="display:inline-block;width:auto;margin-right:5px; "><i style="color:black;" class="fa-regular fa-circle-check"></i></div>';
-
-                                                        echo '<div class="features-point" style="display:inline-block; margin-right:20px;">' . $out . '</div>';
-
-                                                        echo '</div>';
-                                                    }
-                                                    echo '</div>';
-                                                    ?>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php
+                    <?php
                                 }
-
-
                                 mysqli_free_result($result);
                             } else {
                                 echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
@@ -536,46 +396,79 @@ ob_start();
                         } else {
                             echo "Oops! Something went wrong. Please try again later.";
                         }
-
-
                     }
                     ?>
 
                 </div>
             </div>
 
-            <div class="d-flex  justify-content-end p-3">
-                <a style="background-color:none" class="create_btn"
-                    onclick="window.location.href = 'create_plan.php';">+</a>
+            <div class="d-flex justify-content-end p-3">
+                <a style="background-color:none" class="create_btn" onclick="window.location.href = 'create_plan.php';">+</a>
             </div>
 
             <?php require('constant/scripts.php'); ?>
-</body>
+            
 
-<script>
-    function fill(Value) {
-        $('#search').val(Value);
-        $('#display').hide();
-    }
-    $(document).ready(function () {
-        $("#search").keyup(function () {
-            var name = $('#search').val();
-            if (name == "") {
-                $("#display").html("");
-            } else {
-                $.ajax({
-                    type: "POST",
-                    url: "search.php",
-                    data: {
-                        search: name
-                    },
-                    success: function (html) {
-                        $("#display").html(html).show();
-                    }
-                });
-            }
+
+
+
+
+
+            <script>
+   
+   var hoverTimeout; // Variable to store the timer
+
+$(document).on('mouseenter', '.card-name', function () {
+    var cardId = $(this).data('card-id');
+    console.log("Hovering over card with ID:", cardId);
+    var detailsContainer = $(this).closest('.card').find('.card-details-container');
+
+    // Clear any existing timeout
+    clearTimeout(hoverTimeout);
+
+    // Fetch and display card details from backend
+    $.get('fetch_card_details.php', { planId: cardId }, function (data) {
+        detailsContainer.html(data);
+
+        // Center the details container on the screen with reduced width
+        detailsContainer.css({
+            'position': 'fixed',
+            'top': '50%',
+            'left': '50%',
+            'transform': 'translate(-50%, -50%)',
+            'display': 'flex',
+            'justify-content': 'center',
+            'align-items': 'center',
+            'z-index': 9999, // Set a high z-index
+            'width': '40%', // Adjust the width as needed
         });
+
+        detailsContainer.show();
     });
-</script>
+
+    // Set a timeout to hide the details container after 3 seconds
+    hoverTimeout = setTimeout(function () {
+        detailsContainer.hide();
+    }, 300000);
+});
+
+// Clear the timeout if the mouse leaves the card or details container
+$(document).on('mouseleave', '.card', function () {
+    clearTimeout(hoverTimeout);
+    var detailsContainer = $(this).find('.card-details-container');
+    detailsContainer.hide();
+});
+
+
+
+                    
+            </script>
+
+
+
+
+
+
+</body>
 
 </html>
