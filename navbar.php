@@ -672,13 +672,13 @@ a {
                     </span>
                     </p>
                     <p id="topnav-content-2">Your performance summary this week</p><?php } else { ?>
-                        <p id="topnav-content-1"><span id="topnav-content-1-name">
+                        <p id="topnav-content-1">Good Morning, <span id="topnav-content-1-name">
                             <strong>
                                 <?php echo($user['name']); ?>
                             </strong>
                         </span>
                         </p>
-                        <p id="topnav-content-2">Health Details</p> <?php } ?>
+                        <p id="topnav-content-2">Your performance summary this week</p> <?php } ?>
         </div>
         <div class="topnav-icons">
 
