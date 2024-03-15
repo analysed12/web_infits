@@ -328,8 +328,8 @@ img.vector{
                         <img src="<?=$DEFAULT_PATH?>assets/images/vertical-three-dots.svg" alt="options" title="options">
                     </div>
                     <div class="option-popup">
-                    <button onclick="return confirm('Are you sure to delete this?')" class="formDelete"><a href="delete_form.php?form_id=<?=$form['form_id']?>" style="text-decoration:none">DELETE</a></button>
-                    <button class="formEdit"  data-form-id="<?=$form['form_id']?>"><a href="health_detail_form_create.php?form_id=<?=$form['form_id']?>" style="text-decoration:none">EDIT</a></button>
+                    <button onclick="return confirm('Are you sure to delete this?')" class="formDelete"><a href="delete_form.php?form_id=<?=$form['form_id']?>" style=" text-decoration: none; color: white; ">DELETE</a></button>
+                    <button class="formEdit"  data-form-id="<?=$form['form_id']?>"><a href="health_detail_form_create.php?form_id=<?=$form['form_id']?>" style=" text-decoration: none; color: white; ">EDIT</a></button>
                         
                     </div>
                 </div>
@@ -364,7 +364,7 @@ img.vector{
                 const formName = card.querySelector('.form-content h4').textContent.toLowerCase();
 
                 if (formName.includes(searchTerm)) {
-                    card.style.display = 'block';
+                    card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
                 }
