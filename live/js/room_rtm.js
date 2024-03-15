@@ -109,7 +109,7 @@ let addBotMessageToDom = (botMessage) => {
 
     let newMessage = `<div class="message__wrapper">
     <div class="message__body__bot">
-    <img src="<?=$DEFAULT_PATH?>assets/images/live-user-default.svg" alt="Profile Picture" class="profile-picture-in-message">
+    <img src="./assets/images/live-user-default.svg" alt="Profile Picture" class="profile-picture-in-message">
     <div class="message__content__bot" style="padding-left: 10px;>
         <strong class="message__author__bot">Bot</strong>
         <p class="message__text__bot">${botMessage}</p>
