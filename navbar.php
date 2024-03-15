@@ -664,7 +664,9 @@ a {
                 $sql1 = "SELECT * FROM dietitian WHERE dietitianuserID ='$id11'";
                 $res = mysqli_query($conn,$sql1);
                 $user = mysqli_fetch_array($res, MYSQLI_ASSOC);
-                if ($url[2] !== 'health_detail_form_create.php') {?>
+                if (isset($url[2]) && $url[2] !== 'health_detail_form_create.php') {?> 
+                <!--This done to remove an error from hostinger -->
+                <!--if ($url[2] !== 'health_detail_form_create.php') {?>-->
                     <p id="topnav-content-1">Good Morning, <span id="topnav-content-1-name">
                         <strong>
                             <?php echo($user['name']); ?>
