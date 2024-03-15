@@ -8,8 +8,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-... (the integrity value)" crossorigin="anonymous" />
+
     <!-- CSS for full calender -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- JS for jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- JS for full calender -->
@@ -506,9 +510,11 @@ a:hover {
 
                     ?> 
 
-                    <div class="schedule-card">
-                        <div class="schedule-card-title"><?php echo $row['eventname'] ?></div>
-                        <div></div>
+<div class="schedule-card-container">
+    <div class="schedule-card">
+        <div class="schedule-card-title" onmouseenter="showDetails(this)" data-event-id="<?php echo $row['eventID'] ?>">
+            <?php echo $row['eventname'] ?>
+            <div></div>
                         <div class="schedule-card-name" style="margin-top:15px">
                             <div style="display:inline-block;background-color:#528aae;margin-right:10px;border-radius:50%;width:20px;height:20px;color:white;text-align:center;">
                                 <i class="fa-solid fa-user-tie"></i>
@@ -524,7 +530,9 @@ a:hover {
                         <div style="margin-top:15px;color:#4B9AFB">
                             <?php echo $newstartdate ?> - <?php echo $newenddate ?>
                         </div>
-                    </div>
+        </div>
+    </div>
+</div>
                     
                     <?php
                 }}?>
@@ -574,8 +582,7 @@ a:hover {
                 }
 
                 .fc-agendaWeek-button {
-                    /* background: #EFEFEF !important;
-                    border-radius: 5px !important; */
+                    
                     background: #EFEFEF !important;
                     border-radius: 5px !important;
                 }
@@ -587,6 +594,38 @@ a:hover {
                  font-size: 18px !important;
                   margin-top: 7px;
 }
+
+
+/* Center the card container */
+.card-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99999;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif; 
+}
+
+/* CSS for card */
+.card {
+    width: 450px;
+    height: 250px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+}
+
+.card-body {
+    padding: 20px;
+    font-size: 16px; 
+    text-align: center; 
+}
+
+
                 </style>
             </div>
         </div>
@@ -698,4 +737,42 @@ prevNextIcon.forEach(icon => {
         renderCalendar(); 
     });
 });
+
+function showDetails(element) {
+    var eventID = $(element).attr('data-event-id');
+    console.log('Event ID:', eventID); // Debug statement
+    // Send AJAX request to fetch event details
+    $.ajax({
+        url: 'fetch.php',
+        method: 'POST',
+        data: { eventID: eventID },
+        success: function(response) {
+            console.log('Response:', response); // Debug statement
+            // Display event details in a popup or modal
+            showPopup(response);
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
+
+function showPopup(eventDetails) {
+    
+    var eventData = JSON.parse(eventDetails);
+    var cardContainer = $('<div class="card-container"></div>');
+    var card = $('<div class="card"></div>');
+    var cardBody = $('<div class="card-body"></div>');
+    cardBody.append(eventData.eventDetails);
+    card.append(cardBody);
+    cardContainer.append(card);
+    $('body').append(cardContainer);
+
+    setTimeout(function() {
+        cardContainer.remove();
+    }, 1500); // 1500 milliseconds = 1.5 seconds
+}
+
+
+
 </script>
