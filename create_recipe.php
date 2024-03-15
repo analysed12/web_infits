@@ -10,7 +10,7 @@ require('constant/config.php');
 if (isset($_POST['add'])) {
     global $conn;
     if (!empty($_FILES['recipeImage']['name'])) {
-        $uploadsDir = 'uploads/';
+        $uploadsDir = 'uploads/recipe/';
         $uploadedFile = $_FILES['recipeImage']['tmp_name'];
         $originalName = $_FILES['recipeImage']['name'];
         $recipe_name = $_POST['recipe_name'];
@@ -32,7 +32,7 @@ if (isset($_POST['add'])) {
 } elseif (isset($_POST['edit'])) {
     global $conn;
     if (!empty($_FILES['recipeImage']['name'])) {
-        $uploadsDir = 'uploads/';
+        $uploadsDir = 'uploads/recipe/';
         $uploadedFile = $_FILES['recipeImage']['tmp_name'];
         $originalName = $_FILES['recipeImage']['name'];
 
