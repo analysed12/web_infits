@@ -944,7 +944,7 @@ require('constant/config.php');
                 });
                 aloo_paratha.innerHTML = stuff["recipe_name"];
                 if (stuff['recipe_img'] !== "" && stuff['recipe_img'] !== null) {
-                    hover_img.src = "<?= $DEFAULT_PATH ?>uploads/" + stuff['recipe_img'];
+                    hover_img.src = "<?= $DEFAULT_PATH ?>uploads/recipe/" + stuff['recipe_img'];
                 } else {
                     hover_img.src = "<?= $DEFAULT_PATH ?>assets/images/alooparantha.svg"
                 }
