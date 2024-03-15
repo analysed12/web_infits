@@ -224,6 +224,7 @@ session_start();
             z-index: 1;
             cursor: pointer;
             user-select: none;
+            
         }
 
         .content .created-form-container .form-card-container .form-cards .option-popup {
@@ -295,7 +296,7 @@ session_start();
             position: absolute;
             bottom: 0;
             right: 0;
-            height: 120px;
+            height: 80px;
             user-select: none;
             pointer-events: none;
         }
@@ -480,37 +481,29 @@ session_start();
                 </div>
                 <div class="form-card-container">
                     <?php
-                    $sql = "SELECT * FROM dietitian_forms WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
+                    $sql = "SELECT * from dietitian_forms where dietitianuserID = '{$_SESSION['dietitianuserID']}'";
                     $result = $conn->query($sql);
-
-                    $counter = 0;
-
-                    for ($i = 0; $i < 6; $i++) {
-                        $form = $result->fetch_assoc();
-                        if ($form) {
+                    while ($form = $result->fetch_assoc()) {
                     ?>
-                            <div class="form-cards">
-                                <img class="vector" src="<?= $DEFAULT_PATH ?>assets/images/form-card-vector.svg">
-                                <div class="form-content">
-                                    <h4><?= $form['form_name'] ?></h4>
-                                    <p><span><?= $form['total_que'] ?></span> Question</p>
-                                </div>
-                                <div class="options" onclick="showPopup(this)">
-                                    <img src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="options" title="options">
-                                </div>
-                                <div class="option-popup">
-                                    <button onclick="return confirm('Are you sure to delete this?')" class="formDelete"><a href="delete_form.php?form_id=<?= $form['form_id'] ?>">DELETE</a></button>
-                                    <button class="formEdit" data-form-id="<?= $form['form_id'] ?>"><a href="health_detail_form_create.php?form_id=<?= $form['form_id'] ?>">EDIT</a></button>
-                                </div>
+                        <div class="form-cards">
+                            <img class="vector" src="<?= $DEFAULT_PATH ?>assets/images/form-card-vector.svg">
+                            <div class="form-content">
+                                <h4><?= $form['form_name'] ?></h4>
+                                <p><span><?= $form['total_que'] ?></span> Question</p>
                             </div>
+                            <div class="options" onclick="showPopup(this)">
+                                <img src="<?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt="options" title="options">
+                            </div>
+                            <div class="option-popup">
+                                <button onclick="return confirm('Are you sure to delete this?')" class="formDelete"><a href="delete_form.php?form_id=<?= $form['form_id'] ?>">DELETE</a></button>
+                                <button class="formEdit" data-form-id="<?= $form['form_id'] ?>"><a href="health_detail_form_create.php?form_id=<?= $form['form_id'] ?>">EDIT</a></button>
+                            </div>
+                        </div>
                     <?php
-                            $counter++;
-                        }
                     }
                     ?>
+
                 </div>
-
-
             </div>
             <div class="created-client-form-container">
                 <div class="heading-box">
@@ -518,49 +511,36 @@ session_start();
                     <button><a href="health_viewall_forms&documents.php">View all</a></button>
                 </div>
                 <div class="client-card-container">
+
                     <?php
                     $sql = "SELECT * FROM client_forms_docs WHERE dietitianuserID = '{$_SESSION['dietitianuserID']}'";
                     $result = $conn->query($sql);
 
-                    $num_rows = $result->num_rows;
-                    $max_records = min($num_rows, 6);
-
-                    if ($num_rows > 0) {
-                        for ($i = 0; $i < $max_records; $i++) {
-                            $row = $result->fetch_assoc();
-                            if ($row) { 
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
                     ?>
-                                <div class="client-cards">
-                                    <img class="vector" src="<?= $DEFAULT_PATH ?>assets/images/client-card-vector.svg">
-                                    <div class="card-content">
-                                        <img src="<?= $DEFAULT_PATH ?>assets/images/form_profile.svg" alt="Profile" id="clientProfile">
-                                        <p><?= $row['clientuserID'] ?></p>
-                                        <div class="btn-box">
-                                            <a href="health_detail_form.php?form=show&client_id=<?= $row['client_id'] ?>" id="clientForm">Form</a>
-                                            <a href="health_detail_form.php?document=show&client_id=<?= $row['client_id'] ?>" id="clientDocument">Documents</a>
-                                        </div>
+                            <div class="client-cards">
+                                <img class="vector" src="<?= $DEFAULT_PATH ?>assets/images/client-card-vector.svg">
+                                <div class="card-content">
+                                    <img src="<?= $DEFAULT_PATH ?>assets/images/form_profile.svg" alt="Profile" id="clientProfile">
+                                    <p> <?= $row['clientuserID'] ?> </p>
+                                    <div class="btn-box">
+                                        <a href="health_detail_form.php?form=show&client_id=<?= $row['client_id'] ?>" id="clientForm">Form</a>
+                                        <a href="health_detail_form.php?document=show&client_id=<?= $row['client_id'] ?>" id="clientDocument">Documents</a>
                                     </div>
                                 </div>
+                            </div>
                     <?php
-                            }
                         }
-                        
-                    } else {
-                        echo "<p>No client forms or documents found.</p>";
                     }
                     ?>
+
                 </div>
-
-
             </div>
         </div>
     </div>
 
-    <div class="button">
-        <a style="background-color:none" href="health_detail_form_create.php"><button class="create_btn">+</button></a>
 
-
-    </div>
 
 
 
@@ -594,7 +574,7 @@ session_start();
                     const formName = card.querySelector('.form-content h4').textContent.toLowerCase();
 
                     if (formName.includes(searchTerm)) {
-                        card.style.display = 'block';
+                        card.style.display = 'flex';
                     } else {
                         card.style.display = 'none';
                     }
