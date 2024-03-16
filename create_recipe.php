@@ -560,7 +560,7 @@ include('navbar.php');
                 <div class="left uploadImg">
                     <?php if ($action == 'editRecipe') {
                         if ($edit['img'] != "") {
-                            $imgSrc = $DEFAULT_PATH . "uploads/" . $edit['img'];  // recipe/
+                            $imgSrc = $DEFAULT_PATH . "uploads/recipe/" . $edit['img'];  // recipe/
                         } else {
                             $imgSrc = $DEFAULT_PATH . "assets/images/alooparantha.svg";
                         }
