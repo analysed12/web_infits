@@ -819,72 +819,7 @@ require('constant/config.php');
                     </div>
                 </div>
             </div>
-        <?php }
-        // $sql = "SELECT dr.* FROM `default_recipes` dr LEFT JOIN `updated_by_users` ubu ON dr.`drecipe_id` = ubu.`updated_drecipe_id`AND ubu.`dietitian_id`='{$_SESSION['dietitian_id']}' WHERE ubu.`updated_drecipe_id` IS NULL AND ubu.`dietitian_id` IS NULL";
-        // if (!empty($allRecipeSearch)) {
-        //     $sql .= " AND drecipe_name LIKE '%$allRecipeSearch%'";
-        // }
-        // $res = mysqli_query($conn, $sql);
-        // while ($d = mysqli_fetch_assoc($res)) {
-        //     $drecipeDirections = trim($d['drecipe_recipe'], '{}');
-        //     $drecipe_recipe = explode('}, {', $drecipeDirections);
-        //     $steps = count($drecipe_recipe);
-        //     $nutritional = json_decode($d['drecipe_nutritional_information'], true);
-        //     if ($counter == 5) {
-        //         break;
-        //     }
-        //     $temp_data = array("drecipe_name" => $d['drecipe_name'], "recipe_nutritional_information" => $d['drecipe_nutritional_information']);
-        //     $counter++;
-            ?>
-            <!-- <div class="card d-flex"
-                style="padding:15px; width:310px; height:238px;border-radius:16px;margin:35px 1.5vmax ; ">
-                <div class="card-upper d-flex justify-content-between">
-                    <p id="bu" class="card-upper-text" style="white-space: nowrap;"> Default Recipe </p>
-                    <p id="bu" class="card-upper-text d-flex" style="margin-left:10px;"><img
-                            src="<//?= $DEFAULT_PATH; ?>assets/images/Clock.svg" style="margin-right:10px">
-                        <//?php echo $d['drecipe_time']; ?>
-                    </p>
-                </div>
-                <div class="img-dis" style="width:100%;margin-top:-35px;text-align:center;">
-                    <img src="<//?= $DEFAULT_PATH ?>assets/images/alooparantha.svg"
-                        style="height:115px; width:160px; margin-left:-20px;margin-top:20px;" />
-                </div>
-                <div class="d-flex justify-content-between">
-                    <p class="card-food ellipsis" style="width:40px;"
-                        onmouseover='toggleShowHide(stuff="",dstuff=<//?=json_encode($d) ?>)'
-                        onmouseout='toggleShowHide(stuff="",dstuff=<//?= json_encode($d) ?>)'>
-                        <//?php echo $d['drecipe_name'] ?>
-                    </p>
-                    <div class="header">
-                        <div class="dropdown ">
-                            <div id="myDropdownIcon" class="dropbtn" onclick="showDropdown(event)">
-                                <img class="" src="<//?= $DEFAULT_PATH ?>assets/images/vertical-three-dots.svg" alt=""
-                                    style="margin-right:25px;">
-                            </div>
-
-                            <div id="myDropdownContent" class="dropdown-content dropdown-card ">
-                                <a style="color: white;" class="edit-button"
-                                    href="create_recipe.php?recipe_id=<//?= $d['drecipe_id'] ?>&action=editRecipe&isDefault=true">Edit</a>
-                                <a onclick="return confirm('Are you sure to delete this?')" style="color: white;"
-                                    class="delete-button"
-                                    href="deleteRecipe.php?recipeId=<//?= $d['drecipe_id'] ?>&isDefault=true">Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between" style="align-items:center;">
-                    <p class="card-calorie"> <img src="<//?= $DEFAULT_PATH ?>assets/images/calorie.svg" alt="">
-                        <//?php echo $nutritional['Calories'] ?> kcal
-                    </p>
-                    <div class="d-flex align-items-center card-num" style="margin-bottom:0px">
-                        <div class="card-num-circle">
-                            <//?= $steps ?>
-                        </div> &nbsp;
-                        <div class="step" style="font-size:18px; margin-top: -5px;">Steps</div>
-                    </div>
-                </div>
-            </div> -->
-        <?php //} ?>
+        <?php } ?>
     </div>
     <a class="butt" href="create_recipe.php"
         style="text-decoration:none;border-radius:50%;background-color:#9C74F5;width:85px;height:85px;filter: drop-shadow(0px 0px 68px rgba(0, 0, 0, 0.3));color:white;font-size:60px;border:none;position:absolute;right:50px;bottom:60px;display:flex;justify-content:center;align-items:center;">+</a>
