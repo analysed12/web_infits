@@ -298,7 +298,7 @@ $links = array(
                                     echo 'uploads/profile/images/' . $user['p_p'];
                                 } else {
                                     echo $DEFAULT_PATH . 'assets/images/' . $user['p_p'];
-                                } ?>" style="border-radius:25px;" />
+                                } ?>" style="border-radius:25px; height: 150px; width: 150px;" />
                     <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding-top:1rem;">
                         <img src="<?= $DEFAULT_PATH ?>assets/images/Star.svg" style="background:none">
                         <h3 style="font-size:25px;padding-top:0.5rem">4.8</h3>
