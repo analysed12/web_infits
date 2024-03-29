@@ -42,9 +42,7 @@ else if (isset($_POST['final_save_btn'])){
     $sql6 = "INSERT INTO `create_plan` (`profile`,`name`,`tags`, `start_date`, `end_date`,`features`, `description`, `price`) VALUES ('$profile','$planname','$tags','$start_date','$end_date','$features','$description','$price')";
     $result2=mysqli_query($conn,$sql6);
 
-    if($result2){
-
-    }
+    if($result2){    }
     else{
         die(mysqli_error($conn));
     }
@@ -539,7 +537,6 @@ else if (isset($_POST['final_save_btn'])){
     }
 
     /***********************FEATURE POPUP STYLES *******************************/
-
 
     /* Style for pop-up form */
     .modal {
