@@ -9,22 +9,6 @@ let handleMemberJoined = async (MemberId) => {
     addBotMessageToDom(`Welcome to the room ${name}! 👋`)
 }
 
-// let addMemberToDom = async(MemberId) => {
-//     let { name } = await rtmClient.getUserAttributesByKeys(MemberId, ['name'])
-
-//     let membersWrapper = document.getElementById('member__list')
-//     let memberItem = `<div class="member__wrapper" id="member__${MemberId}__wrapper">
-//                         <span class="green__icon"></span>
-//                         <p class="member_name">${name}</p>
-//                     </div>`
-
-//     membersWrapper.insertAdjacentHTML('beforeend', memberItem)
-// }
-
-// let updateMemberTotal = async (members) => {
-//     let total = document.getElementById('members__count')
-//     total.innerText = members.length
-// }
 
 let handleMemberLeft = async (MemberId) => {
     removeMemberFromDom(MemberId)
@@ -41,13 +25,6 @@ let removeMemberFromDom = async (MemberId) => {
     memberWrapper.remove()
 }
 
-// let getMembers = async() => {
-//     let members = await channel.getMembers()
-//     updateMemberTotal(members)
-//     for (let i = 0; members.length > i; i++) {
-//         addMemberToDom(members[i])
-//     }
-// }
 
 let handleChannelMessage = async (messageData, MemberId) => {
     console.log('A new message was received')
@@ -85,11 +62,11 @@ let sendMessage = async (e) => {
 let addMessageToDom = (name, message) => {
     let messagesWrapper = document.getElementById('_messages')
 
-    let newMessage = `<div class="message__wrapper">
+    let newMessage = `<div class="message__wrapper" style="margin-left: 2rem; margin-right: 0rem;">
     <div class="message__body">
     <img src="./assets/images/live-user-default.svg" alt="Profile Picture" class="profile-picture-in-message">
     <div class="message__content" style="padding-left: 10px;">
-        <strong class="message__author">${name}</strong>
+        <strong style="font-size: large; color: white;">${name}</strong>
         <p class="message__text">${message}</p>
     </div>
 </div>
@@ -107,12 +84,12 @@ let addMessageToDom = (name, message) => {
 let addBotMessageToDom = (botMessage) => {
     let messagesWrapper = document.getElementById('_messages')
 
-    let newMessage = `<div class="message__wrapper">
+    let newMessage = `<div class="message__wrapper" style="margin-left: 0px; margin-right: 2rem;" >
     <div class="message__body__bot">
-    <img src="./assets/images/live-user-default.svg" alt="Profile Picture" class="profile-picture-in-message">
-    <div class="message__content__bot" style="padding-left: 10px;>
-        <strong class="message__author__bot">Bot</strong>
-        <p class="message__text__bot">${botMessage}</p>
+    <img src="./assets/images/live-user-default.svg" alt="Profile Picture" class="profile-picture-in-message" style="margin-top: 1em;" > 
+    <div class="message__content__bot" style="padding-left: 10px;">
+        <strong style="color: white; font-size:large; margin-top:5px;">Bot</strong>
+        <p class="message__text__bot" style="color: black; margin-bottom: 0.3rem;">${botMessage}</p>
     </div>
 </div>
 
