@@ -859,53 +859,56 @@ require('constant/config.php');
         }
     }
     const toggleShowHide = (stuff = "", dstuff = "") => {
-        let hover_img = document.getElementsByClassName('hover-img')[0];
-        let aloo_paratha = document.getElementsByClassName("aloo-paratha")[0];
-        let maindiv = document.getElementsByClassName("main-div2")[0];
-        const popholder = document.getElementsByClassName("popupholder")[0];
-        if (popholder.style.display != "block") {
-            popholder.style.display = "block";
-            if (typeof stuff === 'object' && typeof dstuff === 'string') {
-                const arr = Array("Calories", "Protein (g)", "Carbohydrates (g)", "Fibre (g)")
-                let i = 0;
-                const details = JSON.parse(stuff["recipe_nutritional_information"]);
-                Array.from(maindiv.children).forEach(element => {
-                    if (details[arr[i]] == "") {
-                        element.firstElementChild.innerHTML = 0;
-                    } else {
-                        element.firstElementChild.innerHTML = details[arr[i]];
-                    }
-                    i++;
-                });
-                aloo_paratha.innerHTML = stuff["recipe_name"];
-                if (stuff['recipe_img'] !== "" && stuff['recipe_img'] !== null) {
-                    hover_img.src = "<?= $DEFAULT_PATH ?>uploads/recipe/" + stuff['recipe_img'];
-                } else {
-                    hover_img.src = "<?= $DEFAULT_PATH ?>assets/images/alooparantha.svg"
-                }
+    let hover_img = document.getElementsByClassName('hover-img')[0];
+    let aloo_paratha = document.getElementsByClassName("aloo-paratha")[0];
+    let maindiv = document.getElementsByClassName("main-div2")[0];
+    const popholder = document.getElementsByClassName("popupholder")[0];
 
+    if (popholder.style.display != "block") {
+        popholder.style.display = "block";
+        if (typeof stuff === 'object' && typeof dstuff === 'string') {
+            const arr = ["Calories", "Protein (g)", "Carbohydrates (g)", "Fibre (g)"];
+            let i = 0;
+            const details = JSON.parse(stuff["recipe_nutritional_information"]);
+            Array.from(maindiv.children).forEach(element => {
+                if (details[arr[i]] == "") {
+                    element.firstElementChild.innerHTML = 0;
+                } else {
+                    element.firstElementChild.innerHTML = details[arr[i]];
+                }
+                i++;
+            });
+            aloo_paratha.innerHTML = stuff["recipe_name"];
+            if (stuff['recipe_img'] !== "" && stuff['recipe_img'] !== null) {
+                // Set the src attribute of hover_img dynamically
+                hover_img.src = `<?= $DEFAULT_PATH ?>uploads/recipe/${stuff['recipe_img']}`;
+                // Apply fixed width and height to hover_img
+                hover_img.style.width = '480px';
+                hover_img.style.height = '250px';
+            } else {
+                hover_img.src = "<?= $DEFAULT_PATH ?>assets/images/alooparantha.svg";
             }
-            if (typeof dstuff === 'object' && typeof stuff === 'string') {
-                const arr = Array("Calories", "Protein (g)", "Carbohydrates (g)", "Fibre (g)")
-                let i = 0;
-                const details = JSON.parse(dstuff["drecipe_nutritional_information"]);
-                Array.from(maindiv.children).forEach(element => {
-                    if (details[arr[i]] == "") {
-                        element.firstElementChild.innerHTML = 0;
-                    } else {
-                        element.firstElementChild.innerHTML = details[arr[i]];
-                    }
-                    i++;
-                });
-                aloo_paratha.innerHTML = dstuff["drecipe_name"];
-                hover_img.src = "<?= $DEFAULT_PATH ?>assets/images/alooparantha.svg"
-            }
-            // document.body.style = " background: rgba(0, 0, 0, 0.03579);transition: opacity 500ms;";
-        } else {
-            popholder.style.display = "none";
-            // document.body.style = " background: none;transition: none";
         }
+        if (typeof dstuff === 'object' && typeof stuff === 'string') {
+            const arr = ["Calories", "Protein (g)", "Carbohydrates (g)", "Fibre (g)"];
+            let i = 0;
+            const details = JSON.parse(dstuff["drecipe_nutritional_information"]);
+            Array.from(maindiv.children).forEach(element => {
+                if (details[arr[i]] == "") {
+                    element.firstElementChild.innerHTML = 0;
+                } else {
+                    element.firstElementChild.innerHTML = details[arr[i]];
+                }
+                i++;
+            });
+            aloo_paratha.innerHTML = dstuff["drecipe_name"];
+            hover_img.src = "<?= $DEFAULT_PATH ?>assets/images/alooparantha.svg";
+        }
+    } else {
+        popholder.style.display = "none";
     }
+};
+
 </script>
 
 </html>
