@@ -236,7 +236,7 @@ echo $output;
         font-family: 'NATS';
         font-style: normal;
         font-weight: 400;
-        font-size: 30px;
+        font-size: 2vw;
         color: #000000;
     }
 
@@ -299,8 +299,8 @@ echo $output;
     }
 
     .myCheckboxs {
-        height:12%;
-        width:12%;
+        height: 12%;
+        width: 12%;
         position: absolute;
         top: 10%;
         right: 6%;
@@ -360,8 +360,9 @@ echo $output;
         .clients {
             margin-left: 2rem;
         }
-        .search_client{
-            width:auto;
+
+        .search_client {
+            width: auto;
         }
 
         .clients_container {
@@ -474,7 +475,7 @@ echo $output;
             margin-left: 60px;
             /* width: 540px; */
         }
-        
+
     }
 
     @media screen and (max-width: 1100px) {
@@ -485,18 +486,19 @@ echo $output;
         }
 
         .clients_operations {
-            
+
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin-left:-10rem;
+            margin-left: -10rem;
             width: 550px;
         }
-        .search_client{
-            width:auto;
+
+        .search_client {
+            width: auto;
         }
     }
-   
+
     .modal {
         display: none;
         position: fixed;
@@ -506,7 +508,7 @@ echo $output;
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(0, 0, 0, 0.4);
     }
 
     .modal-content {
@@ -516,8 +518,6 @@ echo $output;
         border: 1px solid #888;
         width: 80%;
     }
-
-
 </style>
 
 <body>
@@ -526,35 +526,34 @@ echo $output;
         <div class="clients_container">
             <div class="search_client" style="justify-content:center;align-items:center">
                 <div><button id="btn3"><span class="material-symbols-outlined">search</span></button> </div>
-                <div style="margin-left:1rem;margin-right:4rem;margin-bottom:0.5rem;"> <input type="text"
-                        name="search_client" placeholder="Search Clients" class="seach_clients_text" style="width:60%">
+                <div style="margin-left:1rem;margin-right:4rem;margin-bottom:0.5rem;"> <input type="text" name="search_client" placeholder="Search Clients" class="seach_clients_text" style="width:60%">
                 </div>
             </div>
 
 
             <div class="clients_operations">
                 <button id="btn1">
-                <div class="add_set_client" id="add_set_client">
-                    <div><a href="add_client.php"><span
-                                    class="material-symbols-outlined">add</span></a></div>
-                    <div class="add_set">
-                        <span>Add Clients</span>
+                    <div  class="add_set_client" id="add_set_client">
+                        <div style="margin-top: 4px;"><span class="material-symbols-outlined">add</span></div>
+                        <div class="add_set">
+                            <a href="add_client.php" style="color:blueviolet"><span>Add Clients</span></a>
+                            
+                        </div>
                     </div>
-                </div>
                 </button>
                 <button id="btn1">
-                <div onclick="goals('Set Goals');" class="add_set_client">
-                    <div><span class="material-symbols-outlined">settings</span> </div>
-                    <div class="add_set"><span>Set Goals</span></div>
-                </div>
+                    <div onclick="goals('Set Goals');" class="add_set_client">
+                        <div style="margin-top: 4px;"><span class="material-symbols-outlined">settings</span> </div>
+                        <div class="add_set"><span>Set Goals</span></div>
+                    </div>
                 </button>
 
                 <button id="btn1">
-                <div onclick="toast('Set Reminders');" class="add_set_client">
-                    <div><span class="material-symbols-outlined">notification_add</span>
+                    <div onclick="toast('Set Reminders');" class="add_set_client">
+                        <div style="margin-top: 4px;"><span class="material-symbols-outlined">notification_add</span>
+                        </div>
+                        <div class="add_set"> <span>Set Reminders</span></div>
                     </div>
-                    <div class="add_set"> <span>Set Reminders</span></div>
-                </div>
                 </button>
                 <div onclick="del('Delete Clients');" class="delete_client">
                     <button id="btn2"><span class="material-symbols-outlined">delete</span></button>
@@ -563,16 +562,12 @@ echo $output;
         </div>
 
         <div class="clients_container2">
-            <a href="?active-btn"
-                class="button-top <?php if (!isset($_GET['pending-btn'])) {
-                    echo 'active';
-                } ?> active-button text-dark"
-                name="active-btn">Active</a>
-            <a href="?pending-btn"
-                class="button-top <?php if (isset($_GET['pending-btn'])) {
-                    echo 'active';
-                } ?> pending-btn text-dark"
-                name="pending-btn" style="margin-left:2rem">Pending</a>
+            <a href="?active-btn" class="button-top <?php if (!isset($_GET['pending-btn'])) {
+                                                        echo 'active';
+                                                    } ?> active-button text-dark" name="active-btn">Active</a>
+            <a href="?pending-btn" class="button-top <?php if (isset($_GET['pending-btn'])) {
+                                                            echo 'active';
+                                                        } ?> pending-btn text-dark" name="pending-btn" style="margin-left:2rem">Pending</a>
         </div>
         <br><br>
 
@@ -620,8 +615,6 @@ echo $output;
 
                             echo "</div>";
                             echo "</div>";
-
-
                         }
                     }
                 }
@@ -638,7 +631,6 @@ echo $output;
                         if ($plan_id == 0) {
                             $plan_name = "No plan";
                             $plan_duration = "No Plan";
-
                         } else {
                             $sql1 = "SELECT * FROM create_plan WHERE `plan_id`= $plan_id";
                             $result1 = mysqli_query($conn, $sql1);
@@ -671,7 +663,6 @@ echo $output;
 
                         echo "</div>";
                         echo "</div>";
-
                     }
                 }
             }
@@ -688,17 +679,15 @@ echo $output;
         <div id="toast__btns">
             <form action="" method="POST" id='form'>
                 <input style='cursor:pointer' id='form__input' type='text' hidden name='clientList' value=''>
-                <div style="margin-top:-4px;">
-                <button type="submit" class="btn goalbtn">
-                    <span>
-                        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z"
-                                fill="white" />
-                        </svg>
-                    </span><span class='btn__span'></span>
-                </button>
-                <button onclick='close()' class="btn btn2">Cancel</button>
+                <div style="margin-top:-4px; display:flex;">
+                    <button type="submit" class="btn goalbtn">
+                        <span>
+                            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z" fill="white" />
+                            </svg>
+                        </span><span class='btn__span'></span>
+                    </button>
+                    <button onclick='close()' class="btn btn2">Cancel</button>
                 </div>
             </form>
         </div>
@@ -711,17 +700,15 @@ echo $output;
             <form action="" method="POST" id='form1'>
                 <input style='cursor:pointer' id='form__input1' type='text' hidden name='clientList' value=''>
                 <div style="margin-top:-4px;">
-                <button type="submit" class="btn reminderbtn">
-                    <span>
-                        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z"
-                                fill="white" />
-                        </svg>
+                    <button type="submit" class="btn reminderbtn">
+                        <span>
+                            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z" fill="white" />
+                            </svg>
 
-                    </span><span class='btn__span1'></span>
-                </button>
-                <button onclick='close()' class="btn btn2">Cancel</button>
+                        </span><span class='btn__span1'></span>
+                    </button>
+                    <button onclick='close()' class="btn btn2">Cancel</button>
                 </div>
 
             </form>
@@ -739,9 +726,7 @@ echo $output;
                 <button type="button" class="btn deletebtn" id="myBtn">
                     <span>
                         <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z"
-                                fill="white" />
+                            <path d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z" fill="white" />
                         </svg>
 
                     </span><span class='btn__span2'></span>
@@ -771,7 +756,7 @@ echo $output;
 
 
     <script>
-        document.getElementsByClassName('client-item').onclick = function () {
+        document.getElementsByClassName('client-item').onclick = function() {
             var checkbox = document.getElementById('chk');
             checkbox.checked = !checkbox.checked;
         }
@@ -781,18 +766,18 @@ echo $output;
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
         // When the user clicks the button, open the modal 
-        btns.onclick = function () {
+        btns.onclick = function() {
             event.preventDefault(); //keeps page from refreshing
             modal.style.display = "block";
         }
 
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
+        span.onclick = function() {
             modal.style.display = "none";
         }
 
         // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
+        window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
@@ -826,8 +811,8 @@ echo $output;
             popUp.style.display = "inline-flex";
             btn__span.innerHTML = val;
             myCheckBox.forEach((items) => {
-                popUp1.style.display ="none";
-                popUp2.style.display ="none";
+                popUp1.style.display = "none";
+                popUp2.style.display = "none";
                 items.style.display = "block";
             });
         };
@@ -836,8 +821,8 @@ echo $output;
             popUp1.style.display = "inline-flex";
             btn__span1.innerHTML = val;
             myCheckBox.forEach((items) => {
-                popUp.style.display ="none";
-                popUp2.style.display ="none";
+                popUp.style.display = "none";
+                popUp2.style.display = "none";
                 items.style.display = "block";
             });
         };
@@ -846,8 +831,8 @@ echo $output;
             popUp2.style.display = "inline-flex";
             btn__span2.innerHTML = val;
             myCheckBox.forEach((items) => {
-                popUp.style.display ="none";
-                popUp1.style.display ="none";
+                popUp.style.display = "none";
+                popUp1.style.display = "none";
                 items.style.display = "block";
             });
         };
@@ -927,96 +912,96 @@ echo $output;
                 items.style.display = "none";
             });
         });
+
         function showModal(message) {
-        const modal = document.getElementById("customModal");
-        const modalMessage = document.getElementById("modalMessage");
-        modalMessage.innerHTML = message;
-        modal.style.display = "block";
+            const modal = document.getElementById("customModal");
+            const modalMessage = document.getElementById("modalMessage");
+            modalMessage.innerHTML = message;
+            modal.style.display = "block";
 
-        // Allow selecting checkboxes even with the modal displayed
-        myCheckBox.forEach((items) => {
-            items.disabled = false;
-        });
+            // Allow selecting checkboxes even with the modal displayed
+            myCheckBox.forEach((items) => {
+                items.disabled = false;
+            });
 
-        // Close the modal if the user clicks anywhere outside of it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-            modal.style.display = "none";
-            }
-        };
+            // Close the modal if the user clicks anywhere outside of it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
         }
 
         goalbtn.addEventListener("click", () => {
-        let atLeastOneCheckboxSelected = false;
-
-        myCheckBox.forEach((items) => {
-            if (items.checked) {
-                atLeastOneCheckboxSelected = true;
-            }
-        });
-
-        if (atLeastOneCheckboxSelected) {
-            myCheckBox.forEach((items) => {
-                if (items.checked) {
-                    selectedClients.push(items.value);
-                }
-                form__input.value = JSON.stringify(selectedClients);
-                form.action = "setgoals.php";
-                console.log("setgoals", selectedClients);
-            });
-
-            window.location.reload();
-        } else {
-            showModal("Please select at least one client to set goals. You will stay on this page.");
-        }
-    });
-
-    reminderbtn.addEventListener("click", () => {
-        let atLeastOneCheckboxSelected = false;
-
-        myCheckBox.forEach((items) => {
-            if (items.checked) {
-                atLeastOneCheckboxSelected = true;
-            }
-        });
-
-        if (atLeastOneCheckboxSelected) {
-            myCheckBox.forEach((items) => {
-                if (items.checked) {
-                    selectedClients.push(items.value);
-                }
-                form__input1.value = JSON.stringify(selectedClients);
-                form1.action = 'set_reminders.php';
-                console.log("Set Reminders", selectedClients);
-            });
-
-            window.location.reload();
-        } else {
-            showModal("Please select at least one client to set reminders. You will stay on this page.");
-        }
-    });
-
-    // Disable the buttons by default
-    goalbtn.disabled = true;
-    reminderbtn.disabled = true;
-
-    // Enable/disable buttons based on checkbox selection
-    myCheckBox.forEach((items) => {
-        items.addEventListener('change', () => {
             let atLeastOneCheckboxSelected = false;
 
-            myCheckBox.forEach((checkbox) => {
-                if (checkbox.checked) {
+            myCheckBox.forEach((items) => {
+                if (items.checked) {
                     atLeastOneCheckboxSelected = true;
                 }
             });
 
-            // Enable/disable buttons based on checkbox selection
-            goalbtn.disabled = !atLeastOneCheckboxSelected;
-            reminderbtn.disabled = !atLeastOneCheckboxSelected;
+            if (atLeastOneCheckboxSelected) {
+                myCheckBox.forEach((items) => {
+                    if (items.checked) {
+                        selectedClients.push(items.value);
+                    }
+                    form__input.value = JSON.stringify(selectedClients);
+                    form.action = "setgoals.php";
+                    console.log("setgoals", selectedClients);
+                });
+
+                window.location.reload();
+            } else {
+                showModal("Please select at least one client to set goals. You will stay on this page.");
+            }
         });
-    });
-        
+
+        reminderbtn.addEventListener("click", () => {
+            let atLeastOneCheckboxSelected = false;
+
+            myCheckBox.forEach((items) => {
+                if (items.checked) {
+                    atLeastOneCheckboxSelected = true;
+                }
+            });
+
+            if (atLeastOneCheckboxSelected) {
+                myCheckBox.forEach((items) => {
+                    if (items.checked) {
+                        selectedClients.push(items.value);
+                    }
+                    form__input1.value = JSON.stringify(selectedClients);
+                    form1.action = 'set_reminders.php';
+                    console.log("Set Reminders", selectedClients);
+                });
+
+                window.location.reload();
+            } else {
+                showModal("Please select at least one client to set reminders. You will stay on this page.");
+            }
+        });
+
+        // Disable the buttons by default
+        goalbtn.disabled = true;
+        reminderbtn.disabled = true;
+
+        // Enable/disable buttons based on checkbox selection
+        myCheckBox.forEach((items) => {
+            items.addEventListener('change', () => {
+                let atLeastOneCheckboxSelected = false;
+
+                myCheckBox.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        atLeastOneCheckboxSelected = true;
+                    }
+                });
+
+                // Enable/disable buttons based on checkbox selection
+                goalbtn.disabled = !atLeastOneCheckboxSelected;
+                reminderbtn.disabled = !atLeastOneCheckboxSelected;
+            });
+        });
     </script>
 </body>
 
