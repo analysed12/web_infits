@@ -448,8 +448,7 @@ include('save_invite_code.php');
     }
 
     #_messages {
-        padding-left: 12px;
-        padding-top: 8px;
+        padding: 4px;
     }
 
 
@@ -770,6 +769,14 @@ include('save_invite_code.php');
         margin: 5px;
     }
 
+    .vid .video-player{ 
+        width: 600px;
+        height: 340px;
+        border-radius: 50px;
+        border-style: solid;
+        
+    }
+
 
     @media screen and (max-width: 768px) {
         .container {
@@ -803,7 +810,7 @@ include('save_invite_code.php');
         <div class="container" style="padding-top: 10px;">
             <div class="box">
                 <div class="profile-box">
-                    <img src="<?=$DEFAULT_PATH?>assets/images/live-user-default.svg" alt="Profile Picture"
+                    <img src="./assets/images/live-user-default.svg" alt="Profile Picture"
                         class="profile-picture">
                     <h3 class="name"><?php echo $_SESSION["name"]; ?></h3>
                 </div>
@@ -887,18 +894,12 @@ if (isset($_GET['displayName']) && isset($_GET['meetingLink'])) {
 
         </div>
 
-
         <div class="container">
 
             <div class="box">
 
-                <div class="video">
-                    <div id="stream__box">
-                        <div class="container_videotimer">
-                            <div id="red-dot" class="red-dot"></div>
-                            <div id="timer" class="timer">00:00:00</div>
-                        </div>
-                    </div>
+                <div class="vid" style=" background-color: currentColor; height: 340px; border-radius: 50px; ">
+                    <video class="video-player" id="user-1" autoplay playsinline></video>
                 </div>
             </div>
 
@@ -912,6 +913,7 @@ if (isset($_GET['displayName']) && isset($_GET['meetingLink'])) {
                         <div class="input-row">
                             <input type="text" class="text-field meassage_input" id="myInputMessage" name="message"
                                 placeholder="Send a message....">
+                            <button type="submit" class="btn btn-primary ms-3"id="myInputMessage">Send</button>
                             <span onclick="submitThumb()" class="emoji">👍</span>
                             <span onclick="submitEmoji()" class="emoji">🙂</span>
                         </div>
@@ -961,6 +963,90 @@ if (isset($_GET['displayName']) && isset($_GET['meetingLink'])) {
     </div>
 
     <script>
+        
+    document.addEventListener('DOMContentLoaded', function() {
+        const btnEndLive = document.getElementById('btnEndLive');
+        const overlay = document.getElementById('popup1');
+        const btnCancel = document.getElementById('btnCancel');
+        const btnEnd = document.getElementById('btnEnd');
+        const cameraButton = document.getElementById('camera-btn');
+        const videoElement = document.getElementById('user-1');
+        const micButton = document.getElementById('mic-btn');
+        let isCameraOn = false;
+        let isMicOn = false;
+
+
+        async function toggleCamera() {
+        try {
+            if (!isCameraOn) {
+                let stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                videoElement.srcObject = stream;
+                isCameraOn = true;
+            } else {
+                let tracks = videoElement.srcObject.getTracks();
+                tracks.forEach(track => track.stop());
+                videoElement.srcObject = null;
+                isCameraOn = false;
+            }
+
+            cameraButton.classList.toggle('active');
+        } catch (error) {
+            console.error('Error accessing the camera:', error);
+        }
+    }
+
+    // Event listener for camera button
+    cameraButton.addEventListener('click', toggleCamera);
+
+    async function toggleMic() {
+        try {
+            let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            if (!isMicOn) {
+                // Add the audio stream to the video stream if camera is on
+                if (isCameraOn) {
+                    let videoStream = videoElement.srcObject;
+                    videoStream.addTrack(stream.getAudioTracks()[0]);
+                    videoElement.srcObject = videoStream;
+                }
+                isMicOn = true;
+            } else {
+                let tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
+                if (isCameraOn) {
+                    let videoStream = videoElement.srcObject;
+                    videoStream.removeTrack(stream.getAudioTracks()[0]);
+                }
+                isMicOn = false;
+            }
+
+            micButton.classList.toggle('active');
+        } catch (error) {
+            console.error('Error accessing the microphone:', error);
+        }
+    }
+
+    // Event listener for mic button
+    micButton.addEventListener('click', toggleMic);
+
+
+        // Open the popup when the button is clicked
+        btnEndLive.addEventListener('click', function() {
+            overlay.style.display = 'block';
+        });
+
+        // Close the popup when the cancel button is clicked
+        btnCancel.addEventListener('click', function() {
+            overlay.style.display = 'none';
+        });
+
+        // Close the popup, and redirect to live.php when the end button is clicked
+        btnEnd.addEventListener('click', function() {
+            overlay.style.display = 'none';
+            window.location.href = 'live.php';
+        });
+    });
+    </script>
+    <!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         const btnEndLive = document.getElementById('btnEndLive');
         const overlay = document.getElementById('popup1');
@@ -983,7 +1069,7 @@ if (isset($_GET['displayName']) && isset($_GET['meetingLink'])) {
             window.location = 'live.php';
         });
     });
-    </script>
+    </script> -->
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
