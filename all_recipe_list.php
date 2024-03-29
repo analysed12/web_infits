@@ -678,7 +678,7 @@ $res2 = mysqli_query($conn, $sql2);
                 } ?>
             </small>
         </div>
-        <div style="display:flex;gap:1.5rem">
+        <div style="display:flex;gap:1.5rem ;margin-right:20px;">
             <div class="searchbox" style="align-items:center;">
                 <form method="post">
                     <button style="background-color:white;border:none;" id="search-btn" name="search_btn"><img
@@ -718,7 +718,6 @@ $res2 = mysqli_query($conn, $sql2);
                 </div>
                 <div class="img-dis" style="width:100%; text-align:center;">
                     <?php if ($d['recipe_img'] != "") {
-                        
                         $imgSrc = $DEFAULT_PATH . "uploads/recipe/" . $d['recipe_img'];
                     } else {
 
@@ -727,7 +726,7 @@ $res2 = mysqli_query($conn, $sql2);
 
 
                     <img src="<?= $DEFAULT_PATH ?>uploads/recipe/<?= $d['recipe_img'] ?>"
-                        style="height: 115px; width: 160px; margin-top: 0px; margin-left: -20px;" />
+                        style="height: 115px; width: 160px; margin-top: -12px; margin-left: -20px;" />
 
                 </div>
 
@@ -813,6 +812,7 @@ $res2 = mysqli_query($conn, $sql2);
                 <div class="img-dis" style="width:100%; text-align:center;">
                     <?php if ($d['recipe_img'] != "") {
                         $imgSrc = $DEFAULT_PATH . "uploads/recipe/" . $d['recipe_img'];
+                        
                     } else {
                         $imgSrc = $DEFAULT_PATH . "assets/images/alooparantha.svg";
                     } ?>
@@ -945,6 +945,8 @@ $res2 = mysqli_query($conn, $sql2);
                 aloo_paratha.innerHTML = stuff["recipe_name"];
                 if (stuff['recipe_img'] !== "" && stuff['recipe_img'] !== null) {
                     hover_img.src = "<?= $DEFAULT_PATH ?>uploads/recipe/" + stuff['recipe_img'];
+                    hover_img.style.width = '480px';
+                    hover_img.style.height = '250px';
                 } else {
                     hover_img.src = "<?= $DEFAULT_PATH ?>assets/images/alooparantha.svg"
                 }
