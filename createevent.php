@@ -519,18 +519,26 @@ if (isset($_POST['submit'])) {
 
     #file0:hover+.img1 {
         display: block;
+        width: 300px;
+        height: 200px;
     }
 
     #file1:hover+.img2 {
         display: block;
+        width: 300px;
+        height: 200px;
     }
 
     #file2:hover+.img3 {
         display: block;
+        width: 300px;
+        height: 200px;
     }
 
     #file3:hover+.img4 {
         display: block;
+        width: 300px;
+        height: 200px;
     }
 </style>
 
@@ -550,7 +558,7 @@ if (isset($_POST['submit'])) {
                     <!-- Event name field -->
 
                     <label for="subject" class="event_title" style="font-size:28px;font-weight:400">Event Name</label>
-                    <input class="subject" type="text" name="subject" placeholder="Category"
+                    <input class="subject" type="text" name="subject" placeholder="Event"
                         style="padding:10px 20px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);border-radius: 10px; border: 1px solid #F1F1F1;"
                         required>
 
@@ -599,7 +607,7 @@ if (isset($_POST['submit'])) {
                                 <input type="text" placeholder="Add Client"
                                     style="border-top:none;border-left:none;border-right:none;border-bottom: 1px solid #EFEFEF;"
                                     onclick="update_input()" name="clientname" id="clientname" class="input-field"
-                                    required>
+                                    required >
                             </div>
                             <div class="showlist dropdown-menu">
                             </div>
@@ -701,17 +709,21 @@ if (isset($_POST['submit'])) {
 
 
                         <!-- Add attachment field -->
-                        <div class="input-icons" style="font-size:19px;display:flex;align-items:center">
-                            <img class="icon" style="position: absolute; min-width: 0px;"
-                                src="<?= $DEFAULT_PATH ?>assets/images/Attach.svg">
+<div class="input-icons" style="font-size:19px;display:flex;align-items:center">
+    <img class="icon" style="position: absolute; min-width: 0px;"
+        src="<?= $DEFAULT_PATH ?>assets/images/Attach.svg">
 
-                            <label for="attachment" style="border-top: none; border-left: none; border-right: none; border-bottom: none; 
-                            padding: 0px 0px 0px 50px; cursor: pointer;">
-                                Attachment
-                            </label>
-                            <input type="file" id="attachment" class="" name="attachment" required
-                                onchange="udpatefile(event)" multiple onmouseover="myFunction()">
-                        </div>
+    <label style="border-top: none; border-left: none; border-right: none; border-bottom: none; 
+    padding: 0px 0px 0px 50px; cursor: pointer;">
+        Attachment
+    </label>
+    <input type="file" id="attachment" class="" name="attachment" required
+        onchange="updateFileList(event)" multiple>
+    
+</div>
+
+<!-- File List Container -->
+<div id="fileListContainer"></div>
                         <div class="files" id="attachments">
                             <div class="files2" id="attachments2">
                             </div>
@@ -806,75 +818,47 @@ if (isset($_POST['submit'])) {
             }
 
         }
-        const udpatefile = (event) => {
-            const image = /(.(jpg|svg|png|jpeg|avif)$)/;
-            const pdffile = /.pdf$/;
-            let icon;
-            files = [...files, ...Array.from(event.target.files)]
-            let datatransfer = new DataTransfer();
-            files.forEach(filename => {
-                datatransfer.items.add(filename);
-            })
-            event.target.files = datatransfer.files;
 
-            let fileListContainer = document.getElementById('attachments');
-            fileListContainer.innerHTML = ''
-            // console.log(event.target.files);
-            files.forEach(element => {
-                let inputattachment = document.createElement("div");
+let fileCount = 0;
 
-                inputattachment.id = "file" + af_count;
-                inputattachment.style = "display:flex;justify-content: space-between;";
-                af_count++;
-                //icon type
-                if (image.test(element['name'])) {
-                    icon = "image-file.svg";
-                }
-                else if (pdffile.test(element['name'])) {
-                    icon = "file-pdf.svg"
-                }
-                else {
-                    icon = "file-extra.svg";
-                }
-                let image_in = document.createElement("img");
-                image_in.src = "<?= $DEFAULT_PATH ?>assets/images/" + icon;
+const updateFileList = (event) => {
+    const image = /\.(jpg|svg|png|jpeg|avif)$/i;
+    const pdfFile = /\.pdf$/i;
 
-                let span_1 = document.createElement("span");
-                span_1.style = "display: -webkit-box; overflow: hidden; -webkit-line-clamp: 1; -webkit-box-orient: vertical;  max-height: 5vh; white-space: normal; text-overflow:ellipsis;padding-top:10px;padding-left:5px;";
-                span_1.innerHTML = element['name']
+    // Clear the file list container
+    let fileListContainer = document.getElementById('fileListContainer');
+    fileListContainer.innerHTML = '';
 
-                let span_2 = document.createElement("span");
-                span_2.className = "closer";
-                span_2.style = "position: relative;top: 0;right: 14px;font-size: 30px;transform: rotate(45deg);cursor: pointer;"
-                span_2.textContent = '+';
-                span_2.onclick = delete_file(inputattachment, element);
+    files.push(...Array.from(event.target.files));
+
+    files.forEach((element, index) => {
+        let fileItem = document.createElement("div");
+        fileItem.className = "file-item";
+        fileItem.id = "fileItem_" + fileCount++;
+
+        let fileName = document.createElement("span");
+        fileName.textContent = element.name;
+
+        let removeButton = document.createElement("span");
+        removeButton.textContent = "❌";
+        removeButton.className = "remove-button";
+        removeButton.onclick = function () {
+            removeFile(fileItem.id, index);
+        };
+
+        fileItem.appendChild(fileName);
+        fileItem.appendChild(removeButton);
+
+        fileListContainer.appendChild(fileItem);
+    });
+}
 
 
-
-
-
-                inputattachment.appendChild(image_in);
-                inputattachment.appendChild(span_1);
-                inputattachment.appendChild(span_2);
-
-                attachment.appendChild(inputattachment);
-
-///
-                var image22 = URL.createObjectURL(event.target.files[0]);
-
-                var imagediv = document.getElementById('attachments');
-                var newimg = document.createElement('img');
-                newimg.classList.add("img" + af_count);
-                newimg.style.height = "20sxa0px";
-                newimg.src = image22;
-                imagediv.appendChild(newimg);
-
-
-////
-
-
-            });
-        }
+const removeFile = (fileItemId, index) => {
+    let fileItemToRemove = document.getElementById(fileItemId);
+    files.splice(index, 1);
+    fileItemToRemove.remove();
+}
 
     </script>
     <script>
@@ -888,15 +872,27 @@ if (isset($_POST['submit'])) {
             });
             event.target.classList.toggle("selected");
         }
-        let update_input = () => {
-            const divlist = document.getElementsByClassName("showlist")[0];
-            if (divlist.style.display === "" || divlist.style.display === "none") {
-                divlist.style.display = "flex";
-            } else {
-                divlist.style.display = "none";
+
+        document.addEventListener('click', function(event) {
+            const dropdownMenu = document.querySelector('.showlist');
+            const inputClient = document.getElementById('clientname');
+            const isClickInsideDropdown = dropdownMenu.contains(event.target);
+            const isClickInsideInput = inputClient.contains(event.target);
+
+            if (!isClickInsideDropdown && !isClickInsideInput) {
+                dropdownMenu.style.display = 'none';
             }
-            show_results(document.getElementById("clientname"));
+        });
+        let update_input = () => {
+            const divlist = document.querySelector('.showlist');
+            if (divlist.style.display === '' || divlist.style.display === 'none') {
+                divlist.style.display = 'flex';
+            } else {
+                divlist.style.display = 'none';
+            }
+            show_results(document.getElementById('clientname'));
         }
+
         let show_results = (event) => {
             const inputclient = document.getElementById("clientname");
             if (inputclient.value === "") {
