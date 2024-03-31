@@ -144,6 +144,7 @@ if (isset($_POST['save'])) {
             border-radius: 14px;
             text-align: center;
             padding: 10px;
+            margin: 5px;
         }
 
         .btn_setreminder {
@@ -901,7 +902,7 @@ if (isset($_POST['save'])) {
 
 
                 <div class="left_wrapper1">
-                    <img src="<?= $DEFAULT_PATH ?>assets/images/live-user-default.svg"
+                    <img src=" <?= $DEFAULT_PATH ?>assets/images/live-user-default.svg"
                         style="border-radius: 50%; width: 54.67px; height: 54.67px; filter: invert(0);">
                     <p style="font-size: 24px;line-height: 25px;">john</p>
                     <div>
@@ -917,6 +918,8 @@ if (isset($_POST['save'])) {
                     <button class="btn_setreminder">Set Reminder</button>
 
                 </div>
+                
+
 
 
             </div>
@@ -1494,63 +1497,6 @@ if (isset($_POST['save'])) {
 
             document.body.addEventListener('pointerup', send);
 
-            // ---------------------------------- 
-
-            //function updateDOM(){
-            /*document.querySelectorAll('[data-selected]')
-              .forEach(el => {
-                delete el.dataset.selected
-              });
-            
-            const startDate = Math.min(data.firDate, data.secondDate);
-            const endDate = Math.max(data.firDate, data.secondDate);
-            
-            if ( startDate ) {
-              const startDateEl = document.querySelector(`[data-day="${startDate}"]`);
-              startDateEl.dataset.selected = "start";
-            }
-            
-            if ( endDate ) {
-              const endDateEl = document.querySelector(`[data-day="${endDate}"]`);
-              endDateEl.dataset.selected = "end";
-            }
-  
-  
-  
-            
-            const startDate = Math.min(data.firDate, data.secondDate);
-            const endDate = Math.max(data.firDate, data.secondDate);
-  
-              if (startDate && endDate) {
-                  // Use AJAX to fetch meeting information from the server
-                  $.ajax({
-                      url: 'display_meet.php',  // Update with the correct PHP script path
-                      method: 'POST',
-                      dataType: 'json',
-                      data: { selectedDate: startDate }, // Pass the start date to the PHP script
-                      success: function (meetingInfoArray) {
-                          if (meetingInfoArray.length > 0) {
-                              const meetingInfo = meetingInfoArray[0]; // Assuming only one meeting for simplicity
-  
-                              // Update HTML elements with meeting information
-                              document.getElementById('meeting-title').textContent = meetingInfo.title;
-                              document.getElementById('meeting-description').textContent = meetingInfo.description;
-                              document.getElementById('meeting-time').textContent = meetingInfo.time;
-                              // Update other elements as needed
-                          } else {
-                              // Handle case when no meetings are found
-                              console.log('No meetings found for the selected date range.');
-                          }
-                      },
-                      error: function (error) {
-                          console.error('Error fetching meeting information:', error);
-                      }
-                  });
-              }
-  
-          }*/
-
-
             // Function to fetch meeting information
             function fetchMeetingInfo(startDate, endDate) {
                 const url = 'display_meet.php';  // Update with the correct PHP script path
@@ -1581,44 +1527,6 @@ if (isset($_POST['save'])) {
                     });
             }
 
-
-            // UpdateDOM function (modify as needed)
-            /*function updateDOM() {
-                // ... (existing code)
-            
-                // Add the following to update meeting information
-               // const startDate = Math.min(data.firDate, data.secondDate);
-                //const endDate = Math.max(data.firDate, data.secondDate);
-                let startDate, endDate;
-            
-                if (data.firDate !== null && data.secondDate !== null) {
-                    startDate = Math.min(data.firDate, data.secondDate);
-                    endDate = Math.max(data.firDate, data.secondDate);
-                } else {
-                    // Handle the case when dates are not selected
-                    console.log('No dates selected.');
-                    return;
-                }
-                const formattedStartDate = formatDate(startDate);
-            
-                console.log('Selected start date:', formattedStartDate);
-            
-                if (startDate && endDate) {
-                    fetchMeetingInfo(startDate, endDate)
-                        .then(meetingInfo => {
-                            if (meetingInfo) {
-                                // Update HTML elements with meeting information
-                                document.getElementById('meeting-title').textContent = meetingInfo.title;
-                                document.getElementById('meeting-description').textContent = meetingInfo.description;
-                                document.getElementById('meeting-time').textContent = meetingInfo.time;
-                                // Update other elements as needed
-                            } else {
-                                // Handle case when no meetings are found
-                                console.log('No meetings found for the selected date range.');
-                            }
-                        });
-                }
-            }*/
             // UpdateDOM function (modify as needed)
             function updateDOM() {
                 const rightside_middle = document.getElementsByClassName('rightside_middle')[0];
@@ -1738,46 +1646,6 @@ if (isset($_POST['save'])) {
                                     // Append inner user info div to main wrapper div
                                     rightWrapper.appendChild(userInfoDiv);
 
-                                    // Finally, append the main wrapper div to the document body or any desired container
-                                    // document.body.appendChild(rightWrapper);
-
-                                    /*const titleElement = document.createElement('h1');
-                                    titleElement.id = 'meeting-title';*/
-
-                                    /*const descriptionElement = document.createElement('p');
-                                    descriptionElement.id = 'meeting-description';*/
-
-                                    /*const timeElement = document.createElement('p');
-                                    timeElement.id = 'meeting-time';
-                
-                                    const dateElement = document.createElement('p');
-                                    dateElement.id = 'meeting-date';
-                                            
-                                    const container = document.createElement('div');*/
-
-                                    // if (titleElement && timeElement && dateElement) {
-                                    /*if (meetingInfo.length == 0) {
-                                        // Update HTML elements with meeting information
-                                        titleElement.textContent = meeting.title;
-                                        // descriptionElement.textContent = meeting.description;
-                                        timeElement.textContent = meeting.time;
-                                        dateElement.textContent = meeting.date; // Update the date element
-                                        // Update other elements as needed
-                                        
-            
-                                        container.appendChild(titleElement);
-                                        // container.appendChild(descriptionElement);
-                                        container.appendChild(timeElement);
-                                        container.appendChild(dateElement);*/
-
-                                    // console.log(container);
-                                    // } else {
-                                    // Handle case when no meetings are found
-                                    /*console.log('No meetings found for the selected date range.');
-                                }*/
-                                    // } else {
-                                    // console.error('One or more HTML elements not found.');
-                                    // }
 
                                     rightside_middle.appendChild(rightWrapper);
                                 });
@@ -1792,28 +1660,7 @@ if (isset($_POST['save'])) {
 
                                 console.log('No Meetings Found.');
                             }
-                            // console.log(meetingInfo);
-
-                            /*const titleElement = document.getElementById('meeting-title');
-                            const descriptionElement = document.getElementById('meeting-description');
-                            const timeElement = document.getElementById('meeting-time');
-                            const dateElement = document.getElementById('meeting-date'); // Add this line for the date element*/
-
-                            /*if (titleElement && descriptionElement && timeElement && dateElement) {
-                                if (meetingInfo) {
-                                    // Update HTML elements with meeting information
-                                    titleElement.textContent = meetingInfo.title;
-                                    descriptionElement.textContent = meetingInfo.description;
-                                    timeElement.textContent = meetingInfo.time;
-                                    dateElement.textContent = formattedStartDate; // Update the date element
-                                    // Update other elements as needed
-                                } else {
-                                    // Handle case when no meetings are found
-                                    console.log('No meetings found for the selected date range.');
-                                }
-                            } else {
-                                console.error('One or more HTML elements not found.');
-                            }*/
+     
                         })
                         .catch(error => {
                             console.error('Error fetching meeting information:', error);
@@ -1822,11 +1669,6 @@ if (isset($_POST['save'])) {
                 }
             }
 
-            // Function to format date to YYYY-MM-DD
-            // Function to format date to YYYY-MM-DD with dynamic year
-
-
-
             function formatDate(date) {
                 const currentYear = selectedYear;
                 const month = String(months.indexOf(selectedMonth) + 1).padStart(2, '0');
@@ -1834,67 +1676,6 @@ if (isset($_POST['save'])) {
                 const formattedDate = `${currentYear}-${month}-${day}`;
                 return formattedDate;
             }
-
-
-
-
-            /*document.addEventListener('DOMContentLoaded', function(){
-                document.getElementById('daterange').style.visibility = 'hidden';
-                flatpickr("input[type = date-range]", {
-                    minDate:null,
-                    maxDate: null,
-                    dateFormat: "Y-m-d",
-                    mode: "range",
-                    locale: {
-                            weekdays: {
-                                shorthand: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-                                longhand: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-                            },
-                            months: {
-                                shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                                longhand: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-                            }
-                        },
-                    onDayCreate: function(dObj, dStr, fp, dayElem) {
-                        // const dayOfWeek = fp.formatDate(dObj, 'D');
-                        // console.log(dayOfWeek);
-                        // console.log(dObj);
-                            dayElem.classList.add("d");
-                            // dayElem.id = dObj.getDay();
-                            // dayElem.dataset.day = dObj.getDay();
-                            // You can add more conditions and classes based on your requirements
-                        },
-                    onChange: function(selectedDates, dateStr, instance) {
-                        updateDOM(selectedDates[0], selectedDates[1]);
-                            // Custom_Data(selectedDates);
-                        }
-                }).toggle();
-            });*/
-
-
-            //code from chat gpt
-            /*const cells = document.querySelectorAll('#calendarTable td');
-            
-            // Add click event listener to each cell
-            cells.forEach(cell => {
-              cell.addEventListener('click', function() {
-                // Toggle a 'selected' class on click
-                this.classList.toggle('selected');
-            
-                // Check if the cell is selected
-                const isSelected = this.classList.contains('selected');
-                
-                // Use isSelected boolean value as needed
-                if (isSelected) {
-                  console.log(cell.dataset.day,'Cell is selected');
-                  // Do something when the cell is selected
-                } else {
-                  console.log(cell.dataset.day,'Cell is not selected');
-                  // Do something when the cell is not selected
-                }
-              });
-            });*/
-
 
         </script>
 
