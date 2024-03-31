@@ -554,6 +554,8 @@ a {
         background: linear-gradient(0deg, #cb1fd5, #2b5eeb);
         border-radius: 3px;
     }
+
+    
     
 </style>
 
@@ -664,9 +666,7 @@ a {
                 $sql1 = "SELECT * FROM dietitian WHERE dietitianuserID ='$id11'";
                 $res = mysqli_query($conn,$sql1);
                 $user = mysqli_fetch_array($res, MYSQLI_ASSOC);
-                if (isset($url[2]) && $url[2] !== 'health_detail_form_create.php') {?> 
-                <!--This done to remove an error from hostinger -->
-                <!--if ($url[2] !== 'health_detail_form_create.php') {?>-->
+                if ($url[2] !== 'health_detail_form_create.php') {?>
                     <p id="topnav-content-1">Good Morning, <span id="topnav-content-1-name">
                         <strong>
                             <?php echo($user['name']); ?>
@@ -674,13 +674,13 @@ a {
                     </span>
                     </p>
                     <p id="topnav-content-2">Your performance summary this week</p><?php } else { ?>
-                        <p id="topnav-content-1">Good Morning, <span id="topnav-content-1-name">
+                        <p id="topnav-content-1"><span id="topnav-content-1-name">
                             <strong>
                                 <?php echo($user['name']); ?>
                             </strong>
                         </span>
                         </p>
-                        <p id="topnav-content-2">Your performance summary this week</p> <?php } ?>
+                        <p id="topnav-content-2">Health Details</p> <?php } ?>
         </div>
         <div class="topnav-icons">
 
@@ -965,6 +965,11 @@ side_links_hover2.forEach(el => {
     </script>
 
 <script>
+
+window.addEventListener('load', function() {
+    window.dispatchEvent(new Event('resize'));
+});
+
         // let profile_image = document.getElementsByClassName("profile-image")[0];
         // profile_image.addEventListener("click",()=>{
         //     window.location = 'profile_settings_show.php';
@@ -1021,6 +1026,9 @@ side_links_hover2.forEach(el => {
                 }
             }
         );
+
+        
+
         }
         get_notifications();
 </script>
