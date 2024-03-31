@@ -116,26 +116,109 @@ if (isset($_SESSION['dietitianuserID'])) {
             .bt-outline {
                 border: none;
             }
+
+            .user-name-section {
+                width: 70%; /* Adjust the width as needed */
+            }
+
+            .user-name-section h3 {
+                    font-size: 1.5rem; /* Increase font size as needed */
+                }
+
+                .d-flex.justify-content-between.align-items-center h3 {
+                        font-size: 1.3rem; /* Increase font size as needed */
+                }
+
+                .chat {
+        width: 24.8vw; /* Adjust the width as needed */
+    }
+
+    /* For screens smaller than 768px (tablets and smaller) */
+    @media (max-width: 767.98px) {
+        .chat {
+            width: 90vw; /* Adjust the width as needed for smaller screens */
+        }
+    }
+
+    /* For screens smaller than 576px (phones and smaller) */
+    @media (max-width: 575.98px) {
+        .chat {
+            width: 100vw; /* Adjust the width as needed for even smaller screens */
+        }
+    }
+
+    .scroll {
+    overflow: auto; /* Enable scrolling */
+}
+
+/* Hide scrollbar for Firefox */
+.scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* Show scrollbar when scrolling occurs */
+.scroll:hover::-webkit-scrollbar {
+    display: block;
+}
+
+
+.scroll {
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 300px; /* Set a maximum height for the scrollable container */
+}
+
+/* Thin scrollbar */
+
+
+/* Track */
+
+
+/* Thumb */
+.scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px; /* Make the scrollbar thumb curvy */
+}
+
+/* On hover */
+
+
+.scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar */
+.scroll {
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+/* Hide scrollbar for WebKit/Blink browsers */
+.scroll::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+                
         </style>
     </head>
 
     <body style="z-index:-10;">
         <div class="d-flex flex-row">
-            <div class="d-flex
-                flex-coloumn
-                vh-100 chat" style="outline: 2px solid #EEEEEE; padding:20px!important;z-index:0;">
+        <div class="d-flex flex-coloumn vh-100 chat" style="outline: 2px solid #EEEEEE; padding: 8px!important; padding-left: 21px!important; z-index: 0;width: 25vw;">
+
                 <div class="w-300">
-                    <div style="margin-left:1rem;">
+                    <div style="margin-left:1rem;margin-right:1rem;">
                         <div class="d-flex
                         mb-2 p-2 
                         justify-content-between
                         ">
-                            <div class="mt-1">
-                                <h3 class="chat-message-header" style="margin-top:1rem">Messages</h3>
-                            </div>
+
+                        <div class="mt-1 user-name-section"> <!-- Added class for styling -->
+    <h3 class="chat-message-header" style="margin-top:0.7rem; font-size: 2.2rem;">Messages</h3>
+</div>
                         </div>
 
-                        <div class="input-group mb-3 bt-outline ">
+                        <div class="input-group bt-outline ">
                             <div class="input-group mb-3 bt-outline d-flex align-items-center search__div">
                                 <button class="btn  grey-color text-secondary"
                                     style="background: white !important; border:none;" id="serachBtn">
@@ -147,7 +230,7 @@ if (isset($_SESSION['dietitianuserID'])) {
                             </div>
                         </div>
                         <div class="scroll">
-                            <ul id="chatList" class="list-group mvh-50">
+    <ul id="chatList" class="list-group mvh-50">
                                 <?php //if (!empty($conversations)) { ?>
                                 <?php
 
