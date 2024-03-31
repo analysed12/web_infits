@@ -28,10 +28,11 @@ include('navbar.php');
     .header{
         color: #000;
         font-family: NATS;
-        font-size: 48px;
+        font-size: 4vw;
         font-style: normal;
         font-weight: 400;
-        line-height: 24px; /* 50% */
+        line-height: 3vw; /* 50% */
+        width: 70vw;
     }  
 
     .head{
@@ -40,14 +41,15 @@ include('navbar.php');
         font-size: 48px;
         font-style: normal;
         font-weight: 400;
-        line-height: 24px; /* 50% */
+        line-height: 36px; /* 50% */
     }
 
     .vid .video-player{ 
-        width: 545px;
-        /*height: 375px;*/
+        width: 45vw;
+        height: 30vw;
         border-radius: 50px;
         border-style: solid;
+        background-color: currentColor;
         
     }
         
@@ -60,6 +62,14 @@ include('navbar.php');
         border-style: hidden;
 
     }
+    img{
+        width: 30px;
+        
+    }
+    /* #microphoneIcon{
+        background-color: grey;
+        border-radius: 50%
+    } */
 
     </style>
 
@@ -74,7 +84,7 @@ include('navbar.php');
 
     <div class="container">
         <div class="row px-5 d-flex justify-content-center">
-            <div class="col-md-6 ">
+            <div class="col-sm-9 col-lg-7 ">
                 <div class="row pt-4">
                     <div class="vid">
                         <video class="video-player" id="user-1" autoplay playsinline></video>
@@ -84,24 +94,28 @@ include('navbar.php');
                 <div class="row">
                     <div class="d-flex justify-content-center">
                         <span class="mx-2 my-3">
-                            <button type="button" class="CAM-But" id="Btnn-1"><img id="cameraIcon" src="assets/icons/cam-onn.png" alt="Camera On"></button>
+                            <button type="button" class="CAM-But" id="Btnn-1"><img id="cameraIcon" src="assets/icons/cam-off.svg" alt="Camera On"></button>
                         </span>
                         <span class="mx-2 my-3">
-                            <button type="button" class="Mic-But" id="Btnn-2"><img id="microphoneIcon" src="assets/icons/mic-onn.png" alt="Microphone On"></button>
+                            <button type="button" class="Mic-But" id="Btnn-2"><img id="microphoneIcon" src="assets/icons/mic-off.svg" alt="Microphone On"></button>
                         </span>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6 d-flex justify-content-center align-items-center">
+            <div class="col-sm-12 col-lg-5 d-flex justify-content-center align-items-center">
                 <div class="container mb-5 ms-5 ps-5">
                     <div class="row">
                         <span class="head text-center">Ready to join?</span>
                     </div>
                     <div class="row">
                         <span class="text-center mt-4">
-                            <a href="join_call.php"><button type="button" class="btn btn-lg btn-primary mx-2" style="background-color:#4B9AFB">Join Call </button>
-                            <button type="button" class="btn btn-lg" style="border:1px solid #4B9AFB">Cancel</button>
+                            <a href="live_personalcall.php" style="color: white; ">
+                                <button type="button" class="btn btn-lg btn-primary mx-2" style="background-color:#4B9AFB; margin-bottom: 2vh;">Join Call </button>
+                            </a>
+                            <a href="live.php">
+                                <button type="button" class="btn btn-lg" style="border:1px solid #4B9AFB">Cancel</button>
+                            </a>
                         </span>
                     </div>
                 </div>
@@ -128,13 +142,13 @@ include('navbar.php');
           tracks.forEach(track => track.stop());
           videoElement.srcObject = null;
           
-          cameraIcon.src = "assets/icons/cam-off.png";
+          cameraIcon.src = "assets/icons/cam-off.svg";
         } else {
           
           let stream = await navigator.mediaDevices.getUserMedia({ video: true });
           videoElement.srcObject = stream;
           
-          cameraIcon.src = "assets/icons/cam-onn.png";
+          cameraIcon.src = "assets/icons/cam-onn.svg";
         }
 
         
@@ -152,14 +166,14 @@ include('navbar.php');
           let tracks = videoElement.srcObject.getAudioTracks();
           tracks.forEach(track => track.stop());
           
-          microphoneIcon.src = "assets/icons/mic-off.png";
+          microphoneIcon.src = "assets/icons/mic-off.svg";
         } else {
           
           let stream = videoElement.srcObject;
           let audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
           audioStream.getAudioTracks().forEach(track => stream.addTrack(track));
           
-          microphoneIcon.src = "assets/icons/mic-onn.png";
+          microphoneIcon.src = "assets/icons/mic-onn.svg";
         }
 
         
