@@ -29,14 +29,14 @@ if (isset($_SESSION['dietitianuserID'])) {
         header("Location: chat_home.php");
         exit;
     }
-
-    # Getting User data data
+    
     $chatWith = getClient($_GET['user'], $conn);
-
+    
     if (empty($chatWith)) {
         header("Location: chat_home.php");
         exit;
     }
+    
 
     $chats = getChats($_SESSION['dietitian_id'], $chatWith['client_id'], $conn);
 
@@ -300,19 +300,74 @@ if (isset($_SESSION['dietitianuserID'])) {
             color: black;
             font-weight: bolder;
         }
+
+        .chat .d-flex.flex-row.justify-content-between.mx-4 {
+        width: 70vm; /* Adjust the width as needed */
+    }
+
+    .scroll {
+    overflow: auto; /* Enable scrolling */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+}
+
+
+
+/* Show scrollbar when scrolling occurs */
+/* .scroll:hover::-webkit-scrollbar {
+    width: auto;
+} */
+
+.scroll:hover {
+    scrollbar-width: auto;
+    -ms-overflow-style: auto;
+}
+
+.scroll {
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 300px; /* Set a maximum height for the scrollable container */
+}
+
+.d-flex.justify-content-between.align-items-center h3 {
+        font-size: 1.3rem; /* Increase font size as needed */
+    }
+
+/* Thin scrollbar */
+.scroll::-webkit-scrollbar {
+    width: 0.1px; /* Set the width of the scrollbar */
+}
+
+/* Track */
+.scroll::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Set the background color of the scrollbar track */
+}
+
+/* Thumb */
+.scroll::-webkit-scrollbar-thumb {
+    background-color: #888; /* Set the background color of the scrollbar thumb */
+    border-radius: 10px; /* Make the scrollbar thumb curvy */
+}
+
+/* On hover */
+.scroll::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Change the color of the scrollbar thumb on hover */
+}
+
+.chat {
+        height: 100vh; /* Adjust the height as needed */
+    }
+
         </style>
 
         </style>
     </head>
 
     <body style="overflow: hidden">
-        <div class="d-flex flex-row" style="margin: 0; height: 100%; overflow: hidden">
+    <div class="d-flex flex-row" style="margin: 0; height: 100%; overflow: hidden">
+    <div class="d-flex flex-column vh-100 chat" style="outline: 2px solid #EEEEEE; padding: 20px!important; padding-top: 10px; padding-left: 1px;width: 25vw;">
 
-            <div class="d-flex
-                flex-coloumn
-                vh-100 chat" style="outline: 2px solid #EEEEEE; padding:10px!important;">
-                <div class="w-300">
-                    <div class="w-1st" style="margin-left:1rem;">
+                <div class="">
+                    <div class="w-1st" style="margin-left:1rem;margin-right:0.4rem;">
                         <div class="d-flex
                         mb-2 p-2 
                         justify-content-between
@@ -781,6 +836,9 @@ if (isset($_SESSION['dietitianuserID'])) {
                         // setInterval(fechData, 500);
 
                     });
+
+                    
+
                 </script>
             </div>
 
