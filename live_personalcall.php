@@ -155,8 +155,8 @@ include('navbar.php');
     }
 
     .popup_msg {
-        width: 257px;
-        height: 100px;
+        width: 22vw;
+        height: 10vw;
         display: flex;
         align-items: center;
         text-align: center;
@@ -353,8 +353,8 @@ include('navbar.php');
     </style>
     <style>
     .local {
-        width: 80px;
-        height: 80px;
+        width: 10vw;
+        height: 7vw;
         background-color: #223344;
         top: 15px;
         right: 15px;
@@ -362,15 +362,15 @@ include('navbar.php');
     }
 
     .remote {
-        width: 741px;
-        height: 545px;
-        background-color: #384552;
+        width: 60vw;
+        height: 35vw;
+        background-color: currentColor;
     }
 
     .fa,
     .fas {
         font-size: 32px;
-        padding: 10px;
+        padding: 13px;
         background-color: #FF0000;
         color: white;
         border-radius: 50%;
@@ -380,7 +380,10 @@ include('navbar.php');
         height: 47px;
         font-size: 20px;
     }
-
+    /* ::before,::after{
+        margin-top: 2px;
+        margin-left: 2px;
+    } */
 
     .full {
         font-size: 24px;
@@ -419,11 +422,15 @@ include('navbar.php');
     }
 
     .popup_msg {
-        margin-bottom: 20px;
+       
     }
 
     .popup button {
         margin: 5px;
+    }
+    .icons{
+        margin-top: 2px;
+        margin-left: 2px;
     }
     </style>
 </head>
@@ -433,16 +440,16 @@ include('navbar.php');
         <div style="display:flex;gap:1rem"><img src="<?=$DEFAULT_PATH?>assets/images/live-user-default.svg"
                 style="width: 40.91px;height: 40.91px;border-radius:50%"> <span style="font-size:30px">John Wayne</span>
         </div>
-        <div class="d-flex w-100 p-2">
+        <div class="d-flex w-100 p-2" style="justify-content: center; ">
 
             <div class="p-2 rounded shadow-lg position-relative">
                 <div id="local" class="d-flex p-1 justify-content-center rounded position-absolute local shadow-lg ">
                 </div>
                 <div id="remote" class="d-flex p-1 justify-content-center rounded remote shaow-lg "></div>
                 <div class="d-flex justify-content-between">
-                    <div>
-                        <i class="fa fa-video-camera" id="btnCam" aria-hidden="true"></i>
-                        <i class="fa fa-microphone" id="btnMic" aria-hidden="true"></i>
+                    <div class="icons">
+                        <i class="fa fa-video-slash" id="btnCam" aria-hidden="true"></i>
+                        <i class="fa fa-microphone-slash" id="btnMic" aria-hidden="true"></i>
                         <i class="fa fas fa-plug" id="btnPlug" aria-hidden="true"></i>
                     </div>
                     <div class="leave">
@@ -456,110 +463,9 @@ include('navbar.php');
 
         </div>
 
-        <!-- <div class="bottom_buttons">
-
-
-                <div class="buttons1">
-                        <div class="firstbutton1">
-                        <button  id="micon"><img src="images/micon.png" alt=""></button>
-                        <button id="micoff"><img src="images/micoff.png" alt=""></button>
-                        <script>
-                            var x = document.getElementById("micoff");
-                                var selectbtn1 = document.getElementById("micon");
-                                selectbtn1.onclick = function() {
-                                    
-                                if (x.style.display === "block") {
-                                x.style.display = "none";
-                                selectbtn1.style.display="block";
-                                
-                            } else {
-                                x.style.display = "block";
-                                selectbtn1.style.display="none";
-                            
-                            }
-                            }
-                            var y = document.getElementById("micon");
-                                var selectbtn2 = document.getElementById("micoff");
-                                selectbtn2.onclick = function() {
-                                    
-                                if (y.style.display === "none") {
-                                y.style.display = "block";
-                                selectbtn2.style.display="none";
-                                
-                            } else {
-                                y.style.display = "none";
-                                selectbtn2.style.display="block";
-                            
-                            }
-                            }
-                                
-                        </script> 
-                        </div>
-
-                        <div class="firstbutton2">
-                        <button  id="cameraon"><img src="images/cameraon.png" alt=""></button>
-                        <button id="cameraof"><img src="images/cameraof.png" alt=""></button>
-                        <script>
-                            var a = document.getElementById("cameraof");
-                                var selectbtn3 = document.getElementById("cameraon");
-                                selectbtn3.onclick = function() {
-                                    
-                                if (a.style.display === "block") {
-                                a.style.display = "none";
-                                selectbtn3.style.display="block";
-                                
-                            } else {
-                                a.style.display = "block";
-                                selectbtn3.style.display="none";
-                            
-                            }
-                            }
-                            var b = document.getElementById("cameraon");
-                                var selectbtn4 = document.getElementById("cameraof");
-                                selectbtn4.onclick = function() {
-                                    
-                                if (b.style.display === "none") {
-                                b.style.display = "block";
-                                selectbtn4.style.display="none";
-                                
-                            } else {
-                                b.style.display = "none";
-                                selectbtn4.style.display="block";
-                            
-                            }
-                            }
-                                
-                        </script> 
-                        </div>
-                        <div class="upload"style="padding-top:0.4rem">
-                        <span class="material-symbols-outlined" style="width:80%;;font-weight:500">upload</span>
-                        </div>
-
-                        <div class="upload" style="padding-top:0.5rem">
-                        <span class="material-symbols-outlined" style="width:70%;font-weight:500">back_hand</span>
-                        </div>
-                        <button id="popup_btn"style="background:none;border:none">
-                        <div class="upload" style="padding-top:0.5rem">
-                       <img src="images/chat1.png" alt="" style="width:40%">
-                        </div>
-                        </button>
-                        <div class="upload" style="padding-top:0.5rem">
-                       <img src="images/contacts.png" alt="" style="width:40%">
-                        </div>
-                        
-                        
-                    
-                       
-
-                </div>
-
-
-         </div>
-    </div> -->
-
         <!------------------------------POPUP-------->
         <div id="popup1" style="display: none;">
-            <div class="popup">
+            <div class="popup" style="">
                 <div class="popup_msg">Are you sure you want to end the live video?</div>
                 <div>
                     <button id="btnEnd" class="end">End</button>
