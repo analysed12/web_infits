@@ -73,20 +73,27 @@ body {
         align-items: center;
         justify-content: center;
         text-decoration: none !important;
-}
+    }
     .client-form{
         display: flex;
         align-items: center;
         width: 100% !important;
         flex-direction: column;
         margin-bottom: 4rem;
-}
+    }
     .form-row{
         margin-bottom: 1rem;
         width: 60% !important;
     }
     .form{
         width: 45%;
+    }
+    .backBtn{
+        margin-right: 6vw;
+        text-decoration: none;
+        border: 2px solid #0d6efd;
+        padding: 0.2vw 1.5vw;
+        border-radius: 1.5vw;
     }
     @media screen and (max-width: 725px) {
         .heading{
@@ -169,12 +176,7 @@ $result = mysqli_query($conn,$sql);
         ?>
                 <div class="d-flex justify-content-between align-items-center ps-4 pe-4">
                     <h4 class="heading" style="font-size: 42px;margin-left:2rem;">Client Profile</h4>
-                    <!-----------------------------EDIT BUTTON---------------------------------->
-
-
-                        <!-- <a class="editBtn" name="edit_client" 
-                            href="update_client_profile.php?client_id=<?php echo $client_id?>"><p class="mb-0 edit-profile" style="font-size: 27px;" > Edit Profile</p></a> -->
-                   
+                    <a class="backBtn" name="back_client" href="client_dashboard.php?client_id=<?php echo $client_id?>"><p class="mb-0 edit-profile" style="font-size: 27px;" >Back to Client Dashboard</p></a>
                 </div>    
                     <div class="container">
                         <div class="d-flex justify-content-center align-items-center" style="gap:20px; margin: 2rem;">
