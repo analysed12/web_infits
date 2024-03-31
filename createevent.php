@@ -252,6 +252,29 @@ if (isset($_POST['submit'])) {
         display: block;
         width: 100%;
     }
+    .file-item {
+        display: flex;
+        justify-content: space-between;
+        position: relative; /* Set position relative for containing the absolutely positioned image */
+    }
+
+    .file-item span {
+        white-space: nowrap;
+    }
+
+    .file-item img {
+        max-width: 300px;
+        max-height: 300px;
+        display: none;
+        position: absolute; /* Position the image absolutely */
+        top: 0; /* Position at the top */
+        left: 250px; /* Position at the left */
+        z-index: 1; /* Ensure the image appears on top of other content */
+    }
+
+    .file-item:hover img {
+        display: block;
+    }
 
     /*
 .rem-item {
@@ -557,7 +580,7 @@ if (isset($_POST['submit'])) {
                 <div class="eve_form" style="">
                     <!-- Event name field -->
 
-                    <label for="subject" class="event_title" style="font-size:28px;font-weight:400">Event Name</label>
+                    <label for="subject" class="event_title" style="font-size:28px;font-weight:400;margin-bottom: -60px;">Event Name</label>
                     <input class="subject" type="text" name="subject" placeholder="Event"
                         style="padding:10px 20px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);border-radius: 10px; border: 1px solid #F1F1F1;"
                         required>
@@ -709,7 +732,7 @@ if (isset($_POST['submit'])) {
 
 
                         <!-- Add attachment field -->
-<div class="input-icons" style="font-size:19px;display:flex;align-items:center">
+<div class="input-icons" style="font-size:19px;display:flex;align-items:center;">
     <img class="icon" style="position: absolute; min-width: 0px;"
         src="<?= $DEFAULT_PATH ?>assets/images/Attach.svg">
 
@@ -724,6 +747,7 @@ if (isset($_POST['submit'])) {
 
 <!-- File List Container -->
 <div id="fileListContainer"></div>
+
                         <div class="files" id="attachments">
                             <div class="files2" id="attachments2">
                             </div>
@@ -741,7 +765,7 @@ if (isset($_POST['submit'])) {
                             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
                         <!--cancel and book appointment button -->
-                        <div style="width:100%; margin-left:10%; margin-right:10%;font-size:19px">
+                        <div style="width:100%; margin-left:10%; margin-right:10%;font-size:19px;margin-top: 60px;">
                             <a href="createevent.php"><input
                                     style="display:inline-block; color:black; background:white;"
                                     class="form_btn form_btn1" id='mobile_btn' placeholder="Cancel"></input></a>
@@ -818,47 +842,85 @@ if (isset($_POST['submit'])) {
             }
 
         }
+//         const delete_file = (div, file) => {
+//     return function () {
+//         // Find the index of the file in the files array
+//         const index = files.indexOf(file);
+//         if (index !== -1) {
+//             // Remove the file from the files array
+//             files.splice(index, 1);
+            
+//             // Create a new file list excluding the deleted file
+//             const updatedFiles = Array.from(fileInput.files).filter(f => f !== file);
+            
+//             // Create a new DataTransfer object to update the file input element
+//             const dataTransfer = new DataTransfer();
+//             updatedFiles.forEach(f => dataTransfer.items.add(f));
+            
+//             // Update the file input element's files property
+//             fileInput.files = dataTransfer.files;
+//         }
+//         // Remove the file container from the DOM
+//         div.remove();
+//     }
+// }
 
+        // const delete_file = (container, file) => {
+//     return function () {
+//         // Find the index of the file in the files array
+//         const index = files.indexOf(file);
+//         if (index !== -1) {
+//             // Remove the file from the files array
+//             files.splice(index, 1);
+//         }
+//         // Remove the file container from the DOM
+//         container.remove();
+//     }
+// }
 let fileCount = 0;
 
-const updateFileList = (event) => {
-    const image = /\.(jpg|svg|png|jpeg|avif)$/i;
-    const pdfFile = /\.pdf$/i;
+    const updateFileList = (event) => {
+        const image = /\.(jpg|svg|png|jpeg|avif)$/i;
+        const pdfFile = /\.pdf$/i;
 
-    // Clear the file list container
-    let fileListContainer = document.getElementById('fileListContainer');
-    fileListContainer.innerHTML = '';
+        // Clear the file list container
+        let fileListContainer = document.getElementById('fileListContainer');
+        fileListContainer.innerHTML = '';
 
-    files.push(...Array.from(event.target.files));
+        files.push(...Array.from(event.target.files));
 
-    files.forEach((element, index) => {
-        let fileItem = document.createElement("div");
-        fileItem.className = "file-item";
-        fileItem.id = "fileItem_" + fileCount++;
+        files.forEach((element, index) => {
+            let fileItem = document.createElement("div");
+            fileItem.className = "file-item";
+            fileItem.id = "fileItem_" + fileCount++;
 
-        let fileName = document.createElement("span");
-        fileName.textContent = element.name;
+            let fileName = document.createElement("span");
+            fileName.textContent = element.name;
 
-        let removeButton = document.createElement("span");
-        removeButton.textContent = "❌";
-        removeButton.className = "remove-button";
-        removeButton.onclick = function () {
-            removeFile(fileItem.id, index);
-        };
+            let removeButton = document.createElement("span");
+            removeButton.textContent = "❌";
+            removeButton.className = "remove-button";
+            removeButton.onclick = function () {
+                removeFile(fileItem.id, index);
+            };
 
-        fileItem.appendChild(fileName);
-        fileItem.appendChild(removeButton);
+            let image = document.createElement("img");
+            image.src = URL.createObjectURL(element);
+            image.alt = element.name;
 
-        fileListContainer.appendChild(fileItem);
-    });
-}
+            fileItem.appendChild(fileName);
+            fileItem.appendChild(removeButton);
+            fileItem.appendChild(image);
 
+            fileListContainer.appendChild(fileItem);
+        });
+    }
 
-const removeFile = (fileItemId, index) => {
-    let fileItemToRemove = document.getElementById(fileItemId);
-    files.splice(index, 1);
-    fileItemToRemove.remove();
-}
+    const removeFile = (fileItemId, index) => {
+        let fileItemToRemove = document.getElementById(fileItemId);
+        files.splice(index, 1);
+        fileItemToRemove.remove();
+    }
 
     </script>
     <script>
