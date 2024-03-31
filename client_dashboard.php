@@ -22,9 +22,10 @@ include "navbar.php";
 
     .client_heading {
         font-weight: 400;
-        font-size: 40px;
+        font-size: 4.1vw;
         margin-left: 2rem;
         margin-top: 2rem;
+        width: 27vw;
     }
 
     #content {
@@ -96,6 +97,20 @@ include "navbar.php";
         justify-content: center;
     }
 
+    .edit-profile{
+        font-size: 20px !important;
+    }
+
+    .backBtn{
+        margin-right: 6vw;
+        text-decoration: none;
+        border: 2px solid #0d6efd;
+        padding: 0.2vw 1.5vw;
+        border-radius: 1.5vw;
+        width: 12vw;
+        margin-top: 2rem;
+    }
+
     @media screen and (min-width: 300px) and (max-width: 600px) {
         #content {
             margin: auto;
@@ -157,7 +172,11 @@ include "navbar.php";
             header('Location: client_list.php');
         }
         ?>
-        <h4 class="client_heading">Client Dashboard</h4>
+        <div class="d-flex justify-content-between align-items-center ps-4 pe-4">
+            <h4 class="client_heading">Client Dashboard</h4>
+            <a class="backBtn" name="back_client" href="client_list.php"><p class="mb-0 edit-profile" style="font-size: 27px;" >Client Page</p></a>
+        </div>
+        
         <br>
         <div class="row1 row-cols-2 row-cols-lg-3" ;>
 
