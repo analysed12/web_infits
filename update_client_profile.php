@@ -254,9 +254,29 @@ while ($row = mysqli_fetch_array($result)) {
                                             value="<?php echo $row['name'] ?>">
                                     </div>
                                 </div>
-                                <!--------------------------------------------GENDER---------------------------------------------------------------->
-                                <div class="form-row d-flex flex-row w-100 justify-content-start align-items-center">
-                                    <div class="form d-flex gap-4 align-items-center pt-1 pb-1">
+                                <!--------------------------------------------GENDER AND PLAN--------------------------------------------------------------->
+                        
+                                <div class="form-row d-flex flex-row justify-content-center align-items-center">
+                    
+                                    <div class="form">
+                                        <div class="">Plan</div>
+                                        <div class="d-flex justify-content-center align-items-center ">
+                                            <!-- if plan get changed plan id should be changes with js event -->
+                                            <?php if(isset($_GET['plan_id'])){
+                                                $newPlan = $_GET['plan_id'];
+                                                $sql = "SELECT * FROM create_plan WHERE plan_id = '$newPlan'";
+                                                $res = mysqli_query($conn,$sql);
+                                                $newPlanDetails = mysqli_fetch_assoc($res);
+
+                                            }  ?>
+                                            <input hidden readonly name="plan" value="<?php if(isset($_GET['plan_id'])){echo $newPlanDetails['plan_id'];}else{ echo $row1['plan_id']; } ?>" >
+
+                                            <input readonly type="text" name="" value="<?php if(isset($_GET['plan_id'])){echo $newPlanDetails['name'];}else{ echo $row1['name']; } ?>" class="input-tag" style="width:50% !important; margin-right:10%;" id="">
+                                            <a href="select_client_plan.php?client_id=<?php echo $client_id ?>&pev=update_client_profile" class=""
+                                                style="display:flex;justify-content: center;align-items: center; width:40% !important;height:40px; background: #FFFFFF;border: 1px solid #6883FB;color: #6883FB; text-decoration:none ;border-radius: 8px;">Select</a>
+                                        </div>
+                                    </div>
+                                    <div class="form d-flex gap-4 align-items-center pt-1 pb-1 mt-3">
                                         <div class="">Gender</div>
                                         <input <?php if($row['gender']=='M'){echo 'checked';} ?> type="radio" name="gender" value="M" id="male" class="d-none" />
                                         <label for="male" class="gender-icons mb-0"><i class="fa fa-mars fs-3"></i></label>
@@ -264,6 +284,7 @@ while ($row = mysqli_fetch_array($result)) {
                                         <input <?php if($row['gender']=='F'){echo 'checked';} ?> type="radio" name="gender" value="F" id="female" class="d-none">
                                         <label for="female" onclick="gender" class="gender-icons mb-0"><i class="fa fa-venus fs-3"></i></label>
                                     </div>
+
                                 </div>
                                 <!--------------------------------------EMAIL AND PHONE NO.-------------------------------------------------------->
                                 <div class="form-row d-flex flex-row justify-content-center align-items-center">
@@ -303,30 +324,12 @@ while ($row = mysqli_fetch_array($result)) {
                                 </div>
                             </div>
                             <!--------------------------------LOCATION AND PLAN------------------------------------------------->
-                            <div class="form-row d-flex flex-row w-100 justify-content-center align-items-center gap-5">
+                            <div class="form-row d-flex flex-row w-100 justify-content-start align-items-center gap-5">
                                 <div class="form">
                                     <div class="">Location</div>
                                     <input name="location" type="text" class="input-tag" value="<?php echo $row2['location']; ?>">
                                 </div>
-                                <div class="form">
-                                    <div class="">Plan</div>
-                                    <div class="d-flex justify-content-center align-items-center ">
-                                        <!-- if plan get changed plan id should be changes with js event -->
-                                        <?php if(isset($_GET['plan_id'])){
-                                            $newPlan = $_GET['plan_id'];
-                                            $sql = "SELECT * FROM create_plan WHERE plan_id = '$newPlan'";
-                                            $res = mysqli_query($conn,$sql);
-                                            $newPlanDetails = mysqli_fetch_assoc($res);
-
-                                        }  ?>
-                                        <input hidden readonly name="plan" value="<?php if(isset($_GET['plan_id'])){echo $newPlanDetails['plan_id'];}else{ echo $row1['plan_id']; } ?>" >
-
-                                        <input readonly type="text" name="" value="<?php if(isset($_GET['plan_id'])){echo $newPlanDetails['name'];}else{ echo $row1['name']; } ?>" class="input-tag" style="width:50% !important; margin-right:10%;" id="">
-                                        <a href="select_client_plan.php?client_id=<?php echo $client_id ?>&pev=update_client_profile" class=""
-                                            style="display:flex;justify-content: center;align-items: center; width:40% !important;height:40px; background: #FFFFFF;border: 1px solid #6883FB;color: #6883FB; text-decoration:none ;border-radius: 8px;">Select</a>
-                                    </div>
-                                </div>
-
+                                
                             </div>
                         </div>
                         <!------------------------------------------SAVE AND CANCEL BUTTONS------------------------------------------>
