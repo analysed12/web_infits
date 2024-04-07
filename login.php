@@ -112,6 +112,12 @@
       .x-accordion-group,.x-accordion {
         border-radius: 15px; 
       }
+      .faq-drop{
+        border-radius: 4rem;
+      }
+      .faq-button{
+      border-radius: 4rem;
+      }
     /* ////////////////////////// */
     @media (max-width: 768px) {
         .main-class{
@@ -344,12 +350,13 @@
         </div>
 
         <div class="contactbox row">
-            <div class="left col-lg-5 col-md-5 col-sm-12 mt-4">
+            <div class="col-lg-2 col-md-1 col-sm-0"></div>
+            <div class="left col-lg-4 col-md-5 col-sm-12 mt-4 mb-4">
                 <h2 class="ms-3">Contact Us</h2>
-                <img class="mt-3 me-4" src="./assets/dashboard/guy_chat.jpg" alt="">
+                <img class="mt-3 me-4" src="./assets/dashboard/guy_chat.jpg" alt="" style="width: 90%;">
             </div>
 
-            <div class="right col-lg-6 col-md-6 col-sm-12 ps-4">
+            <div class="right col-lg-6 col-md-6 col-sm-12 ps-4 pe-4">
                 <form>
                     <div class="form-group mt-5 mb-3">
                         <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
@@ -368,7 +375,7 @@
         </div>
     </div>
 
-    <div class="faq">
+    <div class="faq mt-4">
         <div class="faqlogo">
             <img src="./assets/dashboard/faq.png" alt="">
         </div>
@@ -376,87 +383,87 @@
         <div class="faqcontainer">
             
             <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                  <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <div class="accordion-item mt-1">
+                  <h2 class="accordion-header faq-drop">
+                    <button class="accordion-button faq-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         1. For whom the INFITS Wellness app is for?
                     </button>
                   </h2>
-                  <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                  <div id="collapseOne" class="accordion-collapse collapse show faq-drop" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                      <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                      The Infits Wellness app is tailored for wellness practitioners and consultants. It is created to help nutritionists and dietitians maintain track of their clients' daily progress and dietary decisions. With INFITS, you can keep track of your client's daily progress and customise their goals and plans. The general public can also use INFITS to monitor their health progress.
                     </div>
                   </div>
                 </div>
                 <div class="accordion-item">
-                  <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <h2 class="accordion-header faq-drop">
+                    <button class="accordion-button faq-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         2. What makes INFITS different from, say other Wellness apps?
                     </button>
                   </h2>
-                  <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                  <div id="collapseTwo" class="accordion-collapse collapse faq-drop" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                      <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                      There are a lot of wellness apps out there; INFITS shows its uniqueness by tailoring its functions to meet the needs of wellness consultants and practitioners who wish to keep track of their clients' daily progress. It helps you connect to smart devices, create daily reports, save documents, set alerts and reminders for your clients, have online appointment booking, and live stream while your clients can track their steps, sleep, calories, diets, heart rate, and water intake. It's an app tailored for both nutritionists and their clients.
                     </div>
                   </div>
                 </div>
                 <div class="accordion-item">
-                  <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <h2 class="accordion-header faq-drop">
+                    <button class="accordion-button faq-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                         3. What are the benefits of INFITS wellness app?
                     </button>
                   </h2>
-                  <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                  <div id="collapseThree" class="accordion-collapse collapse faq-drop" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                      <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                      There are various benefits to using the INFITS wellness app. Nutritionists, dietitians, and other fitness instructors can use it to track their clients' daily activities and reach target milestones more easily. It also acts as a platform for instructors to accept online appointments and make live video streaming. This will help them escape from the exhausting task of individual calling and messaging.
                     </div>
                   </div>
                 </div>
                 <div class="accordion-item">
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <h2 class="accordion-header faq-drop">
+                      <button class="accordion-button faq-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         4. What does INFITS exactly does?
                       </button>
                     </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div id="collapseTwo" class="accordion-collapse collapse faq-drop" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
-                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        INFITS is a wellness app tailored to the needs of wellness instructors and their clients. It documents every activity of clients, including steps, meals/calories, weight, water, and exercise/workout, while monitoring their sleep and heart rate, providing end-to-end analysis of each client daily. INFITS will help you connect with a smart device for tracking, create alerts and reminders for your progress, accept online appointment booking, live stream videos, and share documents with your clients.
                       </div>
                     </div>
                   </div>
                   <div class="accordion-item">
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <h2 class="accordion-header faq-drop">
+                      <button class="accordion-button faq-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         5. Should I prescribe custom equipment when using INFITS?
                       </button>
                     </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div id="collapseTwo" class="accordion-collapse collapse faq-drop" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
-                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        When using the INFITS wellness app, there is no need to prescribe custom equipment as long as your customers have smart devices to track their activities. INFITS can connect with all wellness devices and collect data through them to get precise readings of your clients. So as long as your clients have smart tracking devices, there is no need for custom prescriptions.
                       </div>
                     </div>
                   </div>
                   <div class="accordion-item">
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <h2 class="accordion-header faq-drop">
+                      <button class="accordion-button faq-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         6. Can I have consultations with international clients?
                       </button>
                     </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div id="collapseTwo" class="accordion-collapse collapse faq-drop" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
-                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        Boundaries and nationalities do not bind INFITS, you can have clients from all over the world as long as they have downloaded the app. It's an online platform where you can interact with clients worldwide. You can track their progress from your home through the app, and give them proper consultations and milestones no matter how far apart you are.
                       </div>
                     </div>
                   </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <div class="accordion-item mb-4">
+                    <h2 class="accordion-header faq-drop">
+                      <button class="accordion-button faq-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         7. How precise is the INFITS wellness app?
                       </button>
                     </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div id="collapseTwo" class="accordion-collapse collapse faq-drop" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
-                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        INFITS wellness app will be as precise as your client's smart device. INFITS collects data from your client's smart devices to compile all their activities to create reports and daily end-to-end analyses of each client. Any smart device can be connected to INFITS, and reports can be generated based on data shared through these connected smart devices.
                       </div>
                     </div>
                   </div>
