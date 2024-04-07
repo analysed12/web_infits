@@ -1,7 +1,7 @@
 <?php
 error_reporting(0);
 ob_start();
-include('navbar.php');
+include ('navbar.php');
 
 if (isset($_SESSION['dietitianuserID'])) {
     $id = $_SESSION['dietitianuserID'];
@@ -60,8 +60,10 @@ echo $output;
 
     .clients_operations {
         display: flex;
-        gap: 3rem;
-        margin-right: 5% !important;
+        width: 70%;
+        /* gap: 3rem; */
+        justify-content: space-around;
+        /* margin-right: 5% !important; */
     }
 
     #btn1 {
@@ -101,7 +103,7 @@ echo $output;
     }
 
     .search_client {
-        width: 343px;
+        width: 30%;
         margin-top: 1rem;
         color: #BBBBBB;
         background-color: white;
@@ -198,6 +200,7 @@ echo $output;
         border-radius: 10px;
         display: none;
         transition: all 0.4 ease-in-out !important;
+        background-color: white;
     }
 
     #del {
@@ -230,13 +233,14 @@ echo $output;
         border-radius: 10px;
         display: none;
         transition: all 0.4 ease-in-out !important;
+        background: white;
     }
 
     #toast__h1 {
         font-family: 'NATS';
         font-style: normal;
         font-weight: 400;
-        font-size: 2vw;
+        font-size: 1.8vw;
         color: #000000;
     }
 
@@ -276,7 +280,7 @@ echo $output;
         font-family: 'NATS';
         font-style: normal;
         font-weight: 400;
-        font-size: 25px;
+        font-size: 18px;
         margin: 0 5px;
     }
 
@@ -357,6 +361,7 @@ echo $output;
 
 
     @media screen and (max-width: 720px) {
+
         .clients {
             margin-left: 2rem;
         }
@@ -368,7 +373,7 @@ echo $output;
         .clients_container {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            /* gap: 1rem; */
         }
 
         .add_set_client {
@@ -411,19 +416,24 @@ echo $output;
 
         .clients_operations {
             display: flex;
-
+            width: 100%;
             gap: 0.5rem;
             max-width: fit-content;
             margin-left: 0rem !important;
+            margin-top: 10px;
         }
 
         .clients_container3 {
             display: none;
         }
 
+        #toast__h1 {
+            font-size: 2vw;
+        }
+
         #toast {
-            flex-direction: column;
-            width: 70%;
+            /* flex-direction: column; */
+            /* width: 70%; */
         }
 
     }
@@ -470,28 +480,40 @@ echo $output;
 
     @media only screen and (min-width: 720px) and (max-width: 930px) {
         .clients_operations {
-            gap: 1rem;
+            display: flex;
             flex-wrap: wrap;
-            margin-left: 60px;
-            /* width: 540px; */
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 10px;
+
+
         }
 
+        #toast__h1 {
+            font-family: 'NATS';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 2vw;
+            color: #000000;
+        }
     }
 
     @media screen and (max-width: 1100px) {
         .clients_container {
             display: flex !important;
             flex-direction: column !important;
-            gap: 0.5rem;
+            /* gap: 0.5rem; */
         }
 
         .clients_operations {
-
+            width: 100%;
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            margin-left: -10rem;
-            width: 550px;
+            justify-content: space-around;
+            margin-top: 10px;
+
+            /* margin-left: -10rem; */
+            /* width: 550px; */
         }
 
         .search_client {
@@ -518,26 +540,81 @@ echo $output;
         border: 1px solid #888;
         width: 80%;
     }
+
+    @media screen and (max-width: 700px) {
+        #goals {
+            display: flex;
+            width: 95%;
+            margin-left: -15%;
+        }
+
+        #toast__h1 {
+            font-family: 'NATS';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 4vw;
+            color: #000000;
+            width: 50%;
+
+        }
+
+        #toast__btns {
+
+            width: 50%;
+        }
+
+        .goalbtn,
+        .reminderbtn {
+            width: 60px;
+            font-size: 14px;
+            height: 40px;
+            padding: 0;
+        }
+
+        .btn2 {
+            width: 60px;
+            font-size: 14px;
+            height: 50px;
+            padding: 0;
+        }
+    }
+
+    @media screen and (max-width: 700px) {
+        #btn1{
+            padding: 0;
+        }
+        .add_set {
+            font-size: 15px;
+            font-weight: 400;
+        }
+        .add_set_client{
+            display: flex;
+            align-items: center;
+            /* padding: 0; */
+            padding-bottom: 4px;
+        }
+        
+    }
 </style>
 
 <body>
     <div class="clients">
         <p style="font-size:40px; font-weight:500">Clients</p>
-        <div class="clients_container">
-            <div class="search_client" style="justify-content:center;align-items:center">
+        <div class="clients_container" style="padding:0;">
+            <div class="search_client" style="justify-content:center;align-items:center;min-width:270px;">
                 <div><button id="btn3"><span class="material-symbols-outlined">search</span></button> </div>
-                <div style="margin-left:1rem;margin-right:4rem;margin-bottom:0.5rem;"> <input type="text" name="search_client" placeholder="Search Clients" class="seach_clients_text" style="width:60%">
+                <div style="margin-left:1rem;margin-right:0;margin-bottom:0.5rem;"> <input type="text"
+                        name="search_client" placeholder="Search Clients" class="seach_clients_text" style="width:100%">
                 </div>
             </div>
 
 
             <div class="clients_operations">
-                <button id="btn1">
-                    <div  class="add_set_client" id="add_set_client">
+                <button class="" id="btn1">
+                    <div class="add_set_client" id="add_set_client">
                         <div style="margin-top: 4px;"><span class="material-symbols-outlined">add</span></div>
                         <div class="add_set">
                             <a href="add_client.php" style="color:blueviolet"><span>Add Clients</span></a>
-                            
                         </div>
                     </div>
                 </button>
@@ -555,7 +632,7 @@ echo $output;
                         <div class="add_set"> <span>Set Reminders</span></div>
                     </div>
                 </button>
-                <div onclick="del('Delete Clients');" class="delete_client">
+                <div onclick="del('Delete Clients');" class="delete_client" id="btn1">
                     <button id="btn2"><span class="material-symbols-outlined">delete</span></button>
                 </div>
             </div>
@@ -563,11 +640,11 @@ echo $output;
 
         <div class="clients_container2">
             <a href="?active-btn" class="button-top <?php if (!isset($_GET['pending-btn'])) {
-                                                        echo 'active';
-                                                    } ?> active-button text-dark" name="active-btn">Active</a>
+                echo 'active';
+            } ?> active-button text-dark" name="active-btn">Active</a>
             <a href="?pending-btn" class="button-top <?php if (isset($_GET['pending-btn'])) {
-                                                            echo 'active';
-                                                        } ?> pending-btn text-dark" name="pending-btn" style="margin-left:2rem">Pending</a>
+                echo 'active';
+            } ?> pending-btn text-dark" name="pending-btn" style="margin-left:2rem">Pending</a>
         </div>
         <br><br>
 
@@ -672,19 +749,22 @@ echo $output;
         </div>
     </div>
 
-    <div id="goals">
-        <h1 id="toast__h1">
+    <div id="goals" class="">
+        <p id="toast__h1">
             Select the clients for whom you want to set the general fitness goals!
-        </h1>
+        </p>
         <div id="toast__btns">
             <form action="" method="POST" id='form'>
                 <input style='cursor:pointer' id='form__input' type='text' hidden name='clientList' value=''>
                 <div style="margin-top:-4px; display:flex;">
-                    <button type="submit" class="btn goalbtn">
+                    <button type="submit" class="btn goalbtn" style="height:50px; width: 100px;">
                         <span>
-                            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z" fill="white" />
-                            </svg>
+                            <!-- <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z"
+                                    fill="white" />
+                            </svg> -->
                         </span><span class='btn__span'></span>
                     </button>
                     <button onclick='close()' class="btn btn2">Cancel</button>
@@ -699,12 +779,16 @@ echo $output;
         <div id="toast__btns">
             <form action="" method="POST" id='form1'>
                 <input style='cursor:pointer' id='form__input1' type='text' hidden name='clientList' value=''>
-                <div style="margin-top:-4px;">
-                    <button type="submit" class="btn reminderbtn">
+                <div style="margin-top:-4px; display:flex;">
+                    <button type="submit" class="btn reminderbtn"
+                        style="height:50px; width: 100px;padding:0;line-height:1;">
                         <span>
-                            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z" fill="white" />
-                            </svg>
+                            <!-- <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z"
+                                    fill="white" />
+                            </svg> -->
 
                         </span><span class='btn__span1'></span>
                     </button>
@@ -726,7 +810,9 @@ echo $output;
                 <button type="button" class="btn deletebtn" id="myBtn">
                     <span>
                         <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z" fill="white" />
+                            <path
+                                d="M15.3767 3.99431V8.54725H13.859V3.99431M13.859 10.0649H15.3767V11.5825H13.859M7.02961 0.200195C6.6271 0.200195 6.24108 0.36009 5.95647 0.644704C5.67185 0.929318 5.51196 1.31534 5.51196 1.71784C5.50663 1.7911 5.50663 1.86464 5.51196 1.9379C3.32655 2.5829 1.71784 4.61655 1.71784 7.02961V11.5825L0.200195 13.1002V13.859H13.859V13.1002L12.3414 11.5825V7.02961C12.3414 4.61655 10.7327 2.5829 8.54725 1.9379C8.55258 1.86464 8.55258 1.7911 8.54725 1.71784C8.54725 1.31534 8.38736 0.929318 8.10275 0.644704C7.81813 0.36009 7.43211 0.200195 7.02961 0.200195ZM5.51196 14.6178C5.51196 15.0203 5.67185 15.4064 5.95647 15.691C6.24108 15.9756 6.6271 16.1355 7.02961 16.1355C7.43211 16.1355 7.81813 15.9756 8.10275 15.691C8.38736 15.4064 8.54725 15.0203 8.54725 14.6178H5.51196Z"
+                                fill="white" />
                         </svg>
 
                     </span><span class='btn__span2'></span>
@@ -756,7 +842,7 @@ echo $output;
 
 
     <script>
-        document.getElementsByClassName('client-item').onclick = function() {
+        document.getElementsByClassName('client-item').onclick = function () {
             var checkbox = document.getElementById('chk');
             checkbox.checked = !checkbox.checked;
         }
@@ -766,18 +852,18 @@ echo $output;
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
         // When the user clicks the button, open the modal 
-        btns.onclick = function() {
+        btns.onclick = function () {
             event.preventDefault(); //keeps page from refreshing
             modal.style.display = "block";
         }
 
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
+        span.onclick = function () {
             modal.style.display = "none";
         }
 
         // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
@@ -925,7 +1011,7 @@ echo $output;
             });
 
             // Close the modal if the user clicks anywhere outside of it
-            window.onclick = function(event) {
+            window.onclick = function (event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
