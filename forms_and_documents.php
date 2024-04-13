@@ -130,6 +130,7 @@ session_start();
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
+            justify-content: center;
 
         }
 
@@ -179,6 +180,7 @@ session_start();
             height: 80px;
             user-select: none;
             pointer-events: none;
+            
         }
 
         .content .created-form-container .form-card-container .form-cards .form-content {
@@ -257,6 +259,7 @@ session_start();
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            
         }
 
         .content .created-form-container .form-card-container .form-cards .option-popup button:last-child {
@@ -401,16 +404,44 @@ session_start();
                 margin-top: 40px;
             }
         }
-
-        @media screen and (max-width: 720px) {
-            .heading-box {
+        @media screen and (max-width: 600px) {
+            /* .heading-box {
                 margin-top: -40px;
+                margin-left: 120px;
+
+            } */
+            /* .search-box1 {
+                margin-top: 100px;
+                margin-left: -300px;
+                margin-right: 30px;
+            } */
+            .heading-box h1 {
                 margin-left: 20px;
+                width: 500px;
+                margin-top: 40px;
             }
 
             .sub-content .heading-box {
                 margin-top: 1px;
             }
+        }
+
+        @media screen and (max-width: 720px) {
+            .heading-box {
+                margin-top: -40px;
+                margin-left: 120px;
+
+            }
+            /* .search-box1 {
+                margin-top: 100px;
+                margin-left: -300px;
+                margin-right: 30px;
+            } */
+
+            .sub-content .heading-box {
+                margin-top: 1px;
+            }
+
         }
 
         @media screen and (max-width:450px) {
@@ -464,7 +495,7 @@ session_start();
 
     <div class="content">
         <div class="heading-box">
-            <h1>Forms and Documents</h1>
+            <h1>Forms&nbsp;and&nbsp;Documents</h1>
             <div class="search-box1">
                 <img src="<?= $DEFAULT_PATH ?>assets/images/search.svg" alt="#">
 
