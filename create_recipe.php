@@ -172,7 +172,7 @@ include('navbar.php');
 
     .rtab-content {
         display: none;
-        width: 80%;
+        width: 100%;
         margin: 0 auto;
     }
 
@@ -339,7 +339,77 @@ include('navbar.php');
             margin-right: 10% !important;
             width: auto !important;
         }
+        /* .rtab-content-group {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
+    }
+
+    .rtab-content {
+        display: none;
+        width: 100%;
+        margin: 0 auto;
+    } */
+
+    }
+    @media screen and (max-width: 980px) {
+        .popup {
+            /* margin-left: 10% !important; */
+            margin-right: 10% !important;
+            width: auto !important;
+        }
+        .rtab-content-group {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .rtab-content {
+        display: none;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .add-actions {
+
+        /* padding: 0; */
+        display: flex;
+        justify-content: space-between;
+        padding: 0 0px;
+        align-items: center;
+
+    }
+
+    }
+    @media screen and (max-width: 810px) {
+        .rtab-content-group {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .rtab-content {
+        display: none;
+        width: 100%;
+        margin: 0 auto;
+    }
+        .add-actions {
+
+        /* padding: 0; */
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        align-items: center;
+
+}
     }
 
     @media screen and (max-width: 720px) {
