@@ -116,7 +116,7 @@ $name = explode(" ", $row['dietitianuserID']);
     border-radius: 10px;
     float: right;
     position: absolute;
-    bottom: 20px;
+    /* bottom: 20px; */
     right: 20px;
 }
 
@@ -380,4 +380,4 @@ $name = explode(" ", $row['dietitianuserID']);
 
 </body>
 
-</html
+</html>
