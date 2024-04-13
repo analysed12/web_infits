@@ -21,7 +21,6 @@ include('navbar.php');
             font-weight: normal;
             font-style: normal;
         }
-
         .header {
             color: #000;
             font-family: NATS;
