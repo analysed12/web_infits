@@ -261,22 +261,14 @@ function fetchInformation1($client_id)
 
         .dashboard_container2 {
             display: flex;
+            flex-wrap:wrap;
             gap: 2rem;
             /* max-width: 100%;
             overflow-x: scroll;
             overflow-y: hidden; */
             padding-bottom: 20px;
+            justify-content: center;
         }
-
-        /* .dashboard_container2::-webkit-scrollbar {
-            width: 0.2em;
-            background-color: transparent;
-        }
-
-        .dashboard_container2::-webkit-scrollbar-thumb {
-            width: 0.1em;
-            background-color: #f1f1f1;
-        } */
 
         .container2_wrapper {
             width: 226px;
@@ -395,7 +387,7 @@ function fetchInformation1($client_id)
             justify-content: space-between;
             gap: 1rem;
             border: none;
-            margin-right: 3.9rem;
+            margin-right: 2.7rem;
             font-size: 20px;
         }
 
@@ -480,10 +472,11 @@ function fetchInformation1($client_id)
         .dashboard_container5 {
             display: flex;
             gap: 2rem;
-            justify-content: space-between;
+            justify-content: space-around;
+            align-items: center;
             margin-top: 1rem;
             margin-bottom: 5rem;
-            margin-right: 3rem;
+            margin-right: 2rem;
         }
 
         .tasklist {
@@ -597,7 +590,7 @@ function fetchInformation1($client_id)
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
-            margin-right: 3rem;
+            margin-right: 2rem;
         }
 
         .mobileview_clientprogress {
@@ -606,6 +599,7 @@ function fetchInformation1($client_id)
 
         .steps {
             margin-top: 1rem;
+            width: 100px;
         }
 
         #two {
@@ -655,7 +649,7 @@ function fetchInformation1($client_id)
                 box-shadow: 0 4px 7px rgba(0, 0, 0, 0.12);
                 border-radius: 0.7rem;
                 padding: 1rem;
-                width: 280px;
+                width: 310px;
                 height: auto;
 
             }
@@ -687,7 +681,7 @@ function fetchInformation1($client_id)
             }
 
             #btn7 {
-                padding-left: 2rem;
+                padding-left: 1.2rem;
                 padding-right: 2rem;
 
             }
@@ -781,7 +775,6 @@ function fetchInformation1($client_id)
             .dashboard_container2 {
                 display: flex;
                 gap: 1rem;
-                margin-left: 3rem;
             }
 
             .symbols3 {
@@ -1013,6 +1006,8 @@ function fetchInformation1($client_id)
             color: #9C74F5;
             cursor: pointer;
         }
+
+        
     </style>
 </head>
 
@@ -1161,7 +1156,7 @@ function fetchInformation1($client_id)
                         <div class="mob_wrapper1">
                             <span class="up"><a href="" style=" color:black;font-weight:500; border:none; margin-top:1rem;background-color:white; margin-left:1rem"><span><img src="<?= $DEFAULT_PATH ?>assets/images/ronald.svg" style="width:2rem;border-radius:1rem">
                                         <?php echo ($data[$i]['name']) ?></span></a></span>
-                            <div class="row1" style="display:flex ; gap:2rem;justify-content:center ">
+                            <div class="row1" style="display:flex ; gap:2rem;justify-content:center; align-items:center ">
                                 <div class="steps">
                                     <div class="symbols">
                                         <div style="color:#F6A682"><img src="<?= $DEFAULT_PATH ?>assets/images/Frame.svg" style="width:1.8rem"></div>
