@@ -51,10 +51,8 @@ if (isset($_POST['save'])) {
     <title>Infits | Live</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
 
     <style>
@@ -144,7 +142,6 @@ if (isset($_POST['save'])) {
             border-radius: 14px;
             text-align: center;
             padding: 10px;
-            margin: 5px;
         }
 
         .btn_setreminder {
@@ -687,17 +684,21 @@ if (isset($_POST['save'])) {
 
         /***************************calendar style end*********************************/
 
+
+
+        @media screen and (max-width: 600px) {
+            .streaming_live {
+                /* width: 80vw !important; */
+                font-size: 1rem !important;
+                /* margin-right: 1vw; */
+            }
+        }
+
         @media screen and (max-width: 1200px) {
             .live {
                 display: flex;
                 flex-direction: column;
                 gap: 0;
-            }
-
-            .streaming_live {
-                width: auto;
-                height: 220px;
-
             }
 
             .btn-title {
@@ -828,6 +829,51 @@ if (isset($_POST['save'])) {
             visibility: hidden;
 
         }
+
+        @media screen and (min-width:999px) {
+            .live_footer {
+                font-size: 2rem !important;
+            }
+        }
+        @media screen and (min-width:900px) and (max-width: 1100px) {
+            .streaming_live {
+                width: 400px !important;
+            }
+        }
+
+        @media screen and (min-width:721px) and (max-width: 899px) {
+            .streaming_live {
+                width: 50vw !important;
+            }
+        }
+
+        @media screen and (max-width: 720px) {
+            .streaming_live {
+                width: 80vw !important;
+                height: calc(170px + 4vw);
+            }
+            .go_live{
+                width: 100px !important;
+                /* padding: 1rem !important; */
+            }
+            
+
+            .f1 {
+                font-size: calc(20px + 1.05vw) !important;
+            }
+            .f2 {
+                font-size: calc(17px + 0.8vw) !important;
+            }
+            .f3 {
+                font-size: calc(10px + 1.05vw) !important;
+            }
+            .f4 {
+                font-size: calc(8px + 0.8vw) !important;
+            }
+            
+        }
+
+        
     </style>
 </head>
 
@@ -837,39 +883,36 @@ if (isset($_POST['save'])) {
         <div class="live_leftside">
             <h1>Live</h1>
             <div class="streaming_live" style="width:40vw;max-width: 652px;">
-                <div style="display:flex;justify-content:space-between"><span style="font-size:26px">Now Streaming
+                <div style="display:flex;justify-content:space-between"><span style="font-size:26px" class="f1">Now Streaming
                         Live</span>
                     <a style="background-color:none">
 
                         <form id="lobby__form">
 
                             <div class="form__field__wrapper">
-                                <input style="display: none;" type="text" name="name"
-                                    value="<?php echo $_SESSION["name"]; ?>" />
+                                <input style="display: none;" type="text" name="name" class="f2" value="<?php echo $_SESSION["name"]; ?>" />
                             </div>
 
                             <div class="form__field__wrapper">
-                                <input style="display: none;" type="hidden" name="uniqueId" id="uniqueId"
-                                    value="<?php echo uniqid($_SESSION["name"]); ?>" />
-                                <button type="submit" class="go_live">Go Live</button>
+                                <input style="display: none;" type="hidden" name="uniqueId" id="uniqueId" value="<?php echo uniqid($_SESSION["name"]); ?>" />
+                                <button type="submit" class="go_live f2">Go Live</button>
                             </div>
                         </form>
                     </a>
                 </div>
                 <div style="margin-top:1rem;display:flex;gap:1rem;">
-                    <img src="<?= $DEFAULT_PATH ?>assets/images/live-user-default.svg"
-                        style="border-radius:50%;width: 75.67px;height:75.67px;margin-top:0.5rem">
+                    <img src="<?= $DEFAULT_PATH ?>assets/images/live-user-default.svg" style="border-radius:50%;width: 75.67px;height:75.67px;margin-top:0.5rem">
                     <div>
-                        <p style="font-size:24px">
+                        <p style="font-size:24px" class="f2">
                             <?php echo $_SESSION["name"]; ?>
                         </p>
-                        <span style="font-size:14px;color: #A4A4A4;">Lorem ipsum dolor sit amet,consectetur </span> <br>
+                        <span style="font-size:14px;color: #A4A4A4;" class="f4">Lorem ipsum dolor sit amet,consectetur </span> <br>
                         <span style="font-size:14px;color: #A4A4A4;">adipiscing elit. Felis.</span>
                     </div>
                 </div>
-                <div style="float:right;font-size: 16px;">+256 viewers</div>
+                <div style="float:right;font-size: 16px;" class="f3">+256 viewers</div>
             </div>
-            <h4 style="margin-top:1.5rem">Upcoming live calls</h4>
+            <h4 style="margin-top:1.5rem" class="f2">Upcoming live calls</h4>
 
 
 
@@ -883,43 +926,34 @@ if (isset($_POST['save'])) {
                         echo
 
 
-                            "<div class='left_wrapper1'>
+                        "<div class='left_wrapper1'>
                         <img src='" . $DEFAULT_PATH . "assets/images/live-user-default.svg' style='border-radius:50%;width: 54.67px;height:54.67px'>
-                        <p style='font-size: 24px;line-height: 25px;'> " . $row['title'] . "</p>
+                        <p style='font-size: 24px;line-height: 25px;' class='f2'> " . $row['title'] . "</p>
                         <div>
-                            <div style='display:flex;justify-content:center;gap:0.3rem'><img src='" . $DEFAULT_PATH . "assets/images/Calendar.svg' style='width:17%'> <span>" . $row['date'] . "</span></div>
-                            <div style='display:flex;gap:0.3rem;margin-top:0.3rem;padding: 0px 19px;'> <img src='" . $DEFAULT_PATH . "assets/images/Clock_live.svg' style='width:27%;'> <span>" . $min->format('h:i') . (substr($min->format('h:i a'), -2) === "pm" ? " p.m." : " a.m.") . "</span></div>
+                            <div style='display:flex;justify-content:center;gap:0.3rem'><img src='" . $DEFAULT_PATH . "assets/images/Calendar.svg' style='width:17%' class='f3'> <span>" . $row['date'] . "</span></div>
+                            <div class='f3' style='display:flex;gap:0.3rem;margin-top:0.3rem;padding: 0px 19px;'> <img src='" . $DEFAULT_PATH . "assets/images/Clock_live.svg' style='width:27%;'> <span>" . $min->format('h:i') . (substr($min->format('h:i a'), -2) === "pm" ? " p.m." : " a.m.") . "</span></div>
                         </div>
                         <a href='live_joincall.php' style='background-color:none'> <button class='btn_joincall'>Join Call</button></a>
                         <button class='btn_setreminder'>Set Reminder</button>
     
                     </div> ";
-
-
                     }
                 }
                 ?>
 
 
                 <div class="left_wrapper1">
-                    <img src=" <?= $DEFAULT_PATH ?>assets/images/live-user-default.svg"
-                        style="border-radius: 50%; width: 54.67px; height: 54.67px; filter: invert(0);">
-                    <p style="font-size: 24px;line-height: 25px;">john</p>
+                    <img src="<?= $DEFAULT_PATH ?>assets/images/live-user-default.svg" style="border-radius: 50%; width: 54.67px; height: 54.67px; filter: invert(0);">
+                    <p class='f2' style="font-size: 24px;line-height: 25px;">john</p>
                     <div>
-                        <div style="display:flex;justify-content:center;gap:0.3rem"><img
-                                src="<?= $DEFAULT_PATH ?>assets/images/Calendar.svg"
-                                style="width: 17%; filter: invert(0);"> <span>09/05/2022</span></div>
-                        <div style="display:flex;gap:0.3rem;margin-top:0.3rem;padding: 0px 19px;"> <img
-                                src="<?= $DEFAULT_PATH ?>assets/images/Clock_live.svg"
-                                style="width: 27%; filter: invert(0);"> <span>2:00 p.m.</span></div>
+                        <div class='f3' style="display:flex;justify-content:center;gap:0.3rem"><img src="<?= $DEFAULT_PATH ?>assets/images/Calendar.svg" style="width: 17%; filter: invert(0);"> <span>09/05/2022</span></div>
+                        <div class='f3' style="display:flex;gap:0.3rem;margin-top:0.3rem;padding: 0px 19px;"> <img src="<?= $DEFAULT_PATH ?>assets/images/Clock_live.svg" style="width: 27%; filter: invert(0);"> <span>2:00 p.m.</span></div>
                     </div>
-                    <a href="live_joincall.php" style="background-color:none"> <button class="btn_joincall">Join
+                    <a href="live_joincall.php" style="background-color:none"> <button class="btn_joincall f3">Join
                             Call</button></a>
-                    <button class="btn_setreminder">Set Reminder</button>
+                    <button class="btn_setreminder f3">Set Reminder</button>
 
                 </div>
-                
-
 
 
             </div>
@@ -933,12 +967,12 @@ if (isset($_POST['save'])) {
         <!------------------------------RIGHTSIDE------------------------------------->
 
         <div class="live_rightside">
-            <h4>Schedule meetings</h4>
+            <h4 class="f1">Schedule meetings</h4>
             <!--------------------------------new calendar---------------------------------->
             <div class="d-flex justify-content-center">
                 <div class="light">
                     <div id="month-year-dropdown">
-                        <span id="selected-month-year">Select a month and year</span>
+                        <span id="selected-month-year" class="f2">Select a month and year</span>
                         <i class='fas fa-angle-down ms-1' style="color: #CCCCCC; font-size: x-small;"></i>
                         <div class="dropdown-menu">
                             <div class="row">
@@ -991,14 +1025,14 @@ if (isset($_POST['save'])) {
                 // $username = "root";
                 // $password = "";
                 // $dbname = "infits";
-                
+
                 //$title = $_POST['title'];
                 //$desc = $_POST['desc'];
                 //$date = $_POST['mydate'];
                 //$time = $_POST['mytime'];
-                
+
                 // $conn = new mysqli($servername, $username, $password, $dbname);
-                
+
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error);
                 }
@@ -1036,13 +1070,12 @@ if (isset($_POST['save'])) {
 
                 // $conn->close();
                 ?>
-                <div class="create-meet-btn d-flex justify-content-end">
+                <div class="create-meet-btn d-flex justify-content-end" style="margin-bottom: 1rem;">
                     <div class="live_footer" style="margin-top:1rem">
-                        <p class="btn-title pt-2">Create Meeting</p>
+                        <p class="btn-title pt-2 m" style="font-size: calc(1.2rem+0.5vw); margin-bottom:0.5rem">Create Meeting</p>
                         <a href="">
                             <button class="livebutton" id="livebutton">
-                                <img src="<?= $DEFAULT_PATH ?>assets/images/create-meeting.svg"
-                                    style="width:99.5%; display: flex; align-items: center;">
+                                <img src="<?= $DEFAULT_PATH ?>assets/images/create-meeting.svg" style="width:99.5%; display: flex; align-items: center;">
                             </button>
                         </a>
                     </div>
@@ -1089,11 +1122,9 @@ if (isset($_POST['save'])) {
                                 <div class="form-check form-switch">
                                     <div class="row d-flex justify-content-center">
                                         <div class="row">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked"
-                                                style="padding-right:40px ;">Set Reminder</label>
+                                            <label class="form-check-label" for="flexSwitchCheckChecked" style="padding-right:40px ;">Set Reminder</label>
                                         </div>
-                                        <input class="form-check-input" type="checkbox" role="switch"
-                                            id="flexSwitchCheckChecked" checked>
+                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
 
                                     </div>
 
@@ -1119,12 +1150,12 @@ if (isset($_POST['save'])) {
             var btn = document.getElementById("livebutton");
 
             // When the user clicks the button, open the modal 
-            btn.onclick = function () {
+            btn.onclick = function() {
                 event.preventDefault(); //keeps page from refreshing
                 modal.style.display = "block";
             }
             // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function (event) {
+            window.onclick = function(event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
@@ -1209,8 +1240,6 @@ if (isset($_POST['save'])) {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
         <script>
-
-
             // Define the months and years to be displayed in the dropdown
             const months = [
                 "January",
@@ -1239,7 +1268,7 @@ if (isset($_POST['save'])) {
             // Generate the calendar table
             let firstDay = new Date(selectedYear, months.indexOf(selectedMonth), 1);
             let lastDay = new Date(selectedYear, months.indexOf(selectedMonth) + 1, 0);
-            let table = $("<table id='calendarTable'>");
+            let table = $("<table id='calendarTable' >");
             let tbody = $("<tbody>");
             let row = $("<tr>");
             let dayNames = ["S", "M", "T", "W", "T", "F", "S"];
@@ -1258,8 +1287,7 @@ if (isset($_POST['save'])) {
                     if ((i === 0 && j < firstDay.getDay()) || date > lastDay.getDate()) {
                         let td = $(`<td>`);
                         row.append(td);
-                    }
-                    else {
+                    } else {
                         // console.log(month1);
                         let td = $(`<td class="d" id="${date}" data-day="${date}">`).text(date);
                         //  console.log(text.data);
@@ -1279,52 +1307,52 @@ if (isset($_POST['save'])) {
             $("#calendar").html(table);
 
             function updateSelectedMonthYear(month, year) {
-    // Remove the "active" class from the previously selected month
-    $(".dropdown-menu .row .month.active").removeClass("active");
+                // Remove the "active" class from the previously selected month
+                $(".dropdown-menu .row .month.active").removeClass("active");
 
-    selectedMonth = month;
-    selectedYear = year;
-    $("#selected-month-year").text(selectedMonth + " " + selectedYear);
+                selectedMonth = month;
+                selectedYear = year;
+                $("#selected-month-year").text(selectedMonth + " " + selectedYear);
 
-    // Add the "active" class to the newly selected month
-    $(".dropdown-menu .row .month:contains('" + month + "')").addClass("active");
+                // Add the "active" class to the newly selected month
+                $(".dropdown-menu .row .month:contains('" + month + "')").addClass("active");
 
-    // Generate the calendar table
-    let firstDay = new Date(selectedYear, months.indexOf(selectedMonth), 1);
-    let lastDay = new Date(selectedYear, months.indexOf(selectedMonth) + 1, 0);
-    let table = $("<table>");
-    let tbody = $("<tbody>");
-    let row = $("<tr>");
-    let dayNames = ["S", "M", "T", "W", "T", "F", "S"];
-    for (let i = 0; i < dayNames.length; i++) {
-        let th = $("<th>").text(dayNames[i]);
-        row.append(th);
-    }
-    tbody.append(row);
-    let date = 1;
-    let today = new Date(); 
-    for (let i = 0; i < 6; i++) {
-        row = $("<tr>");
-        for (let j = 0; j < 7; j++) {
-            if ((i === 0 && j < firstDay.getDay()) || date > lastDay.getDate()) {
-                let td = $(`<td>`);
-                row.append(td);
-            } else {
-                let td = $(`<td class="d" id="${date}" data-day="${date}">`).text(date);
-                if (selectedMonth === months[today.getMonth()] && selectedYear === today.getFullYear() && date === today
-                    .getDate()) {
-                    td.addClass("today");
+                // Generate the calendar table
+                let firstDay = new Date(selectedYear, months.indexOf(selectedMonth), 1);
+                let lastDay = new Date(selectedYear, months.indexOf(selectedMonth) + 1, 0);
+                let table = $("<table>");
+                let tbody = $("<tbody>");
+                let row = $("<tr>");
+                let dayNames = ["S", "M", "T", "W", "T", "F", "S"];
+                for (let i = 0; i < dayNames.length; i++) {
+                    let th = $("<th>").text(dayNames[i]);
+                    row.append(th);
                 }
-                row.append(td);
-                date++;
+                tbody.append(row);
+                let date = 1;
+                let today = new Date();
+                for (let i = 0; i < 6; i++) {
+                    row = $("<tr>");
+                    for (let j = 0; j < 7; j++) {
+                        if ((i === 0 && j < firstDay.getDay()) || date > lastDay.getDate()) {
+                            let td = $(`<td>`);
+                            row.append(td);
+                        } else {
+                            let td = $(`<td class="d" id="${date}" data-day="${date}">`).text(date);
+                            if (selectedMonth === months[today.getMonth()] && selectedYear === today.getFullYear() && date === today
+                                .getDate()) {
+                                td.addClass("today");
+                            }
+                            row.append(td);
+                            date++;
+                        }
+                    }
+                    tbody.append(row);
+                }
+                table.append(tbody);
+                $("#calendar2").html(table);
+                newfun();
             }
-        }
-        tbody.append(row);
-    }
-    table.append(tbody);
-    $("#calendar2").html(table);
-    newfun();
-}
 
             // Update the displayed year and months in the dropdown
             function updateDropdownYear(year) {
@@ -1349,13 +1377,13 @@ if (isset($_POST['save'])) {
                     if (selectedMonth === month3 && selectedYear === year) {
                         monthEl3.addClass("active");
                     }
-                    monthEl1.click(function () {
+                    monthEl1.click(function() {
                         updateSelectedMonthYear(month1, year);
                     });
-                    monthEl2.click(function () {
+                    monthEl2.click(function() {
                         updateSelectedMonthYear(month2, year);
                     });
-                    monthEl3.click(function () {
+                    monthEl3.click(function() {
                         updateSelectedMonthYear(month3, year);
                     });
                     row.append(monthEl1);
@@ -1369,25 +1397,25 @@ if (isset($_POST['save'])) {
             // Initialize the dropdown with the current year and months
             updateDropdownYear(currentYear);
             // Add event listeners for the previous and next year buttons
-            $(".dropdown-menu .prev-year").click(function () {
+            $(".dropdown-menu .prev-year").click(function() {
                 let currentYear = parseInt($(".dropdown-menu .year").text());
                 updateDropdownYear(currentYear - 1);
                 $("#month-year-dropdown").toggleClass("show");
             });
-            $(".dropdown-menu .next-year").click(function () {
+            $(".dropdown-menu .next-year").click(function() {
                 let currentYear = parseInt($(".dropdown-menu .year").text());
                 updateDropdownYear(currentYear + 1);
                 $("#month-year-dropdown").toggleClass("show");
             });
 
             // Show or hide the dropdown menu when the dropdown is clicked
-            $("#month-year-dropdown").click(function (event) {
+            $("#month-year-dropdown").click(function(event) {
                 event.stopPropagation();
                 $("#month-year-dropdown").toggleClass("show");
             });
 
             // Hide the dropdown menu when the user clicks outside of the dropdown area
-            $(document).click(function (event) {
+            $(document).click(function(event) {
                 if (!$(event.target).closest("#month-year-dropdown").length) {
                     $("#month-year-dropdown").removeClass("show");
                 }
@@ -1408,6 +1436,7 @@ if (isset($_POST['save'])) {
                 secondDate: null
             };
             let prev = 0;
+
             function erase(d) {
                 for (let i = 1; i <= d; i++) {
                     document.getElementById(i).classList.remove('leftside');
@@ -1499,16 +1528,16 @@ if (isset($_POST['save'])) {
 
             // Function to fetch meeting information
             function fetchMeetingInfo(startDate, endDate) {
-                const url = 'display_meet.php';  // Update with the correct PHP script path
+                const url = 'display_meet.php'; // Update with the correct PHP script path
 
                 const formData = new FormData();
                 formData.append('selectedDate', startDate);
                 formData.append('endDate', endDate);
 
                 return fetch(url, {
-                    method: 'POST',
-                    body: formData,
-                })
+                        method: 'POST',
+                        body: formData,
+                    })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -1552,7 +1581,7 @@ if (isset($_POST['save'])) {
                 const formattedEndDate = formatDate(endDate);
                 console.log('dom formattedEndDate', formattedEndDate);
 
-                console.log('Selected start date:', formattedStartDate);  // Log the formatted start date
+                console.log('Selected start date:', formattedStartDate); // Log the formatted start date
 
                 if (formattedStartDate && endDate) {
                     fetchMeetingInfo(formattedStartDate, formattedEndDate)
@@ -1560,7 +1589,7 @@ if (isset($_POST['save'])) {
                             console.log(meetingInfo);
                             rightside_middle.innerHTML = "";
                             if (meetingInfo.length > 0) {
-                                meetingInfo.forEach(function (meeting) {
+                                meetingInfo.forEach(function(meeting) {
 
                                     // Create main wrapper div
                                     const rightWrapper = document.createElement('div');
@@ -1646,7 +1675,7 @@ if (isset($_POST['save'])) {
                                     // Append inner user info div to main wrapper div
                                     rightWrapper.appendChild(userInfoDiv);
 
-
+                                    
                                     rightside_middle.appendChild(rightWrapper);
                                 });
                             } else {
@@ -1660,14 +1689,16 @@ if (isset($_POST['save'])) {
 
                                 console.log('No Meetings Found.');
                             }
-     
+                            
                         })
                         .catch(error => {
                             console.error('Error fetching meeting information:', error);
-                            // Handle the error, if necessary
                         });
                 }
             }
+
+           
+
 
             function formatDate(date) {
                 const currentYear = selectedYear;
@@ -1677,11 +1708,10 @@ if (isset($_POST['save'])) {
                 return formattedDate;
             }
 
+
         </script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
         <script type="text/javascript" src="<?= $DEFAULT_PATH ?>live/js/lobby_help.js"></script>
         <!-- <script type="text/javascript" src="<?= $DEFAULT_PATH ?>live/js/lobby.js"></script> -->
         <?php require_once('live/js/lobby.php'); ?>
