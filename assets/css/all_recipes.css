@@ -1,0 +1,427 @@
+body {
+    font-family: "NATS", sans-serif !important;
+    letter-spacing: 1px;
+    font-weight: 400;   
+    /* background-color: #2b0e0e; */
+    color: black;
+    position: relative;
+}
+.tabcontent {
+    padding: 6px 30px;
+    border: none;
+    border-top: none;
+}
+.searchbox {
+    width: auto;
+    width: 360px;
+    height: 50px;
+    background: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 22px;
+}
+.header {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    margin-left: -20px;
+    justify-content: space-between;
+    letter-spacing: 0em;
+}
+#myDIV {
+    margin-right: 0px;
+}
+#myDIV1 {
+    margin: 0px;
+}
+#topnav-content-1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+    margin-bottom: 5px;
+}
+#topnav-content-2 {
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 15px;
+    margin-top: 12px;
+    margin-bottom:6px;
+}
+.card {
+    background: #FFFFFF;
+    border-radius: 17.8334px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    bottom:20px;
+    padding:15px;
+    width:350px; 
+    height:250px;
+    border-radius:16px; 
+    margin-left:10px;
+    margin-right:-5px;
+}
+.card-upper-text {
+    font-size: 15px;
+    padding: 5px 10px;
+    background-color: #FEA945;
+    box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.75);
+    border-radius: 8px;
+    color: white;
+    line-height: 18px;
+}
+.card-food {
+    font-size: 23px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.11428570002317429px;
+    text-align: left;
+    width:400px;
+    margin-bottom: 5px;
+    font-family:"NATS";
+}
+.card-calorie {
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+    align-items: center;
+    margin-top: 5px;
+    display: flex;
+    color: #A3A1A1;
+}
+.card-num-circle {
+    background: #9C74F5;
+    border-radius: 50%;
+    color: white;
+    padding: 5px;
+    height: 25px;
+    width:25px;
+    margin-top: -7px;
+}
+.card-num {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #9C74F5;
+    text-align:center;
+}
+.dropdown {
+    position: absolute;
+    margin-top: -27px;
+    display: inline-block;
+    right: 0.4em;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    margin-top: 0px;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+.dropdown-content a {
+    color: white;
+    padding: 12px 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content .edit-button {
+    background: #A85CF1;
+    text-align: center;
+    border-radius: 7px;
+    margin-bottom: 10px;
+}
+.dropdown-content .delete-button {
+    background: #FF3D3D;
+    border-radius: 7px;
+    text-align: center;
+}
+.show {
+    display: block !important;
+}
+.dropdown-card {
+    background: #FFFFFF;
+    border: 0.723941px solid #E4E4E4;
+    box-shadow: 0px 2.17182px 2.89576px rgba(0, 0, 0, 0.09);
+    border-radius: 13.0309px;
+    padding: 20px;
+}
+.filter-outline {
+    box-sizing: border-box;
+    border: 1.5px solid #B85AEC;
+    border-radius: 15px;
+}
+.filter-line {
+    border: none;
+    border-left: 1.5px solid #B85AEC;
+}
+.white {
+    color: #FFFFFF;
+}
+.lwhite {
+    color: rgba(255, 255, 255, 0.9);
+}
+.container1{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    margin-top: 32px;
+    margin-left: 10px;
+    width: auto;
+    height: max-content;
+    padding: 4px;
+    overflow-x:auto;
+    gap:30px !important;
+}
+.container1::-webkit-scrollbar{
+    display: none;
+}
+.container1 .top-card{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 313.47px;
+    height: 213px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 35px;
+    border-radius: 16px;
+}
+.container1 .top-card .imag{
+    position: absolute;
+}
+.container1 .top-card .im1{
+    width: 150px;
+    height: 200px;
+    top: -8px;
+    right: 0px;
+    z-index:1;
+}
+.container1 .top-card .im2{
+    width: 170.01px;
+    height: 52px;
+    transform: rotate(45deg);
+    bottom: -5px;
+    left: -30px;
+    transform: scale(1.4);
+}
+.top-card h3::before{
+    content: '';
+    width: 260px;
+    height: 220px;
+    border: 1px solid rgba(234, 139, 139, 0.907);
+    border-radius: 50%;
+    position: absolute;
+    top: -60px;
+    left: -60px;
+}
+#myDIV1 h3::before{
+    content: '';
+    width: 260px;
+    height: 220px;
+     border: 1px solid rgba(234, 139, 139, 0.907);
+    border-radius: 50%;
+    position: absolute;
+    top: -60px;
+    left: -60px;
+}
+.breakfast .top-card h3::before{
+    border: 3px solid #A6EFC0;
+}
+.snacks .top-card h3::before{
+    border: 3px solid rgb(255, 255, 255);
+}
+.lunch .top-card h3::before{
+    border: 3px solid #dbaaab;
+}
+.dinner .top-card h3::before{
+    border: 1px solid #dc898a;
+}
+#myDIV1 .breakfast .top-card h3::before{
+    border: 1px solid #92ceb6;;
+}
+#myDIV1 .snacks .top-card h3::before{
+    border: 1px solid  #5191af;;
+}
+#myDIV1 .lunch .top-card h3::before{
+    border: 1px solid #dbaaab;
+}
+#myDIV1 .lunches .top-card h3::before{
+    border: 1px solid #917dda;;
+}
+#myDIV a,
+    #myDIV1 a{
+    cursor: pointer;
+    text-decoration: none;
+}
+#myDIV1 a:hover,
+#myDIV a:hover{
+    text-decoration: none;
+}
+.container1 .top-card .im2-2{
+    transform: scale(1.6) scaleX(-1) rotate(-10deg);
+}
+.container1 .top-card .ci{
+    width: 110px;
+    position: absolute;
+    height: 100px;
+    border-radius: 50%;
+}
+.container1 .top-card .ci1{
+    top: -60px;
+    right: 110px;
+}
+.container1 .top-card .ci2{
+    bottom: -70px;
+    right: 2px;
+}
+.container-1 .top-card h5,p,br{
+    margin-right: 70px;
+    margin-bottom: 35px;
+    font-weight: 400;
+    line-height: 88%;
+}
+.recipe-add-btn {
+        position: inherit;
+        justify-content: flex-end;
+        display: flex;
+        margin: 0px 21px 0px -60px;
+}
+.btn{
+    margin-top: 10px;
+    position: relative;
+    margin-left: 1500px;
+}
+.btn .butt{
+    background: #9C74F5;
+    border: 0px;
+    color: white;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 35px;
+    right: 25px;
+    width: 85px;
+    height: 85px;
+    font-size: 40px;
+}
+.main{
+    margin-left:240px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+@media screen and (min-width: 720px) and (max-width:1500px) {
+    .header{
+        margin-left: 5%;
+        margin-top: 9px;
+    }
+    .searchbox{
+        margin-top: auto;
+        width: 300px;
+    }
+    .card {
+        margin:10px auto !important;
+    }
+    .card-food {
+        font-size: 23px; 
+        font-weight: 400;
+        line-height: 20px;
+        min-width: 180px;
+        margin-bottom: -3px;
+        margin-top:3px;
+    }
+    .card-calorie {
+        margin-top: 5px;
+    }
+    .dropdown-content {
+        left:-125px;
+        bottom:-70px;
+    }
+    .main{
+        margin-left:30px;
+    }
+    .recipe-add-btn{
+        bottom:0px !important;
+        right:0px !important;
+    }
+}
+@media screen and (min-width:0px) and (max-width:720px){
+    .recipe-add-btn{
+        bottom:0px !important;
+        right:0px !important;
+    }
+    .header{
+        margin-left: 5%;
+        margin-top: 8px;
+        flex-direction: column;
+        align-items:flex-start;
+    }
+    input{
+        width: 100%;
+    }
+    .header h1{
+        font-size: 50px;
+        margin-left:0rem !important;
+    }
+    .container1{
+        grid-template-columns: auto auto auto auto;
+        left: -1px;
+        margin-right: 420px;
+        gap: 0.5rem;
+    }
+    .recipe{
+        margin-left: -200px;
+    }
+    .middle_wrapper a {
+        margin-right: -22px;
+        margin-top:-5px;    
+    }
+    .card{
+        margin:10px auto !important;
+    }
+    .main{
+        margin: 20px auto;
+    }
+    .card-food {
+        font-size: 21.5px;
+        font-weight: 500;
+        line-height: 20px;
+        min-width: 180px;
+    }
+    .recipe-add-btn {
+        position: inherit;
+        justify-content: flex-end;
+        display: flex;
+        margin: 0px 21px 0px -60px;
+    }
+    .card-calorie {
+        margin-top: 5px;
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        margin-top: 0px;
+        background-color: #f9f9f9;
+        min-width: 150px;
+        left:-120px;
+    }
+}
+@media screen and (min-width:0px) and (max-width:400px){
+    .searchbox{
+        width:300px;
+    }
+}
+@media screen and (max-width: 720px){
+    .dropdown-content {
+    position: absolute !important;
+    
+    right: 50px !important;
+}
+    }
