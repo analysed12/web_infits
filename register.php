@@ -1,5 +1,4 @@
 <?php
-include "server.php";
 require "constant/config.php";
 ?>
 <!DOCTYPE html>
@@ -10,7 +9,8 @@ require "constant/config.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-    <?php require "constant/head.php"; ?>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
     <style>
 
         body {
@@ -860,14 +860,14 @@ require "constant/config.php";
                         <!-- changed id="name" to  id="uName" as Full Name field is also with id="name"  -->
 
                         <div class="ip_box">
-                            <img src="<?= $DEFAULT_PATH ?>assets/images/account.svg">
+                            <img src="<?= $DEFAULT_PATH ?>assets/images/Account.svg">
                             <input class="input_bar" name="dietitianuserID" id="u_name" type="text" placeholder="       Username">
                         </div>
                         <p class="errors"></p>
                         <!-- changed id="name" to  id="full_ame" as id="name" gave error in javascript  -->
                         
                         <div class="ip_box">
-                            <img src="<?= $DEFAULT_PATH ?>assets/images/account.svg" alt="">
+                            <img src="<?= $DEFAULT_PATH ?>assets/images/Account.svg" alt="">
                             <input class="input_bar" name="name" id="full_name" type="text" placeholder="       Full Name">
                         </div>
                         <p class="errors"></p>
