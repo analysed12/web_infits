@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 include "server.php";
 require "constant/config.php";
