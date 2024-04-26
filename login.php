@@ -1,5 +1,4 @@
 <?php
-include "server.php";
 require "constant/config.php";
 ?>
 <!DOCTYPE html>
@@ -12,7 +11,8 @@ require "constant/config.php";
     <meta name="google-signin-client_id"
         content="3315662633-6joqrjkcqimq2ms96p4ls8ie96e5liq1.apps.googleusercontent.com">
     <title>sign in</title>
-    <?php require('constant/head.php');?>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
 </head>
 <style>
     .abcRioButton {
@@ -719,7 +719,7 @@ require "constant/config.php";
 
                     <form method="post" action="#">
                         <button type="submit" name="login" value="Facebook" class="facebook">
-                            <img style="width: 30px; height: 30px;" src="<?=$DEFAULT_PATH?>assets/images/facebook.svg"
+                            <img style="width: 30px; height: 30px;" src="/assets/images/Facebook.svg"
                                 alt="">
                             <span class="ps-2">Facebook</span>
                         </button>
@@ -1070,7 +1070,6 @@ require "constant/config.php";
 </script>
 </body>
 
-=======
 <?php
 include "server.php";
 require "constant/config.php";
@@ -1085,7 +1084,7 @@ require "constant/config.php";
     <meta name="google-signin-client_id"
         content="3315662633-6joqrjkcqimq2ms96p4ls8ie96e5liq1.apps.googleusercontent.com">
     <title>sign in</title>
-    <?php require('constant/head.php');?>
+    
 </head>
 <style>
     .abcRioButton {
@@ -2143,5 +2142,4 @@ require "constant/config.php";
 </script>
 </body>
 
->>>>>>> b9a6b5fc6a37afbf7524b50a376846ebe5e9ecb9
 </html>
